@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>CoverFlow</title>
+<style>
+  html { height: 100%; }
+  body { background-image: -webkit-radial-gradient(gray 0%, black 100%); }
+
+  #coverflow {
+  width: 800px;
+  height: 400px;
+  overflow: hidden;
+  margin: 100px auto;
+  -webkit-perspective: 500;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-transform-style: preserve-3d;
+  }
+
+
+  #container {
+  height: 100%;
+  width: 100%;
+  margin-left: 350px;
+  background-color: transparent;
+  -webkit-transition: all 400ms ease-in-out;
+  }
+
+  .holder {
+     float: left;
+     position: absolute;
+     margin-top: 100px;
+     margin-left: 20px;
+     -webkit-transition: all 300ms ease-in-out;
+     -webkit-box-reflect: below 4px
+     -webkit-gradient(
+     linear,
+     left top,
+     left bottom,
+     color-stop(0, rgba(255, 255, 255, 0)),
+     color-stop(.5, rgba(255, 255, 255, .3)),
+     color-stop(1, rgba(255, 255, 255, .3))
+     );
+  }
+
+  .slider {
+  position: absolute;
+  width: 200px;
+  height: 30px;
+  margin: 0 0 0 430px;
+  -webkit-appearance: none !important;
+  border-radius: 6px;
+  border: 1px solid white;
+  background: #999;
+  opacity: .5;
+  }
+
+ .slider::-webkit-slider-thumb {
+ -webkit-appearance: none !important;
+ width: 50px;
+ height: 18px;
+ border-radius: 8px;
+ border: 2px solid #fff;
+ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #999), color-stop(.5, #000) );
+ }
+
+ #log { color: white; font-size: 30pt; }
+
+ </style>
+ </head>
+ <body onload="flow()">
+
+ <div id="coverflow">
+ <div id="container">
+      <div class="holder" id="1"><img src="../img/1.jpg" width="200"></div>
+      <div class="holder" id="2"><img src="../img/2.jpg" width="200"></div>
+      <div class="holder" id="3"><img src="../img/3.jpg" width="200"></div>
+      <div class="holder" id="4"><img src="../img/4.jpg" width="200"></div>
+      <div class="holder" id="5"><img src="../img/5.jpg" width="200"></div>
+      <div class="holder" id="6"><img src="../img/6.jpg" width="200"></div>
+      <div class="holder" id="7"><img src="../img/7.jpg" width="200"></div>
+      <div class="holder" id="8"><img src="../img/8.jpg" width="200"></div>
+      <div class="holder" id="9"><img src="../img/9.jpg" width="200"></div>
+      <div class="holder" id="10"><img src="../img/1.jpg" width="200"></div>
+      <div class="holder" id="11"><img src="../img/2.jpg" width="200"></div>
+ </div>
+ </div>
+ <input id="slider" class="slider" type="range" min="1" max="11" value="6" onchange="flow();">
+ <a id="log">value</a>
+ <script>
+ function flow() {
+
+ var space = 2;
+ var coverCount = 11;
+ var current = slider.value;
+ var cover = document.getElementById(current + "");
+ var position = [0, 230, 180, 130, 80, 30, -20, -70, -120, -170, -220, -270];
+
+ for (var i = current; i < (coverCount +1); i++)
+  {
+ document.getElementById(i + "").style.webkitTransform = "translate3d("+((i+space)*50)+"px,0,-10px) rotateY(-65deg)";
+ document.getElementById(i + "").style.zIndex = -i + "";
+  }
+
+ for (var i = 1; i < current; i++)
+  {
+ document.getElementById(i + "").style.webkitTransform = "translate3d("+((i-space)*50)+"px,0,-10px) rotateY(65deg)";
+ document.getElementById(i + "").style.zIndex = i + "";
+  }
+
+  cover.style.webkitTransform = "translate3d("+(slider.value*50)+"px,0,100px) rotateY(0deg)";
+  cover.style.zIndex = current + "";
+  document.getElementById("container").style.marginLeft =  position[current] + "px";
+  document.getElementById("log").innerHTML = slider.value + "";
+  }
+ </script>
+ </body>
+ </html>

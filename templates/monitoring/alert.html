@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% trans 'Alarms' %}{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title="Alarms" %}
+{% endblock page_header %}
+
+{% block manage_overview %}
+{% block page_title %}
+<div class="page_title table_header">
+    <div>
+        <h3>
+            <a href="{% url 'horizon:noc_tools:service_health:index' %}" class="showspinner">
+            {% trans "Service Health" %}</a> : {{ region_name }} -  &gt;
+            {% trans "Service :" %} {{ service }}
+        </h3>
+    </div>
+    <div class="table_actions">
+        <a href="{% url 'horizon:noc_tools:service_health:index' %}" class="close showspinner">&times;</a>
+    </div>
+</div>
+{% endblock page_title %}
+{% endblock %}
+{% block main %}
+    {{ table.render }}
+{% endblock %}
+

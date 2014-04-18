@@ -1,0 +1,25 @@
+
+<div ng-app="modalTest">
+   <div>
+        {% for group in service_groups %}
+        <div class="alert alert-block fade in" style="background:#F1F1F1;color:black;font-weight: bold;">
+            <div>
+                {{ group.name }}
+            </div>
+            {% for service in group.services %}
+                <a href="{% url 'horizon:admin:monitoring:alert' service.name %}" class="showspinner">
+                 <div class="alert alert-block {{ service.class }} fade in" style="display:inline-block; margin-bottom:4px;">
+                    <div>
+                        <img style="margin-right:5px;vertical-align:top;" src="{{ service.icon }}"/>
+                        {{ service.display }}
+                        {% if service.count %}
+                            ({{ service.count }})
+                        {% endif %}
+                    </div>
+                </div>
+                </a>
+             {% endfor %}
+         </div>
+         {% endfor %}
+    </div>
+</div>

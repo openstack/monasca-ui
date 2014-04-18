@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% trans 'Measurements for Alarms' %}{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title="Measurements that Triggered Alarm" %}
+{% endblock page_header %}
+
+{% block manage_overview %}
+{% block page_title %}
+<div class="page_title table_header">
+    <div>
+        <h3>
+            <a href="{% url 'horizon:noc_tools:service_health:index' %}" class="showspinner">
+            {% trans "Service Health" %}</a> : {{ region_name }} -  &gt;
+            {% trans "Service :" %} {{ service }}
+        </h3>
+    </div>
+    <div class="table_actions">
+        <a href="{% url 'horizon:noc_tools:service_health:index' %}" class="close showspinner">&times;</a>
+    </div>
+</div>
+{% endblock page_title %}
+{% endblock %}
+{% block main %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Response Time', 'Threshold'],
+          ['8:42',  1000,      1200],
+          ['8:43',  1170,      1200],
+          ['8:44',  1190,       1200],
+          ['8:45',  1230,      1200]
+        ]);
+
+        var options = {
+          title: 'API Response Time'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+{% endblock %}
+
