@@ -1,12 +1,29 @@
-import logging
+# vim: tabstop=4 shiftwidth=4 softtabstop=4
 
-from datetime import datetime
+# Copyright 2013 Hewlett-Packard Development Company, L.P.
+#
+#    Licensed under the Apache License, Version 2.0 (the "License"); you may
+#    not use this file except in compliance with the License. You may obtain
+#    a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#    License for the specific language governing permissions and limitations
+#    under the License.import logging
+
+import datetime
+import logging
 
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 from horizon import tables
-from .tables import AlertsTable, AlertHistoryTable
+from .tables import AlertsTable
+from .tables import AlertHistoryTable
+from openstack_dashboard import api
 
 LOG = logging.getLogger(__name__)
 
@@ -16,7 +33,8 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context["date"] = datetime.utcnow()
+        #api.monitoring.alarm_list(self.request)
+        context["date"] = datetime.datetime.utcnow()
         context["service_groups"] = [{'name': _('Platform Services'),
            'services': [{'name': 'MaaS',
                          'class': 'alert-success',
@@ -123,11 +141,17 @@ class AlertView(tables.DataTableView):
         return super(AlertView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        results = [{'Host': 'Compute1', 'Service': 'Nova', 'Status': 'WARNING', 'Status_Information': 'API Response Time'},
-                   {'Host': 'Compute2', 'Service': 'Nova', 'Status': 'OK', 'Status_Information': 'System Health'},
-                   {'Host': 'Compute3', 'Service': 'Nova', 'Status': 'OK', 'Status_Information': 'Database Access'},
-                   {'Host': 'Compute4', 'Service': 'Nova', 'Status': 'OK', 'Status_Information': 'Network Latency'},
-                   {'Host': 'Compute5', 'Service': 'Nova', 'Status': 'OK', 'Status_Information': 'Rabbit Health'},
+        results = [{'Host': 'Compute1', 'Service': 'Nova',
+                    'Status': 'WARNING',
+                    'Status_Information': 'API Response Time'},
+                   {'Host': 'Compute2', 'Service': 'Nova',
+                    'Status': 'OK', 'Status_Information': 'System Health'},
+                   {'Host': 'Compute3', 'Service': 'Nova', 'Status': 'OK',
+                    'Status_Information': 'Database Access'},
+                   {'Host': 'Compute4', 'Service': 'Nova', 'Status': 'OK',
+                    'Status_Information': 'Network Latency'},
+                   {'Host': 'Compute5', 'Service': 'Nova', 'Status': 'OK',
+                    'Status_Information': 'Rabbit Health'},
                    ]
 
         return results

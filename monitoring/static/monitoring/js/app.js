@@ -1,11 +1,12 @@
 'use strict';
 
+alert(extension)
 // Declare app level module which depends on filters, and services
 angular.module('monitoringApp', [
-  'monitoring.controllers', 'ngRoute', 'ngGrid', 'ngAnimate'
+  'monitoring.controllers', 'monitoring.directives', 'ngRoute'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/health', {templateUrl: '/static/horizon/js/angular/monitoring/health.html', controller: 'monitoringController'});
-  $routeProvider.when('/alarms/:alarmName', {templateUrl: '/static/horizon/js/angular/monitoring/alarms.html', controller: 'alarmController'});
+  $routeProvider.when('/health', {templateUrl: '/static/monitoring/js/health.html', controller: 'monitoringController'});
+  $routeProvider.when('/alarms/:alarmName', {templateUrl: '/static/monitoring/js/alarms.html', controller: 'alarmController'});
   $routeProvider.otherwise({redirectTo: '/health'});
 }]);

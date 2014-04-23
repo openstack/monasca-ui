@@ -63,6 +63,17 @@ angular.module('monitoring.controllers', [])
                 }
             }
         };
+        $scope.fetchStatus = function() {
+            $http({method: 'GET', url: '/someUrl'}).
+                success(function(data, status, headers, config) {
+                  // this callback will be called asynchronously
+                  // when the response is available
+                }).
+                error(function(data, status, headers, config) {
+                  // called asynchronously if an error occurs
+                  // or server returns response with an error status.
+                });
+        }
         $scope.serviceModel = function() {
             $scope.setStatus()
             return $scope._serviceModel
@@ -71,12 +82,13 @@ angular.module('monitoring.controllers', [])
         $scope.showService = function(ev) {
             // href="#/alarms/{{service.name}}"
             console.log(ev.clientX, ev.clientY);
-            $("#current"+$scope.current)[0].style.webkitTransform = "scale3d(10, 10, +1)"
+            //$("#current"+$scope.current)[0].style.webkitTransform = "scale3d(10, 10, +1)"
             //$("#current"+$scope.current).style.opacity = "0"
             //$("#current"+$scope.current).style.visibility = false
             $scope.current += 1;
-            $("#current"+$scope.current)[0].style.webkitTransform = "translate3d(0,-400px,-1)"
+            //$("#current"+$scope.current)[0].style.webkitTransform = "translate3d(0,-400px,-1)"
         };
+        $scope.format = 'M/d/yy h:mm:ss a';
       })
     .controller('alarmController', function($scope) {
         $scope.myData = [{name: "API Response Time", status: 'Normal'},
@@ -106,13 +118,13 @@ function getRandomStatusValue() {
 
 function getIcon(status) {
     if (status === 'alert-error')
-        return '/static/dashboard/img/critical-icon.png'
+        return '/static/monitoring/img/critical-icon.png'
     else if (status === 'alert-warning')
-        return '/static/dashboard/img/warning-icon.png'
+        return '/static/monitoring/img/warning-icon.png'
     else if (status === 'alert-unknown')
-        return '/static/dashboard/img/unknown-icon.png'
+        return '/static/monitoring/img/unknown-icon.png'
     else if (status === 'alert-success')
-        return '/static/dashboard/img/ok-icon.png'
+        return '/static/monitoring/img/ok-icon.png'
     else if (status === 'alert-notfound')
-        return '/static/dashboard/img/notfound-icon.png'
+        return '/static/monitoring/img/notfound-icon.png'
 }
