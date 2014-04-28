@@ -16,8 +16,11 @@
 
 import datetime
 import logging
+import json
+import random
 
-from django.utils.translation import ugettext_lazy as _
+from django.http import HttpResponse   # noqa
+from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 
 from horizon import tables
@@ -27,15 +30,7 @@ from openstack_dashboard import api
 
 LOG = logging.getLogger(__name__)
 
-
-class IndexView(TemplateView):
-    template_name = 'admin/monitoring/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        #api.monitoring.alarm_list(self.request)
-        context["date"] = datetime.datetime.utcnow()
-        context["service_groups"] = [{'name': _('Platform Services'),
+SAMPLE = [{'name': _('Platform Services'),
            'services': [{'name': 'MaaS',
                          'class': 'alert-success',
                          'icon': '/static/monitoring/img/ok-icon.png',
@@ -128,7 +123,48 @@ class IndexView(TemplateView):
                         ]},
             ]
 
+class IndexView(TemplateView):
+    template_name = 'admin/monitoring/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context["date"] = datetime.datetime.utcnow()
+        context["service_groups"] = SAMPLE
+
         return context
+
+
+class StatusView(TemplateView):
+    template_name = "admin/metering/samples.csv"
+
+    def get(self, request, *args, **kwargs):
+        services = ['MaaS',
+                    ]
+        #api.monitoring.alarm_list(self.request)
+        for group in SAMPLE:
+            for service in group['services']:
+                service['class'] = get_random_status()
+        ret = {}
+        ret['series'] = SAMPLE
+        ret['settings'] = {}
+
+        return HttpResponse(json.dumps(ret),
+            content_type='application/json')
+
+def get_random_status():
+    distribution = [
+        {'prob':.04, 'value':'alert-error'},
+        {'prob':.04, 'value':'alert-warning'},
+        {'prob':.04, 'value':'alert-unknown'},
+        {'prob':.04, 'value':'alert-notfound'},
+        {'prob':1.0, 'value':'alert-success'},
+    ]
+    num = random.random()
+    for dist in distribution:
+        if num < dist["prob"]:
+            return dist["value"]
+        num = num - dist["prob"]
+    return distribution[len(distribution) - 1]["value"]
 
 
 class AlertView(tables.DataTableView):

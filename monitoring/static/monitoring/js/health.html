@@ -25,8 +25,9 @@ color: lightgrey;
 }
 </style>
 <div>
+Current time is: <span my-current-time="format"></span> <button ng-click="fetchStatus()">Refresh</button>
     <div id="current1" class="diagram">
-        <div class="alert alert-block fade in" style="background:#E1E1E1;color:black;" ng-repeat="group in serviceModel()">
+        <div class="alert alert-block fade in" style="background:#E1E1E1;color:black;" ng-repeat="group in _serviceModel">
             <div>
                 {{ group.name }}
             </div>
@@ -42,4 +43,3 @@ color: lightgrey;
          </div>
     </div>
 </div>
-  Current time is: <span my-current-time="format"></span>

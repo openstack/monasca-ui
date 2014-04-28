@@ -21,6 +21,7 @@ from . import views
 urlpatterns = patterns(
     'openstack_dashboard.dashboards.admin.monitoring.views',
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^status', views.StatusView.as_view(), name='status'),
     url(r'^alert/(?P<service>[^/]+)/$',
         views.AlertView.as_view(),
         name='alert'),

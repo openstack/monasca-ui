@@ -41,7 +41,7 @@ def get_status(index):
 
 def show_status(data):
     status = data
-    img_tag = '<img style="margin-right:5px;" src="%s"/>%s'
+    img_tag = '<img src="%s" alt="%s"/>'
     if status == 'CRITICAL':
         return img_tag % (CRITICAL_ICON, status)
     if status == 'WARNING':
@@ -68,11 +68,11 @@ class ShowAlarmMeters(tables.LinkAction):
 
 
 class AlertsTable(tables.DataTable):
-    target = tables.Column('Host', verbose_name=_('Host'))
-    name = tables.Column('Service', verbose_name=_('Service'))
     status = tables.Column('Status', verbose_name=_('Status'),
                            status_choices={(show_status('OK'), True)},
                            filters=[show_status, template.defaultfilters.safe])
+    target = tables.Column('Host', verbose_name=_('Host'))
+    name = tables.Column('Service', verbose_name=_('Service'))
     lastCheck = tables.Column('Last_Check', verbose_name=_('Last Check'))
     time = tables.Column('Duration', verbose_name=_('Duration'))
     detail = tables.Column('Status_Information',
@@ -89,11 +89,11 @@ class AlertsTable(tables.DataTable):
 
 
 class AlertHistoryTable(tables.DataTable):
-    target = tables.Column('Host', verbose_name=_('Host'))
-    name = tables.Column('Service', verbose_name=_('Service'))
     status = tables.Column('Status', verbose_name=_('Status'),
                            status_choices={(show_status('OK'), True)},
                            filters=[show_status, template.defaultfilters.safe])
+    target = tables.Column('Host', verbose_name=_('Host'))
+    name = tables.Column('Service', verbose_name=_('Service'))
     lastCheck = tables.Column('Last_Check', verbose_name=_('Last Check'))
     time = tables.Column('Duration', verbose_name=_('Duration'))
     detail = tables.Column('Status_Information',

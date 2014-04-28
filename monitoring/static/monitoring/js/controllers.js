@@ -1,6 +1,6 @@
 'use strict';
 angular.module('monitoring.controllers', [])
-    .controller('monitoringController', function ($scope) {
+    .controller('monitoringController', function ($scope, $http) {
           $scope._serviceModel = [{'name': 'Platform Services',
            'services': [{'name': 'MaaS',
                          'display': 'MaaS'},
@@ -53,25 +53,27 @@ angular.module('monitoring.controllers', [])
                         ]}
             ]
         $scope.setStatus = function() {
-            var i;
-            for (i=0; i < $scope._serviceModel.length; i++) {
-                var group = $scope._serviceModel[i]
-                for (var j in group.services) {
-                    var service = group.services[j]
-                    service['class'] = getRandomStatusValue()
-                    service['icon'] = getIcon(service['class'])
-                }
-            }
+            $scope.fetchStatus()
         };
         $scope.fetchStatus = function() {
-            $http({method: 'GET', url: '/someUrl'}).
+            $http({method: 'GET', url: '/admin/monitoring/status'}).
                 success(function(data, status, headers, config) {
                   // this callback will be called asynchronously
                   // when the response is available
-                }).
+                    var i;
+                    for (i=0; i < data.series.length; i++) {
+                        var group = data.series[i]
+                        for (var j in group.services) {
+                            var service = group.services[j]
+                            service['icon'] = getIcon(service['class'])
+                        }
+                    }
+                    $scope._serviceModel = data.series
+               }).
                 error(function(data, status, headers, config) {
                   // called asynchronously if an error occurs
                   // or server returns response with an error status.
+                    alert("error")
                 });
         }
         $scope.serviceModel = function() {
@@ -105,6 +107,7 @@ function getRandomStatusValue() {
         {prob:.04, value:'alert-error'},
         {prob:.04, value:'alert-warning'},
         {prob:.04, value:'alert-unknown'},
+        {prob:.04, value:'alert-notfound'},
         {value:'alert-success'},
     ]
     var num = Math.random()
