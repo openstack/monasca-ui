@@ -56,18 +56,28 @@ def show_status(data):
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
     verbose_name = _('Show History')
-    url = 'history'
+    url = 'horizon:admin:monitoring:history'
     classes = ('btn-edit',)
 
 
 class ShowAlarmMeters(tables.LinkAction):
     name = 'meters'
     verbose_name = _('Show Meters')
-    url = 'meters'
+    url = 'horizon:admin:monitoring:meters'
     classes = ('btn-edit',)
 
 
-class AlertsTable(tables.DataTable):
+class CreateAlarm(tables.LinkAction):
+    name = "create_alarm"
+    verbose_name = _("Create Alarm")
+    classes = ("ajax-modal", "btn-create")
+    url = 'horizon:admin:monitoring:alarm_create'
+
+    def allowed(self, request, datum=None):
+        return True
+
+
+class AlarmsTable(tables.DataTable):
     status = tables.Column('Status', verbose_name=_('Status'),
                            status_choices={(show_status('OK'), True)},
                            filters=[show_status, template.defaultfilters.safe])
@@ -85,10 +95,28 @@ class AlertsTable(tables.DataTable):
         name = "users"
         verbose_name = _("Alarms for Nova in the UnderCloud")
         row_actions = (ShowAlarmHistory, ShowAlarmMeters,)
+        table_actions = (CreateAlarm,)
         status_columns = ['status']
 
 
-class AlertHistoryTable(tables.DataTable):
+class RealAlarmsTable(tables.DataTable):
+    state = tables.Column('state', verbose_name=_('State'))
+    target = tables.Column('name', verbose_name=_('Name'))
+    name = tables.Column('description', verbose_name=_('Description'))
+    expression = tables.Column('expression', verbose_name=_('Expression'))
+
+    def get_object_id(self, obj):
+        return obj['name']
+
+    class Meta:
+        name = "alarms"
+        verbose_name = _("Alarms")
+        row_actions = (ShowAlarmHistory, ShowAlarmMeters,)
+        table_actions = (CreateAlarm,)
+        status_columns = ['state']
+
+
+class AlarmHistoryTable(tables.DataTable):
     status = tables.Column('Status', verbose_name=_('Status'),
                            status_choices={(show_status('OK'), True)},
                            filters=[show_status, template.defaultfilters.safe])

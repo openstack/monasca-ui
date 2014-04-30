@@ -1,0 +1,34 @@
+{% extends "horizon/common/_modal_form.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block form_id %}create_notif_method_form{% endblock %}
+{% block form_action %}{% url 'horizon:project:monitoring_notifications:methods:create' %}{% endblock %}
+
+{% block modal-header %}{% trans "Create Notification Method" %}{% endblock %}
+
+{% block modal-body %}
+    <div class="left">
+         <fieldset>
+        {% include "horizon/common/_form_fields.html" %}
+        </fieldset>
+    </div>
+    <div class="right quota-dynamic">
+    <h3>{% trans "Description" %}:</h3>
+    <p>{% blocktrans %}
+      The Name field is used to identify the notification method.
+    {% endblocktrans %}</p>
+    <p>{% blocktrans %}
+      The Type field indicates how the notification is sent when an alarm is triggered.
+    {% endblocktrans %}</p>
+    <p>{% blocktrans %}
+      The Address field indicates the address/number to be notified.
+    {% endblocktrans %}</p>
+  </div>
+
+{% endblock %}
+
+{% block modal-footer %}
+  <input class="btn btn-primary pull-right" type="submit" value="{% trans "Create Notification Method" %}" />
+  <a href="{% url 'horizon:project:monitoring_notifications:index' %}" class="btn secondary cancel close">{% trans "Cancel" %}</a>
+{% endblock %}

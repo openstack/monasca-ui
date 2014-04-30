@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Notification Method Details' %}{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title="Notification Method Details" %}
+{% endblock page_header %}
+
+{% block main %}
+    {% include 'project/monitoring_notifications/methods/_detail.html' %}
+{% endblock %}

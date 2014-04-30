@@ -1,0 +1,18 @@
+{% extends "horizon/common/_modal_form.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block form_id %}detail_alarm_form{% endblock %}
+{% block form_action %}{% url 'horizon:project:monitoring_alarms:detail' alarm.id %}{% endblock %}
+
+{% block modal-header %}{% trans "Alarm Details" %}{% endblock %}
+
+{% block modal-body %}
+    <fieldset>
+    {% include "horizon/common/_form_fields.html" %}
+    </fieldset>
+{% endblock %}
+
+{% block modal-footer %}
+  <a href="{% url 'horizon:project:monitoring_alarms:index' %}" class="btn secondary cancel close">{% trans "Close" %}</a>
+{% endblock %}

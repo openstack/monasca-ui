@@ -19,16 +19,21 @@ import logging
 import json
 import random
 
+from django.core.urlresolvers import reverse_lazy  # noqa
+from django.template import defaultfilters as filters
 from django.http import HttpResponse   # noqa
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 
 from horizon import tables
+from horizon import forms
 
 from monitoring.api import monitoring
 
-from .tables import AlertsTable
-from .tables import AlertHistoryTable
+from .tables import AlarmsTable
+from .tables import RealAlarmsTable
+from .tables import AlarmHistoryTable
+from . import forms as alarm_forms
 
 LOG = logging.getLogger(__name__)
 
@@ -154,14 +159,14 @@ class StatusView(TemplateView):
             content_type='application/json')
 
 
-class AlertView(tables.DataTableView):
-    table_class = AlertsTable
-    template_name = 'admin/monitoring/alert.html'
+class AlarmServiceView(tables.DataTableView):
+    table_class = AlarmsTable
+    template_name = 'admin/monitoring/alarm.html'
 
     def dispatch(self, *args, **kwargs):
         self.service = kwargs['service']
         del kwargs['service']
-        return super(AlertView, self).dispatch(*args, **kwargs)
+        return super(AlarmServiceView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
         results = [{'Host': 'Compute1', 'Service': 'Nova',
@@ -180,19 +185,100 @@ class AlertView(tables.DataTableView):
         return results
 
     def get_context_data(self, **kwargs):
-        context = super(AlertView, self).get_context_data(**kwargs)
+        context = super(AlarmServiceView, self).get_context_data(**kwargs)
         context["service"] = self.service
         return context
 
 
-class AlertHistoryView(tables.DataTableView):
-    table_class = AlertHistoryTable
-    template_name = 'admin/monitoring/alert_history.html'
+class AlarmView(tables.DataTableView):
+    table_class = RealAlarmsTable
+    template_name = 'admin/monitoring/alarm.html'
 
     def dispatch(self, *args, **kwargs):
-        self.service = kwargs['service']
-        del kwargs['service']
-        return super(AlertHistoryView, self).dispatch(*args, **kwargs)
+        return super(AlarmView, self).dispatch(*args, **kwargs)
+
+    def get_data(self):
+        alarms = monitoring.alarm_list(self.request)
+        results = alarms
+
+        return results
+
+    def get_context_data(self, **kwargs):
+        context = super(AlarmView, self).get_context_data(**kwargs)
+        context["service"] = 'All'
+        return context
+
+
+class AlarmCreateView(forms.ModalFormView):
+    form_class = alarm_forms.CreateAlarmForm
+    template_name = 'admin/monitoring/alarms/create.html'
+    success_url = reverse_lazy('horizon:admin:monitoring:alarm')
+
+
+def transform_alarm_data(obj):
+    return {'id': getattr(obj, 'id', None),
+            'name': getattr(obj, 'name', None),
+            'expression': getattr(obj, 'expression', None),
+            'state': filters.title(getattr(obj, 'state', None)),
+            'notifications': getattr(obj, 'alarm_actions', None), }
+
+
+class AlarmDetailView(forms.ModalFormView):
+    form_class = alarm_forms.DetailAlarmForm
+    template_name = 'admin/monitoring/alarms/detail.html'
+    success_url = reverse_lazy('horizon:admin:monitoring:alarm')
+
+    def get_object(self):
+        id = self.kwargs['id']
+        try:
+            if hasattr(self, "_object"):
+                return self._object
+            self._object = None
+            self._object = api.hp_monitoring.alarm_get(self.request, id)
+            alarm_actions = getattr(self._object, 'alarm_actions', [])
+            notifications = []
+            # Fetch the notification object for each alarm_actions
+            for notif_id in alarm_actions:
+                try:
+                    notification = api.hp_monitoring.notification_method_get(
+                        self.request,
+                        notif_id)
+                    notifications.append({"id": notification.id,
+                                          "name": notification.name,
+                                          "type": notification.type,
+                                          "address": notification.address})
+                except exceptions.NOT_FOUND:
+                    msg = _("Notification %s has already been deleted.") % \
+                        notif_id
+                    notifications.append({"id": notif_id,
+                                          "name": unicode(msg),
+                                          "type": "",
+                                          "address": ""})
+            self._object.alarm_actions = notifications
+            return self._object
+        except Exception:
+            redirect = reverse(constants.ALARMS_INDEX_URL)
+            exceptions.handle(self.request,
+                              _('Unable to retrieve alarm details.'),
+                              redirect=redirect)
+        return None
+
+    def get_initial(self):
+        self.alarm = self.get_object()
+        return transform_alarm_data(self.alarm)
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context["alarm"] = self.alarm
+        return context
+
+
+class AlarmHistoryView(tables.DataTableView):
+    table_class = AlarmHistoryTable
+    template_name = 'admin/monitoring/alarm_history.html'
+
+    def dispatch(self, *args, **kwargs):
+        return super(AlarmHistoryView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
         results = [
@@ -204,13 +290,12 @@ class AlertHistoryView(tables.DataTableView):
         return results
 
     def get_context_data(self, **kwargs):
-        context = super(AlertHistoryView, self).get_context_data(**kwargs)
-        context["service"] = self.service
+        context = super(AlarmHistoryView, self).get_context_data(**kwargs)
         return context
 
 
-class AlertMeterView(TemplateView):
-    template_name = 'admin/monitoring/alert_meter.html'
+class AlarmMeterView(TemplateView):
+    template_name = 'admin/monitoring/alarm_meter.html'
 
 
 def get_random_status():

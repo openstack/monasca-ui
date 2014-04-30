@@ -57,43 +57,50 @@ def monclient(request, password=None):
 
 
 def alarm_list(request, marker=None, paginate=False):
-    limit = getattr(settings, 'API_RESULT_LIMIT', 1000)
-    page_size = utils.get_page_size(request)
-
-    if paginate:
-        request_size = page_size + 1
-    else:
-        request_size = limit
-
-    kwargs = {}
-    if marker:
-        kwargs['marker'] = marker
     args = AttrStore()
     args.runlocal = True
     args.os_tenant_id = "12345678"
-    alarm_iter = monclient(request).alarms.list(args, **kwargs)
-
-    has_more_data = False
-    alarms = list(alarm_iter)
-    if paginate:
-        if len(alarms) > page_size:
-            alarms.pop()
-            has_more_data = True
-    return (alarms, has_more_data)
+    return monclient(request).alarms.list(args)
 
 
 def alarm_delete(request, alarm_id):
-    return monclient(request).alarm.delete(alarm_id)
+    return monclient(request).alarms.delete(alarm_id)
 
 
 def alarm_get(request, alarm_id):
-    return monclient(request).alarm.get(alarm_id)
+    return monclient(request).alarms.get(alarm_id)
 
 
 def alarm_create(request, password=None, **kwargs):
-    return monclient(request, password).alarm.create(**kwargs)
+    args = AttrStore()
+    args.runlocal = True
+    args.os_tenant_id = "12345678"
+    return monclient(request, password).alarms.create(args, **kwargs)
 
 
 def alarm_update(request, alarm_id, **kwargs):
-    return monclient(request).alarm.update(alarm_id, **kwargs)
+    return monclient(request).alarms.update(alarm_id, **kwargs)
+
+
+def notification_list(request, marker=None, paginate=False):
+    args = AttrStore()
+    args.runlocal = True
+    args.os_tenant_id = "12345678"
+    return monclient(request).notifications.list(args)
+
+
+def notification_delete(request, notification_id):
+    return monclient(request).notifications.delete(notification_id)
+
+
+def notification_get(request, notification_id):
+    return monclient(request).notifications.get(notification_id)
+
+
+def notification_create(request, password=None, **kwargs):
+    return monclient(request, password).notifications.create(**kwargs)
+
+
+def notification_update(request, notification_id, **kwargs):
+    return monclient(request).notifications.update(notification_id, **kwargs)
 
