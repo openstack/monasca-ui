@@ -6,7 +6,7 @@
                 {{ group.name }}
             </div>
             {% for service in group.services %}
-                <a href="{% url 'horizon:admin:monitoring:servicealarm' service.name %}" class="showspinner">
+                <a href="{% url 'horizon:overcloud:monitoring:servicealarm' service.name %}" class="showspinner">
                  <div class="alert alert-block {{ service.class }} fade in" style="display:inline-block; margin-bottom:4px;">
                     <div>
                         <img style="margin-right:5px;vertical-align:top;" src="{{ service.icon }}"/>

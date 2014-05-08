@@ -39,6 +39,6 @@ PHONE_VALIDATOR = validators.RegexValidator(
 EMAIL_VALIDATOR = validators.EmailValidator(
     message=_("Address must contain a valid email address."))
 
-URL_PREFIX = 'horizon:admin:monitoring:'
-TEMPLATE_PREFIX = 'admin/monitoring/'
+URL_PREFIX = 'horizon:overcloud:monitoring:'
+TEMPLATE_PREFIX = 'overcloud/monitoring/'
 

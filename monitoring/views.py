@@ -163,7 +163,7 @@ class StatusView(TemplateView):
 
 class AlarmServiceView(tables.DataTableView):
     table_class = AlarmsTable
-    template_name = 'admin/monitoring/alarm.html'
+    template_name = constants.TEMPLATE_PREFIX + 'alarm.html'
 
     def dispatch(self, *args, **kwargs):
         self.service = kwargs['service']
@@ -194,7 +194,7 @@ class AlarmServiceView(tables.DataTableView):
 
 class AlarmView(tables.DataTableView):
     table_class = RealAlarmsTable
-    template_name = 'admin/monitoring/alarm.html'
+    template_name = constants.TEMPLATE_PREFIX + 'alarm.html'
 
     def dispatch(self, *args, **kwargs):
         return super(AlarmView, self).dispatch(*args, **kwargs)
