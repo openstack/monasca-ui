@@ -68,7 +68,10 @@ def alarm_delete(request, alarm_id):
 
 
 def alarm_get(request, alarm_id):
-    return monclient(request).alarms.get(alarm_id)
+    args = AttrStore()
+    args.runlocal = True
+    args.os_tenant_id = "12345678"
+    return monclient(request).alarms.get(args, alarm_id=alarm_id)
 
 
 def alarm_create(request, password=None, **kwargs):
@@ -94,11 +97,17 @@ def notification_delete(request, notification_id):
 
 
 def notification_get(request, notification_id):
-    return monclient(request).notifications.get(notification_id)
+    args = AttrStore()
+    args.runlocal = True
+    args.os_tenant_id = "12345678"
+    return monclient(request).notifications.get(args, notification_id=notification_id)
 
 
-def notification_create(request, password=None, **kwargs):
-    return monclient(request, password).notifications.create(**kwargs)
+def notification_create(request, **kwargs):
+    args = AttrStore()
+    args.runlocal = True
+    args.os_tenant_id = "12345678"
+    return monclient(request).notifications.create(args, **kwargs)
 
 
 def notification_update(request, notification_id, **kwargs):

@@ -19,14 +19,15 @@ import logging
 import json
 import random
 
-from django.core.urlresolvers import reverse_lazy  # noqa
+from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.template import defaultfilters as filters
 from django.http import HttpResponse   # noqa
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 
-from horizon import tables
+from horizon import exceptions
 from horizon import forms
+from horizon import tables
 
 from monitoring.api import monitoring
 
@@ -34,6 +35,7 @@ from .tables import AlarmsTable
 from .tables import RealAlarmsTable
 from .tables import AlarmHistoryTable
 from . import forms as alarm_forms
+from . import constants
 
 LOG = logging.getLogger(__name__)
 
@@ -131,7 +133,7 @@ SAMPLE = [{'name': _('Platform Services'),
             ]
 
 class IndexView(TemplateView):
-    template_name = 'admin/monitoring/index.html'
+    template_name = constants.TEMPLATE_PREFIX + 'index.html'
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -142,7 +144,7 @@ class IndexView(TemplateView):
 
 
 class StatusView(TemplateView):
-    template_name = "admin/metering/samples.csv"
+    template_name = ""
 
     def get(self, request, *args, **kwargs):
         services = ['MaaS',
@@ -211,11 +213,18 @@ class AlarmView(tables.DataTableView):
 
 class AlarmCreateView(forms.ModalFormView):
     form_class = alarm_forms.CreateAlarmForm
-    template_name = 'admin/monitoring/alarms/create.html'
-    success_url = reverse_lazy('horizon:admin:monitoring:alarm')
+    template_name = constants.TEMPLATE_PREFIX + 'alarms/create.html'
+    success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
+
+    def get_context_data(self, **kwargs):
+        context = super(AlarmCreateView, self).get_context_data(**kwargs)
+        context["cancel_url"] = self.success_url
+        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create')
+        return context
 
 
 def transform_alarm_data(obj):
+    return obj
     return {'id': getattr(obj, 'id', None),
             'name': getattr(obj, 'name', None),
             'expression': getattr(obj, 'expression', None),
@@ -225,8 +234,8 @@ def transform_alarm_data(obj):
 
 class AlarmDetailView(forms.ModalFormView):
     form_class = alarm_forms.DetailAlarmForm
-    template_name = 'admin/monitoring/alarms/detail.html'
-    success_url = reverse_lazy('horizon:admin:monitoring:alarm')
+    template_name = constants.TEMPLATE_PREFIX + 'alarms/detail.html'
+    success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
 
     def get_object(self):
         id = self.kwargs['id']
@@ -234,19 +243,15 @@ class AlarmDetailView(forms.ModalFormView):
             if hasattr(self, "_object"):
                 return self._object
             self._object = None
-            self._object = api.hp_monitoring.alarm_get(self.request, id)
-            alarm_actions = getattr(self._object, 'alarm_actions', [])
+            self._object = monitoring.alarm_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
-            for notif_id in alarm_actions:
+            for notif_id in self._object["alarm_actions"]:
                 try:
-                    notification = api.hp_monitoring.notification_method_get(
+                    notification = monitoring.notification_get(
                         self.request,
                         notif_id)
-                    notifications.append({"id": notification.id,
-                                          "name": notification.name,
-                                          "type": notification.type,
-                                          "address": notification.address})
+                    notifications.append(notification)
                 except exceptions.NOT_FOUND:
                     msg = _("Notification %s has already been deleted.") % \
                         notif_id
@@ -254,10 +259,10 @@ class AlarmDetailView(forms.ModalFormView):
                                           "name": unicode(msg),
                                           "type": "",
                                           "address": ""})
-            self._object.alarm_actions = notifications
+            self._object["notifications"] = notifications
             return self._object
         except Exception:
-            redirect = reverse(constants.ALARMS_INDEX_URL)
+            redirect = reverse(constants.URL_PREFIX + 'alarm')
             exceptions.handle(self.request,
                               _('Unable to retrieve alarm details.'),
                               redirect=redirect)
@@ -268,14 +273,15 @@ class AlarmDetailView(forms.ModalFormView):
         return transform_alarm_data(self.alarm)
 
     def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
+        context = super(AlarmDetailView, self).get_context_data(**kwargs)
         context["alarm"] = self.alarm
+        context["cancel_url"] = self.success_url
         return context
 
 
 class AlarmHistoryView(tables.DataTableView):
     table_class = AlarmHistoryTable
-    template_name = 'admin/monitoring/alarm_history.html'
+    template_name = constants.TEMPLATE_PREFIX + 'alarm_history.html'
 
     def dispatch(self, *args, **kwargs):
         return super(AlarmHistoryView, self).dispatch(*args, **kwargs)
@@ -295,7 +301,7 @@ class AlarmHistoryView(tables.DataTableView):
 
 
 class AlarmMeterView(TemplateView):
-    template_name = 'admin/monitoring/alarm_meter.html'
+    template_name = constants.TEMPLATE_PREFIX + 'alarm_meter.html'
 
 
 def get_random_status():
@@ -312,3 +318,9 @@ def get_random_status():
             return dist["value"]
         num = num - dist["prob"]
     return distribution[len(distribution) - 1]["value"]
+
+
+class NotificationCreateView(forms.ModalFormView):
+    form_class = alarm_forms.CreateMethodForm
+    template_name = constants.TEMPLATE_PREFIX + 'notifications/create.html'
+    success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')

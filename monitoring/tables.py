@@ -21,6 +21,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from horizon import tables
 
+from . import constants
+
 LOG = logging.getLogger(__name__)
 
 
@@ -56,14 +58,14 @@ def show_status(data):
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
     verbose_name = _('Show History')
-    url = 'horizon:admin:monitoring:history'
+    url = constants.URL_PREFIX + 'history'
     classes = ('btn-edit',)
 
 
 class ShowAlarmMeters(tables.LinkAction):
     name = 'meters'
     verbose_name = _('Show Meters')
-    url = 'horizon:admin:monitoring:meters'
+    url = constants.URL_PREFIX + 'meters'
     classes = ('btn-edit',)
 
 
@@ -71,7 +73,7 @@ class CreateAlarm(tables.LinkAction):
     name = "create_alarm"
     verbose_name = _("Create Alarm")
     classes = ("ajax-modal", "btn-create")
-    url = 'horizon:admin:monitoring:alarm_create'
+    url = constants.URL_PREFIX + 'alarm_create'
 
     def allowed(self, request, datum=None):
         return True
@@ -101,12 +103,14 @@ class AlarmsTable(tables.DataTable):
 
 class RealAlarmsTable(tables.DataTable):
     state = tables.Column('state', verbose_name=_('State'))
-    target = tables.Column('name', verbose_name=_('Name'))
+    target = tables.Column('name', verbose_name=_('Name'),
+                           link=constants.URL_PREFIX + 'alarm_detail',
+                           link_classes=('ajax-modal',))
     name = tables.Column('description', verbose_name=_('Description'))
     expression = tables.Column('expression', verbose_name=_('Expression'))
 
     def get_object_id(self, obj):
-        return obj['name']
+        return obj['id']
 
     class Meta:
         name = "alarms"

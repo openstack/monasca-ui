@@ -3,7 +3,6 @@
 {% load url from future %}
 
 {% block form_id %}detail_alarm_form{% endblock %}
-{% block form_action %}{% url 'horizon:project:monitoring_alarms:detail' alarm.id %}{% endblock %}
 
 {% block modal-header %}{% trans "Alarm Details" %}{% endblock %}
 
@@ -14,5 +13,5 @@
 {% endblock %}
 
 {% block modal-footer %}
-  <a href="{% url 'horizon:project:monitoring_alarms:index' %}" class="btn secondary cancel close">{% trans "Close" %}</a>
+  <a href="{{ cancel_url }}" class="btn secondary cancel close">{% trans "Close" %}</a>
 {% endblock %}

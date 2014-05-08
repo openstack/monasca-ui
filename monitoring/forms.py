@@ -178,8 +178,8 @@ class CreateAlarmForm(BaseAlarmForm):
             notifications = []
             exceptions.handle(request,
                               _('Unable to retrieve notifications: %s') % e)
-        notification_choices = [(notification.id, notification.name)
-                            for notification in notifications]
+        notification_choices = [(notification['id'], notification['name'])
+                                for notification in notifications]
         if notification_choices:
             if len(notification_choices) > 1:
                 notification_choices.insert(
@@ -283,9 +283,9 @@ class CreateMethodForm(BaseNotificationMethodForm):
         try:
             api.monitoring.notification_create(
                 request,
-                data['name'],
-                data['type'],
-                data['address'])
+                name=data['name'],
+                type=data['type'],
+                address=data['address'])
             messages.success(request,
                              _('Notification method has been created '
                                'successfully.'))
