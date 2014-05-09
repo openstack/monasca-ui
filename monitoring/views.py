@@ -29,8 +29,7 @@ from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
-from monitoring.api import monitoring
-
+from monitoring import api
 from .tables import AlarmsTable
 from .tables import RealAlarmsTable
 from .tables import AlarmHistoryTable
@@ -200,7 +199,7 @@ class AlarmView(tables.DataTableView):
         return super(AlarmView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        alarms = monitoring.alarm_list(self.request)
+        alarms = api.monitor.alarm_list(self.request)
         results = alarms
 
         return results
@@ -243,12 +242,12 @@ class AlarmDetailView(forms.ModalFormView):
             if hasattr(self, "_object"):
                 return self._object
             self._object = None
-            self._object = monitoring.alarm_get(self.request, id)
+            self._object = api.monitor.alarm_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
             for notif_id in self._object["alarm_actions"]:
                 try:
-                    notification = monitoring.notification_get(
+                    notification = api.monitor.notification_get(
                         self.request,
                         notif_id)
                     notifications.append(notification)
@@ -324,3 +323,9 @@ class NotificationCreateView(forms.ModalFormView):
     form_class = alarm_forms.CreateMethodForm
     template_name = constants.TEMPLATE_PREFIX + 'notifications/create.html'
     success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
+
+    def get_context_data(self, **kwargs):
+        context = super(NotificationCreateView, self).get_context_data(**kwargs)
+        context["cancel_url"] = self.success_url
+        context["action_url"] = reverse(constants.URL_PREFIX + 'notification_create')
+        return context

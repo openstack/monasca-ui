@@ -3,7 +3,7 @@
 {% load url from future %}
 
 {% block form_id %}create_notif_method_form{% endblock %}
-{% block form_action %}{% url 'horizon:admin:monitoring:notification_create' %}{% endblock %}
+{% block form_action %}{{ action_url }}{% endblock %}
 
 {% block modal-header %}{% trans "Create Notification Method" %}{% endblock %}
 
@@ -30,5 +30,5 @@
 
 {% block modal-footer %}
   <input class="btn btn-primary pull-right" type="submit" value="{% trans "Create Notification Method" %}" />
-  <a href="{% url 'horizon:admin:monitoring:index' %}" class="btn secondary cancel close">{% trans "Cancel" %}</a>
+  <a href="{{ cancel_url }}" class="btn secondary cancel close">{% trans "Cancel" %}</a>
 {% endblock %}

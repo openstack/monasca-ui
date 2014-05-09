@@ -79,6 +79,16 @@ class CreateAlarm(tables.LinkAction):
         return True
 
 
+class CreateNotification(tables.LinkAction):
+    name = "create_notification"
+    verbose_name = _("Create Notification")
+    classes = ("ajax-modal", "btn-create")
+    url = constants.URL_PREFIX + 'notification_create'
+
+    def allowed(self, request, datum=None):
+        return True
+
+
 class AlarmsTable(tables.DataTable):
     status = tables.Column('Status', verbose_name=_('Status'),
                            status_choices={(show_status('OK'), True)},
@@ -116,7 +126,7 @@ class RealAlarmsTable(tables.DataTable):
         name = "alarms"
         verbose_name = _("Alarms")
         row_actions = (ShowAlarmHistory, ShowAlarmMeters,)
-        table_actions = (CreateAlarm,)
+        table_actions = (CreateNotification, CreateAlarm, )
         status_columns = ['state']
 
 

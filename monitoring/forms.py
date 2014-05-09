@@ -173,7 +173,7 @@ class CreateAlarmForm(BaseAlarmForm):
         super(CreateAlarmForm, self)._init_fields(readOnly=False, create=True)
 
         try:
-            notifications = api.monitoring.notification_list(request)
+            notifications = api.monitor.notification_list(request)
         except Exception as e:
             notifications = []
             exceptions.handle(request,
@@ -204,7 +204,7 @@ class CreateAlarmForm(BaseAlarmForm):
         try:
             alarm_actions = [notification.get('notification_id')
                              for notification in data['notifications']]
-            api.monitoring.alarm_create(
+            api.monitor.alarm_create(
                 request,
                 name=data['name'],
                 expression=data['expression'],
@@ -281,7 +281,7 @@ class CreateMethodForm(BaseNotificationMethodForm):
 
     def handle(self, request, data):
         try:
-            api.monitoring.notification_create(
+            api.monitor.notification_create(
                 request,
                 name=data['name'],
                 type=data['type'],
