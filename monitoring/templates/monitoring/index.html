@@ -7,5 +7,8 @@
 {% endblock page_header %}
 {% load url from future %}
 {% block main %}
+    <div style="padding: 3px;">
+        <a href="{%  url 'horizon:overcloud:monitoring:alarm' %}" class="btn btn-small btn-run showspinner">{% trans 'All Alarms' %}</a>
+    </div>
     {%  include 'overcloud/monitoring/monitor.html' %}
 {% endblock %}

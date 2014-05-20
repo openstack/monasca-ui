@@ -107,7 +107,6 @@ class AlarmsTable(tables.DataTable):
         name = "users"
         verbose_name = _("Alarms for Nova in the UnderCloud")
         row_actions = (ShowAlarmHistory, ShowAlarmMeters,)
-        table_actions = (CreateAlarm,)
         status_columns = ['status']
 
 
