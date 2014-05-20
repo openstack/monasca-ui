@@ -22,9 +22,6 @@ from openstack_dashboard.api import base
 LOG = logging.getLogger(__name__)
 
 
-class AttrStore:
-    pass
-
 def format_parameters(params):
     parameters = {}
     for count, p in enumerate(params, 1):
@@ -57,28 +54,19 @@ def monclient(request, password=None):
 
 
 def alarm_list(request, marker=None, paginate=False):
-    args = AttrStore()
-    args.runlocal = True
-    args.os_tenant_id = "12345678"
-    return monclient(request).alarms.list(args)
+    return monclient(request).alarms.list()
 
 
 def alarm_delete(request, alarm_id):
-    return monclient(request).alarms.delete(alarm_id)
+    return monclient(request).alarms.delete(alarm_id=alarm_id)
 
 
 def alarm_get(request, alarm_id):
-    args = AttrStore()
-    args.runlocal = True
-    args.os_tenant_id = "12345678"
-    return monclient(request).alarms.get(args, alarm_id=alarm_id)
+    return monclient(request).alarms.get(alarm_id=alarm_id)
 
 
 def alarm_create(request, password=None, **kwargs):
-    args = AttrStore()
-    args.runlocal = True
-    args.os_tenant_id = "12345678"
-    return monclient(request, password).alarms.create(args, **kwargs)
+    return monclient(request, password).alarms.create(**kwargs)
 
 
 def alarm_update(request, alarm_id, **kwargs):
@@ -86,10 +74,7 @@ def alarm_update(request, alarm_id, **kwargs):
 
 
 def notification_list(request, marker=None, paginate=False):
-    args = AttrStore()
-    args.runlocal = True
-    args.os_tenant_id = "12345678"
-    return monclient(request).notifications.list(args)
+    return monclient(request).notifications.list()
 
 
 def notification_delete(request, notification_id):
@@ -97,17 +82,11 @@ def notification_delete(request, notification_id):
 
 
 def notification_get(request, notification_id):
-    args = AttrStore()
-    args.runlocal = True
-    args.os_tenant_id = "12345678"
-    return monclient(request).notifications.get(args, notification_id=notification_id)
+    return monclient(request).notifications.get(notification_id=notification_id)
 
 
 def notification_create(request, **kwargs):
-    args = AttrStore()
-    args.runlocal = True
-    args.os_tenant_id = "12345678"
-    return monclient(request).notifications.create(args, **kwargs)
+    return monclient(request).notifications.create(**kwargs)
 
 
 def notification_update(request, notification_id, **kwargs):

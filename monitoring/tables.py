@@ -22,6 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 from horizon import tables
 
 from . import constants
+from monitoring import api
 
 LOG = logging.getLogger(__name__)
 
@@ -79,6 +80,19 @@ class CreateAlarm(tables.LinkAction):
         return True
 
 
+class DeleteAlarm(tables.DeleteAction):
+    name = "delete_alarm"
+    verbose_name = _("Delete Alarm")
+    data_type_singular = _("Alarm")
+    data_type_plural = _("Alarms")
+
+    def allowed(self, request, datum=None):
+        return True
+
+    def delete(self, request, obj_id):
+        api.monitor.alarm_delete(request, obj_id)
+
+
 class CreateNotification(tables.LinkAction):
     name = "create_notification"
     verbose_name = _("Create Notification")
@@ -124,7 +138,7 @@ class RealAlarmsTable(tables.DataTable):
     class Meta:
         name = "alarms"
         verbose_name = _("Alarms")
-        row_actions = (ShowAlarmHistory, ShowAlarmMeters,)
+        row_actions = (ShowAlarmHistory, ShowAlarmMeters, DeleteAlarm, )
         table_actions = (CreateNotification, CreateAlarm, )
         status_columns = ['state']
 

@@ -158,6 +158,12 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['description'] = forms.CharField(label=_("Description"),
                                                     required=False,
                                                     widget=textAreaWidget)
+        sev_choices = [("Low", _("Low")),
+                       ("Medium", _("Medium")),
+                       ("High", _("High"))]
+        self.fields['severity'] = forms.ChoiceField(label=_("Severity"),
+                                                    choices=sev_choices,
+                                                    required=False)
         self.fields['state'] = forms.CharField(label=_("State"),
                                                required=False,
                                                widget=textWidget)
@@ -191,14 +197,12 @@ class CreateAlarmForm(BaseAlarmForm):
         self.fields.pop('state')
         self.fields['notifications'].choices = notification_choices
 
-    '''
     def clean_notifications(self):
         notifications = self.cleaned_data["notifications"]
         if len(notifications) == 0:
             msg = _('There must be at least one notification.')
             raise forms.ValidationError(msg)
         return notifications
-    '''
 
     def handle(self, request, data):
         try:
