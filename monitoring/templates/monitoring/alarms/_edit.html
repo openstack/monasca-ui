@@ -1,0 +1,44 @@
+{% extends "horizon/common/_modal_form.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block form_id %}edit_alarm_form{% endblock %}
+{% block form_action %}{{ action_url }}{% endblock %}
+
+{% block modal-header %}{% trans "Edit Alarm" %}{% endblock %}
+
+{% block modal-body %}
+    <h3>{% trans "Description" %}:</h3>
+    <p>{% blocktrans %}
+      The Name field is used to identify the notification method.
+    {% endblocktrans %}</p>
+    <p>{% blocktrans %}
+      The Expression field  which if true, triggers a notification to be sent.
+      See <a href="http://docs.hpcloud.com/api/v13/monitoring/#AlarmExpressions-jumplink-span" target="_blank">Alarm Expressions</a> for how to write an expression.
+    {% endblocktrans %}</p>
+    <p>{% blocktrans %}
+      The Alarm Actions field contains the list of Notification that should be sent when transitioning to an ALARM state.
+    {% endblocktrans %}</p>
+    <fieldset>
+    {% include "horizon/common/_form_fields.html" %}
+    </fieldset>
+
+<script type="text/javascript">
+
+$('#add_notification_button').click(function(){
+  num = $('#notification_table tr').length;
+  id = "id_notifications_" + num;
+  name = "notifications_" + num;
+  options = $("#id_notifications_" + (num - 1)).html();
+  options = options.replace('selected="selected"','');
+  row = '<tr><td><select id="' + id +'" name="' + name + '">' + options + '</select></td></tr>'
+  $('#notification_table tr:last').after(row);
+  return false;
+});
+</script>
+{% endblock %}
+
+{% block modal-footer %}
+  <input class="btn btn-primary pull-right" type="submit" value="{% trans "Save Alarm" %}" />
+  <a href="{{ cancel_url }}" class="btn secondary cancel close">{% trans "Cancel" %}</a>
+{% endblock %}
