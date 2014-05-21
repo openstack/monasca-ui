@@ -172,12 +172,7 @@ class BaseAlarmForm(forms.SelfHandlingForm):
             required=False,
             widget=notificationWidget)
 
-
-class CreateAlarmForm(BaseAlarmForm):
-    def __init__(self, request, *args, **kwargs):
-        super(CreateAlarmForm, self).__init__(request, *args, **kwargs)
-        super(CreateAlarmForm, self)._init_fields(readOnly=False, create=True)
-
+    def set_notification_choices(self, request):
         try:
             notifications = api.monitor.notification_list(request)
         except Exception as e:
@@ -194,8 +189,15 @@ class CreateAlarmForm(BaseAlarmForm):
             notification_choices.insert(
                 0, ("", unicode(_("No notifications available."))))
 
-        self.fields.pop('state')
         self.fields['notifications'].choices = notification_choices
+
+
+class CreateAlarmForm(BaseAlarmForm):
+    def __init__(self, request, *args, **kwargs):
+        super(CreateAlarmForm, self).__init__(request, *args, **kwargs)
+        super(CreateAlarmForm, self)._init_fields(readOnly=False, create=True)
+        super(CreateAlarmForm, self).set_notification_choices(request)
+        self.fields.pop('state')
 
     def clean_notifications(self):
         notifications = self.cleaned_data["notifications"]
@@ -228,6 +230,37 @@ class DetailAlarmForm(BaseAlarmForm):
         super(DetailAlarmForm, self)._init_fields(readOnly=True)
 
     def handle(self, request, data):
+        return True
+
+
+class EditAlarmForm(BaseAlarmForm):
+    def __init__(self, request, *args, **kwargs):
+        super(EditAlarmForm, self).__init__(request, *args, **kwargs)
+        super(EditAlarmForm, self)._init_fields(readOnly=False)
+        super(EditAlarmForm, self).set_notification_choices(request)
+        self.fields.pop('state')
+
+    def handle(self, request, data):
+        try:
+            alarm_actions = []
+            if data['notifications']:
+                alarm_actions = [notification.get('notification_id')
+                                 for notification in data['notifications']]
+            api.monitor.alarm_update(
+                request,
+                alarm_id=self.initial['id'],
+                actions_enabled=self.initial['actions_enabled'],
+                state=self.initial['state'],
+                name=data['name'],
+                expression=data['expression'],
+                description=data['description'],
+                alarm_actions=alarm_actions,
+                )
+            messages.success(request,
+                             _('Alarm has been edited successfully.'))
+        except Exception as e:
+            exceptions.handle(request, _('Unable to edit the alarm: %s') % e)
+            return False
         return True
 
 

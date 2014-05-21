@@ -80,6 +80,16 @@ class CreateAlarm(tables.LinkAction):
         return True
 
 
+class EditAlarm(tables.LinkAction):
+    name = "edit_alarm"
+    verbose_name = _("Edit Alarm")
+    classes = ("ajax-modal", "btn-create")
+    url = constants.URL_PREFIX + 'alarm_edit'
+
+    def allowed(self, request, datum=None):
+        return True
+
+
 class DeleteAlarm(tables.DeleteAction):
     name = "delete_alarm"
     verbose_name = _("Delete Alarm")
@@ -138,7 +148,7 @@ class RealAlarmsTable(tables.DataTable):
     class Meta:
         name = "alarms"
         verbose_name = _("Alarms")
-        row_actions = (ShowAlarmHistory, ShowAlarmMeters, DeleteAlarm, )
+        row_actions = (ShowAlarmHistory, ShowAlarmMeters, DeleteAlarm, EditAlarm, )
         table_actions = (CreateNotification, CreateAlarm, )
         status_columns = ['state']
 

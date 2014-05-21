@@ -36,5 +36,6 @@ urlpatterns = patterns(
         name='meters'),
     url(r'^alarm_create$', views.AlarmCreateView.as_view(), name='alarm_create'),
     url(r'^(?P<id>[^/]+)/alarm_detail/$', views.AlarmDetailView.as_view(), name='alarm_detail'),
+    url(r'^(?P<id>[^/]+)/alarm_edit/$', views.AlarmEditView.as_view(), name='alarm_edit'),
     url(r'^notification_create$', views.NotificationCreateView.as_view(), name='notification_create'),
 )

@@ -16,8 +16,6 @@ import logging
 
 from django.conf import settings
 from monclient import client as mon_client
-from horizon.utils import functions as utils
-from openstack_dashboard.api import base
 
 LOG = logging.getLogger(__name__)
 
@@ -69,8 +67,8 @@ def alarm_create(request, password=None, **kwargs):
     return monclient(request, password).alarms.create(**kwargs)
 
 
-def alarm_update(request, alarm_id, **kwargs):
-    return monclient(request).alarms.update(alarm_id, **kwargs)
+def alarm_update(request, **kwargs):
+    return monclient(request).alarms.update(**kwargs)
 
 
 def notification_list(request, marker=None, paginate=False):
