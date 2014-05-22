@@ -174,20 +174,10 @@ class AlarmServiceView(tables.DataTableView):
         return super(AlarmServiceView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        results = [{'Host': 'Compute1', 'Service': 'Nova',
-                    'Status': 'WARNING',
-                    'Status_Information': 'API Response Time'},
-                   {'Host': 'Compute2', 'Service': 'Nova',
-                    'Status': 'OK', 'Status_Information': 'System Health'},
-                   {'Host': 'Compute3', 'Service': 'Nova', 'Status': 'OK',
-                    'Status_Information': 'Database Access'},
-                   {'Host': 'Compute4', 'Service': 'Nova', 'Status': 'OK',
-                    'Status_Information': 'Network Latency'},
-                   {'Host': 'Compute5', 'Service': 'Nova', 'Status': 'OK',
-                    'Status_Information': 'Rabbit Health'},
-                   ]
-
-        return results
+        alarms_json = api.monitor.alarm_list_by_service(
+                        self.request,
+                        self.service)
+        return alarms_json
 
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
