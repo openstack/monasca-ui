@@ -41,7 +41,7 @@ def get_status(index):
     else:
         return "UNKNOWN: %d" % index
 
-
+# this one is not quite right
 def show_status(data):
     status = data
     img_tag = '<img src="%s" alt="%s"/>'
@@ -55,6 +55,38 @@ def show_status(data):
         return img_tag % (UNKNOWN_ICON, status)
     return status
 
+
+def show_severity(data):
+    severity = data['severity']
+    state = data['state']
+    img_tag = '<div><img src="%s" alt="%s"/> %s </div>'
+    if state == 'ALARM' and severity == 'CRITICAL':
+        return img_tag % (CRITICAL_ICON, severity, severity)
+    if state == 'ALARM' and severity == 'HIGH':
+        return img_tag % (CRITICAL_ICON, severity, severity)
+    if state == 'ALARM' and severity == 'MEDIUM':
+        return img_tag % (WARNING_ICON, severity, severity)
+    if state == 'ALARM' and severity == 'LOW':
+        return img_tag % (WARNING_ICON, severity, severity)
+    if state == 'OK':
+        return img_tag % (OK_ICON, state, state)
+    if state == 'UNDETERMINED':
+        return img_tag % (UNKNOWN_ICON, 'UNDETERMINED', 'UNDETERMINED')
+    return ""
+
+def show_service(data):
+    if any(data['expression_data']['dimensions']):
+        dimensions = data['expression_data']['dimensions']
+        if 'service' in dimensions:
+            return str(data['expression_data']['dimensions']['service'])
+    return ""
+
+def show_host(data):
+    if any(data['expression_data']['dimensions']):
+        dimensions = data['expression_data']['dimensions']
+        if 'hostname' in dimensions:
+            return str(data['expression_data']['dimensions']['hostname'])
+    return ""
 
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
@@ -114,25 +146,25 @@ class CreateNotification(tables.LinkAction):
 
 
 class AlarmsTable(tables.DataTable):
-    status = tables.Column('Status', verbose_name=_('Status'),
-                           status_choices={(show_status('OK'), True)},
-                           filters=[show_status, template.defaultfilters.safe])
-    target = tables.Column('Host', verbose_name=_('Host'))
-    name = tables.Column('Service', verbose_name=_('Service'))
-    lastCheck = tables.Column('Last_Check', verbose_name=_('Last Check'))
-    time = tables.Column('Duration', verbose_name=_('Duration'))
-    detail = tables.Column('Status_Information',
-                           verbose_name=_('Status_Information'))
-
+    status = tables.Column(transform=show_severity, verbose_name=_('Status'),
+                           filters=[template.defaultfilters.safe])
+    target = tables.Column('name', verbose_name=_('Name'),
+                           link=constants.URL_PREFIX + 'alarm_detail',
+                           link_classes=('ajax-modal',))
+    host = tables.Column(transform=show_host, verbose_name=_('Host'))
+    service = tables.Column(transform=show_service, verbose_name=_('Service'))
+    state = tables.Column('state', verbose_name=_('State'))    
+    expression = tables.Column('expression', verbose_name=_('Expression'))
+    enabled = tables.Column('actions_enabled', verbose_name=_('ActionsEnabled'))
+     
     def get_object_id(self, obj):
-        return obj['Host'] + obj['Service']
-
+        return obj['id']
+    
     class Meta:
-        name = "users"
+        name = "alarmslist"
         verbose_name = _("Alarms for Nova in the UnderCloud")
         row_actions = (ShowAlarmHistory, ShowAlarmMeters,)
         status_columns = ['status']
-
 
 class RealAlarmsTable(tables.DataTable):
     state = tables.Column('state', verbose_name=_('State'))

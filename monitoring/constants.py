@@ -32,6 +32,7 @@ class NotificationType(object):
                 return choice[1]
         return key
 
+OVERCLOUD_SERVICES = ["Nova","Swift","Cinder","Glance","Neutron","MySQL","RabbitMQ","Monitoring"]
 
 PHONE_VALIDATOR = validators.RegexValidator(
     regex=r"^\+[()0-9 ]{5,20}$",
