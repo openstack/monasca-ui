@@ -3,7 +3,7 @@ PANEL = 'monitoring'
 # The name of the dashboard the PANEL associated with. Required.
 PANEL_DASHBOARD = 'overcloud'
 # The name of the panel group the PANEL is associated with.
-#PANEL_GROUP = 'admin'
+PANEL_GROUP = 'default'
 
 DEFAULT_PANEL = 'monitoring'
 
