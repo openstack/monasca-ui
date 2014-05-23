@@ -54,10 +54,12 @@ def monclient(request, password=None):
 def alarm_list(request, marker=None, paginate=False):
     return monclient(request).alarms.list()
 
+def alarm_list_by_service(request, service_name, marker=None, paginate=False):
+    service_dim = {'service' : service_name}
+    return monclient(request).alarms.list(dimensions=service_dim)
 
 def alarm_delete(request, alarm_id):
     return monclient(request).alarms.delete(alarm_id=alarm_id)
-
 
 def alarm_get(request, alarm_id):
     return monclient(request).alarms.get(alarm_id=alarm_id)
