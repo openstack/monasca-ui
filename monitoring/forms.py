@@ -134,9 +134,11 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         textWidget = None
         textAreaWidget = forms.Textarea(attrs={'class': 'large-text-area'})
         readOnlyTextInput = forms.TextInput(attrs={'readonly': 'readonly'})
+        choiceWidget = forms.Select
         if readOnly:
             required = False
             textWidget = readOnlyTextInput
+            choiceWidget = readOnlyTextInput
             textAreaWidget = forms.Textarea(attrs={'readonly': 'readonly',
                                                    'class': 'large-text-area'
                                                    })
@@ -163,10 +165,14 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                        ("High", _("High"))]
         self.fields['severity'] = forms.ChoiceField(label=_("Severity"),
                                                     choices=sev_choices,
+                                                    widget=choiceWidget,
                                                     required=False)
         self.fields['state'] = forms.CharField(label=_("State"),
                                                required=False,
                                                widget=textWidget)
+        self.fields['actions_enabled'] = forms.BooleanField(label=_("Enabled"),
+                                                            required=False,
+                                                            initial=True)
         self.fields['notifications'] = NotificationField(
             label=_("Alarm Actions"),
             required=False,
@@ -199,13 +205,6 @@ class CreateAlarmForm(BaseAlarmForm):
         super(CreateAlarmForm, self).set_notification_choices(request)
         self.fields.pop('state')
 
-    def clean_notifications(self):
-        notifications = self.cleaned_data["notifications"]
-        if len(notifications) == 0:
-            msg = _('There must be at least one notification.')
-            raise forms.ValidationError(msg)
-        return notifications
-
     def handle(self, request, data):
         try:
             alarm_actions = [notification.get('notification_id')
@@ -215,6 +214,7 @@ class CreateAlarmForm(BaseAlarmForm):
                 name=data['name'],
                 expression=data['expression'],
                 description=data['description'],
+                severity=data['severity'],
                 alarm_actions=alarm_actions)
             messages.success(request,
                              _('Alarm has been created successfully.'))
@@ -251,6 +251,7 @@ class EditAlarmForm(BaseAlarmForm):
                 alarm_id=self.initial['id'],
                 actions_enabled=self.initial['actions_enabled'],
                 state=self.initial['state'],
+                severity=data['severity'],
                 name=data['name'],
                 expression=data['expression'],
                 description=data['description'],
