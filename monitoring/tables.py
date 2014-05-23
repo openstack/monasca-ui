@@ -155,34 +155,17 @@ class AlarmsTable(tables.DataTable):
     service = tables.Column(transform=show_service, verbose_name=_('Service'))
     state = tables.Column('state', verbose_name=_('State'))    
     expression = tables.Column('expression', verbose_name=_('Expression'))
-    enabled = tables.Column('actions_enabled', verbose_name=_('ActionsEnabled'))
+    enabled = tables.Column('actions_enabled', verbose_name=_('Notifications Enabled'))
      
     def get_object_id(self, obj):
         return obj['id']
     
     class Meta:
-        name = "alarmslist"
-        verbose_name = _("Alarms for Nova in the UnderCloud")
-        row_actions = (ShowAlarmHistory, ShowAlarmMeters,)
-        status_columns = ['status']
-
-class RealAlarmsTable(tables.DataTable):
-    state = tables.Column('state', verbose_name=_('State'))
-    target = tables.Column('name', verbose_name=_('Name'),
-                           link=constants.URL_PREFIX + 'alarm_detail',
-                           link_classes=('ajax-modal',))
-    name = tables.Column('description', verbose_name=_('Description'))
-    expression = tables.Column('expression', verbose_name=_('Expression'))
-
-    def get_object_id(self, obj):
-        return obj['id']
-
-    class Meta:
         name = "alarms"
         verbose_name = _("Alarms")
         row_actions = (ShowAlarmHistory, ShowAlarmMeters, DeleteAlarm, EditAlarm, )
         table_actions = (CreateNotification, CreateAlarm, )
-        status_columns = ['state']
+        status_columns = ['status']
 
 
 class AlarmHistoryTable(tables.DataTable):
@@ -201,6 +184,6 @@ class AlarmHistoryTable(tables.DataTable):
 
     class Meta:
         name = "users"
-        verbose_name = _("Alarm History for Nova in the UnderCloud")
+        verbose_name = _("Alarm History")
         row_actions = (ShowAlarmMeters,)
         status_columns = ['status']

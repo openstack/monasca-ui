@@ -31,7 +31,6 @@ from horizon import tables
 
 from monitoring import api
 from .tables import AlarmsTable
-from .tables import RealAlarmsTable
 from .tables import AlarmHistoryTable
 from . import forms as alarm_forms
 from . import constants
@@ -186,7 +185,7 @@ class AlarmServiceView(tables.DataTableView):
 
 
 class AlarmView(tables.DataTableView):
-    table_class = RealAlarmsTable
+    table_class = AlarmsTable
     template_name = constants.TEMPLATE_PREFIX + 'alarm.html'
 
     def dispatch(self, *args, **kwargs):

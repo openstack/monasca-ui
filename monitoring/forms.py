@@ -170,11 +170,11 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['state'] = forms.CharField(label=_("State"),
                                                required=False,
                                                widget=textWidget)
-        self.fields['actions_enabled'] = forms.BooleanField(label=_("Enabled"),
+        self.fields['actions_enabled'] = forms.BooleanField(label=_("Notifications Enabled"),
                                                             required=False,
                                                             initial=True)
         self.fields['notifications'] = NotificationField(
-            label=_("Alarm Actions"),
+            label=_("Notifications"),
             required=False,
             widget=notificationWidget)
 
