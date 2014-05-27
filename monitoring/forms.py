@@ -110,18 +110,18 @@ class NotificationCreateWidget(forms.Select):
         return format_html(output)
 
     def value_from_datadict(self, data, files, name):
-        notificatons = []
+        notifications = []
         i = 0
         while True:
             i += 1
             notification_id = "%s_%d" % (name, i)
             if notification_id in data:
                 if len(data[notification_id]) > 0:
-                    notificatons.append({"notification_id":
+                    notifications.append({"notification_id":
                                          data[notification_id]})
             else:
                 break
-        return notificatons
+        return notifications
 
 
 class BaseAlarmForm(forms.SelfHandlingForm):
@@ -154,6 +154,7 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                                               required=required,
                                               max_length=250,
                                               widget=textWidget)
+        meters = api.monitor.metrics_list(self.request)
         self.fields['expression'] = forms.CharField(label=_("Expression"),
                                                     required=required,
                                                     widget=textAreaWidget)

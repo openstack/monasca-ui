@@ -36,7 +36,7 @@ def monclient(request, password=None):
     LOG.debug('monclient connection created using token "%s" and url "%s"' %
               (request.user.token.id, endpoint))
     kwargs = {
-        'token': request.user.token.id,
+        'token': '82510970543135',  # request.user.token.id,
         'insecure': insecure,
         'ca_file': cacert,
         'username': request.user.username,
@@ -91,4 +91,9 @@ def notification_create(request, **kwargs):
 
 def notification_update(request, notification_id, **kwargs):
     return monclient(request).notifications.update(notification_id, **kwargs)
+
+
+def metrics_list(request, marker=None, paginate=False):
+    return monclient(request).metrics.list()
+
 
