@@ -26,6 +26,7 @@ from horizon import messages
 from monitoring import api
 from monitoring import constants
 
+
 def get_expression(meter):
     expr = meter['name']
     args = None
@@ -38,12 +39,14 @@ def get_expression(meter):
             args += "%s=%s" % (name, value)
     return "%s{%s}" % (expr, args)
 
+
 class SimpleExpressionWidget(django_forms.MultiWidget):
     def __init__(self, meters=None, attrs=None):
         choices = [(get_expression(m), get_expression(m)) for m in meters]
+        comparators = [('>', '>'), ('<', '<'), ('=', '=')]
         _widgets = (
             django_forms.widgets.Select(attrs=attrs, choices=choices),
-            django_forms.widgets.Select(attrs=attrs, choices=[('>', '>'), ('<', '<'), ('=', '=')]),
+            django_forms.widgets.Select(attrs=attrs, choices=comparatorsß),
             django_forms.widgets.TextInput(attrs=attrs),
         )
         super(SimpleExpressionWidget, self).__init__(_widgets, attrs)
@@ -129,7 +132,7 @@ class NotificationCreateWidget(forms.Select):
             for notification in value:
                 output += '<tr><td>'
                 output += ('<select id="id_notifications_%d" ' +
-                    'name="notifications_%d"> ') % (idx, idx)
+                           'name="notifications_%d"> ') % (idx, idx)
                 options = self.render_options(
                     choices,
                     [notification['notification_id']])
@@ -206,8 +209,8 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                                                     required=required,
                                                     widget=expressionWidget)
         self.fields['description'] = forms.CharField(label=_("Description"),
-                                                    required=False,
-                                                    widget=textAreaWidget)
+                                                     required=False,
+                                                     widget=textAreaWidget)
         sev_choices = [("Low", _("Low")),
                        ("Medium", _("Medium")),
                        ("High", _("High"))]
@@ -218,9 +221,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['state'] = forms.CharField(label=_("State"),
                                                required=False,
                                                widget=textWidget)
-        self.fields['actions_enabled'] = forms.BooleanField(label=_("Notifications Enabled"),
-                                                            required=False,
-                                                            initial=True)
+        self.fields['actions_enabled'] = \
+            forms.BooleanField(label=_("Notifications Enabled"),
+                               required=False,
+                               initial=True)
         self.fields['notifications'] = NotificationField(
             label=_("Notifications"),
             required=False,
@@ -304,7 +308,7 @@ class EditAlarmForm(BaseAlarmForm):
                 expression=data['expression'],
                 description=data['description'],
                 alarm_actions=alarm_actions,
-                )
+            )
             messages.success(request,
                              _('Alarm has been edited successfully.'))
         except Exception as e:

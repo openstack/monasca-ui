@@ -142,17 +142,21 @@ class AlarmsTable(tables.DataTable):
                            link_classes=('ajax-modal',))
     host = tables.Column(transform=show_host, verbose_name=_('Host'))
     service = tables.Column(transform=show_service, verbose_name=_('Service'))
-    state = tables.Column('state', verbose_name=_('State'))    
+    state = tables.Column('state', verbose_name=_('State'))
     expression = tables.Column('expression', verbose_name=_('Expression'))
-    enabled = tables.Column('actions_enabled', verbose_name=_('Notifications Enabled'))
-     
+    enabled = tables.Column('actions_enabled',
+                            verbose_name=_('Notifications Enabled'))
+
     def get_object_id(self, obj):
         return obj['id']
-    
+
     class Meta:
         name = "alarms"
         verbose_name = _("Alarms")
-        row_actions = (ShowAlarmHistory, ShowAlarmMeters, DeleteAlarm, EditAlarm, )
+        row_actions = (ShowAlarmHistory,
+                       ShowAlarmMeters,
+                       DeleteAlarm,
+                       EditAlarm, )
         table_actions = (CreateNotification, CreateAlarm, )
         status_columns = ['status']
 

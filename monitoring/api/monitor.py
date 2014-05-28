@@ -55,12 +55,15 @@ def monclient(request, password=None):
 def alarm_list(request, marker=None, paginate=False):
     return monclient(request).alarms.list()
 
+
 def alarm_list_by_service(request, service_name, marker=None, paginate=False):
-    service_dim = {'service' : service_name}
+    service_dim = {'service': service_name}
     return monclient(request).alarms.list(dimensions=service_dim)
+
 
 def alarm_delete(request, alarm_id):
     return monclient(request).alarms.delete(alarm_id=alarm_id)
+
 
 def alarm_get(request, alarm_id):
     return monclient(request).alarms.get(alarm_id=alarm_id)
@@ -83,7 +86,8 @@ def notification_delete(request, notification_id):
 
 
 def notification_get(request, notification_id):
-    return monclient(request).notifications.get(notification_id=notification_id)
+    return monclient(request).notifications. \
+        get(notification_id=notification_id)
 
 
 def notification_create(request, **kwargs):
@@ -96,5 +100,3 @@ def notification_update(request, notification_id, **kwargs):
 
 def metrics_list(request, marker=None, paginate=False):
     return monclient(request).metrics.list()
-
-

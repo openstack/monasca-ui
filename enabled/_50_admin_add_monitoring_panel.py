@@ -16,4 +16,3 @@ ADD_INSTALLED_APPS = ['monitoring']
 
 # A list of angular modules to be added as dependencies to horizon app.
 #ADD_ANGULAR_MODULE = ['monitoringApp']
-
