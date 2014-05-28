@@ -32,7 +32,8 @@ def monclient(request, password=None):
     api_version = "2_0"
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     cacert = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
-    endpoint = 'http://192.168.10.4:8080/v2.0'  # base.url_for(request, 'orchestration')
+    endpoint = getattr(settings, 'MONITORING_ENDPOINT',
+                       'http://192.168.10.4:8080/v2.0')
     LOG.debug('monclient connection created using token "%s" and url "%s"' %
               (request.user.token.id, endpoint))
     kwargs = {

@@ -14,6 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+from django import forms as django_forms
 from django.utils.html import escape
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _  # noqa
@@ -24,6 +25,48 @@ from horizon import messages
 
 from monitoring import api
 from monitoring import constants
+
+def get_expression(meter):
+    expr = meter['name']
+    args = None
+    for name, value in meter['dimensions'].items():
+        if name != 'detail':
+            if args:
+                args += ', '
+            else:
+                args = ''
+            args += "%s=%s" % (name, value)
+    return "%s{%s}" % (expr, args)
+
+class SimpleExpressionWidget(django_forms.MultiWidget):
+    def __init__(self, meters=None, attrs=None):
+        choices = [(get_expression(m), get_expression(m)) for m in meters]
+        _widgets = (
+            django_forms.widgets.Select(attrs=attrs, choices=choices),
+            django_forms.widgets.Select(attrs=attrs, choices=[('>', '>'), ('<', '<'), ('=', '=')]),
+            django_forms.widgets.TextInput(attrs=attrs),
+        )
+        super(SimpleExpressionWidget, self).__init__(_widgets, attrs)
+
+    def decompress(self, expr):
+        if expr:
+            m, end = expr.split('}')
+            return [m+'}', end[0], end[1::]]
+        return [None, None, None]
+
+    def format_output(self, rendered_widgets):
+        return ''.join(rendered_widgets)
+
+    def value_from_datadict(self, data, files, name):
+        values = [
+            widget.value_from_datadict(data, files, name + '_%s' % i)
+            for i, widget in enumerate(self.widgets)]
+        try:
+            expression = values[0] + values[1] + values[2]
+        except ValueError:
+            return ''
+        else:
+            return expression
 
 
 class NotificationTableWidget(forms.Widget):
@@ -142,6 +185,11 @@ class BaseAlarmForm(forms.SelfHandlingForm):
             textAreaWidget = forms.Textarea(attrs={'readonly': 'readonly',
                                                    'class': 'large-text-area'
                                                    })
+            expressionWidget = readOnlyTextInput
+        else:
+            meters = api.monitor.metrics_list(self.request)
+            expressionWidget = SimpleExpressionWidget(meters=meters)
+
         if create:
             notificationWidget = NotificationCreateWidget()
         else:
@@ -154,10 +202,9 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                                               required=required,
                                               max_length=250,
                                               widget=textWidget)
-        meters = api.monitor.metrics_list(self.request)
         self.fields['expression'] = forms.CharField(label=_("Expression"),
                                                     required=required,
-                                                    widget=textAreaWidget)
+                                                    widget=expressionWidget)
         self.fields['description'] = forms.CharField(label=_("Description"),
                                                     required=False,
                                                     widget=textAreaWidget)
