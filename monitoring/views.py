@@ -32,6 +32,8 @@ from horizon import tables
 from monitoring import api
 from .tables import AlarmsTable
 from .tables import AlarmHistoryTable
+from .tables import show_service
+from .tables import show_severity
 from . import forms as alarm_forms
 from . import constants
 
@@ -39,100 +41,106 @@ LOG = logging.getLogger(__name__)
 
 SAMPLE = [{'name': _('Platform Services'),
            'services': [{'name': 'MaaS',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('MaaS')},
                         {'name': 'DBaaS',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('DBaaS')},
                         {'name': 'LBaaS',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('LBaaS')},
                         {'name': 'DNSaaS',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('DNSaaS')},
                         {'name': 'MSGaaS',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('MSGaaS')},
                         ]},
           {'name': _('The OverCloud Services'),
            'services': [{'name': 'nova',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Nova')},
                         {'name': 'swift',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Swift')},
                         {'name': 'bock',
-                         'class': 'alert-error',
-                         'icon': '/static/monitoring/img/critical-icon.png',
                          'display': _('Cinder')},
                         {'name': 'glance',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Glance')},
                         {'name': 'quantum',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Neutron')},
                         {'name': 'mysql',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('MySQL')},
                         {'name': 'rabbitmq',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('RabbitMQ')},
-                         {'name': 'mini-mon',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
+                        {'name': 'mini-mon',
                          'display': _('Monitoring')},
                         ]},
           {'name': _('The UnderCloud Services'),
            'services': [{'name': 'nova',
-                         'icon': '/static/monitoring/img/warning-icon.png',
                          'display': _('Nova')},
                         {'name': 'swift',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Cinder')},
                         {'name': 'glance',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Glance')},
                         {'name': 'horizon',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Horizon')},
                         ]},
           {'name': _('Network Services'),
            'services': [{'name': 'dhcp',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('DHCP')},
                         {'name': 'dns',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('DNS')},
                         {'name': 'dns-servers',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('DNS Servers')},
                         {'name': 'http',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('http')},
                         {'name': 'web_proxy',
-                         'class': 'alert-success',
-                         'icon': '/static/monitoring/img/ok-icon.png',
                          'display': _('Web Proxy')},
-                        ]},
-            ]
+                        ]}
+          ]
+
+
+def get_icon(status):
+    if status == 'alert-success':
+        return constants.OK_ICON
+    if status == 'alert-error':
+        return constants.CRITICAL_ICON
+    if status == 'alert-warning':
+        return constants.WARNING_ICON
+    if status == 'alert-unknown':
+        return constants.UNKNOWN_ICON
+    if status == 'alert-notfound':
+        return constants.NOTFOUND_ICON
+
+
+priorities = [
+    {'status': 'alert-success', 'severity': 'OK'},
+    {'status': 'alert-unknown', 'severity': 'UNDETERMINED'},
+    {'status': 'alert-warning', 'severity': 'WARNING'},
+    {'status': 'alert-error', 'severity': 'ERROR'},
+]
+index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
+
+
+def get_status(alarms):
+    if not alarms:
+        return 'alert-notfound'
+    status_index = 0
+    for a in alarms:
+        severity = show_severity(a)
+        severity_index = index_by_severity[severity]
+        status_index = max(status_index, severity_index)
+    return priorities[status_index]['status']
+
+
+def generate_status(request):
+    alarms = api.monitor.alarm_list(request)
+    alarms_by_service = {}
+    for a in alarms:
+        service = show_service(a)
+        service_alarms = alarms_by_service.setdefault(service, [])
+        service_alarms.append(a)
+    for row in SAMPLE:
+        for service in row['services']:
+            service_alarms = alarms_by_service.get(service['name'], [])
+            service['class'] = get_status(service_alarms)
+            service['icon'] = get_icon(service['class'])
+    return SAMPLE
+
 
 class IndexView(TemplateView):
     template_name = constants.TEMPLATE_PREFIX + 'index.html'
@@ -140,7 +148,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context["date"] = datetime.datetime.utcnow()
-        context["service_groups"] = SAMPLE
+        context["service_groups"] = generate_status(self.request)
 
         return context
 
@@ -149,18 +157,13 @@ class StatusView(TemplateView):
     template_name = ""
 
     def get(self, request, *args, **kwargs):
-        services = ['MaaS',
-                    ]
-        #monitoring.alarm_list(self.request)
-        for group in SAMPLE:
-            for service in group['services']:
-                service['class'] = get_random_status()
-        ret = {}
-        ret['series'] = SAMPLE
-        ret['settings'] = {}
+        ret = {
+            'series': generate_status(self.request),
+            'settings': {}
+        }
 
         return HttpResponse(json.dumps(ret),
-            content_type='application/json')
+                            content_type='application/json')
 
 
 class AlarmServiceView(tables.DataTableView):
@@ -174,8 +177,8 @@ class AlarmServiceView(tables.DataTableView):
 
     def get_data(self):
         alarms_json = api.monitor.alarm_list_by_service(
-                        self.request,
-                        self.service)
+            self.request,
+            self.service)
         return alarms_json
 
     def get_context_data(self, **kwargs):
@@ -222,7 +225,8 @@ def transform_alarm_data(obj):
             'expression': getattr(obj, 'expression', None),
             'state': filters.title(getattr(obj, 'state', None)),
             'severity': filters.title(getattr(obj, 'severity', None)),
-            'actions_enabled': filters.title(getattr(obj, 'actions_enabled', None)),
+            'actions_enabled': filters.title(getattr(obj, 'actions_enabled',
+                                                     None)),
             'notifications': getattr(obj, 'alarm_actions', None), }
 
 
@@ -240,16 +244,15 @@ class AlarmDetailView(forms.ModalFormView):
             self._object = api.monitor.alarm_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
-            for notif_id in self._object["alarm_actions"]:
+            for id in self._object["alarm_actions"]:
                 try:
                     notification = api.monitor.notification_get(
                         self.request,
-                        notif_id)
+                        id)
                     notifications.append(notification)
                 except exceptions.NOT_FOUND:
-                    msg = _("Notification %s has already been deleted.") % \
-                        notif_id
-                    notifications.append({"id": notif_id,
+                    msg = _("Notification %s has already been deleted.") % id
+                    notifications.append({"id": id,
                                           "name": unicode(msg),
                                           "type": "",
                                           "address": ""})
@@ -287,16 +290,15 @@ class AlarmEditView(forms.ModalFormView):
             self._object = api.monitor.alarm_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
-            for notif_id in self._object["alarm_actions"]:
+            for id in self._object["alarm_actions"]:
                 try:
                     notification = api.monitor.notification_get(
                         self.request,
-                        notif_id)
+                        id)
                     notifications.append(notification)
                 except exceptions.NOT_FOUND:
-                    msg = _("Notification %s has already been deleted.") % \
-                        notif_id
-                    notifications.append({"id": notif_id,
+                    msg = _("Notification %s has already been deleted.") % id
+                    notifications.append({"id": id,
                                           "name": unicode(msg),
                                           "type": "",
                                           "address": ""})
@@ -317,7 +319,8 @@ class AlarmEditView(forms.ModalFormView):
         context = super(AlarmEditView, self).get_context_data(**kwargs)
         id = self.kwargs['id']
         context["cancel_url"] = self.success_url
-        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_edit', args=(id,))
+        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_edit',
+                                        args=(id,))
         return context
 
 
@@ -330,9 +333,15 @@ class AlarmHistoryView(tables.DataTableView):
 
     def get_data(self):
         results = [
-            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'CRITICAL', 'Last_Check': 'Feb 12 2014 2:34 CST', 'Status_Information': 'API Response Time'},
-            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'OK', 'Last_Check': 'Feb 12 2014 2:45 CST', 'Status_Information': 'API Response Time'},
-            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'WARNING', 'Last_Check': 'April 18 2014 8:45 CST', 'Status_Information': 'API Response Time'}
+            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'CRITICAL',
+             'Last_Check': 'Feb 12 2014 2:34 CST',
+             'Status_Information': 'API Response Time'},
+            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'OK',
+             'Last_Check': 'Feb 12 2014 2:45 CST',
+             'Status_Information': 'API Response Time'},
+            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'WARNING',
+             'Last_Check': 'April 18 2014 8:45 CST',
+             'Status_Information': 'API Response Time'}
         ]
 
         return results
@@ -348,11 +357,11 @@ class AlarmMeterView(TemplateView):
 
 def get_random_status():
     distribution = [
-        {'prob':.04, 'value':'alert-error'},
-        {'prob':.04, 'value':'alert-warning'},
-        {'prob':.04, 'value':'alert-unknown'},
-        {'prob':.04, 'value':'alert-notfound'},
-        {'prob':1.0, 'value':'alert-success'},
+        {'prob': .04, 'value': 'alert-error'},
+        {'prob': .04, 'value': 'alert-warning'},
+        {'prob': .04, 'value': 'alert-unknown'},
+        {'prob': .04, 'value': 'alert-notfound'},
+        {'prob': 1.0, 'value': 'alert-success'},
     ]
     num = random.random()
     for dist in distribution:
@@ -368,7 +377,9 @@ class NotificationCreateView(forms.ModalFormView):
     success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
 
     def get_context_data(self, **kwargs):
-        context = super(NotificationCreateView, self).get_context_data(**kwargs)
+        context = super(NotificationCreateView, self). \
+            get_context_data(**kwargs)
         context["cancel_url"] = self.success_url
-        context["action_url"] = reverse(constants.URL_PREFIX + 'notification_create')
+        action = constants.URL_PREFIX + 'notification_create'
+        context["action_url"] = reverse(action)
         return context
