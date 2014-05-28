@@ -46,7 +46,7 @@ class SimpleExpressionWidget(django_forms.MultiWidget):
         comparators = [('>', '>'), ('<', '<'), ('=', '=')]
         _widgets = (
             django_forms.widgets.Select(attrs=attrs, choices=choices),
-            django_forms.widgets.Select(attrs=attrs, choices=comparatorsß),
+            django_forms.widgets.Select(attrs=attrs, choices=comparators),
             django_forms.widgets.TextInput(attrs=attrs),
         )
         super(SimpleExpressionWidget, self).__init__(_widgets, attrs)

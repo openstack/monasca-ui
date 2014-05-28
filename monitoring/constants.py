@@ -31,7 +31,6 @@ class NotificationType(object):
             if choice[0] == key:
                 return choice[1]
         return key
-ß
 
 PHONE_VALIDATOR = validators.RegexValidator(
     regex=r"^\+[()0-9 ]{5,20}$",
