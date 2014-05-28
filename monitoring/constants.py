@@ -43,3 +43,8 @@ EMAIL_VALIDATOR = validators.EmailValidator(
 URL_PREFIX = 'horizon:overcloud:monitoring:'
 TEMPLATE_PREFIX = 'overcloud/monitoring/'
 
+CRITICAL_ICON = '/static/monitoring/img/critical-icon.png'
+WARNING_ICON = '/static/monitoring/img/warning-icon.png'
+OK_ICON = '/static/monitoring/img/ok-icon.png'
+UNKNOWN_ICON = '/static/monitoring/img/unknown-icon.png'
+NOTFOUND_ICON = '/static/monitoring/img/notfound-icon.png'

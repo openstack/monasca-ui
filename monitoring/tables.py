@@ -28,11 +28,6 @@ LOG = logging.getLogger(__name__)
 
 
 STATUS = ["OK", "WARNING", "CRITICAL", "UNKNOWN"]
-CRITICAL_ICON = '/static/monitoring/img/critical-icon.png'
-WARNING_ICON = '/static/monitoring/img/warning-icon.png'
-OK_ICON = '/static/monitoring/img/ok-icon.png'
-UNKNOWN_ICON = '/static/monitoring/img/unknown-icon.png'
-NOTFOUND_ICON = '/static/monitoring/img/notfound-icon.png'
 
 
 def get_status(index):
@@ -41,38 +36,29 @@ def get_status(index):
     else:
         return "UNKNOWN: %d" % index
 
-# this one is not quite right
+
 def show_status(data):
     status = data
-    img_tag = '<img src="%s" alt="%s"/>'
+    img_tag = '<img src="%s" title="%s"/>'
     if status == 'CRITICAL':
-        return img_tag % (CRITICAL_ICON, status)
+        return img_tag % (constants.CRITICAL_ICON, status)
     if status == 'WARNING':
-        return img_tag % (WARNING_ICON, status)
+        return img_tag % (constants.WARNING_ICON, status)
     if status == 'OK':
-        return img_tag % (OK_ICON, status)
-    if status == 'UNKNOWN':
-        return img_tag % (UNKNOWN_ICON, status)
+        return img_tag % (constants.OK_ICON, status)
+    if status == 'UNKNOWN' or status == 'UNDETERMINED':
+        return img_tag % (constants.UNKNOWN_ICON, status)
     return status
 
 
 def show_severity(data):
     severity = data['severity']
     state = data['state']
-    img_tag = '<div><img src="%s" alt="%s"/> %s </div>'
-    if state == 'ALARM' and severity == 'CRITICAL':
-        return img_tag % (CRITICAL_ICON, severity, severity)
-    if state == 'ALARM' and severity == 'HIGH':
-        return img_tag % (CRITICAL_ICON, severity, severity)
-    if state == 'ALARM' and severity == 'MEDIUM':
-        return img_tag % (WARNING_ICON, severity, severity)
-    if state == 'ALARM' and severity == 'LOW':
-        return img_tag % (WARNING_ICON, severity, severity)
-    if state == 'OK':
-        return img_tag % (OK_ICON, state, state)
-    if state == 'UNDETERMINED':
-        return img_tag % (UNKNOWN_ICON, 'UNDETERMINED', 'UNDETERMINED')
-    return ""
+    if state == 'ALARM':
+        return severity
+    else:
+        return state
+
 
 def show_service(data):
     if any(data['expression_data']['dimensions']):
@@ -81,12 +67,14 @@ def show_service(data):
             return str(data['expression_data']['dimensions']['service'])
     return ""
 
+
 def show_host(data):
     if any(data['expression_data']['dimensions']):
         dimensions = data['expression_data']['dimensions']
         if 'hostname' in dimensions:
             return str(data['expression_data']['dimensions']['hostname'])
     return ""
+
 
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
@@ -147,7 +135,8 @@ class CreateNotification(tables.LinkAction):
 
 class AlarmsTable(tables.DataTable):
     status = tables.Column(transform=show_severity, verbose_name=_('Status'),
-                           filters=[template.defaultfilters.safe])
+                           status_choices={(show_status('OK'), True)},
+                           filters=[show_status, template.defaultfilters.safe])
     target = tables.Column('name', verbose_name=_('Name'),
                            link=constants.URL_PREFIX + 'alarm_detail',
                            link_classes=('ajax-modal',))
