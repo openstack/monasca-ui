@@ -34,10 +34,12 @@ def monclient(request, password=None):
     cacert = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
     endpoint = getattr(settings, 'MONITORING_ENDPOINT',
                        'http://192.168.10.4:8080/v2.0')
+    project_id = getattr(settings, 'MONITORING_PROJECT',
+                       '82510970543135')
     LOG.debug('monclient connection created using token "%s" and url "%s"' %
               (request.user.token.id, endpoint))
     kwargs = {
-        'token': '82510970543135',  # request.user.token.id,
+        'token': project_id,  # workaround API should be request.user.token.id
         'insecure': insecure,
         'ca_file': cacert,
         'username': request.user.username,
