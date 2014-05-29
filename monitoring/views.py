@@ -95,32 +95,32 @@ SAMPLE = [{'name': _('Platform Services'),
 
 
 def get_icon(status):
-    if status == 'alert-success':
+    if status == 'chicklet-success':
         return constants.OK_ICON
-    if status == 'alert-error':
+    if status == 'chicklet-error':
         return constants.CRITICAL_ICON
-    if status == 'alert-warning':
+    if status == 'chicklet-warning':
         return constants.WARNING_ICON
-    if status == 'alert-unknown':
+    if status == 'chicklet-unknown':
         return constants.UNKNOWN_ICON
-    if status == 'alert-notfound':
+    if status == 'chicklet-notfound':
         return constants.NOTFOUND_ICON
 
 
 priorities = [
-    {'status': 'alert-success', 'severity': 'OK'},
-    {'status': 'alert-unknown', 'severity': 'UNDETERMINED'},
-    {'status': 'alert-warning', 'severity': 'LOW'},
-    {'status': 'alert-warning', 'severity': 'MEDIUM'},
-    {'status': 'alert-warning', 'severity': 'HIGH'},
-    {'status': 'alert-error', 'severity': 'CRITICAL'},
+    {'status': 'chicklet-success', 'severity': 'OK'},
+    {'status': 'chicklet-unknown', 'severity': 'UNDETERMINED'},
+    {'status': 'chicklet-warning', 'severity': 'LOW'},
+    {'status': 'chicklet-warning', 'severity': 'MEDIUM'},
+    {'status': 'chicklet-warning', 'severity': 'HIGH'},
+    {'status': 'chicklet-error', 'severity': 'CRITICAL'},
 ]
 index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
 
 
 def get_status(alarms):
     if not alarms:
-        return 'alert-notfound'
+        return 'chicklet-notfound'
     status_index = 0
     for a in alarms:
         severity = show_severity(a)
@@ -359,11 +359,11 @@ class AlarmMeterView(TemplateView):
 
 def get_random_status():
     distribution = [
-        {'prob': .04, 'value': 'alert-error'},
-        {'prob': .04, 'value': 'alert-warning'},
-        {'prob': .04, 'value': 'alert-unknown'},
-        {'prob': .04, 'value': 'alert-notfound'},
-        {'prob': 1.0, 'value': 'alert-success'},
+        {'prob': .04, 'value': 'chicklet-error'},
+        {'prob': .04, 'value': 'chicklet-warning'},
+        {'prob': .04, 'value': 'chicklet-unknown'},
+        {'prob': .04, 'value': 'chicklet-notfound'},
+        {'prob': 1.0, 'value': 'chicklet-success'},
     ]
     num = random.random()
     for dist in distribution:

@@ -1,37 +1,66 @@
 <style>
-.alert-notfound {
+.chicklet-container {
+ border: 1px solid #F1F1F1;
+ color:black;
+ font-weight: bold;
  background-color: white;
- border-color: grey;
- color: grey;
+ padding: 14px 35px 14px 14px;
+ margin-bottom: 18px;
+ border-radius: 4px;
 }
-.alert-unknown {
- background-color: #6666FF;
- border-color: blue;
- color: lightgrey;
+.base-chicklet {
+ border: 3px solid;
+ color: #7C7C7C;
+ background-color: white;
+ display:inline-block;
+ padding:0px;
+ text-shadow: 0 1px 0 rgba(255,255,255,.5);
+ border-radius: 4px;
 }
-.alert-error {
- background-color: #D64C4C;
- border-color: red;
- color: #EEEEEE;
+.chicklet-success {
+ border-color: #36A32C;
 }
-.alert-warning {
- background-color: #F7F700;
- border-color: yellow;
+.chicklet-notfound {
+ border-color: #e5e5e5;
+}
+.chicklet-unknown {
+ border-color: #626262;
+}
+.chicklet-error {
+ border-color: #9E1213;
+}
+.chicklet-warning {
+ border-color: #D6C037;
+}
+.status-icon-holder {
+ background-color: #EDEEF0;
+ width: 20px;
+ height: 30px;
+ float: left;
+ padding-top:10px;
+ padding-left: 4px;
+ padding-right: 4px;
+ border-right:2px solid;
+ border-color: #D8D7DD;
 }
 </style>
 <div style="border: 1px solid #dddddd;">
    <div>
         {% for group in service_groups %}
-        <div class="alert alert-block fade in" style="background:#F1F1F1;color:black;font-weight: bold;">
+        <div class="chicklet-container">
             <div>
                 {{ group.name }}
             </div>
             {% for service in group.services %}
                 <a href="{% url 'horizon:overcloud:monitoring:servicealarm' service.name %}" class="showspinner">
-                 <div class="alert alert-block {{ service.class }} fade in" style="display:inline-block; margin-bottom:4px;">
+                 <div class="base-chicklet {{ service.class }}">
                     <div>
-                        <img style="margin-right:5px;vertical-align:top;" src="{{ service.icon }}"/>
+                        <div class = "status-icon-holder" >
+                            <img src="{{ service.icon }}"/>
+                        </div>
+                        <div style="float: right; margin: 10px;">
                         {{ service.display }}
+                        </div>
                         {% if service.count %}
                             ({{ service.count }})
                         {% endif %}
