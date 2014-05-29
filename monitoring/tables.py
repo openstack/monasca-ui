@@ -42,7 +42,7 @@ def show_status(data):
     img_tag = '<img src="%s" title="%s"/>'
     if status == 'CRITICAL':
         return img_tag % (constants.CRITICAL_ICON, status)
-    if status == 'WARNING':
+    if status in ('LOW', 'MEDIUM', 'HIGH'):
         return img_tag % (constants.WARNING_ICON, status)
     if status == 'OK':
         return img_tag % (constants.OK_ICON, status)

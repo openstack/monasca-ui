@@ -43,8 +43,11 @@ def get_expression(meter):
 class SimpleExpressionWidget(django_forms.MultiWidget):
     def __init__(self, meters=None, attrs=None):
         choices = [(get_expression(m), get_expression(m)) for m in meters]
-        comparators = [('>', '>'), ('<', '<'), ('=', '=')]
+        comparators = [('>', '>'), ('>=', '>='), ('<', '<'), ('<=', '<=')]
+        func = [('min', _('min')), ('max', _('max')), ('sum', _('sum')),
+                ('count', _('count')), ('avg', _('avg'))]
         _widgets = (
+            django_forms.widgets.Select(attrs=attrs, choices=func),
             django_forms.widgets.Select(attrs=attrs, choices=choices),
             django_forms.widgets.Select(attrs=attrs, choices=comparators),
             django_forms.widgets.TextInput(attrs=attrs),
@@ -52,9 +55,6 @@ class SimpleExpressionWidget(django_forms.MultiWidget):
         super(SimpleExpressionWidget, self).__init__(_widgets, attrs)
 
     def decompress(self, expr):
-        if expr:
-            m, end = expr.split('}')
-            return [m+'}', end[0], end[1::]]
         return [None, None, None]
 
     def format_output(self, rendered_widgets):
@@ -65,7 +65,10 @@ class SimpleExpressionWidget(django_forms.MultiWidget):
             widget.value_from_datadict(data, files, name + '_%s' % i)
             for i, widget in enumerate(self.widgets)]
         try:
-            expression = values[0] + values[1] + values[2]
+            expression = '%s(%s)%s%s' % (values[0],
+                                         values[1],
+                                         values[2],
+                                         values[3])
         except ValueError:
             return ''
         else:
@@ -188,10 +191,13 @@ class BaseAlarmForm(forms.SelfHandlingForm):
             textAreaWidget = forms.Textarea(attrs={'readonly': 'readonly',
                                                    'class': 'large-text-area'
                                                    })
-            expressionWidget = readOnlyTextInput
+            expressionWidget = textAreaWidget
         else:
             meters = api.monitor.metrics_list(self.request)
-            expressionWidget = SimpleExpressionWidget(meters=meters)
+            if create:
+                expressionWidget = SimpleExpressionWidget(meters=meters)
+            else:
+                expressionWidget = textAreaWidget
 
         if create:
             notificationWidget = NotificationCreateWidget()
@@ -211,9 +217,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['description'] = forms.CharField(label=_("Description"),
                                                      required=False,
                                                      widget=textAreaWidget)
-        sev_choices = [("Low", _("Low")),
-                       ("Medium", _("Medium")),
-                       ("High", _("High"))]
+        sev_choices = [("LOW", _("Low")),
+                       ("MEDIUM", _("Medium")),
+                       ("HIGH", _("High")),
+                       ("CRITICAL", _("Critical"))]
         self.fields['severity'] = forms.ChoiceField(label=_("Severity"),
                                                     choices=sev_choices,
                                                     widget=choiceWidget,

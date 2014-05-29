@@ -110,8 +110,10 @@ def get_icon(status):
 priorities = [
     {'status': 'alert-success', 'severity': 'OK'},
     {'status': 'alert-unknown', 'severity': 'UNDETERMINED'},
-    {'status': 'alert-warning', 'severity': 'WARNING'},
-    {'status': 'alert-error', 'severity': 'ERROR'},
+    {'status': 'alert-warning', 'severity': 'LOW'},
+    {'status': 'alert-warning', 'severity': 'MEDIUM'},
+    {'status': 'alert-warning', 'severity': 'HIGH'},
+    {'status': 'alert-error', 'severity': 'CRITICAL'},
 ]
 index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
 
