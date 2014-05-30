@@ -155,10 +155,10 @@ class AlarmsTable(tables.DataTable):
         verbose_name = _("Alarms")
         row_actions = (ShowAlarmHistory,
                        ShowAlarmMeters,
+                       EditAlarm,
                        DeleteAlarm,
-                       EditAlarm, )
+                       )
         table_actions = (CreateNotification, CreateAlarm, )
-        status_columns = ['status']
 
 
 class AlarmHistoryTable(tables.DataTable):
@@ -179,4 +179,3 @@ class AlarmHistoryTable(tables.DataTable):
         name = "users"
         verbose_name = _("Alarm History")
         row_actions = (ShowAlarmMeters,)
-        status_columns = ['status']

@@ -334,17 +334,8 @@ class AlarmHistoryView(tables.DataTableView):
         return super(AlarmHistoryView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        results = [
-            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'CRITICAL',
-             'Last_Check': 'Feb 12 2014 2:34 CST',
-             'Status_Information': 'API Response Time'},
-            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'OK',
-             'Last_Check': 'Feb 12 2014 2:45 CST',
-             'Status_Information': 'API Response Time'},
-            {'Host': 'Compute1', 'Service': 'Nova', 'Status': 'WARNING',
-             'Last_Check': 'April 18 2014 8:45 CST',
-             'Status_Information': 'API Response Time'}
-        ]
+        # to be implemented
+        results = []
 
         return results
 
