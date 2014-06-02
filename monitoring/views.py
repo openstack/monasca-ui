@@ -203,8 +203,10 @@ class AlarmCreateView(forms.ModalFormView):
 
     def dispatch(self, *args, **kwargs):
         self.service = kwargs['service']
-        del kwargs['service']
         return super(AlarmCreateView, self).dispatch(*args, **kwargs)
+
+    def get_initial(self):
+        return {"service": self.service}
 
     def get_context_data(self, **kwargs):
         context = super(AlarmCreateView, self).get_context_data(**kwargs)

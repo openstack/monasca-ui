@@ -178,7 +178,7 @@ class BaseAlarmForm(forms.SelfHandlingForm):
     def _instantiate(cls, request, *args, **kwargs):
         return cls(request, *args, **kwargs)
 
-    def _init_fields(self, readOnly=False, create=False):
+    def _init_fields(self, readOnly=False, create=False, initial=None):
         required = True
         textWidget = None
         textAreaWidget = forms.Textarea(attrs={'class': 'large-text-area'})
@@ -193,8 +193,14 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                                                    })
             expressionWidget = textAreaWidget
         else:
-            meters = api.monitor.metrics_list(self.request)
             if create:
+                meters = api.monitor.metrics_list(self.request)
+                if initial and 'service' in initial and \
+                        initial['service'] != 'all':
+                    service = initial['service']
+                    meters = [m for m in meters
+                              if m.setdefault('dimensions', {}).
+                              setdefault('service', '') == service]
                 expressionWidget = SimpleExpressionWidget(meters=meters)
             else:
                 expressionWidget = textAreaWidget
@@ -260,7 +266,8 @@ class BaseAlarmForm(forms.SelfHandlingForm):
 class CreateAlarmForm(BaseAlarmForm):
     def __init__(self, request, *args, **kwargs):
         super(CreateAlarmForm, self).__init__(request, *args, **kwargs)
-        super(CreateAlarmForm, self)._init_fields(readOnly=False, create=True)
+        super(CreateAlarmForm, self)._init_fields(readOnly=False, create=True,
+                                                  initial=kwargs['initial'])
         super(CreateAlarmForm, self).set_notification_choices(request)
         self.fields.pop('state')
 
