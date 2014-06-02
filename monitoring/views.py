@@ -19,6 +19,7 @@ import logging
 import json
 import random
 
+from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.template import defaultfilters as filters
 from django.http import HttpResponse   # noqa
@@ -178,10 +179,17 @@ class AlarmServiceView(tables.DataTableView):
         return super(AlarmServiceView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        alarms_json = api.monitor.alarm_list_by_service(
-            self.request,
-            self.service)
-        return alarms_json
+        results = []
+        try:
+            if self.service == 'all':
+                results = api.monitor.alarm_list(self.request)
+            else:
+                results = api.monitor.alarm_list_by_service(
+                    self.request,
+                    self.service)
+        except:
+            messages.error(self.request, _("Could not retrieve alarms"))
+        return results
 
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
@@ -189,35 +197,23 @@ class AlarmServiceView(tables.DataTableView):
         return context
 
 
-class AlarmView(tables.DataTableView):
-    table_class = AlarmsTable
-    template_name = constants.TEMPLATE_PREFIX + 'alarm.html'
-
-    def dispatch(self, *args, **kwargs):
-        return super(AlarmView, self).dispatch(*args, **kwargs)
-
-    def get_data(self):
-        alarms = api.monitor.alarm_list(self.request)
-        results = alarms
-
-        return results
-
-    def get_context_data(self, **kwargs):
-        context = super(AlarmView, self).get_context_data(**kwargs)
-        context["service"] = 'All'
-        return context
-
-
 class AlarmCreateView(forms.ModalFormView):
     form_class = alarm_forms.CreateAlarmForm
     template_name = constants.TEMPLATE_PREFIX + 'alarms/create.html'
-    success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
+
+    def dispatch(self, *args, **kwargs):
+        self.service = kwargs['service']
+        del kwargs['service']
+        return super(AlarmCreateView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(AlarmCreateView, self).get_context_data(**kwargs)
-        context["cancel_url"] = self.success_url
-        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create')
+        context["cancel_url"] = self.get_success_url()
+        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create', args=(self.service,))
         return context
+
+    def get_success_url(self):
+        return reverse_lazy(constants.URL_PREFIX + 'alarm', args=(self.service,))
 
 
 def transform_alarm_data(obj):
@@ -235,7 +231,6 @@ def transform_alarm_data(obj):
 class AlarmDetailView(forms.ModalFormView):
     form_class = alarm_forms.DetailAlarmForm
     template_name = constants.TEMPLATE_PREFIX + 'alarms/detail.html'
-    success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
 
     def get_object(self):
         id = self.kwargs['id']
@@ -274,14 +269,21 @@ class AlarmDetailView(forms.ModalFormView):
     def get_context_data(self, **kwargs):
         context = super(AlarmDetailView, self).get_context_data(**kwargs)
         context["alarm"] = self.alarm
-        context["cancel_url"] = self.success_url
+        context["cancel_url"] = self.get_success_url()
         return context
+
+    def get_success_url(self):
+        return "d"
 
 
 class AlarmEditView(forms.ModalFormView):
     form_class = alarm_forms.EditAlarmForm
     template_name = constants.TEMPLATE_PREFIX + 'alarms/edit.html'
-    success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
+
+    def dispatch(self, *args, **kwargs):
+        self.service = kwargs['service']
+        del kwargs['service']
+        return super(AlarmEditView, self).dispatch(*args, **kwargs)
 
     def get_object(self):
         id = self.kwargs['id']
@@ -320,10 +322,13 @@ class AlarmEditView(forms.ModalFormView):
     def get_context_data(self, **kwargs):
         context = super(AlarmEditView, self).get_context_data(**kwargs)
         id = self.kwargs['id']
-        context["cancel_url"] = self.success_url
+        context["cancel_url"] = self.get_success_url()
         context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_edit',
-                                        args=(id,))
+                                        args=(self.service, id,))
         return context
+
+    def get_success_url(self):
+        return reverse_lazy(constants.URL_PREFIX + 'alarm', args=(self.service,))
 
 
 class AlarmHistoryView(tables.DataTableView):
@@ -367,12 +372,14 @@ def get_random_status():
 class NotificationCreateView(forms.ModalFormView):
     form_class = alarm_forms.CreateMethodForm
     template_name = constants.TEMPLATE_PREFIX + 'notifications/create.html'
-    success_url = reverse_lazy(constants.URL_PREFIX + 'alarm')
 
     def get_context_data(self, **kwargs):
         context = super(NotificationCreateView, self). \
             get_context_data(**kwargs)
-        context["cancel_url"] = self.success_url
+        context["cancel_url"] = self.get_success_url()
         action = constants.URL_PREFIX + 'notification_create'
         context["action_url"] = reverse(action)
         return context
+
+    def get_success_url(self):
+        return reverse_lazy(constants.URL_PREFIX + 'alarm', args=(self.service,))

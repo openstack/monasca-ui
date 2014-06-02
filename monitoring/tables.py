@@ -17,6 +17,7 @@
 import logging
 
 from django import template
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from horizon import tables
@@ -94,7 +95,10 @@ class CreateAlarm(tables.LinkAction):
     name = "create_alarm"
     verbose_name = _("Create Alarm")
     classes = ("ajax-modal", "btn-create")
-    url = constants.URL_PREFIX + 'alarm_create'
+
+    def get_link_url(self):
+        return reverse(constants.URL_PREFIX + 'alarm_create',
+                       args=(self.table.kwargs['service'],))
 
     def allowed(self, request, datum=None):
         return True
@@ -104,7 +108,10 @@ class EditAlarm(tables.LinkAction):
     name = "edit_alarm"
     verbose_name = _("Edit Alarm")
     classes = ("ajax-modal", "btn-create")
-    url = constants.URL_PREFIX + 'alarm_edit'
+
+    def get_link_url(self, datum):
+        return reverse(constants.URL_PREFIX + 'alarm_edit',
+                       args=(self.table.kwargs['service'], datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
