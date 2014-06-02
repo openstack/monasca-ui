@@ -1,0 +1,50 @@
+CHANGES
+=======
+
+1.0.1
+-----
+included cosmos and enabled packages setup.cfg
+
+1.0.0
+-----
+
+* Added top level ChangeLog
+* pypi packaging files
+* Make delete alarm last action in menu. Remove demo data
+* Tweak layout of chicklets
+* Make project_id configurable in settings
+* Redesign chicklets based on UX feedback
+* Pick up new icons from Piet in UX
+* Allow editing of alarm expressions. Remap severity
+* Show service by status on index page
+* Remove some wierd characters that got added
+* Fix all pep8 errors except demo code in views
+* Fix some remaining paths for includes
+* Make status color correct. Move images to constants
+* Add expression field. Make endpoint configurable
+* Hard code tenant id. Place framework for list meters
+* Remove demo data for alarms list
+* Remove panel group Other in dashboard
+* Add enabled field
+* Changes to support AlarmServiceView
+* Add new templates for Alarm Edit
+* Add alarm edit
+* Migrate API to new signtures. Add Alarm delete
+* Add button to list all alarms
+* Set DEFAULT_PANEL to monitoring panel
+* Add in Cosmos dashboard
+* Add cosmos dashboard
+* Add Create Notification button to table
+* Update README.md
+* Switch to overcloud dashboard
+* Progress on alarms (details and create)
+* Add forms for alarms and partially for notifications
+* Initial installer work
+* Changes for demo
+* Snapshot latest
+* Latest changes
+* Update README.md
+* Update README.md
+* Create README.md
+* Restructure tree
+* Initial UI (only mockup)
