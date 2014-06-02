@@ -19,7 +19,7 @@ from django.utils.translation import ugettext_lazy as _
 import horizon
 
 
-class Monitoring(horizon.Panel):
-    name = _("Alarms")
-    slug = 'alarms'
+class Notifications(horizon.Panel):
+    name = _("Notifications")
+    slug = 'notifications'
     permissions = ('openstack.roles.admin', )
