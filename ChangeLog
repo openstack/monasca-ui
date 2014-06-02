@@ -1,6 +1,15 @@
-1.0.0
+CHANGES
 =======
 
+1.0.1
+-----
+included cosmos and enabled packages setup.cfg
+
+1.0.0
+-----
+
+* Added top level ChangeLog
+* pypi packaging files
 * Make delete alarm last action in menu. Remove demo data
 * Tweak layout of chicklets
 * Make project_id configurable in settings
