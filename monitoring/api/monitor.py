@@ -79,6 +79,10 @@ def alarm_update(request, **kwargs):
     return monclient(request).alarms.update(**kwargs)
 
 
+def alarm_patch(request, **kwargs):
+    return monclient(request).alarms.patch(**kwargs)
+
+
 def notification_list(request, marker=None, paginate=False):
     return monclient(request).notifications.list()
 
