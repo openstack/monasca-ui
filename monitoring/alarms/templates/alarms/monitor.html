@@ -43,6 +43,11 @@
  border-right:2px solid;
  border-color: #D8D7DD;
 }
+.service-text {
+ float: right;
+ margin: 10px;
+ min-width: 60px;
+}
 </style>
 <div style="border: 1px solid #dddddd;">
    <div>
@@ -55,10 +60,10 @@
                 <a href="{% url 'horizon:overcloud:alarms:alarm' service.name %}" class="showspinner">
                  <div class="base-chicklet {{ service.class }}">
                     <div>
-                        <div class = "status-icon-holder" >
+                        <div class="status-icon-holder" >
                             <img src="{{ service.icon }}"/>
                         </div>
-                        <div style="float: right; margin: 10px;">
+                        <div class="service-text">
                         {{ service.display }}
                         </div>
                         {% if service.count %}
