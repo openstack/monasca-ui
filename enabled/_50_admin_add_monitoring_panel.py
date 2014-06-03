@@ -9,7 +9,7 @@ DEFAULT_PANEL = 'alarms'
 
 # Python panel class of the PANEL to be added.
 ADD_PANEL = \
-    'monitoring.panel.Monitoring'
+    'monitoring.alarms.panel.Monitoring'
 
 # A list of applications to be added to INSTALLED_APPS.
 ADD_INSTALLED_APPS = ['monitoring']
