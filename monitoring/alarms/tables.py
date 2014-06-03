@@ -21,6 +21,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from horizon import tables
+from horizon import exceptions
 
 from . import constants
 from monitoring import api
@@ -117,6 +118,29 @@ class EditAlarm(tables.LinkAction):
         return True
 
 
+class ClearAlarm(tables.BatchAction):
+    name = "clear_alarm"
+    verbose_name = _("Clear Alarm")
+    classes = ("btn-create",)
+    data_type_singular = _("Alarm")
+    data_type_plural = _("Alarms")
+    action_present = _("Clear")
+    action_past = _("Cleared")
+
+    def action(self, request, datum_id):
+        try:
+            api.monitor.alarm_patch(
+                request,
+                alarm_id=datum_id,
+                state='OK',
+            )
+        except Exception as e:
+            exceptions.handle(request, _('Unable to edit the alarm: %s') % e)
+
+    def allowed(self, request, datum=None):
+        return datum['state'] != 'OK'
+
+
 class DeleteAlarm(tables.DeleteAction):
     name = "delete_alarm"
     verbose_name = _("Delete Alarm")
@@ -147,12 +171,16 @@ class AlarmsTable(tables.DataTable):
     def get_object_id(self, obj):
         return obj['id']
 
+    def get_object_display(self, obj):
+        return obj['name']
+
     class Meta:
         name = "alarms"
         verbose_name = _("Alarms")
         row_actions = (ShowAlarmHistory,
                        ShowAlarmMeters,
                        EditAlarm,
+                       ClearAlarm,
                        DeleteAlarm,
                        )
         table_actions = (CreateAlarm, )
