@@ -14,29 +14,6 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from django.core import validators
-from django.utils.translation import ugettext_lazy as _  # noqa
-
-
-class NotificationType(object):
-    SMS = "SMS"
-    EMAIL = "EMAIL"
-
-    CHOICES = [(EMAIL, _("Email")),
-               (SMS, _("SMS")), ]
-
-    @staticmethod
-    def get_label(key):
-        for choice in NotificationType.CHOICES:
-            if choice[0] == key:
-                return choice[1]
-        return key
-
-PHONE_VALIDATOR = validators.RegexValidator(
-    regex=r"^\+[()0-9 ]{5,20}$",
-    message=_("Address must contain a valid phone number."))
-EMAIL_VALIDATOR = validators.EmailValidator(
-    message=_("Address must contain a valid email address."))
 
 URL_PREFIX = 'horizon:overcloud:alarms:'
 TEMPLATE_PREFIX = 'overcloud/alarms/'

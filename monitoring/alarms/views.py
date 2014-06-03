@@ -211,11 +211,13 @@ class AlarmCreateView(forms.ModalFormView):
     def get_context_data(self, **kwargs):
         context = super(AlarmCreateView, self).get_context_data(**kwargs)
         context["cancel_url"] = self.get_success_url()
-        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create', args=(self.service,))
+        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create',
+                                        args=(self.service,))
         return context
 
     def get_success_url(self):
-        return reverse_lazy(constants.URL_PREFIX + 'alarm', args=(self.service,))
+        return reverse_lazy(constants.URL_PREFIX + 'alarm',
+                            args=(self.service,))
 
 
 def transform_alarm_data(obj):
@@ -330,7 +332,8 @@ class AlarmEditView(forms.ModalFormView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy(constants.URL_PREFIX + 'alarm', args=(self.service,))
+        return reverse_lazy(constants.URL_PREFIX + 'alarm',
+                            args=(self.service,))
 
 
 class AlarmHistoryView(tables.DataTableView):

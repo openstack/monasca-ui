@@ -38,11 +38,5 @@ PHONE_VALIDATOR = validators.RegexValidator(
 EMAIL_VALIDATOR = validators.EmailValidator(
     message=_("Address must contain a valid email address."))
 
-URL_PREFIX = 'horizon:overcloud:alarms:'
-TEMPLATE_PREFIX = 'overcloud/alarms/'
-
-CRITICAL_ICON = '/static/monitoring/img/critical-icon.png'
-WARNING_ICON = '/static/monitoring/img/warning-icon.png'
-OK_ICON = '/static/monitoring/img/ok-icon.png'
-UNKNOWN_ICON = '/static/monitoring/img/unknown-icon.png'
-NOTFOUND_ICON = '/static/monitoring/img/notfound-icon.png'
+URL_PREFIX = 'horizon:overcloud:notifications:'
+TEMPLATE_PREFIX = 'overcloud/notifications/'

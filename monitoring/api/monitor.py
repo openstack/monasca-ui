@@ -35,7 +35,7 @@ def monclient(request, password=None):
     endpoint = getattr(settings, 'MONITORING_ENDPOINT',
                        'http://192.168.10.4:8080/v2.0')
     project_id = getattr(settings, 'MONITORING_PROJECT',
-                       '82510970543135')
+                         '82510970543135')
     LOG.debug('monclient connection created using token "%s" and url "%s"' %
               (request.user.token.id, endpoint))
     kwargs = {

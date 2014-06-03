@@ -24,7 +24,6 @@ from horizon import forms
 from horizon import messages
 
 from monitoring import api
-from monitoring import constants
 
 
 def get_expression(meter):
