@@ -52,7 +52,7 @@
                 {{ group.name }}
             </div>
             {% for service in group.services %}
-                <a href="{% url 'horizon:overcloud:monitoring:alarm' service.name %}" class="showspinner">
+                <a href="{% url 'horizon:overcloud:alarms:alarm' service.name %}" class="showspinner">
                  <div class="base-chicklet {{ service.class }}">
                     <div>
                         <div class = "status-icon-holder" >

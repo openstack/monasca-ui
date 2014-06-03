@@ -40,7 +40,4 @@ urlpatterns = patterns(
     url(r'^alarm/(?P<service>[^/]+)/(?P<id>[^/]+)/alarm_edit/$',
         views.AlarmEditView.as_view(),
         name='alarm_edit'),
-    url(r'^notification_create$',
-        views.NotificationCreateView.as_view(),
-        name='notification_create'),
 )
