@@ -137,7 +137,7 @@ class NotificationCreateWidget(forms.Select):
                            'name="notifications_%d"> ') % (idx, idx)
                 options = self.render_options(
                     choices,
-                    [notification['notification_id']])
+                    [notification['id']])
                 if options:
                     output += options
                 output += '</select>'
@@ -191,6 +191,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                                                    'class': 'large-text-area'
                                                    })
             expressionWidget = textAreaWidget
+            notificationWidget = NotificationTableWidget(
+                fields=[('name', _('Name')),
+                        ('type', _('Type')),
+                        ('address', _('Address')), ])
         else:
             if create:
                 meters = api.monitor.metrics_list(self.request)
@@ -201,16 +205,11 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                               if m.setdefault('dimensions', {}).
                               setdefault('service', '') == service]
                 expressionWidget = SimpleExpressionWidget(meters=meters)
+                notificationWidget = NotificationCreateWidget()
             else:
                 expressionWidget = textAreaWidget
+                notificationWidget = NotificationCreateWidget()
 
-        if create:
-            notificationWidget = NotificationCreateWidget()
-        else:
-            notificationWidget = NotificationTableWidget(
-                fields=[('name', _('Name')),
-                        ('type', _('Type')),
-                        ('address', _('Address')), ])
 
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
