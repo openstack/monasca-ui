@@ -33,7 +33,7 @@ class NotificationType(object):
         return key
 
 PHONE_VALIDATOR = validators.RegexValidator(
-    regex=r"^\+[()0-9 ]{5,20}$",
+    regex=r"^[()0-9+\- ]{5,20}",
     message=_("Address must contain a valid phone number."))
 EMAIL_VALIDATOR = validators.EmailValidator(
     message=_("Address must contain a valid email address."))

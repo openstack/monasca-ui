@@ -8,4 +8,6 @@
 {% load url from future %}
 {% block main %}
     Need to implement list notifications
+    <a href="{%  url 'horizon:overcloud:notifications:notification_create' %}" class="btn btn-small btn-run showspinner">{% trans 'Create Notification' %}</a>
+
 {% endblock %}

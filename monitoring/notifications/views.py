@@ -33,7 +33,8 @@ class IndexView(TemplateView):
 
 class NotificationCreateView(forms.ModalFormView):
     form_class = alarm_forms.CreateMethodForm
-    template_name = constants.TEMPLATE_PREFIX + 'notifications/create.html'
+    template_name = constants.TEMPLATE_PREFIX + 'create.html'
+    success_url = reverse_lazy(constants.URL_PREFIX + 'index')
 
     def get_context_data(self, **kwargs):
         context = super(NotificationCreateView, self). \
@@ -42,7 +43,3 @@ class NotificationCreateView(forms.ModalFormView):
         action = constants.URL_PREFIX + 'notification_create'
         context["action_url"] = reverse(action)
         return context
-
-    def get_success_url(self):
-        return reverse_lazy(constants.URL_PREFIX + 'index',
-                            args=(self.service,))
