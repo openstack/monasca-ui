@@ -81,8 +81,15 @@ def show_host(data):
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
     verbose_name = _('Show History')
-    url = constants.URL_PREFIX + 'history'
+    #url = constants.URL_PREFIX + 'history'
     classes = ('btn-edit',)
+
+    def get_link_url(self, datum):
+        return reverse(constants.URL_PREFIX + 'history',
+                       args=(datum['name'], datum['id'], ))
+
+    def allowed(self, request, datum=None):
+        return True
 
 
 class ShowAlarmMeters(tables.LinkAction):
@@ -187,18 +194,15 @@ class AlarmsTable(tables.DataTable):
 
 
 class AlarmHistoryTable(tables.DataTable):
-    status = tables.Column('Status', verbose_name=_('Status'),
-                           status_choices={(show_status('OK'), True)},
-                           filters=[show_status, template.defaultfilters.safe])
-    target = tables.Column('Host', verbose_name=_('Host'))
-    name = tables.Column('Service', verbose_name=_('Service'))
-    lastCheck = tables.Column('Last_Check', verbose_name=_('Last Check'))
-    time = tables.Column('Duration', verbose_name=_('Duration'))
-    detail = tables.Column('Status_Information',
-                           verbose_name=_('Status_Information'))
+    name = tables.Column('name', verbose_name=_('Name'))
+    old_state = tables.Column('old_state', verbose_name=_('Old State'))
+    new_state = tables.Column('new_state', verbose_name=_('New State'))
+    timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
+    reason = tables.Column('reason', verbose_name=_('Reason'))
+    reason_data = tables.Column('reason_data', verbose_name=_('Reason Data'))
 
     def get_object_id(self, obj):
-        return obj['Last_Check'] + obj['Service']
+        return obj['alarm_id'] + obj['timestamp']
 
     class Meta:
         name = "users"
