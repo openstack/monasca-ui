@@ -236,8 +236,8 @@ def transform_alarm_history(results, name):
     newlist = []
     for item in results:
         temp = {}
-        temp['alarm_id'] =  item['alarm_id']
-        temp['name'] =  name
+        temp['alarm_id'] = item['alarm_id']
+        temp['name'] = name
         temp['old_state'] = item['old_state']
         temp['new_state'] = item['new_state']
         temp['timestamp'] = item['timestamp']
@@ -365,8 +365,8 @@ class AlarmHistoryView(tables.DataTableView):
         try:
             results = api.monitor.alarm_history(self.request, id)
         except:
-            messages.error(self.request, 
-                _("Could not retrieve alarm history for %s") % id)
+            messages.error(self.request,
+                           _("Could not retrieve alarm history for %s") % id)
         return transform_alarm_history(results, name)
 
     def get_context_data(self, **kwargs):

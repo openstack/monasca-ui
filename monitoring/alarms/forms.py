@@ -210,7 +210,6 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                 expressionWidget = textAreaWidget
                 notificationWidget = NotificationCreateWidget()
 
-
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
                                               max_length=250,

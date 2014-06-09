@@ -81,7 +81,6 @@ def show_host(data):
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
     verbose_name = _('Show History')
-    #url = constants.URL_PREFIX + 'history'
     classes = ('btn-edit',)
 
     def get_link_url(self, datum):

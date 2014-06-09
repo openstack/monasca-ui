@@ -44,10 +44,10 @@ def monclient(request, password=None):
         'ca_file': cacert,
         'username': request.user.username,
         'password': password
-        #'timeout': args.timeout,
-        #'ca_file': args.ca_file,
-        #'cert_file': args.cert_file,
-        #'key_file': args.key_file,
+        # 'timeout': args.timeout,
+        # 'ca_file': args.ca_file,
+        # 'cert_file': args.cert_file,
+        # 'key_file': args.key_file,
     }
     client = mon_client.Client(api_version, endpoint, **kwargs)
     client.format_parameters = format_parameters
@@ -92,7 +92,8 @@ def notification_list(request, marker=None, paginate=False):
 
 
 def notification_delete(request, notification_id):
-    return monclient(request).notifications.delete(notification_id)
+    return monclient(request).notifications.delete(
+        notification_id=notification_id)
 
 
 def notification_get(request, notification_id):

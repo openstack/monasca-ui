@@ -24,4 +24,7 @@ urlpatterns = patterns(
     url(r'^notification_create$',
         views.NotificationCreateView.as_view(),
         name='notification_create'),
+    # url(r'^notification_edit/(?P<id>[^/]+)$',
+    #    views.NotificationEditView.as_view(),
+    #    name='notification_edit'),
 )
