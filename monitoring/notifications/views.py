@@ -16,19 +16,40 @@
 
 import logging
 
+from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.views.generic import TemplateView
 
 from horizon import forms
+from horizon import tables
 
 from . import forms as alarm_forms
 from . import constants
 
+from monitoring import api
+from .tables import NotificationsTable
+
 LOG = logging.getLogger(__name__)
 
 
-class IndexView(TemplateView):
+class IndexView(tables.DataTableView):
+    table_class = NotificationsTable
     template_name = constants.TEMPLATE_PREFIX + 'index.html'
+
+    def dispatch(self, *args, **kwargs):
+        return super(IndexView, self).dispatch(*args, **kwargs)
+
+    def get_data(self):
+        results = []
+        try:
+            results = api.monitor.notification_list(self.request)
+        except:
+            messages.error(self.request, _("Could not retrieve notifications"))
+        return results
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        return context
 
 
 class NotificationCreateView(forms.ModalFormView):
