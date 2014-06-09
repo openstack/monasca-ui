@@ -232,6 +232,21 @@ def transform_alarm_data(obj):
             'notifications': getattr(obj, 'alarm_actions', None), }
 
 
+def transform_alarm_history(results, name):
+    newlist = []
+    for item in results:
+        temp = {}
+        temp['alarm_id'] =  item['alarm_id']
+        temp['name'] =  name
+        temp['old_state'] = item['old_state']
+        temp['new_state'] = item['new_state']
+        temp['timestamp'] = item['timestamp']
+        temp['reason'] = item['reason']
+        temp['reason_data'] = item['reason_data']
+        newlist.append(temp)
+    return newlist
+
+
 class AlarmDetailView(forms.ModalFormView):
     form_class = alarm_forms.DetailAlarmForm
     template_name = constants.TEMPLATE_PREFIX + 'alarms/detail.html'
@@ -344,10 +359,15 @@ class AlarmHistoryView(tables.DataTableView):
         return super(AlarmHistoryView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        # to be implemented
+        id = self.kwargs['id']
+        name = self.kwargs['name']
         results = []
-
-        return results
+        try:
+            results = api.monitor.alarm_history(self.request, id)
+        except:
+            messages.error(self.request, 
+                _("Could not retrieve alarm history for %s") % id)
+        return transform_alarm_history(results, name)
 
     def get_context_data(self, **kwargs):
         context = super(AlarmHistoryView, self).get_context_data(**kwargs)

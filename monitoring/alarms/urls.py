@@ -25,7 +25,7 @@ urlpatterns = patterns(
     url(r'^alarm/(?P<service>[^/]+)/$',
         views.AlarmServiceView.as_view(),
         name='alarm'),
-    url(r'^history/(?P<service>[^/]+)$',
+    url(r'^history/(?P<name>[^/]+)/(?P<id>[^/]+)$',
         views.AlarmHistoryView.as_view(),
         name='history'),
     url(r'^meters/(?P<service>[^/]+)$',

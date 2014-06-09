@@ -67,6 +67,10 @@ def alarm_delete(request, alarm_id):
     return monclient(request).alarms.delete(alarm_id=alarm_id)
 
 
+def alarm_history(request, alarm_id):
+    return monclient(request).alarms.history(alarm_id=alarm_id)
+
+
 def alarm_get(request, alarm_id):
     return monclient(request).alarms.get(alarm_id=alarm_id)
 
