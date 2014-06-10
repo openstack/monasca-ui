@@ -3,14 +3,27 @@ CHANGES
 
 1.0.2
 -----
-* New layout of Alarms and Notifications
-* Alarm show history added
-* Notification list, delete, and create button
-* setup.cfg data_files for cosmos and enabled
+
+* ChangeLog new version info, alarm history removed reason_data for now
+* Notification list, Notification delete, and Notification create action and button
+* Alarms History added
+* Fix notification create
+* Allow editing of notifications. Fix templates to new url
+* Change path to panel
+* Clean up notifications to remove old code
+* Give the chicklets a minimum width for consistency
+* Add Clear Alarm action to alarms table
+* Refactor to make alarms and notifications as panels
+* Give the chicklets a minimum width for consistency
+* Add Clear Alarm action to alarms table
+* First pass at refactor notifications
+* Filter metrics based on selected service
+* Track the service that the alarm view uses so that it can be naviagated to
 
 1.0.1
 -----
-* included cosmos and enabled packages setup.cfg
+
+* Version 1.0.1 included packages cosmos,enabled in setup.cfg
 
 1.0.0
 -----
