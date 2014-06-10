@@ -1,9 +1,15 @@
 CHANGES
 =======
 
+1.0.3
+-----
+
+* Forgot to checkin tables.py for notifications
+
 1.0.2
 -----
 
+* New version to changelog
 * ChangeLog new version info, alarm history removed reason_data for now
 * Notification list, Notification delete, and Notification create action and button
 * Alarms History added
