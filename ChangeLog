@@ -1,9 +1,16 @@
 CHANGES
 =======
 
+1.0.2
+-----
+* New layout of Alarms and Notifications
+* Alarm show history added
+* Notification list, delete, and create button
+* setup.cfg data_files for cosmos and enabled
+
 1.0.1
 -----
-included cosmos and enabled packages setup.cfg
+* included cosmos and enabled packages setup.cfg
 
 1.0.0
 -----

@@ -198,7 +198,7 @@ class AlarmHistoryTable(tables.DataTable):
     new_state = tables.Column('new_state', verbose_name=_('New State'))
     timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
     reason = tables.Column('reason', verbose_name=_('Reason'))
-    reason_data = tables.Column('reason_data', verbose_name=_('Reason Data'))
+    # reason_data = tables.Column('reason_data', verbose_name=_('Reason Data'))
 
     def get_object_id(self, obj):
         return obj['alarm_id'] + obj['timestamp']
