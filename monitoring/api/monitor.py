@@ -106,7 +106,8 @@ def notification_create(request, **kwargs):
 
 
 def notification_update(request, notification_id, **kwargs):
-    return monclient(request).notifications.update(notification_id, **kwargs)
+    return monclient(request).notifications. \
+        update(notification_id=notification_id, **kwargs)
 
 
 def metrics_list(request, marker=None, paginate=False):
