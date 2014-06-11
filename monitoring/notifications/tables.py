@@ -67,7 +67,7 @@ class EditNotification(tables.LinkAction):
 
     def get_link_url(self, datum):
         return reverse(constants.URL_PREFIX + 'notification_edit',
-                       datum['id'], )
+                       args=(datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
@@ -87,5 +87,5 @@ class NotificationsTable(tables.DataTable):
     class Meta:
         name = "notifications"
         verbose_name = _("Notifications")
-        row_actions = (DeleteNotification, )
+        row_actions = (EditNotification, DeleteNotification, )
         table_actions = (CreateNotification, )

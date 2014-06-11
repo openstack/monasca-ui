@@ -20,10 +20,11 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.views.generic import TemplateView
 
+from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
-from . import forms as alarm_forms
+from . import forms as notification_forms
 from . import constants
 
 from monitoring import api
@@ -53,7 +54,7 @@ class IndexView(tables.DataTableView):
 
 
 class NotificationCreateView(forms.ModalFormView):
-    form_class = alarm_forms.CreateMethodForm
+    form_class = notification_forms.CreateMethodForm
     template_name = constants.TEMPLATE_PREFIX + 'create.html'
     success_url = reverse_lazy(constants.URL_PREFIX + 'index')
 
@@ -64,3 +65,41 @@ class NotificationCreateView(forms.ModalFormView):
         action = constants.URL_PREFIX + 'notification_create'
         context["action_url"] = reverse(action)
         return context
+
+
+class NotificationEditView(forms.ModalFormView):
+    form_class = notification_forms.EditMethodForm
+    template_name = constants.TEMPLATE_PREFIX + 'edit.html'
+
+    def dispatch(self, *args, **kwargs):
+        return super(NotificationEditView, self).dispatch(*args, **kwargs)
+
+    def get_object(self):
+        id = self.kwargs['id']
+        try:
+            if hasattr(self, "_object"):
+                return self._object
+            self._object = None
+            self._object = api.monitor.notification_get(self.request, id)
+            return self._object
+        except Exception:
+            redirect = reverse(constants.URL_PREFIX + 'index')
+            exceptions.handle(self.request,
+                              _('Unable to retrieve notification details.'),
+                              redirect=redirect)
+        return None
+
+    def get_initial(self):
+        self.notification = self.get_object()
+        return self.notification
+
+    def get_context_data(self, **kwargs):
+        context = super(NotificationEditView, self).get_context_data(**kwargs)
+        id = self.kwargs['id']
+        context["cancel_url"] = self.get_success_url()
+        context["action_url"] = reverse(constants.URL_PREFIX +
+                                        'notification_edit', args=(id,))
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy(constants.URL_PREFIX + 'index',)

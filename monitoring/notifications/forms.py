@@ -101,3 +101,28 @@ class DetailMethodForm(BaseNotificationMethodForm):
 
     def handle(self, request, data):
         return True
+
+
+class EditMethodForm(BaseNotificationMethodForm):
+    def __init__(self, request, *args, **kwargs):
+        super(EditMethodForm, self).__init__(request, *args, **kwargs)
+        super(EditMethodForm, self)._init_fields(readOnly=False)
+
+    def handle(self, request, data):
+        try:
+            kwargs = {}
+            kwargs['notification_id'] = self.initial['id']
+            kwargs['name'] = data['name']
+            kwargs['type'] = data['type']
+            kwargs['address'] = data['address']
+            api.monitor.notification_update(
+                request,
+                **kwargs
+            )
+            messages.success(request,
+                             _('Notification has been edited successfully.'))
+        except Exception as e:
+            exceptions.handle(request,
+                              _('Unable to edit the notification: %s') % e)
+            return False
+        return True
