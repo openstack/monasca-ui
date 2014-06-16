@@ -18,7 +18,6 @@ import logging
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
-from django.views.generic import TemplateView
 
 from horizon import exceptions
 from horizon import forms
