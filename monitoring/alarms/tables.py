@@ -186,7 +186,6 @@ class AlarmsTable(tables.DataTable):
         row_actions = (ShowAlarmHistory,
                        ShowAlarmMeters,
                        EditAlarm,
-                       ClearAlarm,
                        DeleteAlarm,
                        )
         table_actions = (CreateAlarm, )
