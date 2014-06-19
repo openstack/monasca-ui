@@ -15,5 +15,9 @@ ADD_PANEL = \
 ADD_INSTALLED_APPS = ['monitoring']
 
 # A list of angular modules to be added as dependencies to horizon app.
-#ADD_ANGULAR_MODULE = ['monitoringApp']
+ADD_ANGULAR_MODULES = ['monitoringApp']
+
+# A list of javascript files to be included for all pages
+ADD_JS_FILES = ['monitoring/js/app.js',
+                'monitoring/js/controllers.js']
 

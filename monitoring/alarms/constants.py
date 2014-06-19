@@ -15,6 +15,7 @@
 # under the License.
 
 
+
 URL_PREFIX = 'horizon:overcloud:alarms:'
 TEMPLATE_PREFIX = 'overcloud/alarms/'
 

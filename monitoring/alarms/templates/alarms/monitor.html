@@ -50,30 +50,26 @@
 }
 </style>
 <div style="border: 1px solid #dddddd;">
-   <div>
-        {% for group in service_groups %}
-        <div class="chicklet-container">
+    <div ng-controller = "monitoringController" ng-init="fetchStatus()">
+        <div class="chicklet-container" ng-repeat="group in _serviceModel">
             <div>
-                {{ group.name }}
+                {$ group.name $}
             </div>
-            {% for service in group.services %}
-                <a href="{% url 'horizon:overcloud:alarms:alarm' service.name %}" class="showspinner">
-                 <div class="base-chicklet {{ service.class }}">
+            <div ng-repeat="service in group.services" style="display:inline-block; margin-bottom:4px;">
+                <a href="/overcloud/alarm/{$ service.name $}">
+                 <div class="base-chicklet {$ service.class $}">
                     <div>
                         <div class="status-icon-holder" >
-                            <img src="{{ service.icon }}"/>
+                            <img ng-src="{$ service.icon $}"/>
                         </div>
                         <div class="service-text">
-                        {{ service.display }}
+                        {$ service.display $}
                         </div>
-                        {% if service.count %}
-                            ({{ service.count }})
-                        {% endif %}
                     </div>
-                </div>
-                </a>
-             {% endfor %}
+                 </div>
+                 </a>
+            </div>
          </div>
-         {% endfor %}
     </div>
 </div>
+

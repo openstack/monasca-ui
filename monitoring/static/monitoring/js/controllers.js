@@ -1,8 +1,8 @@
 'use strict';
 angular.module('monitoring.controllers', [])
-    .controller('monitoringController', function ($scope, $http) {
+    .controller('monitoringController', function ($scope, $http, $timeout) {
          $scope.fetchStatus = function() {
-            $http({method: 'GET', url: '/admin/monitoring/status'}).
+            $http({method: 'GET', url: '/overcloud/status'}).
                 success(function(data, status, headers, config) {
                   // this callback will be called asynchronously
                   // when the response is available
@@ -19,29 +19,29 @@ angular.module('monitoring.controllers', [])
                 error(function(data, status, headers, config) {
                   // called asynchronously if an error occurs
                   // or server returns response with an error status.
-                    alert("error")
+                  // reload page if there was an error, login may be required
+                    window.top.location.reload(true)
                 });
         }
-    })
-    .controller('alarmController', function($scope) {
-        $scope.myData = [{name: "API Response Time", status: 'Normal'},
-                         {name: "System Health", status: 'Normal'},
-                         {name: "Database Access", status: 'Normal'},
-                         {name: "Network Latency", status: 'Normal'},
-                         {name: "Rabbit Health", status: 'Normal'}];
-        $scope.gridOptions = { data: 'myData' ,
-                columnDefs: [{field:'name', displayName:'Name'}, {field:'status', displayName:'Status'}]};
-    });
+    $scope.onTimeout = function(){
+        mytimeout = $timeout($scope.onTimeout,10000);
+        $scope.fetchStatus()
+    }
+    var mytimeout = $timeout($scope.onTimeout,10000);
 
+    $scope.stop = function(){
+        $timeout.cancel(mytimeout);
+    }
+    });
 function getIcon(status) {
-    if (status === 'alert-error')
+    if (status === 'chicklet-error')
         return '/static/monitoring/img/critical-icon.png'
-    else if (status === 'alert-warning')
+    else if (status === 'chicklet-warning')
         return '/static/monitoring/img/warning-icon.png'
-    else if (status === 'alert-unknown')
+    else if (status === 'chicklet-unknown')
         return '/static/monitoring/img/unknown-icon.png'
-    else if (status === 'alert-success')
+    else if (status === 'chicklet-success')
         return '/static/monitoring/img/ok-icon.png'
-    else if (status === 'alert-notfound')
+    else if (status === 'chicklet-notfound')
         return '/static/monitoring/img/notfound-icon.png'
 }
