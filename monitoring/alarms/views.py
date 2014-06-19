@@ -148,13 +148,6 @@ def generate_status(request):
 class IndexView(TemplateView):
     template_name = constants.TEMPLATE_PREFIX + 'index.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context["date"] = datetime.datetime.utcnow()
-        context["service_groups"] = generate_status(self.request)
-
-        return context
-
 
 class StatusView(TemplateView):
     template_name = ""
@@ -199,7 +192,7 @@ class AlarmServiceView(tables.DataTableView):
 
 class AlarmCreateView(forms.ModalFormView):
     form_class = alarm_forms.CreateAlarmForm
-    template_name = constants.TEMPLATE_PREFIX + 'alarms/create.html'
+    template_name = constants.TEMPLATE_PREFIX + 'create.html'
 
     def dispatch(self, *args, **kwargs):
         self.service = kwargs['service']
@@ -249,7 +242,7 @@ def transform_alarm_history(results, name):
 
 class AlarmDetailView(forms.ModalFormView):
     form_class = alarm_forms.DetailAlarmForm
-    template_name = constants.TEMPLATE_PREFIX + 'alarms/detail.html'
+    template_name = constants.TEMPLATE_PREFIX + 'detail.html'
 
     def get_object(self):
         id = self.kwargs['id']
@@ -297,7 +290,7 @@ class AlarmDetailView(forms.ModalFormView):
 
 class AlarmEditView(forms.ModalFormView):
     form_class = alarm_forms.EditAlarmForm
-    template_name = constants.TEMPLATE_PREFIX + 'alarms/edit.html'
+    template_name = constants.TEMPLATE_PREFIX + 'edit.html'
 
     def dispatch(self, *args, **kwargs):
         self.service = kwargs['service']
