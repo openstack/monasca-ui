@@ -31,10 +31,16 @@ $('#add_notification_button').click(function(){
   name = "notifications_" + num;
   options = $("#id_notifications_" + (num - 1)).html();
   options = options.replace('selected="selected"','');
-  row = '<tr><td><select id="' + id +'" name="' + name + '">' + options + '</select></td></tr>'
+  row = '<tr><td><select id="' + id +'" name="' + name + '">' + options + '</select></td><td><a href="" id="remove_notification_button">X</a></td></tr>'
   $('#notification_table tr:last').after(row);
   return false;
 });
+$('#notification_table').on('click', '#remove_notification_button', (function(event){
+    var target = $(event.target.parentNode.parentNode);
+    target.remove();
+    return false;
+}));
+
 </script>
 {% endblock %}
 
