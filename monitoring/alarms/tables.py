@@ -167,10 +167,10 @@ class AlarmsTable(tables.DataTable):
     target = tables.Column('name', verbose_name=_('Name'),
                            link=constants.URL_PREFIX + 'alarm_detail',
                            link_classes=('ajax-modal',))
+    description = tables.Column('description', verbose_name=_('Description'))
     host = tables.Column(transform=show_host, verbose_name=_('Host'))
     service = tables.Column(transform=show_service, verbose_name=_('Service'))
     state = tables.Column('state', verbose_name=_('State'))
-    expression = tables.Column('expression', verbose_name=_('Expression'))
     enabled = tables.Column('actions_enabled',
                             verbose_name=_('Notifications Enabled'))
 
