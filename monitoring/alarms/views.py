@@ -268,7 +268,7 @@ class AlarmDetailView(forms.ModalFormView):
             self._object["notifications"] = notifications
             return self._object
         except Exception:
-            redirect = reverse(constants.URL_PREFIX + 'alarm')
+            redirect = self.get_success_url()
             exceptions.handle(self.request,
                               _('Unable to retrieve alarm details.'),
                               redirect=redirect)
@@ -285,7 +285,7 @@ class AlarmDetailView(forms.ModalFormView):
         return context
 
     def get_success_url(self):
-        return "d"
+        return reverse_lazy(constants.URL_PREFIX + 'index')
 
 
 class AlarmEditView(forms.ModalFormView):
@@ -321,7 +321,7 @@ class AlarmEditView(forms.ModalFormView):
             self._object["notifications"] = notifications
             return self._object
         except Exception:
-            redirect = reverse(constants.URL_PREFIX + 'alarm')
+            redirect = self.get_success_url()
             exceptions.handle(self.request,
                               _('Unable to retrieve alarm details.'),
                               redirect=redirect)

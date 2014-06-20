@@ -167,7 +167,7 @@ class NotificationCreateWidget(forms.Select):
             notification_id = "%s_%d" % (name, i)
             if notification_id in data:
                 if len(data[notification_id]) > 0:
-                    notifications.append({"notification_id":
+                    notifications.append({"id":
                                          data[notification_id]})
             else:
                 break
@@ -272,7 +272,7 @@ class CreateAlarmForm(BaseAlarmForm):
 
     def handle(self, request, data):
         try:
-            alarm_actions = [notification.get('notification_id')
+            alarm_actions = [notification.get('id')
                              for notification in data['notifications']]
             api.monitor.alarm_create(
                 request,
@@ -309,7 +309,7 @@ class EditAlarmForm(BaseAlarmForm):
         try:
             alarm_actions = []
             if data['notifications']:
-                alarm_actions = [notification.get('notification_id')
+                alarm_actions = [notification.get('id')
                                  for notification in data['notifications']]
             api.monitor.alarm_update(
                 request,
