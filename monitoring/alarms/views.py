@@ -30,6 +30,7 @@ from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
+import monclient.exc as exc
 from monitoring import api
 from .tables import AlarmsTable
 from .tables import AlarmHistoryTable
@@ -259,7 +260,8 @@ class AlarmDetailView(forms.ModalFormView):
                         self.request,
                         id)
                     notifications.append(notification)
-                except exceptions.NOT_FOUND:
+                # except exceptions.NOT_FOUND:
+                except exc.HTTPException:
                     msg = _("Notification %s has already been deleted.") % id
                     notifications.append({"id": id,
                                           "name": unicode(msg),
@@ -312,12 +314,9 @@ class AlarmEditView(forms.ModalFormView):
                         self.request,
                         id)
                     notifications.append(notification)
-                except exceptions.NOT_FOUND:
+                # except exceptions.NOT_FOUND:
+                except exc.HTTPException:
                     msg = _("Notification %s has already been deleted.") % id
-                    notifications.append({"id": id,
-                                          "name": unicode(msg),
-                                          "type": "",
-                                          "address": ""})
             self._object["notifications"] = notifications
             return self._object
         except Exception:
