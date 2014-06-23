@@ -141,7 +141,7 @@ class NotificationCreateWidget(forms.Select):
                 if options:
                     output += options
                 output += '</select>'
-                output += '<td><a href="" id="remove_notification_button">X</a></td>'
+                output += '<td><a href="" id="remove_notif_button">X</a></td>'
                 output += '</td></tr>'
                 idx += 1
         else:
@@ -152,7 +152,7 @@ class NotificationCreateWidget(forms.Select):
             if options:
                 output += options
             output += '</select>'
-            output += '<td><a href="" id="remove_notification_button">X</a></td>'
+            output += '<td><a href="" id="remove_notif_button">X</a></td>'
             output += '</td></tr>'
         output += '</table>'
         label = unicode(_("+ Add more"))
