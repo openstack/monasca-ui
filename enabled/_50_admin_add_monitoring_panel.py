@@ -19,5 +19,13 @@ ADD_ANGULAR_MODULES = ['monitoringApp']
 
 # A list of javascript files to be included for all pages
 ADD_JS_FILES = ['monitoring/js/app.js',
-                'monitoring/js/controllers.js']
+                'monitoring/js/controllers.js',
+                'monitoring/js/ng-tags-input.js']
 
+from monclient import exc
+# A dictionary of exception classes to be added to HORIZON['exceptions'].
+ADD_EXCEPTIONS = {
+    'recoverable': (exc.HTTPUnProcessable,),
+    'not_found': (exc.HTTPNotFound,),
+    'unauthorized': (exc.HTTPUnauthorized,),
+}

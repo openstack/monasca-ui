@@ -18,6 +18,7 @@ import datetime
 import logging
 import json
 import random
+from collections import defaultdict
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
@@ -206,6 +207,21 @@ class AlarmCreateView(forms.ModalFormView):
         context["cancel_url"] = self.get_success_url()
         context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create',
                                         args=(self.service,))
+        metrics = api.monitor.metrics_list(self.request)
+        # Filter out metrics for other services
+        if self.service != 'all':
+            meters = [m for m in metrics
+                      if m.setdefault('dimensions', {}).
+                      setdefault('service', '') == self.service]
+
+        # Aggregate all dimensions for each metric name
+        d = defaultdict(set)
+        for metric in metrics:
+            dim_list = ['%s=%s' % (n, l) for n, l in metric["dimensions"].items()]
+            d[metric["name"]].update(dim_list)
+        unique_metrics = [{'name': k, 'dimensions': sorted(list(v))}
+                          for k, v in d.items()]
+        context["metrics"] = json.dumps(unique_metrics)
         return context
 
     def get_success_url(self):

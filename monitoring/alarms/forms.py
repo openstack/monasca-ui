@@ -26,30 +26,42 @@ from horizon import messages
 from monitoring import api
 
 
-def get_expression(meter):
-    expr = meter['name']
-    args = None
-    for name, value in meter['dimensions'].items():
-        if name != 'detail':
-            if args:
-                args += ', '
-            else:
-                args = ''
-            args += "%s=%s" % (name, value)
-    return "%s{%s}" % (expr, args)
+class ExpressionWidget(forms.Widget):
+    def __init__(self, initial, attrs):
+        super(ExpressionWidget, self).__init__(attrs)
+        self.initial = initial
+
+    def render(self, name, value, attrs):
+        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs['placeholder'] = _('Add a dimension')
+        if 'all' in self.initial['service']:
+            dim = ''
+        else:
+            dim = next(("%s=%s" % (k, v) for k, v in self.initial.items()), '')
+        final_attrs['service'] = dim
+        output = '''
+        <div ng-controller="alarmEditController" ng-init="init('%(service)s')">
+         <input type="hidden" name="%(name)s" id="dimension"/>
+         <select id="metric-chooser" ng-model="currentMetric" ng-options="metric.name for metric in metrics | orderBy:'name'" ng-change="metricChanged()"></select>
+         <tags-input id="dimension-chooser" ng-model="tags" placeholder="%(placeholder)s" add-from-autocomplete-only="true" max-results-to-show="20" on-tag-added="saveDimension()" on-tag-removed="saveDimension()">
+          <auto-complete source="possibleDimensions()" min-length="1">
+          </auto-complete>
+         </tags-input>
+        </div>
+       ''' % final_attrs
+        return format_html(output)
 
 
 class SimpleExpressionWidget(django_forms.MultiWidget):
-    def __init__(self, meters=None, attrs=None):
-        choices = [(get_expression(m), get_expression(m)) for m in meters]
+    def __init__(self, initial, attrs=None):
         comparators = [('>', '>'), ('>=', '>='), ('<', '<'), ('<=', '<=')]
         func = [('min', _('min')), ('max', _('max')), ('sum', _('sum')),
                 ('count', _('count')), ('avg', _('avg'))]
         _widgets = (
             django_forms.widgets.Select(attrs=attrs, choices=func),
-            django_forms.widgets.Select(attrs=attrs, choices=choices),
+            ExpressionWidget(initial, attrs={}),
             django_forms.widgets.Select(attrs=attrs, choices=comparators),
-            django_forms.widgets.TextInput(attrs=attrs),
+            django_forms.widgets.TextInput(),
         )
         super(SimpleExpressionWidget, self).__init__(_widgets, attrs)
 
@@ -199,14 +211,7 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                         ('address', _('Address')), ])
         else:
             if create:
-                meters = api.monitor.metrics_list(self.request)
-                if initial and 'service' in initial and \
-                        initial['service'] != 'all':
-                    service = initial['service']
-                    meters = [m for m in meters
-                              if m.setdefault('dimensions', {}).
-                              setdefault('service', '') == service]
-                expressionWidget = SimpleExpressionWidget(meters=meters)
+                expressionWidget = SimpleExpressionWidget(initial)
                 notificationWidget = NotificationCreateWidget()
             else:
                 expressionWidget = textAreaWidget

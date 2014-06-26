@@ -40,18 +40,14 @@ $('#notification_table').on('click', '#remove_notification_button', (function(ev
     target.remove();
     return false;
 }));
+metricsList = {{ metrics | safe }}
 </script>
 <style>
-  #id_expression_0 {
-      width: 65px;
-  }
   #id_expression_2 {
       width: 60px;
   }
-  #id_expression_3 {
-      width: 80px;
-  }
-</style>
+ </style>
+    <link href='{{ STATIC_URL }}/monitoring/css/ng-tags-input.css' type="text/css" rel="stylesheet"/>
 {% endblock %}
 
 {% block modal-footer %}
