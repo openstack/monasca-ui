@@ -15,8 +15,7 @@
 # under the License.
 
 from django import forms as django_forms
-from django.utils.html import escape
-from django.utils.html import format_html
+from django.utils import html
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon import exceptions
@@ -42,14 +41,19 @@ class ExpressionWidget(forms.Widget):
         output = '''
         <div ng-controller="alarmEditController" ng-init="init('%(service)s')">
          <input type="hidden" name="%(name)s" id="dimension"/>
-         <select id="metric-chooser" ng-model="currentMetric" ng-options="metric.name for metric in metrics | orderBy:'name'" ng-change="metricChanged()"></select>
-         <tags-input id="dimension-chooser" ng-model="tags" placeholder="%(placeholder)s" add-from-autocomplete-only="true" max-results-to-show="20" on-tag-added="saveDimension()" on-tag-removed="saveDimension()">
+         <select id="metric-chooser" ng-model="currentMetric"
+          ng-options="metric.name for metric in metrics | orderBy:'name'"
+          ng-change="metricChanged()"></select>
+         <tags-input id="dimension-chooser" ng-model="tags"
+          placeholder="%(placeholder)s"
+          add-from-autocomplete-only="true" max-results-to-show="20"
+          on-tag-added="saveDimension()" on-tag-removed="saveDimension()">
           <auto-complete source="possibleDimensions()" min-length="1">
           </auto-complete>
          </tags-input>
         </div>
        ''' % final_attrs
-        return format_html(output)
+        return html.format_html(output)
 
 
 class SimpleExpressionWidget(django_forms.MultiWidget):
@@ -104,10 +108,10 @@ class NotificationTableWidget(forms.Widget):
                 output += "<tr>"
                 for field in self.fields:
                     field_value = notification[field[self.FIELD_ID_IDX]]
-                    output += '<td>%s</td>' % escape(field_value)
+                    output += '<td>%s</td>' % html.escape(field_value)
                 output += "</tr>"
         output += '</table>'
-        return format_html(output)
+        return html.format_html(output)
 
 
 class NotificationField(forms.MultiValueField):
@@ -169,7 +173,7 @@ class NotificationCreateWidget(forms.Select):
         output += '</table>'
         label = unicode(_("+ Add more"))
         output += '<a href="" id="add_notification_button">%s</a>' % (label)
-        return format_html(output)
+        return html.format_html(output)
 
     def value_from_datadict(self, data, files, name):
         notifications = []

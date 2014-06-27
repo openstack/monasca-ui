@@ -14,7 +14,7 @@
 
 import logging
 
-from django.conf import settings
+from django.conf import settings  # noqa
 from monclient import client as mon_client
 
 LOG = logging.getLogger(__name__)

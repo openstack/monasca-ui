@@ -18,22 +18,23 @@ import logging
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
+from django.utils.translation import ugettext as _  # noqa
 
 from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
-from . import forms as notification_forms
-from . import constants
+from monitoring.notifications import constants
+from monitoring.notifications import forms as notification_forms
+from monitoring.notifications import tables as notification_tables
 
 from monitoring import api
-from .tables import NotificationsTable
 
 LOG = logging.getLogger(__name__)
 
 
 class IndexView(tables.DataTableView):
-    table_class = NotificationsTable
+    table_class = notification_tables.NotificationsTable
     template_name = constants.TEMPLATE_PREFIX + 'index.html'
 
     def dispatch(self, *args, **kwargs):
@@ -43,7 +44,7 @@ class IndexView(tables.DataTableView):
         results = []
         try:
             results = api.monitor.notification_list(self.request)
-        except:
+        except Exception:
             messages.error(self.request, _("Could not retrieve notifications"))
         return results
 

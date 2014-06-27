@@ -16,15 +16,14 @@
 
 import logging
 
-from django import template
-from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.core import urlresolvers
+from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon import exceptions
 from horizon import tables
 
-from . import constants
 from monitoring import api
+from monitoring.notifications import constants
 
 LOG = logging.getLogger(__name__)
 
@@ -54,7 +53,8 @@ class CreateNotification(tables.LinkAction):
     classes = ("ajax-modal", "btn-create")
 
     def get_link_url(self):
-        return reverse(constants.URL_PREFIX + 'notification_create',)
+        url = constants.URL_PREFIX + 'notification_create'
+        return urlresolvers.reverse(url)
 
     def allowed(self, request, datum=None):
         return True
@@ -66,8 +66,8 @@ class EditNotification(tables.LinkAction):
     classes = ("ajax-modal", "btn-create")
 
     def get_link_url(self, datum):
-        return reverse(constants.URL_PREFIX + 'notification_edit',
-                       args=(datum['id'], ))
+        return urlresolvers.reverse(constants.URL_PREFIX + 'notification_edit',
+                                    args=(datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True

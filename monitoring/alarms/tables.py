@@ -16,14 +16,14 @@
 
 import logging
 
+from django.core import urlresolvers
 from django import template
-from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _  # noqa
 
-from horizon import tables
 from horizon import exceptions
+from horizon import tables
 
-from . import constants
+from monitoring.alarms import constants
 from monitoring import api
 
 LOG = logging.getLogger(__name__)
@@ -84,8 +84,8 @@ class ShowAlarmHistory(tables.LinkAction):
     classes = ('btn-edit',)
 
     def get_link_url(self, datum):
-        return reverse(constants.URL_PREFIX + 'history',
-                       args=(datum['name'], datum['id'], ))
+        return urlresolvers.reverse(constants.URL_PREFIX + 'history',
+                                    args=(datum['name'], datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
@@ -104,8 +104,8 @@ class CreateAlarm(tables.LinkAction):
     classes = ("ajax-modal", "btn-create")
 
     def get_link_url(self):
-        return reverse(constants.URL_PREFIX + 'alarm_create',
-                       args=(self.table.kwargs['service'],))
+        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_create',
+                                    args=(self.table.kwargs['service'],))
 
     def allowed(self, request, datum=None):
         return True
@@ -117,8 +117,9 @@ class EditAlarm(tables.LinkAction):
     classes = ("ajax-modal", "btn-create")
 
     def get_link_url(self, datum):
-        return reverse(constants.URL_PREFIX + 'alarm_edit',
-                       args=(self.table.kwargs['service'], datum['id'], ))
+        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_edit',
+                                    args=(self.table.kwargs['service'],
+                                          datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True

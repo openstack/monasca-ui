@@ -21,7 +21,7 @@ from horizon import forms
 from horizon import messages
 
 from monitoring import api
-from . import constants
+from monitoring.notifications import constants
 
 
 READONLY_TEXTINPUT = forms.TextInput(attrs={'readonly': 'readonly'})

@@ -13,10 +13,10 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from django.conf.urls import patterns
-from django.conf.urls import url
+from django.conf.urls import patterns  # noqa
+from django.conf.urls import url  # noqa
 
-from . import views
+from monitoring.notifications import views
 
 urlpatterns = patterns(
     '',

@@ -14,31 +14,26 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.import logging
 
-import datetime
-import logging
+from collections import defaultdict  # noqa
 import json
-import random
-from collections import defaultdict
+import logging
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
+from django.http import HttpResponse  # noqa
 from django.template import defaultfilters as filters
-from django.http import HttpResponse   # noqa
-from django.utils.translation import ugettext as _
-from django.views.generic import TemplateView
+from django.utils.translation import ugettext as _  # noqa
+from django.views.generic import TemplateView  # noqa
 
 from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
 import monclient.exc as exc
+from monitoring.alarms import constants
+from monitoring.alarms import forms as alarm_forms
+from monitoring.alarms import tables as alarm_tables
 from monitoring import api
-from .tables import AlarmsTable
-from .tables import AlarmHistoryTable
-from .tables import show_service
-from .tables import show_severity
-from . import forms as alarm_forms
-from . import constants
 
 LOG = logging.getLogger(__name__)
 
@@ -126,7 +121,7 @@ def get_status(alarms):
         return 'chicklet-notfound'
     status_index = 0
     for a in alarms:
-        severity = show_severity(a)
+        severity = alarm_tables.show_severity(a)
         severity_index = index_by_severity[severity]
         status_index = max(status_index, severity_index)
     return priorities[status_index]['status']
@@ -136,7 +131,7 @@ def generate_status(request):
     alarms = api.monitor.alarm_list(request)
     alarms_by_service = {}
     for a in alarms:
-        service = show_service(a)
+        service = alarm_tables.show_service(a)
         service_alarms = alarms_by_service.setdefault(service, [])
         service_alarms.append(a)
     for row in SAMPLE:
@@ -165,7 +160,7 @@ class StatusView(TemplateView):
 
 
 class AlarmServiceView(tables.DataTableView):
-    table_class = AlarmsTable
+    table_class = alarm_tables.AlarmsTable
     template_name = constants.TEMPLATE_PREFIX + 'alarm.html'
 
     def dispatch(self, *args, **kwargs):
@@ -182,7 +177,7 @@ class AlarmServiceView(tables.DataTableView):
                 results = api.monitor.alarm_list_by_service(
                     self.request,
                     self.service)
-        except:
+        except Exception:
             messages.error(self.request, _("Could not retrieve alarms"))
         return results
 
@@ -211,14 +206,15 @@ class AlarmCreateView(forms.ModalFormView):
         metrics = api.monitor.metrics_list(self.request)
         # Filter out metrics for other services
         if self.service != 'all':
-            meters = [m for m in metrics
-                      if m.setdefault('dimensions', {}).
-                      setdefault('service', '') == self.service]
+            metrics = [m for m in metrics
+                       if m.setdefault('dimensions', {}).
+                       setdefault('service', '') == self.service]
 
         # Aggregate all dimensions for each metric name
         d = defaultdict(set)
         for metric in metrics:
-            dim_list = ['%s=%s' % (n, l) for n, l in metric["dimensions"].items()]
+            dim_list = ['%s=%s' % (n, l)
+                        for n, l in metric["dimensions"].items()]
             d[metric["name"]].update(dim_list)
         unique_metrics = [{'name': k, 'dimensions': sorted(list(v))}
                           for k, v in d.items()]
@@ -333,6 +329,7 @@ class AlarmEditView(forms.ModalFormView):
                 # except exceptions.NOT_FOUND:
                 except exc.HTTPException:
                     msg = _("Notification %s has already been deleted.") % id
+                    messages.warning(self.request, msg)
             self._object["notifications"] = notifications
             return self._object
         except Exception:
@@ -360,7 +357,7 @@ class AlarmEditView(forms.ModalFormView):
 
 
 class AlarmHistoryView(tables.DataTableView):
-    table_class = AlarmHistoryTable
+    table_class = alarm_tables.AlarmHistoryTable
     template_name = constants.TEMPLATE_PREFIX + 'alarm_history.html'
 
     def dispatch(self, *args, **kwargs):
@@ -372,7 +369,7 @@ class AlarmHistoryView(tables.DataTableView):
         results = []
         try:
             results = api.monitor.alarm_history(self.request, id)
-        except:
+        except Exception:
             messages.error(self.request,
                            _("Could not retrieve alarm history for %s") % id)
         return transform_alarm_history(results, name)
@@ -384,19 +381,3 @@ class AlarmHistoryView(tables.DataTableView):
 
 class AlarmMeterView(TemplateView):
     template_name = constants.TEMPLATE_PREFIX + 'alarm_meter.html'
-
-
-def get_random_status():
-    distribution = [
-        {'prob': .04, 'value': 'chicklet-error'},
-        {'prob': .04, 'value': 'chicklet-warning'},
-        {'prob': .04, 'value': 'chicklet-unknown'},
-        {'prob': .04, 'value': 'chicklet-notfound'},
-        {'prob': 1.0, 'value': 'chicklet-success'},
-    ]
-    num = random.random()
-    for dist in distribution:
-        if num < dist["prob"]:
-            return dist["value"]
-        num = num - dist["prob"]
-    return distribution[len(distribution) - 1]["value"]
