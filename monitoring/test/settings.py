@@ -32,7 +32,7 @@ STATIC_URL = '/static/'
 
 SECRET_KEY = secret_key_utils.generate_or_read_from_file(
     os.path.join(TEST_DIR, '.secret_key_store'))
-ROOT_URLCONF = 'tuskar_ui.test.urls'
+ROOT_URLCONF = 'monitoring.test.urls'
 TEMPLATE_DIRS = (
     os.path.join(TEST_DIR, 'templates'),
 )

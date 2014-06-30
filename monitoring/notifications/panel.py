@@ -22,4 +22,3 @@ import horizon
 class Notifications(horizon.Panel):
     name = _("Notifications")
     slug = 'notifications'
-    permissions = ('openstack.roles.admin', )

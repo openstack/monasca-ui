@@ -1,6 +1,3 @@
-# vim: tabstop=4 shiftwidth=4 softtabstop=4
-
-# Copyright 2013 Hewlett-Packard Development Company, L.P.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -14,11 +11,17 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from django.utils.translation import ugettext_lazy as _  # noqa
+from django.conf import urls
+from django.views import generic
 
-import horizon
+import openstack_dashboard.urls
 
-
-class Monitoring(horizon.Panel):
-    name = _("Alarms")
-    slug = 'alarms'
+urlpatterns = urls.patterns(
+    '',
+    urls.url(
+        r'^qunit_tuskar',
+        generic.TemplateView.as_view(
+            template_name="infrastructure/qunit.html"),
+        name='qunit_tests'),
+    urls.url(r'', urls.include(openstack_dashboard.urls))
+)
