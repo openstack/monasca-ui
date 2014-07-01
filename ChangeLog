@@ -1,6 +1,24 @@
 CHANGES
 =======
 
+1.0.4
+-----
+
+* Changes to work with api keystone. Changes for tests
+* Resolve all pep8 issues
+* Enable unit and pep8 tests
+* Implement dimension chooser angular field
+* alarms detail and edit catch monclient exception, pep8 changes
+* Show description instead of expression in alarms table
+* Fix problem where form validation failed for alarms with notifications
+* Allow deletion of notifications from alarms
+* Refactor template files for alarms
+* Dynamically update status without refreshing page
+* removed clear alarm option
+* Remove unused import
+* Added Notification update
+* Modified ChangeLog
+
 1.0.3
 -----
 
