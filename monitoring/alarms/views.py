@@ -145,6 +145,11 @@ def generate_status(request):
 class IndexView(TemplateView):
     template_name = constants.TEMPLATE_PREFIX + 'index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context["token"] = self.request.user.token.id
+        return context
+
 
 class StatusView(TemplateView):
     template_name = ""

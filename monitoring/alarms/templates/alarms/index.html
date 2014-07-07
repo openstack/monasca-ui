@@ -9,6 +9,7 @@
 {% block main %}
     <div style="padding: 3px;">
         <a href="{%  url 'horizon:overcloud:alarms:alarm' 'all'%}" class="btn btn-small btn-run showspinner">{% trans 'All Alarms' %}</a>
+        <a target="dashboard" href="http://localhost:8000/static/grafana/index.html#/dashboard/file/default.json?token={{ token }}" class="btn btn-small btn-run showspinner">{% trans 'Dashboard' %}</a>
     </div>
     {%  include 'overcloud/alarms/monitor.html' %}
 {% endblock %}

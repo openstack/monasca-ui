@@ -12,7 +12,7 @@ ADD_PANEL = \
     'monitoring.alarms.panel.Monitoring'
 
 # A list of applications to be added to INSTALLED_APPS.
-ADD_INSTALLED_APPS = ['monitoring']
+ADD_INSTALLED_APPS = ['monitoring', 'grafana']
 
 # A list of angular modules to be added as dependencies to horizon app.
 ADD_ANGULAR_MODULES = ['monitoringApp']
