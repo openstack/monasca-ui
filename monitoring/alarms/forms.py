@@ -323,12 +323,12 @@ class EditAlarmForm(BaseAlarmForm):
             api.monitor.alarm_update(
                 request,
                 alarm_id=self.initial['id'],
-                actions_enabled=self.initial['actions_enabled'],
                 state=self.initial['state'],
                 severity=data['severity'],
                 name=data['name'],
                 expression=data['expression'],
                 description=data['description'],
+                actions_enabled=data['actions_enabled'],
                 alarm_actions=alarm_actions,
             )
             messages.success(request,
