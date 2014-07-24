@@ -91,13 +91,6 @@ class ShowAlarmHistory(tables.LinkAction):
         return True
 
 
-class ShowAlarmMeters(tables.LinkAction):
-    name = 'meters'
-    verbose_name = _('Show Meters')
-    url = constants.URL_PREFIX + 'meters'
-    classes = ('btn-edit',)
-
-
 class CreateAlarm(tables.LinkAction):
     name = "create_alarm"
     verbose_name = _("Create Alarm")
@@ -185,7 +178,6 @@ class AlarmsTable(tables.DataTable):
         name = "alarms"
         verbose_name = _("Alarms")
         row_actions = (ShowAlarmHistory,
-                       ShowAlarmMeters,
                        EditAlarm,
                        DeleteAlarm,
                        )
@@ -206,4 +198,3 @@ class AlarmHistoryTable(tables.DataTable):
     class Meta:
         name = "users"
         verbose_name = _("Alarm History")
-        row_actions = (ShowAlarmMeters,)

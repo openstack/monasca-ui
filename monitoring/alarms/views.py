@@ -382,7 +382,3 @@ class AlarmHistoryView(tables.DataTableView):
     def get_context_data(self, **kwargs):
         context = super(AlarmHistoryView, self).get_context_data(**kwargs)
         return context
-
-
-class AlarmMeterView(TemplateView):
-    template_name = constants.TEMPLATE_PREFIX + 'alarm_meter.html'
