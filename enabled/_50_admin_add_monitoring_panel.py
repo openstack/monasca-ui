@@ -22,7 +22,7 @@ ADD_JS_FILES = ['monitoring/js/app.js',
                 'monitoring/js/controllers.js',
                 'monitoring/js/ng-tags-input.js']
 
-from monclient import exc
+from monascaclient import exc
 # A dictionary of exception classes to be added to HORIZON['exceptions'].
 ADD_EXCEPTIONS = {
     'recoverable': (exc.HTTPUnProcessable,),

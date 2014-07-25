@@ -29,7 +29,7 @@ from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
-import monclient.exc as exc
+import monascaclient.exc as exc
 from monitoring.alarms import constants
 from monitoring.alarms import forms as alarm_forms
 from monitoring.alarms import tables as alarm_tables

@@ -11,13 +11,13 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from monclient.openstack.common.apiclient import exceptions as monclient
+from monascaclient.openstack.common.apiclient import exceptions as monascacli
 from openstack_dashboard.test.test_data import exceptions
 
 
 def data(TEST):
     TEST.exceptions = exceptions.data
 
-    monitoring_exception = monclient.ClientException
+    monitoring_exception = monascacli.ClientException
     TEST.exceptions.monitoring = exceptions.create_stubbed_exception(
         monitoring_exception)
