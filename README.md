@@ -1,11 +1,14 @@
 monasca-ui
 ==========
 
-Monasca UI
-
-This monasca UI is implemented as a horizon plugin that adds a panel.
-You need to copy the file from enabled directory into horizon's openstack_dashboard/local/enabled directory.
-You need to symlink the monitoring directory into horizon top level directory.
+Monasca UI is implemented as a horizon plugin that adds panels to horizon. It is installed into devstack
+by monasca-vagrant. For a UI development setup:
+* git clone https://github.com/openstack/horizon.git  # clone horizon
+* git clone https://github.com/stackforge/monasca-ui.git # clone monasca-ui
+* cd horizon
+* cp ../monasca-ui/enabled/* openstack_dashbaord/local/enabled  # Copy enabled files
+* ln -s ../monasca-ui/monitoring monitoring
+* tools/with_venv.sh pip install -r ../monasca-ui/requirements.txt
 
 # License
 
