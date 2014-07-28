@@ -63,7 +63,7 @@ def show_severity(data):
 
 
 def show_service(data):
-    if any(data['expression_data']['dimensions']):
+    if 'dimensions' in data['expression_data']:
         dimensions = data['expression_data']['dimensions']
         if 'service' in dimensions:
             return str(data['expression_data']['dimensions']['service'])
@@ -71,7 +71,7 @@ def show_service(data):
 
 
 def show_host(data):
-    if any(data['expression_data']['dimensions']):
+    if 'dimensions' in data['expression_data']:
         dimensions = data['expression_data']['dimensions']
         if 'hostname' in dimensions:
             return str(data['expression_data']['dimensions']['hostname'])
