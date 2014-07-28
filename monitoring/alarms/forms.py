@@ -80,10 +80,10 @@ class SimpleExpressionWidget(django_forms.MultiWidget):
             widget.value_from_datadict(data, files, name + '_%s' % i)
             for i, widget in enumerate(self.widgets)]
         try:
-            expression = '%s(%s)%s%s' % (values[0],
-                                         values[1],
-                                         values[2],
-                                         values[3])
+            expression = '%s(%s) %s %s' % (values[0],
+                                           values[1],
+                                           values[2],
+                                           values[3])
         except ValueError:
             return ''
         else:
@@ -270,6 +270,16 @@ class BaseAlarmForm(forms.SelfHandlingForm):
 
         self.fields['notifications'].choices = notification_choices
 
+    def clean_expression(self):
+        data = self.cleaned_data['expression']
+        value = data.split(' ')[2]
+        if not value.isdigit():
+            raise forms.ValidationError("Value must be an integer")
+
+        # Always return the cleaned data, whether you have changed it or
+        # not.
+        return data
+
 
 class CreateAlarmForm(BaseAlarmForm):
     def __init__(self, request, *args, **kwargs):
@@ -293,7 +303,7 @@ class CreateAlarmForm(BaseAlarmForm):
             messages.success(request,
                              _('Alarm has been created successfully.'))
         except Exception as e:
-            exceptions.handle(request, _('Unable to create the alarm: %s') % e)
+            exceptions.handle(request, _('Unable to create the alarm: %s') % e.message)
             return False
         return True
 
