@@ -1,18 +1,7 @@
-# The name of the panel to be added to HORIZON_CONFIG. Required.
-PANEL = 'monitoring'
-# The name of the dashboard the PANEL associated with. Required.
-PANEL_DASHBOARD = 'overcloud'
-# The name of the panel group the PANEL is associated with.
-PANEL_GROUP = 'monitoring'
-
-DEFAULT_PANEL = 'alarms'
-
-# Python panel class of the PANEL to be added.
-ADD_PANEL = \
-    'monitoring.alarms.panel.Monitoring'
+DASHBOARD = "monitoring"
 
 # A list of applications to be added to INSTALLED_APPS.
-ADD_INSTALLED_APPS = ['monitoring', 'grafana']
+ADD_INSTALLED_APPS = ['monitoring']
 
 # A list of angular modules to be added as dependencies to horizon app.
 ADD_ANGULAR_MODULES = ['monitoringApp']

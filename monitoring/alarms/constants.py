@@ -15,8 +15,8 @@
 # under the License.
 
 
-URL_PREFIX = 'horizon:overcloud:alarms:'
-TEMPLATE_PREFIX = 'overcloud/alarms/'
+URL_PREFIX = 'horizon:monitoring:alarms:'
+TEMPLATE_PREFIX = 'monitoring/alarms/'
 
 CRITICAL_ICON = '/static/monitoring/img/critical-icon.png'
 WARNING_ICON = '/static/monitoring/img/warning-icon.png'

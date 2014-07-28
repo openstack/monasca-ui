@@ -17,8 +17,12 @@
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 import horizon
+from monitoring import dashboard
 
 
 class Notifications(horizon.Panel):
     name = _("Notifications")
     slug = 'notifications'
+
+
+dashboard.Monitoring.register(Notifications)

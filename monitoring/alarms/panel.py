@@ -18,7 +18,12 @@ from django.utils.translation import ugettext_lazy as _  # noqa
 
 import horizon
 
+from monitoring import dashboard
 
-class Monitoring(horizon.Panel):
+
+class Alarms(horizon.Panel):
     name = _("Alarms")
     slug = 'alarms'
+
+
+dashboard.Monitoring.register(Alarms)

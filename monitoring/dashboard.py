@@ -19,10 +19,11 @@ from django.utils.translation import ugettext_lazy as _
 import horizon
 
 
-class OverCloud(horizon.Dashboard):
-    name = _("OverCloud")
-    slug = "overcloud"
-    panels = ()
+class Monitoring(horizon.Dashboard):
+    name = _("Monitoring")
+    slug = "monitoring"
+    panels = ('alarms', 'notifications')
+    default_panel = 'alarms'
 
 
-horizon.register(OverCloud)
+horizon.register(Monitoring)

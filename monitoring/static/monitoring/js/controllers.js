@@ -2,7 +2,7 @@
 angular.module('monitoring.controllers', [])
     .controller('monitoringController', function ($scope, $http, $timeout) {
          $scope.fetchStatus = function() {
-            $http({method: 'GET', url: '/overcloud/status'}).
+            $http({method: 'GET', url: '/monitoring/status'}).
                 success(function(data, status, headers, config) {
                   // this callback will be called asynchronously
                   // when the response is available
