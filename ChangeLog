@@ -1,15 +1,19 @@
 CHANGES
 =======
 
-1.0.5
+1.0.2
+-----
+
+* using python-monascaclient instead of old python-monclient
+* Use default system dashboard
+* Save enabled field on alarm edit
+* remove mocked up show metrics action
+
+1.0.1
 -----
 
 * Add grafana
 * Updated ChangeLog
-
-1.0.4
------
-
 * Changes to work with api keystone. Changes for tests
 * Resolve all pep8 issues
 * Enable unit and pep8 tests
@@ -23,17 +27,7 @@ CHANGES
 * removed clear alarm option
 * Remove unused import
 * Added Notification update
-* Modified ChangeLog
-
-1.0.3
------
-
 * Forgot to checkin tables.py for notifications
-
-1.0.2
------
-
-* New version to changelog
 * ChangeLog new version info, alarm history removed reason_data for now
 * Notification list, Notification delete, and Notification create action and button
 * Alarms History added
@@ -49,15 +43,7 @@ CHANGES
 * First pass at refactor notifications
 * Filter metrics based on selected service
 * Track the service that the alarm view uses so that it can be naviagated to
-
-1.0.1
------
-
 * Version 1.0.1 included packages cosmos,enabled in setup.cfg
-
-1.0.0
------
-
 * Added top level ChangeLog
 * pypi packaging files
 * Make delete alarm last action in menu. Remove demo data
