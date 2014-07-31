@@ -17,10 +17,7 @@ angular.module('monitoring.controllers', [])
                     $scope._serviceModel = data.series
                }).
                 error(function(data, status, headers, config) {
-                  // called asynchronously if an error occurs
-                  // or server returns response with an error status.
-                  // reload page if there was an error, login may be required
-                    window.top.location.reload(true)
+                    $scope.stop();
                 });
         }
         $scope.onTimeout = function(){

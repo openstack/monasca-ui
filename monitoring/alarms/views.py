@@ -128,7 +128,10 @@ def get_status(alarms):
 
 
 def generate_status(request):
-    alarms = api.monitor.alarm_list(request)
+    try:
+        alarms = api.monitor.alarm_list(request)
+    except Exception:
+        alarms = []
     alarms_by_service = {}
     for a in alarms:
         service = alarm_tables.show_service(a)
