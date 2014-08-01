@@ -41,7 +41,7 @@ class ExpressionWidget(forms.Widget):
         output = '''
         <div ng-controller="alarmEditController" ng-init="init('%(service)s')">
          <input type="hidden" name="%(name)s" id="dimension"/>
-         <select id="metric-chooser" ng-model="currentMetric"
+         <select id="metric-chooser" class="form-control" ng-model="currentMetric"
           ng-options="metric.name for metric in metrics | orderBy:'name'"
           ng-change="metricChanged()"></select>
          <tags-input id="dimension-chooser" ng-model="tags"
