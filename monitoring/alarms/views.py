@@ -18,6 +18,7 @@ from collections import defaultdict  # noqa
 import json
 import logging
 
+from django.conf import settings  # noqa
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.http import HttpResponse  # noqa
@@ -36,60 +37,7 @@ from monitoring.alarms import tables as alarm_tables
 from monitoring import api
 
 LOG = logging.getLogger(__name__)
-
-SAMPLE = [{'name': _('Platform Services'),
-           'services': [{'name': 'MaaS',
-                         'display': _('MaaS')},
-                        {'name': 'DBaaS',
-                         'display': _('DBaaS')},
-                        {'name': 'LBaaS',
-                         'display': _('LBaaS')},
-                        {'name': 'DNSaaS',
-                         'display': _('DNSaaS')},
-                        {'name': 'MSGaaS',
-                         'display': _('MSGaaS')},
-                        ]},
-          {'name': _('The OverCloud Services'),
-           'services': [{'name': 'nova',
-                         'display': _('Nova')},
-                        {'name': 'swift',
-                         'display': _('Swift')},
-                        {'name': 'bock',
-                         'display': _('Cinder')},
-                        {'name': 'glance',
-                         'display': _('Glance')},
-                        {'name': 'quantum',
-                         'display': _('Neutron')},
-                        {'name': 'mysql',
-                         'display': _('MySQL')},
-                        {'name': 'rabbitmq',
-                         'display': _('RabbitMQ')},
-                        {'name': 'mini-mon',
-                         'display': _('Monitoring')},
-                        ]},
-          {'name': _('The UnderCloud Services'),
-           'services': [{'name': 'nova',
-                         'display': _('Nova')},
-                        {'name': 'swift',
-                         'display': _('Cinder')},
-                        {'name': 'glance',
-                         'display': _('Glance')},
-                        {'name': 'horizon',
-                         'display': _('Horizon')},
-                        ]},
-          {'name': _('Network Services'),
-           'services': [{'name': 'dhcp',
-                         'display': _('DHCP')},
-                        {'name': 'dns',
-                         'display': _('DNS')},
-                        {'name': 'dns-servers',
-                         'display': _('DNS Servers')},
-                        {'name': 'http',
-                         'display': _('http')},
-                        {'name': 'web_proxy',
-                         'display': _('Web Proxy')},
-                        ]}
-          ]
+SERVICES = getattr(settings, 'MONITORING_SERVICES', [])
 
 
 def get_icon(status):
@@ -137,12 +85,14 @@ def generate_status(request):
         service = alarm_tables.show_service(a)
         service_alarms = alarms_by_service.setdefault(service, [])
         service_alarms.append(a)
-    for row in SAMPLE:
+    for row in SERVICES:
+        row['name'] = unicode(row['name'])
         for service in row['services']:
             service_alarms = alarms_by_service.get(service['name'], [])
             service['class'] = get_status(service_alarms)
             service['icon'] = get_icon(service['class'])
-    return SAMPLE
+            service['display'] = unicode(service['display'])
+    return SERVICES
 
 
 class IndexView(TemplateView):

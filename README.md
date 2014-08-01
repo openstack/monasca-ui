@@ -11,8 +11,9 @@ by monasca-vagrant. For a UI development setup:
 * ln -s ../monasca-ui/monitoring monitoring
 * ln -s ../../../grafana/src monitoring/static/grafana
 * tools/with_venv.sh pip install -r ../monasca-ui/requirements.txt
-
-# License
+* cat ../monasca-ui/local_settings.py >> openstack_dashboard/local/local_settings.py
+# 
+License
 
 Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
 
