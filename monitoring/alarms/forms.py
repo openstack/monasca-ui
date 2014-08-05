@@ -41,14 +41,16 @@ class ExpressionWidget(forms.Widget):
         output = '''
         <div ng-controller="alarmEditController" ng-init="init('%(service)s')">
          <input type="hidden" name="%(name)s" id="dimension"/>
-         <select id="metric-chooser" class="form-control" ng-model="currentMetric"
+         <select id="metric-chooser" class="form-control"
+          ng-model="currentMetric"
           ng-options="metric.name for metric in metrics | orderBy:'name'"
           ng-change="metricChanged()"></select>
          <tags-input id="dimension-chooser" ng-model="tags"
           placeholder="%(placeholder)s"
-          add-from-autocomplete-only="true" max-results-to-show="20"
+          add-from-autocomplete-only="true"
           on-tag-added="saveDimension()" on-tag-removed="saveDimension()">
-          <auto-complete source="possibleDimensions()" min-length="1">
+          <auto-complete source="possibleDimensions()"
+          max-results-to-show="30" min-length="1">
           </auto-complete>
          </tags-input>
         </div>
