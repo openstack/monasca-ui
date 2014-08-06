@@ -14,6 +14,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import re
+
 from django import forms as django_forms
 from django.utils import html
 from django.utils.translation import ugettext_lazy as _  # noqa
@@ -33,10 +35,13 @@ class ExpressionWidget(forms.Widget):
     def render(self, name, value, attrs):
         final_attrs = self.build_attrs(attrs, name=name)
         final_attrs['placeholder'] = _('Add a dimension')
-        if 'all' in self.initial['service']:
-            dim = ''
+        if value:
+            dim = value
         else:
-            dim = next(("%s=%s" % (k, v) for k, v in self.initial.items()), '')
+            if 'all' in self.initial['service']:
+                dim = ''
+            else:
+                dim = next(("%s=%s" % (k, v) for k, v in self.initial.items()), '')
         final_attrs['service'] = dim
         output = '''
         <div ng-controller="alarmEditController" ng-init="init('%(service)s')">
@@ -72,7 +77,10 @@ class SimpleExpressionWidget(django_forms.MultiWidget):
         super(SimpleExpressionWidget, self).__init__(_widgets, attrs)
 
     def decompress(self, expr):
-        return [None, None, None]
+        if expr:
+            return re.search('^(\w+)\((.*)\) ([<>=]*) (.*)$', expr).groups()
+        else:
+            return [None, None, None, None]
 
     def format_output(self, rendered_widgets):
         return ''.join(rendered_widgets)
