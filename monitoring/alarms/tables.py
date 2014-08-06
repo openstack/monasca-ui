@@ -94,7 +94,10 @@ class ShowAlarmHistory(tables.LinkAction):
 class CreateAlarm(tables.LinkAction):
     name = "create_alarm"
     verbose_name = _("Create Alarm")
-    classes = ("ajax-modal", "btn-create")
+    classes = ("ajax-modal",)
+    icon = "plus"
+    policy_rules = (("alarm", "alarm:create"),)
+    ajax = True
 
     def get_link_url(self):
         return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_create',
@@ -118,29 +121,6 @@ class EditAlarm(tables.LinkAction):
         return True
 
 
-class ClearAlarm(tables.BatchAction):
-    name = "clear_alarm"
-    verbose_name = _("Clear Alarm")
-    classes = ("btn-create",)
-    data_type_singular = _("Alarm")
-    data_type_plural = _("Alarms")
-    action_present = _("Clear")
-    action_past = _("Cleared")
-
-    def action(self, request, datum_id):
-        try:
-            api.monitor.alarm_patch(
-                request,
-                alarm_id=datum_id,
-                state='OK',
-            )
-        except Exception as e:
-            exceptions.handle(request, _('Unable to edit the alarm: %s') % e)
-
-    def allowed(self, request, datum=None):
-        return datum['state'] != 'OK'
-
-
 class DeleteAlarm(tables.DeleteAction):
     name = "delete_alarm"
     verbose_name = _("Delete Alarm")
@@ -152,6 +132,14 @@ class DeleteAlarm(tables.DeleteAction):
 
     def delete(self, request, obj_id):
         api.monitor.alarm_delete(request, obj_id)
+
+
+class AlarmsFilterAction(tables.FilterAction):
+    def filter(self, table, alarms, filter_string):
+        """Naive case-insensitive search."""
+        q = filter_string.lower()
+        return [alarm for alarm in alarms
+                if q in alarm.name.lower()]
 
 
 class AlarmsTable(tables.DataTable):
@@ -181,7 +169,9 @@ class AlarmsTable(tables.DataTable):
                        EditAlarm,
                        DeleteAlarm,
                        )
-        table_actions = (CreateAlarm, )
+        table_actions = (CreateAlarm,
+                         AlarmsFilterAction,
+                        )
 
 
 class AlarmHistoryTable(tables.DataTable):

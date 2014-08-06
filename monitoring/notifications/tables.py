@@ -50,7 +50,10 @@ class DeleteNotification(tables.DeleteAction):
 class CreateNotification(tables.LinkAction):
     name = "create_notification"
     verbose_name = _("Create Notification")
-    classes = ("ajax-modal", "btn-create")
+    classes = ("ajax-modal",)
+    icon = "plus"
+    policy_rules = (("notification", "notification:create"),)
+    ajax = True
 
     def get_link_url(self):
         url = constants.URL_PREFIX + 'notification_create'
@@ -73,6 +76,14 @@ class EditNotification(tables.LinkAction):
         return True
 
 
+class NotificationsFilterAction(tables.FilterAction):
+    def filter(self, table, notifications, filter_string):
+        """Naive case-insensitive search."""
+        q = filter_string.lower()
+        return [notif for notif in notifications
+                if q in notif.name.lower()]
+
+
 class NotificationsTable(tables.DataTable):
     target = tables.Column('name', verbose_name=_('Name'))
     type = tables.Column('type', verbose_name=_('Type'))
@@ -88,4 +99,4 @@ class NotificationsTable(tables.DataTable):
         name = "notifications"
         verbose_name = _("Notifications")
         row_actions = (EditNotification, DeleteNotification, )
-        table_actions = (CreateNotification, )
+        table_actions = (CreateNotification, NotificationsFilterAction,)
