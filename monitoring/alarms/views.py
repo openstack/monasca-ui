@@ -168,15 +168,7 @@ class AlarmCreateView(forms.ModalFormView):
                        if m.setdefault('dimensions', {}).
                        setdefault('service', '') == self.service]
 
-        # Aggregate all dimensions for each metric name
-        d = defaultdict(set)
-        for metric in metrics:
-            dim_list = ['%s=%s' % (n, l)
-                        for n, l in metric["dimensions"].items()]
-            d[metric["name"]].update(dim_list)
-        unique_metrics = [{'name': k, 'dimensions': sorted(list(v))}
-                          for k, v in d.items()]
-        context["metrics"] = json.dumps(unique_metrics)
+        context["metrics"] = json.dumps(metrics)
         return context
 
     def get_success_url(self):

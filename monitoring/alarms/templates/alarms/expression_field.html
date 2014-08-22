@@ -1,0 +1,31 @@
+{% load i18n %}
+<div ng-controller="alarmEditController" ng-init="init('{{ service }}')">
+    <input type="hidden" name="{{ name }}" id="dimension"/>
+    <select id="metric-chooser" class="form-control"
+            ng-model="currentMetric"
+            ng-options="metric for metric in metricNames"
+            ng-change="metricChanged()"></select>
+    <tags-input id="dimension-chooser" ng-model="tags"
+                placeholder="{% trans 'Add a dimension' %}"
+                add-from-autocomplete-only="true"
+                on-tag-added="saveDimension()" on-tag-removed="saveDimension()">
+        <auto-complete source="possibleDimensions()"
+                       max-results-to-show="30" min-length="1">
+        </auto-complete>
+    </tags-input>
+    <div class="topologyBalloon" id="metrics" style="position:static;display: block;">
+        <div class="contentBody">
+            <table class="detailInfoTable">
+                <caption>Matching Metrics</caption>
+                <tbody>
+                <tr>
+                    <th ng-repeat="name in dimnames">{$name$}</th>
+                </tr>
+                <tr ng-repeat="metric in matchingMetrics">
+                    <td ng-repeat="dim in dimnames">{$metric[dim]$}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

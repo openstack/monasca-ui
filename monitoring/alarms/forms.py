@@ -17,6 +17,8 @@
 import re
 
 from django import forms as django_forms
+from django.template.loader import get_template
+from django.template import Context
 from django.utils import html
 from django.utils.translation import ugettext_lazy as _  # noqa
 
@@ -25,6 +27,7 @@ from horizon import forms
 from horizon import messages
 
 from monitoring import api
+from monitoring.alarms import constants
 
 
 class ExpressionWidget(forms.Widget):
@@ -34,7 +37,6 @@ class ExpressionWidget(forms.Widget):
 
     def render(self, name, value, attrs):
         final_attrs = self.build_attrs(attrs, name=name)
-        final_attrs['placeholder'] = _('Add a dimension')
         if value:
             dim = value
         else:
@@ -42,25 +44,12 @@ class ExpressionWidget(forms.Widget):
                 dim = ''
             else:
                 dim = next(("%s=%s" % (k, v) for k, v in self.initial.items()), '')
-        final_attrs['service'] = dim
-        output = '''
-        <div ng-controller="alarmEditController" ng-init="init('%(service)s')">
-         <input type="hidden" name="%(name)s" id="dimension"/>
-         <select id="metric-chooser" class="form-control"
-          ng-model="currentMetric"
-          ng-options="metric.name for metric in metrics | orderBy:'name'"
-          ng-change="metricChanged()"></select>
-         <tags-input id="dimension-chooser" ng-model="tags"
-          placeholder="%(placeholder)s"
-          add-from-autocomplete-only="true"
-          on-tag-added="saveDimension()" on-tag-removed="saveDimension()">
-          <auto-complete source="possibleDimensions()"
-          max-results-to-show="30" min-length="1">
-          </auto-complete>
-         </tags-input>
-        </div>
-       ''' % final_attrs
-        return html.format_html(output)
+        t = get_template(constants.TEMPLATE_PREFIX + 'expression_field.html')
+        local_attrs = {'service': dim}
+        local_attrs.update(final_attrs)
+        context = Context(local_attrs)
+        return t.render(context)
+
 
 
 class SimpleExpressionWidget(django_forms.MultiWidget):
