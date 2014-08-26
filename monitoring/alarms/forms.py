@@ -298,7 +298,10 @@ class CreateAlarmForm(BaseAlarmForm):
                 expression=data['expression'],
                 description=data['description'],
                 severity=data['severity'],
-                alarm_actions=alarm_actions)
+                alarm_actions=alarm_actions,
+                ok_actions=alarm_actions,
+                undetermined_actions=alarm_actions,
+            )
             messages.success(request,
                              _('Alarm has been created successfully.'))
         except Exception as e:
@@ -339,6 +342,8 @@ class EditAlarmForm(BaseAlarmForm):
                 description=data['description'],
                 actions_enabled=data['actions_enabled'],
                 alarm_actions=alarm_actions,
+                ok_actions=alarm_actions,
+                undetermined_actions=alarm_actions,
             )
             messages.success(request,
                              _('Alarm has been edited successfully.'))
