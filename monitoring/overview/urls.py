@@ -1,6 +1,6 @@
 # vim: tabstop=4 shiftwidth=4 softtabstop=4
 
-# Copyright 2012 Nebula, Inc.
+# Copyright 2013 Hewlett-Packard Development Company, L.P.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -13,17 +13,13 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
+from django.conf.urls import patterns  # noqa
+from django.conf.urls import url  # noqa
 
-from django.utils.translation import ugettext_lazy as _
+from monitoring.overview import views
 
-import horizon
-
-
-class Monitoring(horizon.Dashboard):
-    name = _("Monitoring")
-    slug = "monitoring"
-    panels = ('overview', 'alarms', 'notifications')
-    default_panel = 'overview'
-
-
-horizon.register(Monitoring)
+urlpatterns = patterns(
+    '',
+    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^status', views.StatusView.as_view(), name='status'),
+)

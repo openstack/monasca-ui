@@ -16,13 +16,6 @@ DETAIL_URL = urlresolvers.reverse(
 
 
 class AlarmsTest(helpers.TestCase):
-    def test_index_get(self):
-        res = self.client.get(INDEX_URL)
-
-        self.assertTemplateUsed(
-            res, 'monitoring/alarms/index.html')
-        self.assertTemplateUsed(res, 'monitoring/alarms/monitor.html')
-
     def test_alarms_get(self):
         with patch('monitoring.api.monitor', **{
             'spec_set': ['alarm_list_by_service'],
