@@ -34,6 +34,8 @@ def monascaclient(request, password=None):
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     cacert = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
     endpoint = base.url_for(request, 'monitoring')
+    if endpoint.endswith('/'):
+        endpoint = endpoint[:-1]
     LOG.debug('monascaclient connection created using token "%s" , url "%s"' %
               (request.user.token.id, endpoint))
     kwargs = {
