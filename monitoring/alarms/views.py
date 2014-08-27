@@ -22,9 +22,10 @@ from django.conf import settings  # noqa
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.http import HttpResponse  # noqa
+from django.shortcuts import redirect
 from django.template import defaultfilters as filters
 from django.utils.translation import ugettext as _  # noqa
-from django.views.generic import TemplateView  # noqa
+from django.views.generic import View  # noqa
 
 from horizon import exceptions
 from horizon import forms
@@ -95,26 +96,9 @@ def generate_status(request):
     return SERVICES
 
 
-class IndexView(TemplateView):
-    template_name = constants.TEMPLATE_PREFIX + 'index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context["token"] = self.request.user.token.id
-        return context
-
-
-class StatusView(TemplateView):
-    template_name = ""
-
-    def get(self, request, *args, **kwargs):
-        ret = {
-            'series': generate_status(self.request),
-            'settings': {}
-        }
-
-        return HttpResponse(json.dumps(ret),
-                            content_type='application/json')
+class IndexView(View):
+    def dispatch(self, request, *args, **kwargs):
+        return redirect(constants.URL_PREFIX + 'alarm', service='all')
 
 
 class AlarmServiceView(tables.DataTableView):

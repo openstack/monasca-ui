@@ -21,7 +21,6 @@ from monitoring.alarms import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^status', views.StatusView.as_view(), name='status'),
     url(r'^alarm/(?P<service>[^/]+)/$',
         views.AlarmServiceView.as_view(),
         name='alarm'),
