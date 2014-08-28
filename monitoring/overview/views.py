@@ -76,11 +76,29 @@ def generate_status(request):
         service_alarms.append(a)
     for row in SERVICES:
         row['name'] = unicode(row['name'])
-        for service in row['services']:
-            service_alarms = alarms_by_service.get(service['name'], [])
-            service['class'] = get_status(service_alarms)
-            service['icon'] = get_icon(service['class'])
-            service['display'] = unicode(service['display'])
+        if 'groupBy' in row:
+            alarms_by_group = {}
+            for a in alarms:
+                group = alarm_tables.show_by_dimension(a, row['groupBy'])
+                if group:
+                    group_alarms = alarms_by_group.setdefault(group, [])
+                    group_alarms.append(a)
+            services = []
+            for group, group_alarms in alarms_by_group.items():
+                service = {
+                    'display': group,
+                    'name': group,
+                    'class': get_status(group_alarms)
+                }
+                service['icon'] = get_icon(service['class'])
+                services.append(service)
+            row['services'] = services
+        else:
+            for service in row['services']:
+                service_alarms = alarms_by_service.get(service['name'], [])
+                service['class'] = get_status(service_alarms)
+                service['icon'] = get_icon(service['class'])
+                service['display'] = unicode(service['display'])
     return SERVICES
 
 

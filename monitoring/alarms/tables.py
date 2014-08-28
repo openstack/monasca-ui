@@ -62,20 +62,20 @@ def show_severity(data):
         return state
 
 
-def show_service(data):
+def show_by_dimension(data, dim_name):
     if 'dimensions' in data['expression_data']:
         dimensions = data['expression_data']['dimensions']
-        if 'service' in dimensions:
-            return str(data['expression_data']['dimensions']['service'])
+        if dim_name in dimensions:
+            return str(data['expression_data']['dimensions'][dim_name])
     return ""
+
+
+def show_service(data):
+    return show_by_dimension(data, 'service')
 
 
 def show_host(data):
-    if 'dimensions' in data['expression_data']:
-        dimensions = data['expression_data']['dimensions']
-        if 'hostname' in dimensions:
-            return str(data['expression_data']['dimensions']['hostname'])
-    return ""
+    return show_by_dimension(data, 'hostname')
 
 
 class ShowAlarmHistory(tables.LinkAction):

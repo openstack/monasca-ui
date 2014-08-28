@@ -100,15 +100,16 @@ OPENSTACK_KEYSTONE_BACKEND = {
 }
 
 OPENSTACK_NEUTRON_NETWORK = {
-    'enable_lb': True
+    'enable_lb': False,
+    'enable_firewall': False,
+    'enable_vpn': False,
+    'profile_support': None,
+    'enable_distributed_router': False,
 }
 
 OPENSTACK_HYPERVISOR_FEATURES = {
-    'can_set_mount_point': True,
-
-    # NOTE: as of Grizzly this is not yet supported in Nova so enabling this
-    # setting will not do anything useful
-    'can_encrypt_volumes': False
+    'can_set_mount_point': False,
+    'can_encrypt_volumes': False,
 }
 
 LOGGING['loggers']['openstack_dashboard'] = {
