@@ -22,8 +22,7 @@ class NotificationType(object):
     SMS = "SMS"
     EMAIL = "EMAIL"
 
-    CHOICES = [(EMAIL, _("Email")),
-               (SMS, _("SMS")), ]
+    CHOICES = [(EMAIL, _("Email")),]
 
     @staticmethod
     def get_label(key):
