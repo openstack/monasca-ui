@@ -132,9 +132,10 @@ class GraphMetric(tables.LinkAction):
 
     def get_link_url(self, datum):
         name = datum['expression_data']['metric_name']
+        threshold = datum['expression_data']['threshold']
         self.attrs['target'] = '_blank'
-        return "/static/grafana/index.html#/dashboard/script/detail.js?token=%s&name=%s" % \
-               (self.table.request.user.token.id, name)
+        return "/static/grafana/index.html#/dashboard/script/detail.js?token=%s&name=%s&threshold=%s" % \
+               (self.table.request.user.token.id, name, threshold)
 
     def allowed(self, request, datum=None):
         return 'metric_name' in datum['expression_data']
