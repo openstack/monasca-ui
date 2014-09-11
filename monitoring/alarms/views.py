@@ -14,18 +14,17 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.import logging
 
-from collections import defaultdict  # noqa
 import json
 import logging
 
 from django.conf import settings  # noqa
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
-from django.http import HttpResponse  # noqa
 from django.shortcuts import redirect
 from django.template import defaultfilters as filters
 from django.utils.translation import ugettext as _  # noqa
 from django.views.generic import View  # noqa
+from django.views.generic import TemplateView  # noqa
 
 from horizon import exceptions
 from horizon import forms
@@ -187,8 +186,7 @@ def transform_alarm_history(results, name):
     return newlist
 
 
-class AlarmDetailView(forms.ModalFormView):
-    form_class = alarm_forms.DetailAlarmForm
+class AlarmDetailView(TemplateView):
     template_name = constants.TEMPLATE_PREFIX + 'detail.html'
 
     def get_object(self):
@@ -228,6 +226,7 @@ class AlarmDetailView(forms.ModalFormView):
 
     def get_context_data(self, **kwargs):
         context = super(AlarmDetailView, self).get_context_data(**kwargs)
+        self.get_initial()
         context["alarm"] = self.alarm
         context["cancel_url"] = self.get_success_url()
         return context

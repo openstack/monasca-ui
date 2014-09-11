@@ -89,30 +89,6 @@ class SimpleExpressionWidget(django_forms.MultiWidget):
             return expression
 
 
-class NotificationTableWidget(forms.Widget):
-    FIELD_ID_IDX = 0
-    FIELD_NAME_IDX = 1
-
-    def __init__(self, *args, **kwargs):
-        self.fields = kwargs.pop('fields')
-        super(NotificationTableWidget, self).__init__(*args, **kwargs)
-
-    def render(self, name, value, attrs):
-        output = '<table class="table table-condensed"><thead><tr>'
-        for field in self.fields:
-            output += '<th>%s</th>' % unicode(field[self.FIELD_NAME_IDX])
-        output += '</tr></thead>'
-        if value:
-            for notification in value:
-                output += "<tr>"
-                for field in self.fields:
-                    field_value = notification[field[self.FIELD_ID_IDX]]
-                    output += '<td>%s</td>' % html.escape(field_value)
-                output += "</tr>"
-        output += '</table>'
-        return html.format_html(output)
-
-
 class NotificationField(forms.MultiValueField):
     def __init__(self, *args, **kwargs):
         super(NotificationField, self).__init__(*args, **kwargs)
@@ -198,27 +174,13 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         required = True
         textWidget = None
         textAreaWidget = forms.Textarea(attrs={'class': 'large-text-area'})
-        readOnlyTextInput = forms.TextInput(attrs={'readonly': 'readonly'})
         choiceWidget = forms.Select
-        if readOnly:
-            required = False
-            textWidget = readOnlyTextInput
-            choiceWidget = readOnlyTextInput
-            textAreaWidget = forms.Textarea(attrs={'readonly': 'readonly',
-                                                   'class': 'large-text-area'
-                                                   })
-            expressionWidget = textAreaWidget
-            notificationWidget = NotificationTableWidget(
-                fields=[('name', _('Name')),
-                        ('type', _('Type')),
-                        ('address', _('Address')), ])
+        if create:
+            expressionWidget = SimpleExpressionWidget(initial)
+            notificationWidget = NotificationCreateWidget()
         else:
-            if create:
-                expressionWidget = SimpleExpressionWidget(initial)
-                notificationWidget = NotificationCreateWidget()
-            else:
-                expressionWidget = textAreaWidget
-                notificationWidget = NotificationCreateWidget()
+            expressionWidget = textAreaWidget
+            notificationWidget = NotificationCreateWidget()
 
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
@@ -307,15 +269,6 @@ class CreateAlarmForm(BaseAlarmForm):
         except Exception as e:
             exceptions.handle(request, _('Unable to create the alarm: %s') % e.message)
             return False
-        return True
-
-
-class DetailAlarmForm(BaseAlarmForm):
-    def __init__(self, request, *args, **kwargs):
-        super(DetailAlarmForm, self).__init__(request, *args, **kwargs)
-        super(DetailAlarmForm, self)._init_fields(readOnly=True)
-
-    def handle(self, request, data):
         return True
 
 
