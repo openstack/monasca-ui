@@ -192,6 +192,7 @@ class AlarmsTable(tables.DataTable):
                        )
         table_actions = (CreateAlarm,
                          AlarmsFilterAction,
+                         DeleteAlarm,
                         )
 
 
