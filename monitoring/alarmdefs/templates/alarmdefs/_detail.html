@@ -1,0 +1,39 @@
+{% load i18n sizeformat %}
+
+<div class="info row detail">
+  <h4>{% trans "Info" %}</h4>
+  <hr class="header_rule">
+  <dl>
+    <dt>{% trans "Name" %}</dt>
+    <dd>{{ alarm.name|default:_("None") }}</dd>
+    <dt>{% trans "Description" %}</dt>
+    <dd>{{ alarm.description }}</dd>
+    <dt>{% trans "Expression" %}</dt>
+    <dd>{{ alarm.expression }}</dd>
+    <dt>{% trans "Severity" %}</dt>
+    <dd>{{ alarm.severity }}</dd>
+    <dt>{% trans "Notifications Enabled" %}</dt>
+    <dd>{{ alarm.actions_enabled }}</dd>
+  </dl>
+</div>
+<div class="specs row detail">
+  <h4>{% trans "Notifications" %}</h4>
+  <hr class="header_rule">
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Type" %}</th>
+                <th>{% trans "Address" %}</th>
+            </tr>
+        </thead>
+        {% for row in alarm.notifications %}
+        <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.type }}</td>
+            <td>{{ row.address }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+</div>
+

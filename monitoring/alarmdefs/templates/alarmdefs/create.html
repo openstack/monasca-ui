@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Create Alarm Definition' %}{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title="Create Alarm Definition" %}
+{% endblock page_header %}
+
+{% block main %}
+    {% include 'monitoring/alarmdefs/_create.html' %}
+{% endblock %}

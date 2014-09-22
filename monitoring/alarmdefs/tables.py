@@ -17,49 +17,14 @@
 import logging
 
 from django.core import urlresolvers
-from django import template
 from django.utils.translation import ugettext_lazy as _  # noqa
 
-from horizon import exceptions
 from horizon import tables
 
-from monitoring.alarms import constants
+from monitoring.alarmdefs import constants
 from monitoring import api
 
 LOG = logging.getLogger(__name__)
-
-
-STATUS = ["OK", "WARNING", "CRITICAL", "UNKNOWN"]
-
-
-def get_status(index):
-    if index < len(STATUS):
-        return STATUS[index]
-    else:
-        return "UNKNOWN: %d" % index
-
-
-def show_status(data):
-    status = data
-    img_tag = '<img src="%s" title="%s"/>'
-    if status == 'CRITICAL':
-        return img_tag % (constants.CRITICAL_ICON, status)
-    if status in ('LOW', 'MEDIUM', 'HIGH'):
-        return img_tag % (constants.WARNING_ICON, status)
-    if status == 'OK':
-        return img_tag % (constants.OK_ICON, status)
-    if status == 'UNKNOWN' or status == 'UNDETERMINED':
-        return img_tag % (constants.UNKNOWN_ICON, status)
-    return status
-
-
-def show_severity(data):
-    severity = data['severity']
-    state = data['state']
-    if state == 'ALARM':
-        return severity
-    else:
-        return state
 
 
 def show_by_dimension(data, dim_name):
@@ -70,38 +35,18 @@ def show_by_dimension(data, dim_name):
     return ""
 
 
-def show_service(data):
-    return show_by_dimension(data, 'service')
-
-
-def show_host(data):
-    return show_by_dimension(data, 'hostname')
-
-
-class ShowAlarmHistory(tables.LinkAction):
-    name = 'history'
-    verbose_name = _('Show History')
-    classes = ('btn-edit',)
-
-    def get_link_url(self, datum):
-        return urlresolvers.reverse(constants.URL_PREFIX + 'history',
-                                    args=(datum['name'], datum['id'], ))
-
-    def allowed(self, request, datum=None):
-        return True
-
-
 class CreateAlarm(tables.LinkAction):
     name = "create_alarm"
-    verbose_name = _("Create Alarm")
+    verbose_name = _("Create Alarm Definition")
     classes = ("ajax-modal",)
     icon = "plus"
     policy_rules = (("alarm", "alarm:create"),)
     ajax = True
 
+
     def get_link_url(self):
         return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_create',
-                                    args=(self.table.kwargs['service'],))
+                                    args=())
 
     def allowed(self, request, datum=None):
         return True
@@ -109,12 +54,12 @@ class CreateAlarm(tables.LinkAction):
 
 class EditAlarm(tables.LinkAction):
     name = "edit_alarm"
-    verbose_name = _("Edit Alarm")
+    verbose_name = _("Edit Alarm Definition")
     classes = ("ajax-modal", "btn-create")
 
     def get_link_url(self, datum):
         return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_edit',
-                                    args=(self.table.kwargs['service'],
+                                    args=(
                                           datum['id'], ))
 
     def allowed(self, request, datum=None):
@@ -143,9 +88,9 @@ class GraphMetric(tables.LinkAction):
 
 class DeleteAlarm(tables.DeleteAction):
     name = "delete_alarm"
-    verbose_name = _("Delete Alarm")
-    data_type_singular = _("Alarm")
-    data_type_plural = _("Alarms")
+    verbose_name = _("Delete Alarm Definition")
+    data_type_singular = _("Alarm Definition")
+    data_type_plural = _("Alarm Definitions")
 
     def allowed(self, request, datum=None):
         return True
@@ -163,16 +108,12 @@ class AlarmsFilterAction(tables.FilterAction):
 
 
 class AlarmsTable(tables.DataTable):
-    status = tables.Column(transform=show_severity, verbose_name=_('Status'),
-                           status_choices={(show_status('OK'), True)},
-                           filters=[show_status, template.defaultfilters.safe])
     target = tables.Column('name', verbose_name=_('Name'),
                            link=constants.URL_PREFIX + 'alarm_detail',
                            )
     description = tables.Column('description', verbose_name=_('Description'))
-    host = tables.Column(transform=show_host, verbose_name=_('Host'))
-    service = tables.Column(transform=show_service, verbose_name=_('Service'))
-    state = tables.Column('state', verbose_name=_('State'))
+    enabled = tables.Column('actions_enabled',
+                            verbose_name=_('Notifications Enabled'))
 
     def get_object_id(self, obj):
         return obj['id']
@@ -182,28 +123,12 @@ class AlarmsTable(tables.DataTable):
 
     class Meta:
         name = "alarms"
-        verbose_name = _("Alarms")
+        verbose_name = _("Alarm Definitions")
         row_actions = (GraphMetric,
-                       ShowAlarmHistory,
+                       EditAlarm,
                        DeleteAlarm,
                        )
-        table_actions = (
+        table_actions = (CreateAlarm,
                          AlarmsFilterAction,
                          DeleteAlarm,
                         )
-
-
-class AlarmHistoryTable(tables.DataTable):
-    name = tables.Column('name', verbose_name=_('Name'))
-    old_state = tables.Column('old_state', verbose_name=_('Old State'))
-    new_state = tables.Column('new_state', verbose_name=_('New State'))
-    timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
-    reason = tables.Column('reason', verbose_name=_('Reason'))
-    # reason_data = tables.Column('reason_data', verbose_name=_('Reason Data'))
-
-    def get_object_id(self, obj):
-        return obj['alarm_id'] + obj['timestamp']
-
-    class Meta:
-        name = "users"
-        verbose_name = _("Alarm History")

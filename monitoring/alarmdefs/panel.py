@@ -1,6 +1,6 @@
 # vim: tabstop=4 shiftwidth=4 softtabstop=4
 
-# Copyright 2012 Nebula, Inc.
+# Copyright 2013 Hewlett-Packard Development Company, L.P.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -14,16 +14,16 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _  # noqa
 
 import horizon
 
-
-class Monitoring(horizon.Dashboard):
-    name = _("Monitoring")
-    slug = "monitoring"
-    panels = ('overview', 'alarmdefs', 'alarms', 'notifications',)
-    default_panel = 'overview'
+from monitoring import dashboard
 
 
-horizon.register(Monitoring)
+class AlarmDefinitions(horizon.Panel):
+    name = _("Alarm Definitions")
+    slug = 'alarmdefs'
+
+
+dashboard.Monitoring.register(AlarmDefinitions)
