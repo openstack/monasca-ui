@@ -40,7 +40,7 @@ class IndexView(tables.DataTableView):
     def get_data(self):
         results = []
         try:
-            results = api.monitor.alarm_list(self.request)
+            results = api.monitor.alarmdef_list(self.request)
         except Exception:
             messages.error(self.request, _("Could not retrieve alarm definitions"))
         return results
@@ -101,7 +101,7 @@ class AlarmDetailView(TemplateView):
             if hasattr(self, "_object"):
                 return self._object
             self._object = None
-            self._object = api.monitor.alarm_get(self.request, id)
+            self._object = api.monitor.alarmdef_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
             for id in self._object["alarm_actions"]:
@@ -151,7 +151,7 @@ class AlarmEditView(forms.ModalFormView):
             if hasattr(self, "_object"):
                 return self._object
             self._object = None
-            self._object = api.monitor.alarm_get(self.request, id)
+            self._object = api.monitor.alarmdef_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
             for id in self._object["alarm_actions"]:

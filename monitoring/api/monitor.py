@@ -75,16 +75,41 @@ def alarm_get(request, alarm_id):
     return monascaclient(request).alarms.get(alarm_id=alarm_id)
 
 
-def alarm_create(request, password=None, **kwargs):
-    return monascaclient(request, password).alarms.create(**kwargs)
-
-
-def alarm_update(request, **kwargs):
-    return monascaclient(request).alarms.update(**kwargs)
-
-
 def alarm_patch(request, **kwargs):
     return monascaclient(request).alarms.patch(**kwargs)
+
+
+def alarmdef_list(request, marker=None, paginate=False):
+    return monascaclient(request).alarm_definitions.list()
+
+
+def alarmdef_list_by_service(request, service_name, marker=None, paginate=False):
+    service_dim = {'service': service_name}
+    return monascaclient(request).alarm_definitions.list(dimensions=service_dim)
+
+
+def alarmdef_delete(request, alarm_id):
+    return monascaclient(request).alarm_definitions.delete(alarm_id=alarm_id)
+
+
+def alarmdef_history(request, alarm_id):
+    return monascaclient(request).alarm_definitions.history(alarm_id=alarm_id)
+
+
+def alarmdef_get(request, alarm_id):
+    return monascaclient(request).alarm_definitions.get(alarm_id=alarm_id)
+
+
+def alarmdef_create(request, password=None, **kwargs):
+    return monascaclient(request, password).alarm_definitions.create(**kwargs)
+
+
+def alarmdef_update(request, **kwargs):
+    return monascaclient(request).alarm_definitions.update(**kwargs)
+
+
+def alarmdef_patch(request, **kwargs):
+    return monascaclient(request).alarm_definitions.patch(**kwargs)
 
 
 def notification_list(request, marker=None, paginate=False):

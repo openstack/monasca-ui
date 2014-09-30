@@ -247,7 +247,7 @@ class CreateAlarmForm(BaseAlarmForm):
         try:
             alarm_actions = [notification.get('id')
                              for notification in data['notifications']]
-            api.monitor.alarm_create(
+            api.monitor.alarmdef_create(
                 request,
                 name=data['name'],
                 expression=data['expression'],
@@ -278,7 +278,7 @@ class EditAlarmForm(BaseAlarmForm):
             if data['notifications']:
                 alarm_actions = [notification.get('id')
                                  for notification in data['notifications']]
-            api.monitor.alarm_update(
+            api.monitor.alarmdef_update(
                 request,
                 alarm_id=self.initial['id'],
                 state=self.initial['state'],

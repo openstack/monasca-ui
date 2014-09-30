@@ -17,10 +17,8 @@
 import logging
 
 from django.core import urlresolvers
-from django import template
 from django.utils.translation import ugettext_lazy as _  # noqa
 
-from horizon import exceptions
 from horizon import tables
 
 from monitoring.alarms import constants
@@ -63,10 +61,10 @@ def show_severity(data):
 
 
 def show_by_dimension(data, dim_name):
-    if 'dimensions' in data['expression_data']:
-        dimensions = data['expression_data']['dimensions']
+    if 'dimensions' in data['metrics']:
+        dimensions = data['metrics']['dimensions']
         if dim_name in dimensions:
-            return str(data['expression_data']['dimensions'][dim_name])
+            return str(data['metrics']['dimensions'][dim_name])
     return ""
 
 
@@ -85,7 +83,7 @@ class ShowAlarmHistory(tables.LinkAction):
 
     def get_link_url(self, datum):
         return urlresolvers.reverse(constants.URL_PREFIX + 'history',
-                                    args=(datum['name'], datum['id'], ))
+                                    args=(datum['alarm_definition_id'], datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
@@ -131,14 +129,23 @@ class GraphMetric(tables.LinkAction):
         return super(self, GraphMetric).render()
 
     def get_link_url(self, datum):
-        name = datum['expression_data']['metric_name']
-        threshold = datum['expression_data']['threshold']
+        name = datum['metrics'][0]['name']
+        threshold = datum['metrics']
         self.attrs['target'] = '_blank'
         return "/static/grafana/index.html#/dashboard/script/detail.js?token=%s&name=%s&threshold=%s" % \
                (self.table.request.user.token.id, name, threshold)
 
     def allowed(self, request, datum=None):
-        return 'metric_name' in datum['expression_data']
+        return datum['metrics']
+
+
+class ShowAlarmDefinition(tables.LinkAction):
+    name = "show_alarm_definition"
+    verbose_name = _("Show Alarm Definition")
+
+    def get_link_url(self, datum=None):
+        return urlresolvers.reverse_lazy('horizon:monitoring:alarmdefs:alarm_detail',
+                                         args=(datum['alarm_definition_id'],))
 
 
 class DeleteAlarm(tables.DeleteAction):
@@ -163,13 +170,8 @@ class AlarmsFilterAction(tables.FilterAction):
 
 
 class AlarmsTable(tables.DataTable):
-    status = tables.Column(transform=show_severity, verbose_name=_('Status'),
-                           status_choices={(show_status('OK'), True)},
-                           filters=[show_status, template.defaultfilters.safe])
-    target = tables.Column('name', verbose_name=_('Name'),
-                           link=constants.URL_PREFIX + 'alarm_detail',
-                           )
-    description = tables.Column('description', verbose_name=_('Description'))
+    target = tables.Column('id', verbose_name=_('Id'))
+    metrics = tables.Column('metrics', verbose_name=_('Metrics'))
     host = tables.Column(transform=show_host, verbose_name=_('Host'))
     service = tables.Column(transform=show_service, verbose_name=_('Service'))
     state = tables.Column('state', verbose_name=_('State'))
@@ -178,13 +180,14 @@ class AlarmsTable(tables.DataTable):
         return obj['id']
 
     def get_object_display(self, obj):
-        return obj['name']
+        return obj['id']
 
     class Meta:
         name = "alarms"
         verbose_name = _("Alarms")
         row_actions = (GraphMetric,
                        ShowAlarmHistory,
+                       ShowAlarmDefinition,
                        DeleteAlarm,
                        )
         table_actions = (

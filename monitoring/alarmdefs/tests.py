@@ -16,11 +16,11 @@ DETAIL_URL = urlresolvers.reverse(
 class AlarmDefinitionsTest(helpers.TestCase):
     def test_alarmdefs_get(self):
         with patch('monitoring.api.monitor', **{
-            'spec_set': ['alarm_list'],
-            'alarm_list.return_value': [],
+            'spec_set': ['alarmdef_list'],
+            'alarmdef_list.return_value': [],
         }) as mock:
             res = self.client.get(INDEX_URL)
-            self.assertEqual(mock.alarm_list.call_count, 1)
+            self.assertEqual(mock.alarmdef_list.call_count, 1)
 
         self.assertTemplateUsed(
             res, 'monitoring/alarmdefs/alarm.html')
@@ -40,13 +40,13 @@ class AlarmDefinitionsTest(helpers.TestCase):
 
     def test_alarmdefs_detail(self):
         with patch('monitoring.api.monitor', **{
-            'spec_set': ['alarm_get'],
-            'alarm_get.return_value': {
+            'spec_set': ['alarmdef_get'],
+            'alarmdef_get.return_value': {
                 'alarm_actions': []
             }
         }) as mock:
             res = self.client.get(DETAIL_URL)
-            self.assertEqual(mock.alarm_get.call_count, 1)
+            self.assertEqual(mock.alarmdef_get.call_count, 1)
 
         self.assertTemplateUsed(
             res, 'monitoring/alarmdefs/_detail.html')
