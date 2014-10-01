@@ -281,7 +281,6 @@ class EditAlarmForm(BaseAlarmForm):
             api.monitor.alarmdef_update(
                 request,
                 alarm_id=self.initial['id'],
-                state=self.initial['state'],
                 severity=data['severity'],
                 name=data['name'],
                 expression=data['expression'],

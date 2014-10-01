@@ -96,7 +96,7 @@ class DeleteAlarm(tables.DeleteAction):
         return True
 
     def delete(self, request, obj_id):
-        api.monitor.alarm_delete(request, obj_id)
+        api.monitor.alarmdef_delete(request, obj_id)
 
 
 class AlarmsFilterAction(tables.FilterAction):
