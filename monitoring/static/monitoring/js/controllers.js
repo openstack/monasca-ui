@@ -34,7 +34,7 @@ angular.module('monitoring.controllers', [])
         $scope.metrics = metricsList;
         $scope.metricNames = uniqueNames(metricsList, 'name')
         $scope.currentMetric = $scope.metricNames[0];
-        $scope.possibleDimensions = function() {
+        $scope.possibleDimensions = function(query) {
             var deferred = $q.defer();
             var dim = {}
             var dimList = []
@@ -42,7 +42,9 @@ angular.module('monitoring.controllers', [])
                 for (var key in value.dimensions) {
                     if (value.dimensions.hasOwnProperty(key)) {
                         var dimStr = key + "=" + value.dimensions[key]
-                        dim[dimStr] = dimStr
+                        if (dimStr.indexOf(query) === 0) {
+                            dim[dimStr] = dimStr;
+                        }
                     }
                 }
             });

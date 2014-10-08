@@ -9,7 +9,7 @@
                 placeholder="{% trans 'Add a dimension' %}"
                 add-from-autocomplete-only="true"
                 on-tag-added="saveDimension()" on-tag-removed="saveDimension()">
-        <auto-complete source="possibleDimensions()"
+        <auto-complete source="possibleDimensions($query)"
                        max-results-to-show="30" min-length="1">
         </auto-complete>
     </tags-input>
