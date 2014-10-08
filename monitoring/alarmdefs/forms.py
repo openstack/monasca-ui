@@ -15,12 +15,13 @@
 # under the License.
 
 import re
+import json
 
 from django import forms as django_forms
 from django.template.loader import get_template
 from django.template import Context
 from django.utils import html
-from django.utils.translation import ugettext_lazy as _  # noqa
+from django.utils.translation import ugettext as _  # noqa
 
 from horizon import exceptions
 from horizon import forms
@@ -31,55 +32,22 @@ from monitoring.alarmdefs import constants
 
 
 class ExpressionWidget(forms.Widget):
-    def __init__(self, initial, attrs):
+    def __init__(self, initial, attrs=None):
         super(ExpressionWidget, self).__init__(attrs)
         self.initial = initial
 
     def render(self, name, value, attrs):
         final_attrs = self.build_attrs(attrs, name=name)
         t = get_template(constants.TEMPLATE_PREFIX + 'expression_field.html')
-        local_attrs = {'service': ''}
+        func = json.dumps([('min', _('min')), ('max', _('max')), ('sum', _('sum')),
+        ('count', _('count')), ('avg', _('avg'))])
+        comparators = [['>', '>'], ['>=', '>='], ['<', '<'], ['<=', '<=']]
+
+
+        local_attrs = {'service': '', 'func': func, 'comparators': comparators}
         local_attrs.update(final_attrs)
         context = Context(local_attrs)
         return t.render(context)
-
-
-
-class SimpleExpressionWidget(django_forms.MultiWidget):
-    def __init__(self, initial, attrs=None):
-        comparators = [('>', '>'), ('>=', '>='), ('<', '<'), ('<=', '<=')]
-        func = [('min', _('min')), ('max', _('max')), ('sum', _('sum')),
-                ('count', _('count')), ('avg', _('avg'))]
-        _widgets = (
-            django_forms.widgets.Select(attrs=attrs, choices=func),
-            ExpressionWidget(initial, attrs={}),
-            django_forms.widgets.Select(attrs=attrs, choices=comparators),
-            django_forms.widgets.TextInput(),
-        )
-        super(SimpleExpressionWidget, self).__init__(_widgets, attrs)
-
-    def decompress(self, expr):
-        if expr:
-            return re.search('^(\w+)\((.*)\) ([<>=]*) (.*)$', expr).groups()
-        else:
-            return [None, None, None, None]
-
-    def format_output(self, rendered_widgets):
-        return ''.join(rendered_widgets)
-
-    def value_from_datadict(self, data, files, name):
-        values = [
-            widget.value_from_datadict(data, files, name + '_%s' % i)
-            for i, widget in enumerate(self.widgets)]
-        try:
-            expression = '%s(%s) %s %s' % (values[0],
-                                           values[1],
-                                           values[2],
-                                           values[3])
-        except ValueError:
-            return ''
-        else:
-            return expression
 
 
 class NotificationField(forms.MultiValueField):
@@ -166,13 +134,12 @@ class BaseAlarmForm(forms.SelfHandlingForm):
     def _init_fields(self, readOnly=False, create=False, initial=None):
         required = True
         textWidget = None
-        textAreaWidget = forms.Textarea(attrs={'class': 'large-text-area'})
         choiceWidget = forms.Select
         if create:
-            expressionWidget = SimpleExpressionWidget(initial)
+            expressionWidget = ExpressionWidget(initial)
             notificationWidget = NotificationCreateWidget()
         else:
-            expressionWidget = textAreaWidget
+            expressionWidget = textWidget
             notificationWidget = NotificationCreateWidget()
 
         self.fields['name'] = forms.CharField(label=_("Name"),
@@ -184,7 +151,7 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                                                     widget=expressionWidget)
         self.fields['description'] = forms.CharField(label=_("Description"),
                                                      required=False,
-                                                     widget=textAreaWidget)
+                                                     widget=textWidget)
         sev_choices = [("LOW", _("Low")),
                        ("MEDIUM", _("Medium")),
                        ("HIGH", _("High")),

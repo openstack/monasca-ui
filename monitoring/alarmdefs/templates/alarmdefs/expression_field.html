@@ -1,10 +1,18 @@
 {% load i18n %}
 <div ng-controller="alarmEditController" ng-init="init('{{ service }}')">
     <input type="hidden" name="{{ name }}" id="dimension"/>
-    <select id="metric-chooser" class="form-control"
-            ng-model="currentMetric"
-            ng-options="metric for metric in metricNames"
-            ng-change="metricChanged()"></select>
+    <div style="margin-bottom:5px;">
+        <select id="function" class="form-control"
+                ng-model="currentFunction" ng-options="f[0] as f[1] for f in {{func}}"></select>
+        <select id="metric-chooser" class="form-control"
+                ng-model="currentMetric"
+                ng-options="metric for metric in metricNames"
+                ng-change="metricChanged()">
+                </select>
+        <select id="comparators" class="form-control"
+                ng-model="currentComparator" ng-options="f[0] as f[1] for f in {{comparators}}"></select>
+        <input type="number" id="threshold" class="form-control" ng-model="currentThreshold"/>
+    </div>
     <tags-input id="dimension-chooser" ng-model="tags"
                 placeholder="{% trans 'Add a dimension' %}"
                 add-from-autocomplete-only="true"

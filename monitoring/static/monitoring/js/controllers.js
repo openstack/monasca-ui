@@ -34,6 +34,10 @@ angular.module('monitoring.controllers', [])
         $scope.metrics = metricsList;
         $scope.metricNames = uniqueNames(metricsList, 'name')
         $scope.currentMetric = $scope.metricNames[0];
+        $scope.currentFunction = "max";
+        $scope.currentComparator = ">";
+        $scope.currentThreshold = 0;
+        $scope.tags = [];
         $scope.possibleDimensions = function(query) {
             var deferred = $q.defer();
             var dim = {}
@@ -90,7 +94,7 @@ angular.module('monitoring.controllers', [])
                 }
                 dim += value['text']
             })
-            return $scope.currentMetric + '{' + dim + '}';
+            return $scope.currentMetric + '{' + dim + '} ' + $scope.currentComparator + ' ' + $scope.currentThreshold;
         }
         $scope.init = function(defaultTag) {
             if (defaultTag.length > 0) {
