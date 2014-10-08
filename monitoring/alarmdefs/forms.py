@@ -14,10 +14,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import re
 import json
 
-from django import forms as django_forms
 from django.template.loader import get_template
 from django.template import Context
 from django.utils import html
@@ -149,6 +147,13 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['expression'] = forms.CharField(label=_("Expression"),
                                                     required=required,
                                                     widget=expressionWidget)
+        apply_to = [['1', _('individually')],
+                    ['2', _('as a group')]]
+        self.fields['apply_to'] = forms.ChoiceField(label=_("Apply function to metrics"),
+                                                    choices=apply_to,
+                                                    required=False,
+                                                    widget=forms.RadioSelect(),
+                                                    initial="1")
         self.fields['description'] = forms.CharField(label=_("Description"),
                                                      required=False,
                                                      widget=textWidget)
@@ -194,8 +199,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
     def clean_expression(self):
         data = self.cleaned_data['expression']
         value = data.split(' ')[2]
-        if not value.isdigit():
-            raise forms.ValidationError("Value must be an integer")
+        try:
+            float(value)
+        except ValueError:
+            raise forms.ValidationError("Value must be a number")
 
         # Always return the cleaned data, whether you have changed it or
         # not.
@@ -220,6 +227,7 @@ class CreateAlarmForm(BaseAlarmForm):
                 expression=data['expression'],
                 description=data['description'],
                 severity=data['severity'],
+                match_by=request.POST['match_by'].split(',') if request.POST['apply_to'] == '1' else None,
                 alarm_actions=alarm_actions,
                 ok_actions=alarm_actions,
                 undetermined_actions=alarm_actions,
