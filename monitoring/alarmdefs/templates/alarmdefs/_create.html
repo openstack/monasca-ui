@@ -5,7 +5,7 @@
 {% block form_id %}create_alarm_form{% endblock %}
 {% block form_action %}{{ action_url }}{% endblock %}
 
-{% block modal-header %}{% trans "Create Alarm" %}{% endblock %}
+{% block modal-header %}{% trans "Create Alarm Definition" %}{% endblock %}
 
 {% block modal-body %}
     <h3>{% trans "Description" %}:</h3>
@@ -43,8 +43,19 @@ $('#notification_table').on('click', '#remove_notif_button', (function(event){
 metricsList = {{ metrics | safe }}
 </script>
 <style>
+  #id_expression_0 {
+      width: auto;
+      float: left;
+  }
+  #metric-chooser {
+      width: auto;
+  }
   #id_expression_2 {
-      width: 60px;
+      width: auto;
+      float: left;
+  }
+  #id_expression_3 {
+      width: auto;
   }
  </style>
     <link href='{{ STATIC_URL }}/monitoring/css/ng-tags-input.css' type="text/css" rel="stylesheet"/>
