@@ -59,22 +59,14 @@ def show_severity(data):
     else:
         return state
 
+def show_metric_name(data):
+    return data['metrics'][0]['name']
 
-def show_by_dimension(data, dim_name):
-    if 'dimensions' in data['metrics']:
-        dimensions = data['metrics']['dimensions']
-        if dim_name in dimensions:
-            return str(data['metrics']['dimensions'][dim_name])
-    return ""
-
-
-def show_service(data):
-    return show_by_dimension(data, 'service')
-
-
-def show_host(data):
-    return show_by_dimension(data, 'hostname')
-
+def show_metric_dimensions(data):
+    if len(data['metrics']) > 1:
+        return _('Multiple metrics')
+    else:
+        return ','.join(["%s=%s" % (n, v) for n,v in data['metrics'][0]['dimensions'].items()])
 
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
@@ -170,10 +162,8 @@ class AlarmsFilterAction(tables.FilterAction):
 
 
 class AlarmsTable(tables.DataTable):
-    target = tables.Column('id', verbose_name=_('Id'))
-    metrics = tables.Column('metrics', verbose_name=_('Metrics'))
-    host = tables.Column(transform=show_host, verbose_name=_('Host'))
-    service = tables.Column(transform=show_service, verbose_name=_('Service'))
+    metrics = tables.Column(transform=show_metric_name, verbose_name=_('Metric Name'))
+    dimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Metric Dimensions'))
     state = tables.Column('state', verbose_name=_('State'))
 
     def get_object_id(self, obj):
