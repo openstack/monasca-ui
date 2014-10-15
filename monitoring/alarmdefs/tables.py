@@ -66,26 +66,6 @@ class EditAlarm(tables.LinkAction):
         return True
 
 
-class GraphMetric(tables.LinkAction):
-    name = "graph_alarm"
-    verbose_name = _("Graph Metric")
-    icon = "dashboard"
-
-    def render(self):
-        self.attrs['target'] = 'newtab'
-        return super(self, GraphMetric).render()
-
-    def get_link_url(self, datum):
-        name = datum['expression_data']['metric_name']
-        threshold = datum['expression_data']['threshold']
-        self.attrs['target'] = '_blank'
-        return "/static/grafana/index.html#/dashboard/script/detail.js?token=%s&name=%s&threshold=%s" % \
-               (self.table.request.user.token.id, name, threshold)
-
-    def allowed(self, request, datum=None):
-        return 'metric_name' in datum['expression_data']
-
-
 class DeleteAlarm(tables.DeleteAction):
     name = "delete_alarm"
     verbose_name = _("Delete Alarm Definition")
@@ -124,8 +104,7 @@ class AlarmsTable(tables.DataTable):
     class Meta:
         name = "alarms"
         verbose_name = _("Alarm Definitions")
-        row_actions = (GraphMetric,
-                       EditAlarm,
+        row_actions = (EditAlarm,
                        DeleteAlarm,
                        )
         table_actions = (CreateAlarm,

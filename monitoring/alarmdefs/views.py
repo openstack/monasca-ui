@@ -66,15 +66,9 @@ class AlarmCreateView(forms.ModalFormView):
 
 
 def transform_alarm_data(obj):
+    obj['apply_to'] = '1' if obj['match_by'] else '2'
     return obj
-    return {'id': getattr(obj, 'id', None),
-            'name': getattr(obj, 'name', None),
-            'expression': getattr(obj, 'expression', None),
-            'state': filters.title(getattr(obj, 'state', None)),
-            'severity': filters.title(getattr(obj, 'severity', None)),
-            'actions_enabled': filters.title(getattr(obj, 'actions_enabled',
-                                                     None)),
-            'notifications': getattr(obj, 'alarm_actions', None), }
+
 
 
 def transform_alarm_history(results, name):

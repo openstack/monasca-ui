@@ -37,6 +37,7 @@ angular.module('monitoring.controllers', [])
         $scope.currentFunction = "max";
         $scope.currentComparator = ">";
         $scope.currentThreshold = 0;
+        $scope.matchingMetrics= [];
         $scope.tags = [];
         $scope.possibleDimensions = function(query) {
             var deferred = $q.defer();
@@ -71,7 +72,7 @@ angular.module('monitoring.controllers', [])
             angular.forEach($scope.metrics, function(value, key) {
                 if (value.name === $scope.currentMetric) {
                     var match = true;
-                    for (var i =0; i < $scope.tags.length; i++) {
+                    for (var i = 0; i < $scope.tags.length; i++) {
                         var vals = $scope.tags[i]['text'].split('=');
                         if (value.dimensions[vals[0]] !== vals[1]) {
                             match = false;
@@ -85,7 +86,8 @@ angular.module('monitoring.controllers', [])
             });
             $scope.matchingMetrics = mm
             $scope.dimnames = ['name', 'dimensions'];
-       }
+            $('#match').val($scope.formatMatchBy());
+        }
         $scope.formatDimension = function() {
             var dim = ''
             angular.forEach($scope.tags, function(value, key) {
@@ -95,6 +97,15 @@ angular.module('monitoring.controllers', [])
                 dim += value['text']
             })
             return $scope.currentMetric + '{' + dim + '} ' + $scope.currentComparator + ' ' + $scope.currentThreshold;
+        }
+        $scope.formatMatchBy = function() {
+            var dimNames = {}
+            for (var i = 0; i < $scope.matchingMetrics.length; i++) {
+                for (var attrname in $scope.matchingMetrics[i].dimensions) { dimNames[attrname] = true; }
+            }
+            var matches = [];
+            for (var attrname in dimNames) { matches.push(attrname); }
+            return matches;
         }
         $scope.init = function(defaultTag) {
             if (defaultTag.length > 0) {

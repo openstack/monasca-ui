@@ -42,7 +42,9 @@ class AlarmDefinitionsTest(helpers.TestCase):
         with patch('monitoring.api.monitor', **{
             'spec_set': ['alarmdef_get'],
             'alarmdef_get.return_value': {
-                'alarm_actions': []
+                'alarm_actions': [],
+                'apply_to': '1',
+                'match_by': [],
             }
         }) as mock:
             res = self.client.get(DETAIL_URL)
