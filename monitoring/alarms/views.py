@@ -112,14 +112,17 @@ class AlarmServiceView(tables.DataTableView):
     def get_data(self):
         results = []
         try:
-            if self.service == 'all':
-                results = api.monitor.alarm_list(self.request)
-            else:
-                results = api.monitor.alarm_list_by_service(
-                    self.request,
-                    self.service)
+            results = api.monitor.alarm_list(self.request)
         except Exception:
             messages.error(self.request, _("Could not retrieve alarms"))
+        if self.service != 'all':
+            name, value = self.service.split('=')
+            filtered = []
+            for row in results:
+                if (name in row['metrics'][0]['dimensions'] and
+                    row['metrics'][0]['dimensions'][name] == value):
+                    filtered.append(row)
+            results = filtered
         return results
 
     def get_context_data(self, **kwargs):

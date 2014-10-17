@@ -27,14 +27,6 @@ from monitoring import api
 LOG = logging.getLogger(__name__)
 
 
-def show_by_dimension(data, dim_name):
-    if 'dimensions' in data['expression_data']:
-        dimensions = data['expression_data']['dimensions']
-        if dim_name in dimensions:
-            return str(data['expression_data']['dimensions'][dim_name])
-    return ""
-
-
 class CreateAlarm(tables.LinkAction):
     name = "create_alarm"
     verbose_name = _("Create Alarm Definition")

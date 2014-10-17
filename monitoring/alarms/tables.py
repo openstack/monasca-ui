@@ -17,6 +17,7 @@
 import logging
 
 from django.core import urlresolvers
+from django import template
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon import tables
@@ -52,21 +53,39 @@ def show_status(data):
 
 
 def show_severity(data):
-    severity = data['severity']
+    severity = data['alarm_definition']['severity']
     state = data['state']
     if state == 'ALARM':
         return severity
     else:
         return state
 
+
 def show_metric_name(data):
     return data['metrics'][0]['name']
+
+
+def show_def_name(data):
+    return data['alarm_definition']['name']
+
+
+def show_def_severity(data):
+    return data['alarm_definition']['severity']
+
 
 def show_metric_dimensions(data):
     if len(data['metrics']) > 1:
         return _('Multiple metrics')
     else:
         return ','.join(["%s=%s" % (n, v) for n,v in data['metrics'][0]['dimensions'].items()])
+
+
+def get_service(data):
+    if len(data['metrics']) == 1 and 'service' in data['metrics'][0]['dimensions']:
+        return data['metrics'][0]['dimensions']['service']
+    else:
+        return ''
+
 
 class ShowAlarmHistory(tables.LinkAction):
     name = 'history'
@@ -162,9 +181,12 @@ class AlarmsFilterAction(tables.FilterAction):
 
 
 class AlarmsTable(tables.DataTable):
+    state = tables.Column(transform=show_severity, verbose_name=_('Status'),
+                           status_choices={(show_status('OK'), True)},
+                           filters=[show_status, template.defaultfilters.safe])
     metrics = tables.Column(transform=show_metric_name, verbose_name=_('Metric Name'))
     dimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Metric Dimensions'))
-    state = tables.Column('state', verbose_name=_('State'))
+    name = tables.Column(transform=show_def_name, verbose_name=_('Definition'))
 
     def get_object_id(self, obj):
         return obj['id']
@@ -180,8 +202,7 @@ class AlarmsTable(tables.DataTable):
                        ShowAlarmDefinition,
                        DeleteAlarm,
                        )
-        table_actions = (
-                         AlarmsFilterAction,
+        table_actions = (AlarmsFilterAction,
                          DeleteAlarm,
                         )
 

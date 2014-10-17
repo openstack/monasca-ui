@@ -53,6 +53,14 @@ priorities = [
 index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
 
 
+def show_by_dimension(data, dim_name):
+    if 'dimensions' in data['metrics'][0]:
+        dimensions = data['metrics'][0]['dimensions']
+        if dim_name in dimensions:
+            return str(data['metrics'][0]['dimensions'][dim_name])
+    return ""
+
+
 def get_status(alarms):
     if not alarms:
         return 'chicklet-notfound'
@@ -71,7 +79,7 @@ def generate_status(request):
         alarms = []
     alarms_by_service = {}
     for a in alarms:
-        service = alarm_tables.show_service(a)
+        service = alarm_tables.get_service(a)
         service_alarms = alarms_by_service.setdefault(service, [])
         service_alarms.append(a)
     for row in SERVICES:
@@ -79,7 +87,7 @@ def generate_status(request):
         if 'groupBy' in row:
             alarms_by_group = {}
             for a in alarms:
-                group = alarm_tables.show_by_dimension(a, row['groupBy'])
+                group = show_by_dimension(a, row['groupBy'])
                 if group:
                     group_alarms = alarms_by_group.setdefault(group, [])
                     group_alarms.append(a)
@@ -87,7 +95,7 @@ def generate_status(request):
             for group, group_alarms in alarms_by_group.items():
                 service = {
                     'display': group,
-                    'name': group,
+                    'name': "%s=%s" % (row['groupBy'], group),
                     'class': get_status(group_alarms)
                 }
                 service['icon'] = get_icon(service['class'])
