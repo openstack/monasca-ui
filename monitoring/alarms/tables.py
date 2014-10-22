@@ -156,7 +156,7 @@ class ShowAlarmDefinition(tables.LinkAction):
 
     def get_link_url(self, datum=None):
         return urlresolvers.reverse_lazy('horizon:monitoring:alarmdefs:alarm_detail',
-                                         args=(datum['alarm_definition_id'],))
+                                         args=(datum['alarm_definition']['id'],))
 
 
 class DeleteAlarm(tables.DeleteAction):
