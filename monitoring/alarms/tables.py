@@ -94,7 +94,7 @@ class ShowAlarmHistory(tables.LinkAction):
 
     def get_link_url(self, datum):
         return urlresolvers.reverse(constants.URL_PREFIX + 'history',
-                                    args=(datum['alarm_definition_id'], datum['id'], ))
+                                    args=(datum['alarm_definition']['id'], datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
