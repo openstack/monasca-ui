@@ -65,8 +65,11 @@ angular.module('monitoring.controllers', [])
             }
             $scope.saveDimension();
         }
-        $scope.saveDimension = function() {
+        $scope.saveExpression = function() {
             $('#dimension').val($scope.formatDimension());
+        }
+        $scope.saveDimension = function() {
+            $scope.saveExpression();
 
             var mm = []
             angular.forEach($scope.metrics, function(value, key) {
@@ -96,7 +99,7 @@ angular.module('monitoring.controllers', [])
                 }
                 dim += value['text']
             })
-            return $scope.currentMetric + '{' + dim + '} ' + $scope.currentComparator + ' ' + $scope.currentThreshold;
+            return $scope.currentFunction + '(' + $scope.currentMetric + '{' + dim + '}) ' + $scope.currentComparator + ' ' + $scope.currentThreshold;
         }
         $scope.formatMatchBy = function() {
             var dimNames = {}

@@ -1,17 +1,116 @@
 CHANGES
 =======
 
+1.0.15
+------
+
+* One more place to remap attribute
+
+1.0.14
+------
+
+* Use new layout for alarms JSON
+
+1.0.13
+------
+
+* Display fields from definitions in alarms Display services and hosts in overview panel
+
+1.0.12
+------
+
+* Implement match by for alarm definitions
+* Remove docutils pin
+* Show more interesting columns in Alarms table
+* Move expression field to angularjas so that fields line up better
+* Filter out dimensions with the typeahead text
+* Improve expression layout
+
+1.0.11
+------
+
+* Alarm Definition bug fixes
+
+1.0.10
+------
+
+* Changes to work with alarm definition
+* Add Alarm Definition Make changes to UI to differentiate between alarms and alarm definitions. At some point the backend of Monasca will change to support this and then we will use the new APIs. But for now, this exposes the user model but still uses the existing underlying alarm data model
+
+1.0.9
+-----
+
+* Use openstack.json dashboard in grafana
+
+1.0.8
+-----
+
+* Allow bulk deletion of alarms
+* Change detail panel to take over screen
+* Pass threshold to drilldown script in grafana
+* Only support email for notifications
+* Add ability to group by dimension for service health
+
+1.0.7
+-----
+
+* Add and remove from all 3 notification lists for alarms
+* Remove trailing / from endpoint
+* Find monasca api endpoint from Keystone's service catalog
+* Move service health view into new overview panel
+* In Create Alarm dialog, show metrics that match currently selected criteria
+* Add Graphh Metric button to lauunch grafana
+
+1.0.6
+-----
+
+* Use data_files to install data files
+* Update buttons to bootstrap3, add icons, add filter
+* Move local_settings to config
+
+1.0.5
+-----
+
+* Fill in expression fields when there is a form redraw
+* fix max size of autocomplete parameter
+* Add local_settings.py to setup.cfg so it gets installed
+
+1.0.4
+-----
+
+* Change styles to match new version of bootstrap in horizon
+* Move service health configuration to local_settings
+* Quit calling ajax when there is an error
+* Add unit tests
+
+1.0.3
+-----
+
+* Move from overcloud dashboard to monitoring
+* Validate expression and return better errors to user
+* Update README with latest instructions for dev environment
+* Fix key error on compound alarm expressions
+* Updated ChangeLog
+
 1.0.2
 -----
 
 * using python-monascaclient instead of old python-monclient
 * Use default system dashboard
 * Save enabled field on alarm edit
-* remove mocked up show metrics action
+* Remove mocked up show metrics action
+* Bump hacking to 0.9.x series
 
 1.0.1
 -----
 
+* setup.cfg and README name change
+
+1.0.0
+-----
+
+* Add .gitreview and tox.ini files
+* Don't hardcode grafana URL
 * Add grafana
 * Updated ChangeLog
 * Changes to work with api keystone. Changes for tests
@@ -27,7 +126,9 @@ CHANGES
 * removed clear alarm option
 * Remove unused import
 * Added Notification update
+* Modified ChangeLog
 * Forgot to checkin tables.py for notifications
+* New version to changelog
 * ChangeLog new version info, alarm history removed reason_data for now
 * Notification list, Notification delete, and Notification create action and button
 * Alarms History added

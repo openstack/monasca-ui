@@ -4,15 +4,15 @@
     <input type="hidden" name="match_by" id="match"/>
     <div style="margin-bottom:5px;">
         <select id="function" class="form-control"
-                ng-model="currentFunction" ng-options="f[0] as f[1] for f in {{func}}"></select>
+                ng-model="currentFunction" ng-options="f[0] as f[1] for f in {{func}}" ng-change="saveExpression()"></select>
         <select id="metric-chooser" class="form-control"
                 ng-model="currentMetric"
                 ng-options="metric for metric in metricNames"
                 ng-change="metricChanged()">
                 </select>
         <select id="comparators" class="form-control"
-                ng-model="currentComparator" ng-options="f[0] as f[1] for f in {{comparators}}"></select>
-        <input type="number" step="any" id="threshold" class="form-control" ng-model="currentThreshold"/>
+                ng-model="currentComparator" ng-options="f[0] as f[1] for f in {{comparators}}" ng-change="saveExpression()"></select>
+        <input type="number" step="any" id="threshold" class="form-control" ng-model="currentThreshold" ng-change="saveExpression()"/>
     </div>
     <tags-input id="dimension-chooser" ng-model="tags"
                 placeholder="{% trans 'Add a dimension' %}"
