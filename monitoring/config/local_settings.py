@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 
 # Services being monitored
 MONITORING_SERVICES = [

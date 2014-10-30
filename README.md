@@ -4,14 +4,14 @@ monasca-ui
 Monasca UI is implemented as a horizon plugin that adds panels to horizon. It is installed into devstack
 by monasca-vagrant. For a UI development setup:
 * git clone https://github.com/openstack/horizon.git  # clone horizon
-* git clone https://github.com/stackforge/monasca-ui.git # clone monasca-ui
 * git clone https://github.com/hpcloud-mon/grafana.git
+* ln -s grafana/src horizon/static/grafana
+
 * cd horizon
-* cp ../monasca-ui/enabled/* openstack_dashbaord/local/enabled  # Copy enabled files
-* ln -s ../monasca-ui/monitoring monitoring
-* ln -s ../../../grafana/src monitoring/static/grafana
-* tools/with_venv.sh pip install -r ../monasca-ui/requirements.txt
-* cat ../monasca-ui/local_settings.py >> openstack_dashboard/local/local_settings.py
+* Add git+https://github.com/stackforge/monasca-ui.git  to requirements.txt
+* Edit openstack_dashboard/settings.py to include the following two lines:
+* import monitoring.enabled
+* monitoring.enabled, #Add to the settings.update_dashboards list
 # 
 License
 
