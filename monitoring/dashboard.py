@@ -24,6 +24,6 @@ class Monitoring(horizon.Dashboard):
     slug = "monitoring"
     panels = ('overview', 'alarmdefs', 'alarms', 'notifications',)
     default_panel = 'overview'
-
+    policy_rules = (("monitoring", "monitoring:monitoring"),)
 
 horizon.register(Monitoring)
