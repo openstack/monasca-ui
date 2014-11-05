@@ -10,6 +10,18 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+from openstack_dashboard.test.test_data import keystone_data
+
+monasca = {
+    "type": "monitoring",
+    "name": "Monitoring",
+    "endpoints_links": [],
+    "endpoints": [
+     {"region": "RegionOne",
+      "adminURL": "http://admin.monasca.example.com:8386/v1.1",
+      "publicURL": "http://public.monasca.example.com:8386/v1.1",
+      "internalURL": "http://int.monasca.example.com:8386/v1.1"}]}
+keystone_data.SERVICE_CATALOG.append(monasca)
 
 def data(TEST):
     pass
