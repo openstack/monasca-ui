@@ -20,13 +20,21 @@ import logging
 from django.conf import settings  # noqa
 from django.http import HttpResponse  # noqa
 from django.views.generic import TemplateView  # noqa
+from django.utils.translation import ugettext_lazy as _  # noqa
 
 from monitoring.overview import constants
 from monitoring.alarms import tables as alarm_tables
 from monitoring import api
 
 LOG = logging.getLogger(__name__)
-SERVICES = getattr(settings, 'MONITORING_SERVICES', [])
+OVERVIEW = [
+    {'name': _('OpenStack Services'),
+     'groupBy': 'service'},
+    {'name': _('Servers'),
+     'groupBy': 'hostname'}
+]
+
+SERVICES = getattr(settings, 'MONITORING_SERVICES', OVERVIEW)
 
 
 def get_icon(status):
@@ -116,6 +124,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context["token"] = self.request.user.token.id
+        context["api"] = api.monitor.monasca_endpoint(self.request)
         return context
 
 

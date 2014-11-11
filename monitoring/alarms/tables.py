@@ -142,9 +142,13 @@ class GraphMetric(tables.LinkAction):
     def get_link_url(self, datum):
         name = datum['metrics'][0]['name']
         threshold = datum['metrics']
+        token = self.table.request.user.token.id
+        endpoint = api.monitor.monasca_endpoint(self.table.request)
         self.attrs['target'] = '_blank'
-        return "/static/grafana/index.html#/dashboard/script/detail.js?token=%s&name=%s&threshold=%s" % \
-               (self.table.request.user.token.id, name, threshold)
+        url = '/static/grafana/index.html#/dashboard/script/detail.js'
+        query = "?token=%s&name=%s&threshold=%s&api=%s" % \
+                (token, name, threshold, endpoint)
+        return url + query
 
     def allowed(self, request, datum=None):
         return datum['metrics']
