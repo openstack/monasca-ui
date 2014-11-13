@@ -8,7 +8,6 @@
 {% load url from future %}
 {% block main %}
     <div style="padding: 3px;">
-        <a href="{%  url 'horizon:monitoring:alarms:alarm' 'all'%}" class="btn btn-default btn-sm showspinner">{% trans 'All Alarms' %}</a>
         <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/openstack.json?token={{token}}&api={{api}}" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-dashboard"></span>
             {% trans 'Dashboard' %}
