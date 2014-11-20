@@ -64,7 +64,7 @@ class CreateMethodForm(BaseNotificationMethodForm):
         super(CreateMethodForm, self).__init__(request, *args, **kwargs)
         super(CreateMethodForm, self)._init_fields(readOnly=False)
 
-    def clean(self):
+    def clean_address(self):
         '''Check to make sure address is the correct format depending on the
         type of notification
         '''
@@ -74,7 +74,7 @@ class CreateMethodForm(BaseNotificationMethodForm):
         elif data['type'] == constants.NotificationType.SMS:
             constants.PHONE_VALIDATOR(data['address'])
 
-        return data
+        return data['address']
 
     def handle(self, request, data):
         try:
