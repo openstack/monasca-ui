@@ -10,14 +10,13 @@
 {% block modal-body %}
     <h3>{% trans "Description" %}:</h3>
     <p>{% blocktrans %}
-      The Name field is used to identify the notification method.
+      The Name field is used to identify the alarm definition.
     {% endblocktrans %}</p>
     <p>{% blocktrans %}
       The Expression field  which if true, triggers a notification to be sent.
-      See <a href="http://docs.hpcloud.com/api/v13/monitoring/#AlarmExpressions-jumplink-span" target="_blank">Alarm Expressions</a> for how to write an expression.
     {% endblocktrans %}</p>
     <p>{% blocktrans %}
-      The Alarm Actions field contains the list of Notification that should be sent when transitioning to an ALARM state.
+      The Notifications field contains the list of Notifications that should be sent when expression is true.
     {% endblocktrans %}</p>
     <fieldset>
     {% include "horizon/common/_form_fields.html" %}

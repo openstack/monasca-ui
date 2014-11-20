@@ -162,18 +162,6 @@ class AlarmCreateView(forms.ModalFormView):
                             args=(self.service,))
 
 
-def transform_alarm_data(obj):
-    return obj
-    return {'id': getattr(obj, 'id', None),
-            'name': getattr(obj, 'name', None),
-            'expression': getattr(obj, 'expression', None),
-            'state': filters.title(getattr(obj, 'state', None)),
-            'severity': filters.title(getattr(obj, 'severity', None)),
-            'actions_enabled': filters.title(getattr(obj, 'actions_enabled',
-                                                     None)),
-            'notifications': getattr(obj, 'alarm_actions', None), }
-
-
 def transform_alarm_history(results, name):
     newlist = []
     for item in results:
@@ -187,109 +175,6 @@ def transform_alarm_history(results, name):
         temp['reason_data'] = item['reason_data']
         newlist.append(temp)
     return newlist
-
-
-class AlarmDetailView(TemplateView):
-    template_name = constants.TEMPLATE_PREFIX + 'detail.html'
-
-    def get_object(self):
-        id = self.kwargs['id']
-        try:
-            if hasattr(self, "_object"):
-                return self._object
-            self._object = None
-            self._object = api.monitor.alarm_get(self.request, id)
-            notifications = []
-            # Fetch the notification object for each alarm_actions
-            for id in self._object["alarm_actions"]:
-                try:
-                    notification = api.monitor.notification_get(
-                        self.request,
-                        id)
-                    notifications.append(notification)
-                # except exceptions.NOT_FOUND:
-                except exc.HTTPException:
-                    msg = _("Notification %s has already been deleted.") % id
-                    notifications.append({"id": id,
-                                          "name": unicode(msg),
-                                          "type": "",
-                                          "address": ""})
-            self._object["notifications"] = notifications
-            return self._object
-        except Exception:
-            redirect = self.get_success_url()
-            exceptions.handle(self.request,
-                              _('Unable to retrieve alarm details.'),
-                              redirect=redirect)
-        return None
-
-    def get_initial(self):
-        self.alarm = self.get_object()
-        return transform_alarm_data(self.alarm)
-
-    def get_context_data(self, **kwargs):
-        context = super(AlarmDetailView, self).get_context_data(**kwargs)
-        self.get_initial()
-        context["alarm"] = self.alarm
-        context["cancel_url"] = self.get_success_url()
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy(constants.URL_PREFIX + 'index')
-
-
-class AlarmEditView(forms.ModalFormView):
-    form_class = alarm_forms.EditAlarmForm
-    template_name = constants.TEMPLATE_PREFIX + 'edit.html'
-
-    def dispatch(self, *args, **kwargs):
-        self.service = kwargs['service']
-        del kwargs['service']
-        return super(AlarmEditView, self).dispatch(*args, **kwargs)
-
-    def get_object(self):
-        id = self.kwargs['id']
-        try:
-            if hasattr(self, "_object"):
-                return self._object
-            self._object = None
-            self._object = api.monitor.alarm_get(self.request, id)
-            notifications = []
-            # Fetch the notification object for each alarm_actions
-            for id in self._object["alarm_actions"]:
-                try:
-                    notification = api.monitor.notification_get(
-                        self.request,
-                        id)
-                    notifications.append(notification)
-                # except exceptions.NOT_FOUND:
-                except exc.HTTPException:
-                    msg = _("Notification %s has already been deleted.") % id
-                    messages.warning(self.request, msg)
-            self._object["notifications"] = notifications
-            return self._object
-        except Exception:
-            redirect = self.get_success_url()
-            exceptions.handle(self.request,
-                              _('Unable to retrieve alarm details.'),
-                              redirect=redirect)
-        return None
-
-    def get_initial(self):
-        self.alarm = self.get_object()
-        return transform_alarm_data(self.alarm)
-
-    def get_context_data(self, **kwargs):
-        context = super(AlarmEditView, self).get_context_data(**kwargs)
-        id = self.kwargs['id']
-        context["cancel_url"] = self.get_success_url()
-        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_edit',
-                                        args=(self.service, id,))
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy(constants.URL_PREFIX + 'alarm',
-                            args=(self.service,))
 
 
 class AlarmHistoryView(tables.DataTableView):

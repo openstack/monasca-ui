@@ -27,13 +27,4 @@ urlpatterns = patterns(
     url(r'^history/(?P<name>[^/]+)/(?P<id>[^/]+)$',
         views.AlarmHistoryView.as_view(),
         name='history'),
-    url(r'^alarm/(?P<service>[^/]+)/create$',
-        views.AlarmCreateView.as_view(),
-        name='alarm_create'),
-    url(r'^(?P<id>[^/]+)/alarm_detail/$',
-        views.AlarmDetailView.as_view(),
-        name='alarm_detail'),
-    url(r'^alarm/(?P<service>[^/]+)/(?P<id>[^/]+)/alarm_edit/$',
-        views.AlarmEditView.as_view(),
-        name='alarm_edit'),
 )
