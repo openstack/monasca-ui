@@ -21,8 +21,9 @@ from django.utils.translation import ugettext_lazy as _  # noqa
 class NotificationType(object):
     SMS = "SMS"
     EMAIL = "EMAIL"
+    WEBHOOK = "WEBHOOK"
 
-    CHOICES = [(EMAIL, _("Email")),]
+    CHOICES = [(EMAIL, _("Email")), (WEBHOOK, _("Webhook")),]
 
     @staticmethod
     def get_label(key):
@@ -36,6 +37,8 @@ PHONE_VALIDATOR = validators.RegexValidator(
     message=_("Address must contain a valid phone number."))
 EMAIL_VALIDATOR = validators.EmailValidator(
     message=_("Address must contain a valid email address."))
+WEBHOOK_VALIDATOR = validators.URLValidator(
+    message=_("Address must contain a valid URL address."))
 
 URL_PREFIX = 'horizon:monitoring:notifications:'
 TEMPLATE_PREFIX = 'monitoring/notifications/'
