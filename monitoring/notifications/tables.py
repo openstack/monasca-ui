@@ -99,4 +99,5 @@ class NotificationsTable(tables.DataTable):
         name = "notifications"
         verbose_name = _("Notifications")
         row_actions = (EditNotification, DeleteNotification, )
-        table_actions = (CreateNotification, NotificationsFilterAction,)
+        table_actions = (CreateNotification, NotificationsFilterAction,
+                         DeleteNotification)
