@@ -119,6 +119,16 @@ angular.module('monitoring.controllers', [])
         }
     })
 
+angular.module('monitoring.filters', [])
+    .filter('spacedim', function () {
+        return function(text) {
+            if (typeof text == "string")
+                return text;
+            return JSON.stringify(text).split(',').join(', ');
+        }
+    })
+
+
 function uniqueNames(input, key) {
     var unique = {};
     var uniqueList = [];
