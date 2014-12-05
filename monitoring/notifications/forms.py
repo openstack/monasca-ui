@@ -73,6 +73,8 @@ class CreateMethodForm(BaseNotificationMethodForm):
             constants.EMAIL_VALIDATOR(data['address'])
         elif data['type'] == constants.NotificationType.SMS:
             constants.PHONE_VALIDATOR(data['address'])
+        elif data['type'] == constants.NotificationType.WEBHOOK:
+            constants.WEBHOOK_VALIDATOR(data['address'])
 
         return data['address']
 
