@@ -1,8 +1,8 @@
 'use strict';
 angular.module('monitoring.controllers', [])
-    .controller('monitoringController', function ($scope, $http, $timeout) {
+    .controller('monitoringController', function ($scope, $http, $timeout, $location) {
          $scope.fetchStatus = function() {
-            $http({method: 'GET', url: '/monitoring/status'}).
+            $http({method: 'GET', url: $location.absUrl().concat('status')}).
                 success(function(data, status, headers, config) {
                   // this callback will be called asynchronously
                   // when the response is available
