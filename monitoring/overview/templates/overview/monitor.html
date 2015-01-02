@@ -55,7 +55,7 @@
                 {$ group.name $}
             </div>
             <div ng-repeat="service in group.services" style="display:inline-block; margin-bottom:4px; margin-right:4px;">
-                <a href="/monitoring/alarms/alarm/{$ service.name $}">
+                <a href="{% url 'horizon:monitoring:alarms:index' %}alarm/{$ service.name $}">
                  <div class="base-chicklet {$ service.class $}">
                     <div>
                         <div class="status-icon-holder" >
