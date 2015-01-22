@@ -250,6 +250,7 @@ class EditAlarmForm(BaseAlarmForm):
     def handle(self, request, data):
         try:
             alarm_actions = []
+            alarm_def = api.monitor.alarmdef_get(request, self.initial['id'])
             if data['notifications']:
                 alarm_actions = [notification.get('id')
                                  for notification in data['notifications']]
@@ -260,6 +261,7 @@ class EditAlarmForm(BaseAlarmForm):
                 name=data['name'],
                 expression=data['expression'],
                 description=data['description'],
+                match_by = alarm_def['match_by'],
                 actions_enabled=data['actions_enabled'],
                 alarm_actions=alarm_actions,
                 ok_actions=alarm_actions,
