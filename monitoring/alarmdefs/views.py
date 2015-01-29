@@ -18,9 +18,7 @@ import json
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
-from django.template import defaultfilters as filters
 from django.utils.translation import ugettext as _  # noqa
-from django.views.generic import View  # noqa
 from django.views.generic import TemplateView  # noqa
 
 from horizon import exceptions
@@ -68,22 +66,6 @@ class AlarmCreateView(forms.ModalFormView):
 def transform_alarm_data(obj):
     obj['apply_to'] = '1' if obj['match_by'] else '2'
     return obj
-
-
-
-def transform_alarm_history(results, name):
-    newlist = []
-    for item in results:
-        temp = {}
-        temp['alarm_id'] = item['alarm_id']
-        temp['name'] = name
-        temp['old_state'] = item['old_state']
-        temp['new_state'] = item['new_state']
-        temp['timestamp'] = item['timestamp']
-        temp['reason'] = item['reason']
-        temp['reason_data'] = item['reason_data']
-        newlist.append(temp)
-    return newlist
 
 
 class AlarmDetailView(TemplateView):

@@ -131,37 +131,6 @@ class AlarmServiceView(tables.DataTableView):
         return context
 
 
-class AlarmCreateView(forms.ModalFormView):
-    form_class = alarm_forms.CreateAlarmForm
-    template_name = constants.TEMPLATE_PREFIX + 'create.html'
-
-    def dispatch(self, *args, **kwargs):
-        self.service = kwargs['service']
-        return super(AlarmCreateView, self).dispatch(*args, **kwargs)
-
-    def get_initial(self):
-        return {"service": self.service}
-
-    def get_context_data(self, **kwargs):
-        context = super(AlarmCreateView, self).get_context_data(**kwargs)
-        context["cancel_url"] = self.get_success_url()
-        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create',
-                                        args=(self.service,))
-        metrics = api.monitor.metrics_list(self.request)
-        # Filter out metrics for other services
-        if self.service != 'all':
-            metrics = [m for m in metrics
-                       if m.setdefault('dimensions', {}).
-                       setdefault('service', '') == self.service]
-
-        context["metrics"] = json.dumps(metrics)
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy(constants.URL_PREFIX + 'alarm',
-                            args=(self.service,))
-
-
 def transform_alarm_history(results, name):
     newlist = []
     for item in results:
