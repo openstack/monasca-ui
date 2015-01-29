@@ -81,7 +81,7 @@ class NotificationsFilterAction(tables.FilterAction):
         """Naive case-insensitive search."""
         q = filter_string.lower()
         return [notif for notif in notifications
-                if q in notif.name.lower()]
+                if q in notif['name'].lower()]
 
 
 class NotificationsTable(tables.DataTable):

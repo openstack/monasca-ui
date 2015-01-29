@@ -181,7 +181,7 @@ class AlarmsFilterAction(tables.FilterAction):
         """Naive case-insensitive search."""
         q = filter_string.lower()
         return [alarm for alarm in alarms
-                if q in alarm.name.lower()]
+                if q in alarm['metrics'][0]['name'].lower()]
 
 
 class AlarmsTable(tables.DataTable):
