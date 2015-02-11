@@ -13,5 +13,11 @@
             {% trans 'Dashboard' %}
         </a>
     </div>
+    <div style="padding: 3px;">
+        <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/monasca.json?token={{token}}&api={{api}}" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-dashboard"></span>
+            {% trans 'Monasca Health' %}
+        </a>
+    </div>
     {%  include 'monitoring/overview/monitor.html' %}
 {% endblock %}
