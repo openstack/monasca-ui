@@ -123,6 +123,7 @@ class AlarmServiceView(tables.DataTableView):
                     row['metrics'][0]['dimensions'][name] == value):
                     filtered.append(row)
             results = filtered
+        results.sort(key=lambda x: x['state'])
         return results
 
     def get_context_data(self, **kwargs):
