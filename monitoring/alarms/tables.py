@@ -40,15 +40,15 @@ def get_status(index):
 
 def show_status(data):
     status = data
-    img_tag = '<img src="%s" title="%s"/>'
+    img_tag = '<img src="{img}" title="{label}" class="status-icon" />{label}'
     if status == 'CRITICAL':
-        return img_tag % (constants.CRITICAL_ICON, status)
+        return img_tag.format(img=constants.CRITICAL_ICON, label=status)
     if status in ('LOW', 'MEDIUM', 'HIGH'):
-        return img_tag % (constants.WARNING_ICON, status)
+        return img_tag.format(img=constants.WARNING_ICON, label=status)
     if status == 'OK':
-        return img_tag % (constants.OK_ICON, status)
+        return img_tag.format(img=constants.OK_ICON, label=status)
     if status == 'UNKNOWN' or status == 'UNDETERMINED':
-        return img_tag % (constants.UNKNOWN_ICON, status)
+        return img_tag.format(img=constants.UNKNOWN_ICON, label=status)
     return status
 
 
