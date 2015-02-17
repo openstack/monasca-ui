@@ -217,10 +217,9 @@ class AlarmsTable(tables.DataTable):
 
 
 class AlarmHistoryTable(tables.DataTable):
-    name = tables.Column('name', verbose_name=_('Name'))
+    timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
     old_state = tables.Column('old_state', verbose_name=_('Old State'))
     new_state = tables.Column('new_state', verbose_name=_('New State'))
-    timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
     alarmDimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Alarm Metric Dimensions'))
     reason = tables.Column('reason', verbose_name=_('Reason'))
     # reason_data = tables.Column('reason_data', verbose_name=_('Reason Data'))
@@ -229,5 +228,5 @@ class AlarmHistoryTable(tables.DataTable):
         return obj['alarm_id'] + obj['timestamp']
 
     class Meta:
-        name = "users"
+        name = "history"
         verbose_name = _("Alarm History")

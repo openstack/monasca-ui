@@ -5,25 +5,22 @@
 {% block title %}{% trans 'Alarm History' %}{% endblock %}
 
 {% block page_header %}
-  {% include "horizon/common/_page_header.html" with title="Alarm History" %}
+    <div class="page-header">
+      <h2>{% trans 'Alarm History' %}</h2>
+    </div>
+   <h4>{% trans "Alarm Details" %}</h4>
+  <hr class="header_rule">
+  <dl class="dl-horizontal">
+    <dt>{% trans "Name" %}</dt>
+    <dd>{{ alarm.alarm_definition.name|default:_("None") }}</dd>
+    {% for metric in alarm.metrics %}
+    <dt>{% trans "Metric Name"  %} {{forloop.counter}}</dt>
+    <dd>{{ metric.name }}</dd>
+    {% endfor %}
+  </dl>
+
 {% endblock page_header %}
 
-{% block manage_overview %}
-{% block page_title %}
-<div class="page_title table_header">
-    <div>
-        <h3>
-            <a href="{% url 'horizon:noc_tools:service_health:index' %}" class="showspinner">
-            {% trans "Service Health" %}</a> : {{ region_name }} -  &gt;
-            {% trans "Service :" %} {{ service }}
-        </h3>
-    </div>
-    <div class="table_actions">
-        <a href="{% url 'horizon:noc_tools:service_health:index' %}" class="close showspinner">&times;</a>
-    </div>
-</div>
-{% endblock page_title %}
-{% endblock %}
 {% block main %}
     {{ table.render }}
 {% endblock %}
