@@ -168,4 +168,12 @@ class AlarmHistoryView(tables.DataTableView):
 
     def get_context_data(self, **kwargs):
         context = super(AlarmHistoryView, self).get_context_data(**kwargs)
+        id = self.kwargs['id']
+        try:
+            alarm = api.monitor.alarm_get(self.request, id)
+        except Exception:
+            messages.error(self.request,
+                           _("Could not retrieve alarm for %s") % id)
+        context['alarm'] = alarm
         return context
+
