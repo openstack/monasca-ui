@@ -221,6 +221,7 @@ class AlarmHistoryTable(tables.DataTable):
     old_state = tables.Column('old_state', verbose_name=_('Old State'))
     new_state = tables.Column('new_state', verbose_name=_('New State'))
     timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
+    alarmDimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Alarm Metric Dimensions'))
     reason = tables.Column('reason', verbose_name=_('Reason'))
     # reason_data = tables.Column('reason_data', verbose_name=_('Reason Data'))
 

@@ -142,6 +142,7 @@ def transform_alarm_history(results, name):
         temp['new_state'] = item['new_state']
         temp['timestamp'] = item['timestamp']
         temp['reason'] = item['reason']
+        temp['metrics'] = item['metrics']
         temp['reason_data'] = item['reason_data']
         newlist.append(temp)
     return newlist
