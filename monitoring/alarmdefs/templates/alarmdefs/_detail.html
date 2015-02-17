@@ -1,9 +1,9 @@
 {% load i18n sizeformat %}
 
-<div class="info row detail">
+<div class="info detail">
   <h4>{% trans "Info" %}</h4>
   <hr class="header_rule">
-  <dl>
+  <dl class="dl-horizontal">
     <dt>{% trans "Name" %}</dt>
     <dd>{{ alarm.name|default:_("None") }}</dd>
     <dt>{% trans "Description" %}</dt>
@@ -16,7 +16,7 @@
     <dd>{{ alarm.actions_enabled }}</dd>
   </dl>
 </div>
-<div class="specs row detail">
+<div class="specs detail">
   <h4>{% trans "Notifications" %}</h4>
   <hr class="header_rule">
     <table class="table table-condensed">
