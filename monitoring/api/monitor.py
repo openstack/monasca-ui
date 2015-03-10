@@ -61,21 +61,22 @@ def monascaclient(request, password=None):
 
 
 def alarm_list(request, marker=None, paginate=False):
-    return monascaclient(request).alarms.list()
+    result = monascaclient(request).alarms.list()
+    return result['elements'] if type(result) is dict else result
 
 
 def alarm_list_by_service(request, service_name, marker=None, paginate=False):
     service_dim = {'service': service_name}
-    return monascaclient(request).alarms.list(dimensions=service_dim)
-
+    result = monascaclient(request).alarms.list(dimensions=service_dim)
+    return result['elements'] if type(result) is dict else result
 
 def alarm_delete(request, alarm_id):
     return monascaclient(request).alarms.delete(alarm_id=alarm_id)
 
 
 def alarm_history(request, alarm_id):
-    return monascaclient(request).alarms.history(alarm_id=alarm_id)
-
+    result = monascaclient(request).alarms.history(alarm_id=alarm_id)
+    return result['elements'] if type(result) is dict else result
 
 def alarm_get(request, alarm_id):
     return monascaclient(request).alarms.get(alarm_id=alarm_id)
@@ -86,13 +87,13 @@ def alarm_patch(request, **kwargs):
 
 
 def alarmdef_list(request, marker=None, paginate=False):
-    return monascaclient(request).alarm_definitions.list()
-
+    result = monascaclient(request).alarm_definitions.list()
+    return result['elements'] if type(result) is dict else result
 
 def alarmdef_list_by_service(request, service_name, marker=None, paginate=False):
     service_dim = {'service': service_name}
-    return monascaclient(request).alarm_definitions.list(dimensions=service_dim)
-
+    result = monascaclient(request).alarm_definitions.list(dimensions=service_dim)
+    return result['elements'] if type(result) is dict else result
 
 def alarmdef_delete(request, alarm_id):
     return monascaclient(request).alarm_definitions.delete(alarm_id=alarm_id)
@@ -119,8 +120,8 @@ def alarmdef_patch(request, **kwargs):
 
 
 def notification_list(request, marker=None, paginate=False):
-    return monascaclient(request).notifications.list()
-
+    result = monascaclient(request).notifications.list()
+    return result['elements'] if type(result) is dict else result
 
 def notification_delete(request, notification_id):
     return monascaclient(request).notifications.delete(
@@ -142,4 +143,5 @@ def notification_update(request, notification_id, **kwargs):
 
 
 def metrics_list(request, marker=None, paginate=False):
-    return monascaclient(request).metrics.list()
+    result = monascaclient(request).metrics.list()
+    return result['elements'] if type(result) is dict else result
