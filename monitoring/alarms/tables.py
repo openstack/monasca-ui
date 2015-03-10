@@ -193,9 +193,9 @@ class AlarmsTable(tables.DataTable):
     state = tables.Column(transform=show_severity, verbose_name=_('Status'),
                            status_choices={(show_status('OK'), True)},
                            filters=[show_status, template.defaultfilters.safe])
+    name = tables.Column(transform=show_def_name, verbose_name=_('Name'))
     metrics = tables.Column(transform=show_metric_name, verbose_name=_('Metric Name'))
     dimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Metric Dimensions'))
-    name = tables.Column(transform=show_def_name, verbose_name=_('Definition'))
 
     def get_object_id(self, obj):
         return obj['id']
