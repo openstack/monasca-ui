@@ -10,7 +10,7 @@
     </div>
    <h4>{% trans "Alarm Details" %}</h4>
   <hr class="header_rule">
-  <dl class="dl-horizontal">
+  <dl>
     <dt>{% trans "Name" %}</dt>
     <dd>{{ alarm.alarm_definition.name|default:_("None") }}</dd>
     {% for metric in alarm.metrics %}
