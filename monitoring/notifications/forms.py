@@ -71,10 +71,10 @@ class CreateMethodForm(BaseNotificationMethodForm):
         data = super(forms.Form, self).clean()
         if data['type'] == constants.NotificationType.EMAIL:
             constants.EMAIL_VALIDATOR(data['address'])
-        elif data['type'] == constants.NotificationType.SMS:
-            constants.PHONE_VALIDATOR(data['address'])
         elif data['type'] == constants.NotificationType.WEBHOOK:
             constants.WEBHOOK_VALIDATOR(data['address'])
+        elif data['type'] == constants.NotificationType.PAGERDUTY:
+            pass
 
         return data['address']
 

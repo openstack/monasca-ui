@@ -19,11 +19,13 @@ from django.utils.translation import ugettext_lazy as _  # noqa
 
 
 class NotificationType(object):
-    SMS = "SMS"
     EMAIL = "EMAIL"
     WEBHOOK = "WEBHOOK"
+    PAGERDUTY = "PAGERDUTY"
 
-    CHOICES = [(EMAIL, _("Email")), (WEBHOOK, _("Webhook")),]
+    CHOICES = [(EMAIL, _("Email")),
+               (WEBHOOK, _("Webhook")),
+               (PAGERDUTY, _("Pagerduty")),]
 
     @staticmethod
     def get_label(key):
@@ -32,9 +34,6 @@ class NotificationType(object):
                 return choice[1]
         return key
 
-PHONE_VALIDATOR = validators.RegexValidator(
-    regex=r"^[()0-9+\- ]{5,20}",
-    message=_("Address must contain a valid phone number."))
 EMAIL_VALIDATOR = validators.EmailValidator(
     message=_("Address must contain a valid email address."))
 WEBHOOK_VALIDATOR = validators.URLValidator(
