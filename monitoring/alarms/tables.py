@@ -216,8 +216,12 @@ class AlarmsTable(tables.DataTable):
                         )
 
 
+def show_timestamp(data):
+    return data['timestamp'].replace('.000Z', '').replace('T', ' ')
+
+
 class AlarmHistoryTable(tables.DataTable):
-    timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
+    timestamp = tables.Column(transform=show_timestamp,  verbose_name=_('Timestamp'))
     old_state = tables.Column('old_state', verbose_name=_('Old State'))
     new_state = tables.Column('new_state', verbose_name=_('New State'))
     alarmDimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Alarm Metric Dimensions'))
