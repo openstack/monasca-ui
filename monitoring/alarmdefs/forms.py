@@ -236,7 +236,7 @@ class CreateAlarmForm(BaseAlarmForm):
             messages.success(request,
                              _('Alarm Definition has been created successfully.'))
         except Exception as e:
-            exceptions.handle(request, _('Unable to create the alarm definition: %s') % e.message)
+            exceptions.handle(request, _('Unable to create the alarm definition: %s') % e)
             return False
         return True
 
