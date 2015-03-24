@@ -14,7 +14,7 @@ ADD_JS_FILES = ['monitoring/js/app.js',
 from monascaclient import exc
 # A dictionary of exception classes to be added to HORIZON['exceptions'].
 ADD_EXCEPTIONS = {
-    'recoverable': (exc.HTTPUnProcessable,),
+    'recoverable': (exc.HTTPUnProcessable, exc.HTTPConflict, exc.HTTPException),
     'not_found': (exc.HTTPNotFound,),
     'unauthorized': (exc.HTTPUnauthorized,),
 }
