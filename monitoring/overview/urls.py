@@ -22,4 +22,6 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^status', views.StatusView.as_view(), name='status'),
+    url(r'^proxy\/(?P<restpath>.*)$', views.MonascaProxyView.as_view()),
+    url(r'^proxy', views.MonascaProxyView.as_view(), name='proxy'),
 )

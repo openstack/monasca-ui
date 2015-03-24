@@ -142,6 +142,11 @@ def notification_update(request, notification_id, **kwargs):
         update(notification_id=notification_id, **kwargs)
 
 
-def metrics_list(request, marker=None, paginate=False):
-    result = monascaclient(request).metrics.list()
+def metrics_list(request, **kwargs):
+    result = monascaclient(request).metrics.list(**kwargs)
+    return result['elements'] if type(result) is dict else result
+
+
+def metrics_stat_list(request, **kwargs):
+    result = monascaclient(request).metrics.list_statistics(**kwargs)
     return result['elements'] if type(result) is dict else result

@@ -18,6 +18,7 @@ import json
 import logging
 
 from django.conf import settings  # noqa
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse  # noqa
 from django.views.generic import TemplateView  # noqa
 from django.utils.translation import ugettext_lazy as _  # noqa
@@ -123,9 +124,52 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context["token"] = self.request.user.token.id
-        context["api"] = api.monitor.monasca_endpoint(self.request)
+        proxy_url_path = str(reverse_lazy(constants.URL_PREFIX + 'proxy'))
+        api_root = self.request.build_absolute_uri(proxy_url_path)
+        context["api"] = api_root
         return context
+
+
+class MonascaProxyView(TemplateView):
+    template_name = ""
+
+    def _convert_dimensions(self, req_kwargs):
+        """this method converts the dimension string
+        service:monitoring  (requested by a query string arg)
+        into a python dict that looks like
+        {"service": "monitoring"} (used by monasca api calls)
+        """
+        if 'dimensions' in req_kwargs:
+            new_dimenstion_dict = {}
+            for dimension in req_kwargs['dimensions']:
+                key, value = dimension.split(":")
+                new_dimenstion_dict[key] = value
+            req_kwargs['dimensions'] = new_dimenstion_dict
+        return req_kwargs
+
+    def get(self, request, *args, **kwargs):
+        # monasca_endpoint = api.monitor.monasca_endpoint(self.request)
+        restpath = self.kwargs['restpath']
+
+        results = None
+        parts = restpath.split('/')
+        if "metrics" == parts[0]:
+            req_kwargs = dict(self.request.GET)
+            self._convert_dimensions(req_kwargs)
+            if "statistics" == parts[1]:
+                results = {'elements': api.monitor.
+                           metrics_stat_list(request,
+                                             **req_kwargs)}
+            if "measurements" == parts[1]:
+                results = {'elements': api.monitor.
+                           metrics_list(request,
+                                        **req_kwargs)}
+        if not results:
+            LOG.warn("There was a request made for the path %s that"
+                     " is not supported." % restpath)
+            results = {}
+        return HttpResponse(json.dumps(results),
+                            content_type='application/json')
 
 
 class StatusView(TemplateView):

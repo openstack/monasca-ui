@@ -8,11 +8,11 @@
 {% load url from future %}
 {% block main %}
     <div style="padding: 3px;">
-        <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/openstack.json?token={{token}}&api={{api}}" class="btn btn-default btn-sm">
+        <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/openstack.json?&api={{api}}" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-dashboard"></span>
             {% trans 'Dashboard' %}
         </a>
-        <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/monasca.json?token={{token}}&api={{api}}" class="btn btn-default btn-sm">
+        <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/monasca.json?&api={{api}}" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-dashboard"></span>
             {% trans 'Monasca Health' %}
         </a>
