@@ -35,7 +35,13 @@ OVERVIEW = [
      'groupBy': 'hostname'}
 ]
 
+DEFAULT_LINKS = [
+    {'title': 'Dashboard', 'fileName': 'openstack.json'},
+    {'title': 'Monasca Health', 'fileName': 'monasca.json'}
+]
+
 SERVICES = getattr(settings, 'MONITORING_SERVICES', OVERVIEW)
+DASHBOARDS = getattr(settings, 'GRAFANA_LINKS', DEFAULT_LINKS)
 
 
 def get_icon(status):
@@ -127,6 +133,7 @@ class IndexView(TemplateView):
         proxy_url_path = str(reverse_lazy(constants.URL_PREFIX + 'proxy'))
         api_root = self.request.build_absolute_uri(proxy_url_path)
         context["api"] = api_root
+        context["dashboards"] = DASHBOARDS
         return context
 
 

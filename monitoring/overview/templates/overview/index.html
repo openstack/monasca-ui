@@ -8,14 +8,12 @@
 {% load url from future %}
 {% block main %}
     <div style="padding: 3px;">
-        <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/openstack.json?&api={{api}}" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-dashboard"></span>
-            {% trans 'Dashboard' %}
-        </a>
-        <a target="dashboard" href="/static/grafana/index.html#/dashboard/file/monasca.json?&api={{api}}" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-dashboard"></span>
-            {% trans 'Monasca Health' %}
-        </a>
+      {% for dashboard in dashboards %}
+      <a target={{ dashboard.title }} href="/static/grafana/index.html#/dashboard/file/{{ dashboard.fileName }}?api={{api}}" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-dashboard"></span>
+              {% trans dashboard.title %}
+          </a>
+      {% endfor %}
     </div>
     {%  include 'monitoring/overview/monitor.html' %}
 {% endblock %}

@@ -7,3 +7,9 @@ MONITORING_SERVICES = [
     {'name': _('Servers'),
      'groupBy': 'hostname'}
 ]
+
+# Grafana button titles/file names
+GRAFANA_LINKS = [
+    {'title': 'Dashboard', 'fileName': 'openstack.json'},
+    {'title': 'Monasca Health', 'fileName': 'monasca.json'}
+]
