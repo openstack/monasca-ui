@@ -17,13 +17,16 @@
 import logging
 
 from django.core import urlresolvers
+from django.core.urlresolvers import reverse_lazy
 from django import template
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon import tables
 
 from monitoring.alarms import constants
+from monitoring.overview import constants as ov_constants
 from monitoring import api
+
 
 LOG = logging.getLogger(__name__)
 
@@ -78,15 +81,19 @@ def show_metric_dimensions(data):
         commondimensions = data['metrics'][0]['dimensions']
         for metric in data['metrics'][1:]:
             for k in commondimensions.keys():
-                if k not in metric['dimensions'].keys() or commondimensions[k] != metric['dimensions'][k]:
+                if k not in metric['dimensions'].keys() or \
+                        commondimensions[k] != metric['dimensions'][k]:
                     del commondimensions[k]
-        return ','.join(["%s=%s" % (n, v) for n,v in commondimensions.items()])
+        return ','.join(["%s=%s" % (n, v) for n, v
+                         in commondimensions.items()])
     else:
-        return ','.join(["%s=%s" % (n, v) for n,v in data['metrics'][0]['dimensions'].items()])
+        return ','.join(["%s=%s" % (n, v) for n, v
+                         in data['metrics'][0]['dimensions'].items()])
 
 
 def get_service(data):
-    if len(data['metrics']) == 1 and 'service' in data['metrics'][0]['dimensions']:
+    if len(data['metrics']) == 1 and 'service'in\
+            data['metrics'][0]['dimensions']:
         return data['metrics'][0]['dimensions']['service']
     else:
         return ''
@@ -99,7 +106,8 @@ class ShowAlarmHistory(tables.LinkAction):
 
     def get_link_url(self, datum):
         return urlresolvers.reverse(constants.URL_PREFIX + 'history',
-                                    args=(datum['alarm_definition']['id'], datum['id'], ))
+                                    args=(datum['alarm_definition']['id'],
+                                          datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
@@ -147,12 +155,12 @@ class GraphMetric(tables.LinkAction):
     def get_link_url(self, datum):
         name = datum['metrics'][0]['name']
         threshold = datum['metrics']
-        token = self.table.request.user.token.id
-        endpoint = api.monitor.monasca_endpoint(self.table.request)
+        endpoint = str(reverse_lazy(ov_constants.URL_PREFIX + 'proxy'))
+        endpoint = self.table.request.build_absolute_uri(endpoint)
         self.attrs['target'] = '_blank'
         url = '/static/grafana/index.html#/dashboard/script/detail.js'
-        query = "?token=%s&name=%s&threshold=%s&api=%s" % \
-                (token, name, threshold, endpoint)
+        query = "?name=%s&threshold=%s&api=%s" % \
+                (name, threshold, endpoint)
         return url + query
 
     def allowed(self, request, datum=None):
@@ -164,8 +172,9 @@ class ShowAlarmDefinition(tables.LinkAction):
     verbose_name = _("Show Alarm Definition")
 
     def get_link_url(self, datum=None):
-        return urlresolvers.reverse_lazy('horizon:monitoring:alarmdefs:alarm_detail',
-                                         args=(datum['alarm_definition']['id'],))
+        url = 'horizon:monitoring:alarmdefs:alarm_detail'
+        args = (datum['alarm_definition']['id'],)
+        return urlresolvers.reverse_lazy(url, args=args)
 
 
 class DeleteAlarm(tables.DeleteAction):
@@ -191,11 +200,13 @@ class AlarmsFilterAction(tables.FilterAction):
 
 class AlarmsTable(tables.DataTable):
     state = tables.Column(transform=show_severity, verbose_name=_('Status'),
-                           status_choices={(show_status('OK'), True)},
-                           filters=[show_status, template.defaultfilters.safe])
+                          status_choices={(show_status('OK'), True)},
+                          filters=[show_status, template.defaultfilters.safe])
     name = tables.Column(transform=show_def_name, verbose_name=_('Name'))
-    metrics = tables.Column(transform=show_metric_name, verbose_name=_('Metric Name'))
-    dimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Metric Dimensions'))
+    metrics = tables.Column(transform=show_metric_name,
+                            verbose_name=_('Metric Name'))
+    dimensions = tables.Column(transform=show_metric_dimensions,
+                               verbose_name=_('Metric Dimensions'))
 
     def get_object_id(self, obj):
         return obj['id']
@@ -213,7 +224,7 @@ class AlarmsTable(tables.DataTable):
                        )
         table_actions = (AlarmsFilterAction,
                          DeleteAlarm,
-                        )
+                         )
 
 
 def show_timestamp(data):
@@ -221,10 +232,12 @@ def show_timestamp(data):
 
 
 class AlarmHistoryTable(tables.DataTable):
-    timestamp = tables.Column(transform=show_timestamp,  verbose_name=_('Timestamp'))
+    timestamp = tables.Column(transform=show_timestamp,
+                              verbose_name=_('Timestamp'))
     old_state = tables.Column('old_state', verbose_name=_('Old State'))
     new_state = tables.Column('new_state', verbose_name=_('New State'))
-    alarmDimensions = tables.Column(transform=show_metric_dimensions, verbose_name=_('Alarm Metric Dimensions'))
+    alarmDimensions = tables.Column(transform=show_metric_dimensions,
+                                    verbose_name=_('Alarm Metric Dimensions'))
     reason = tables.Column('reason', verbose_name=_('Reason'))
     # reason_data = tables.Column('reason_data', verbose_name=_('Reason Data'))
 

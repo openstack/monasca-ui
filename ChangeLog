@@ -1,6 +1,84 @@
 CHANGES
 =======
 
+* Allow dynamic dashboard links
+
+1.0.24
+------
+
+* correct tokens present in url requests
+
+1.0.23
+------
+
+* Fixed display of HTTP exceptions
+* Format timestamp to be easier to read and sortable
+
+1.0.22
+------
+
+* Handle api returning dict rather than list
+* Reformat info so it displays well with older horizon versions
+* move alarm defintion name to be second column since it is useful to recognize alarm
+* Added Pagerduty to Notification UI
+* Added a config file for documentation generation using Markdown and readthedocs.org
+
+1.0.21
+------
+
+* Clear leftover text when focus moves from dimension chooser
+* Add general alarm information to top of alarm history
+* Adding common alarm metrics dimensions to state change history
+* Since API does not support actions_enabled on create, don't show in form
+* Change layout of alarmdef detail to match the latest horizon CSS
+* Show dashboard buttons on the same line
+
+1.0.20
+------
+
+* Sort alarms by status initially
+* Show label with status icon. Improves sorting as well
+* Modify README to include steps to set up dev environment
+* Outputting common dimensions for multiple metrics
+* Added a button for the Monasca Health dashboard https://blueprints.launchpad.net/monasca/+spec/monitoring-of-monitoring
+* Fix filter action logic to allow server side filtering in future
+* Fixed a dead link in the documentation to alarm expressions. Changed it to the github repo docs
+* Remove some old unused code
+
+1.0.19
+------
+
+* Allow edits to threshold value
+* Use relative path from overview to alarm drill down
+* Add support for non-default WSGIScriptAlias
+* Ensure that dimensions do not extend beyond field
+* Backout change for dimension length. No break characters
+* Allow bulk delete of notifications
+* Fix layout of metrics with long dimension
+* Adding option to select WEBHOOK notification
+
+1.0.18
+------
+
+* Cleanup up templates and docs for forms
+* Fix validation of notification fields
+* Clean up some small changes
+
+1.0.17
+------
+
+* Pass in monasca-api endpoint to grafana
+* Only show panesl when the service is in catalog
+* Pare down requirements.txt to minimum
+* Added monasca-ui permissions policy
+* Moved files for better egg packaging
+
+1.0.16
+------
+
+* Allow service type to be customized
+* Fix bug where we were not saving threshold values in expression editor
+
 1.0.15
 ------
 
