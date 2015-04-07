@@ -16,6 +16,7 @@
 
 import json
 import logging
+import urllib
 
 from django.conf import settings  # noqa
 from django.core.urlresolvers import reverse_lazy
@@ -146,11 +147,19 @@ class MonascaProxyView(TemplateView):
         into a python dict that looks like
         {"service": "monitoring"} (used by monasca api calls)
         """
+        new_dimenstion_dict = {}
         if 'dimensions' in req_kwargs:
-            new_dimenstion_dict = {}
-            for dimension in req_kwargs['dimensions']:
-                key, value = dimension.split(":")
-                new_dimenstion_dict[key] = value
+            dimensions_str = req_kwargs['dimensions'][0]
+            print(dimensions_str)
+            print(type(dimensions_str))
+            dimensions_str_array = dimensions_str.split(',')
+            for dimension in dimensions_str_array:
+                dimension_name_value = dimension.split(':')
+                if len(dimension_name_value) == 2:
+                    new_dimenstion_dict[dimension_name_value[0]] = urllib.unquote(dimension_name_value[1]).decode('utf8')
+                else:
+                    raise Exception('Dimensions are malformed')
+
             req_kwargs['dimensions'] = new_dimenstion_dict
         return req_kwargs
 
@@ -163,14 +172,18 @@ class MonascaProxyView(TemplateView):
         if "metrics" == parts[0]:
             req_kwargs = dict(self.request.GET)
             self._convert_dimensions(req_kwargs)
-            if "statistics" == parts[1]:
-                results = {'elements': api.monitor.
-                           metrics_stat_list(request,
-                                             **req_kwargs)}
-            if "measurements" == parts[1]:
+            if len(parts) == 1:
                 results = {'elements': api.monitor.
                            metrics_list(request,
                                         **req_kwargs)}
+            elif "statistics" == parts[1]:
+                results = {'elements': api.monitor.
+                           metrics_stat_list(request,
+                                             **req_kwargs)}
+            elif "measurements" == parts[1]:
+                results = {'elements': api.monitor.
+                           metrics_measurement_list(request,
+                                                    **req_kwargs)}
         if not results:
             LOG.warn("There was a request made for the path %s that"
                      " is not supported." % restpath)
