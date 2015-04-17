@@ -57,6 +57,8 @@ ln -s ../monasca-ui/monitoring monitoring
 ```
 cd static
 ln -s ../../grafana/src grafana
+cd grafana
+cp config.monasca.js config.js
 ```
 
 ##Start Server
