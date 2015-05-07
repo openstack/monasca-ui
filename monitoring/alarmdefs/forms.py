@@ -271,6 +271,6 @@ class EditAlarmForm(BaseAlarmForm):
             messages.success(request,
                              _('Alarm definition has been updated.'))
         except Exception as e:
-            exceptions.handle(request, _('Unable to edit the alarm definition: %s') % e)
+            exceptions.handle(request, _('%s') % e)
             return False
         return True
