@@ -25,6 +25,7 @@ from django.template import defaultfilters as filters
 from django.utils.translation import ugettext as _  # noqa
 from django.views.generic import View  # noqa
 from django.views.generic import TemplateView  # noqa
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from horizon import exceptions
 from horizon import forms
@@ -110,25 +111,46 @@ class AlarmServiceView(tables.DataTableView):
         return super(AlarmServiceView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        results = []
+        limit = 25
+        page_offset=self.request.GET.get('page_offset')
+        if page_offset == None:
+            page_offset = 0
         try:
-            results = api.monitor.alarm_list(self.request)
+            results = api.monitor.alarm_list(self.request, page_offset, limit)
+            results.sort(key=lambda x: x['state'])
+            paginator = Paginator(results, limit)
+            contacts = paginator.page(1)
+        except PageNotAnInteger:
+            contacts = paginator.page(1)
+        except EmptyPage:
+            contacts = paginator.page(paginator.num_pages)
         except Exception:
             messages.error(self.request, _("Could not retrieve alarms"))
-        if self.service != 'all':
-            name, value = self.service.split('=')
-            filtered = []
-            for row in results:
-                if (name in row['metrics'][0]['dimensions'] and
-                    row['metrics'][0]['dimensions'][name] == value):
-                    filtered.append(row)
-            results = filtered
-        results.sort(key=lambda x: x['state'])
-        return results
+        return contacts
 
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
+        limit = 25
+        page_offset = self.request.GET.get('page_offset')
+        if page_offset == None:
+            page_offset = 0
+        try:
+            results = api.monitor.alarm_list(self.request, page_offset, limit)
+            paginator = Paginator(results, limit)
+        except Exception:
+            messages.error(self.request, _("Could not retrieve alarms"))
+        try:
+            contacts = paginator.page(1)
+        except PageNotAnInteger:
+            contacts = paginator.page(1)
+        except EmptyPage:
+            contacts = paginator.page(paginator.num_pages)
+        context["contacts"] = contacts
         context["service"] = self.service
+        if len(contacts.object_list) < limit:
+            context["page_offset"] = None
+        else:
+            context["page_offset"] = contacts.object_list[-1]["id"]
         return context
 
 

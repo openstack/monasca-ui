@@ -18,7 +18,7 @@ class AlarmsTest(helpers.TestCase):
             'alarm_list.return_value': [],
         }) as mock:
             res = self.client.get(ALARMS_URL)
-            self.assertEqual(mock.alarm_list.call_count, 1)
+            self.assertEqual(mock.alarm_list.call_count, 2)
 
         self.assertTemplateUsed(
             res, 'monitoring/alarms/alarm.html')

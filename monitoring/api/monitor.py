@@ -147,6 +147,11 @@ def metrics_list(request, **kwargs):
     return result['elements'] if type(result) is dict else result
 
 
+def metrics_measurement_list(request, **kwargs):
+    result = monascaclient(request).metrics.list_measurements(**kwargs)
+    return result['elements'] if type(result) is dict else result
+
+
 def metrics_stat_list(request, **kwargs):
     result = monascaclient(request).metrics.list_statistics(**kwargs)
     return result['elements'] if type(result) is dict else result
