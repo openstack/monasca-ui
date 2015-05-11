@@ -60,8 +60,8 @@ def monascaclient(request, password=None):
     return client
 
 
-def alarm_list(request, marker=None, paginate=False):
-    result = monascaclient(request).alarms.list()
+def alarm_list(request, offset, limit, marker=None, paginate=False):
+    result = monascaclient(request).alarms.list(offset=offset, limit=limit)
     return result['elements'] if type(result) is dict else result
 
 
@@ -70,6 +70,7 @@ def alarm_list_by_service(request, service_name, marker=None, paginate=False):
     result = monascaclient(request).alarms.list(dimensions=service_dim)
     return result['elements'] if type(result) is dict else result
 
+
 def alarm_delete(request, alarm_id):
     return monascaclient(request).alarms.delete(alarm_id=alarm_id)
 
@@ -77,6 +78,7 @@ def alarm_delete(request, alarm_id):
 def alarm_history(request, alarm_id):
     result = monascaclient(request).alarms.history(alarm_id=alarm_id)
     return result['elements'] if type(result) is dict else result
+
 
 def alarm_get(request, alarm_id):
     return monascaclient(request).alarms.get(alarm_id=alarm_id)
@@ -90,10 +92,12 @@ def alarmdef_list(request, marker=None, paginate=False):
     result = monascaclient(request).alarm_definitions.list()
     return result['elements'] if type(result) is dict else result
 
+
 def alarmdef_list_by_service(request, service_name, marker=None, paginate=False):
     service_dim = {'service': service_name}
     result = monascaclient(request).alarm_definitions.list(dimensions=service_dim)
     return result['elements'] if type(result) is dict else result
+
 
 def alarmdef_delete(request, alarm_id):
     return monascaclient(request).alarm_definitions.delete(alarm_id=alarm_id)
@@ -122,6 +126,7 @@ def alarmdef_patch(request, **kwargs):
 def notification_list(request, marker=None, paginate=False):
     result = monascaclient(request).notifications.list()
     return result['elements'] if type(result) is dict else result
+
 
 def notification_delete(request, notification_id):
     return monascaclient(request).notifications.delete(
