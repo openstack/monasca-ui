@@ -22,4 +22,11 @@
   margin-right: 2px;
 }
 </style>
+<div class="pagination">
+    <span class="step-links">
+        {% if pageOffset %}
+            Page <a href="?pageOffset={{ pageOffset }}">Next</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
