@@ -63,6 +63,8 @@ def show_severity(data):
     else:
         return state
 
+def show_alarm_id(data):
+    return data['id']
 
 def show_metric_name(data):
     return data['metrics'][0]['name']
@@ -203,6 +205,7 @@ class AlarmsTable(tables.DataTable):
                           status_choices={(show_status('OK'), True)},
                           filters=[show_status, template.defaultfilters.safe])
     name = tables.Column(transform=show_def_name, verbose_name=_('Name'))
+    alarmId = tables.Column(transform=show_alarm_id, verbose_name=_('Alarm Id'))
     metrics = tables.Column(transform=show_metric_name,
                             verbose_name=_('Metric Name'))
     dimensions = tables.Column(transform=show_metric_dimensions,
