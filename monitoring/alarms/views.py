@@ -40,7 +40,7 @@ from monitoring import api
 LOG = logging.getLogger(__name__)
 SERVICES = getattr(settings, 'MONITORING_SERVICES', [])
 
-
+LIMIT = 10
 def get_icon(status):
     if status == 'chicklet-success':
         return constants.OK_ICON
@@ -113,16 +113,15 @@ class AlarmServiceView(tables.DataTableView):
         return super(AlarmServiceView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        limit = 25
+
         page_offset=self.request.GET.get('page_offset')
         contacts = []
 
         if page_offset == None:
             page_offset = 0
         try:
-            results = api.monitor.alarm_list(self.request, page_offset, limit)
-            results.sort(key=lambda x: x['state'])
-            paginator = Paginator(results, limit)
+            results = api.monitor.alarm_list(self.request, page_offset, LIMIT)
+            paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
@@ -133,15 +132,14 @@ class AlarmServiceView(tables.DataTableView):
 
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
-        limit = 25
         contacts = []
         page_offset = self.request.GET.get('page_offset')
 
         if page_offset == None:
             page_offset = 0
         try:
-            results = api.monitor.alarm_list(self.request, page_offset, limit)
-            paginator = Paginator(results, limit)
+            results = api.monitor.alarm_list(self.request, page_offset, LIMIT)
+            paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
@@ -152,7 +150,7 @@ class AlarmServiceView(tables.DataTableView):
         context["contacts"] = contacts
         context["service"] = self.service
 
-        if len(contacts.object_list) < limit:
+        if len(contacts.object_list) < LIMIT:
             context["page_offset"] = None
         else:
             context["page_offset"] = contacts.object_list[-1]["id"]
@@ -184,15 +182,23 @@ class AlarmHistoryView(tables.DataTableView):
         return super(AlarmHistoryView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
+        page_offset=self.request.GET.get('page_offset')
+        contacts=[]
         id = self.kwargs['id']
         name = self.kwargs['name']
         results = []
+        if page_offset == None:
+            page_offset = 0
         try:
-            results = api.monitor.alarm_history(self.request, id)
+            results = api.monitor.alarm_history(self.request, id, page_offset, LIMIT)
+            paginator = Paginator(results, LIMIT)
+            contacts = paginator.page(1)
+        except EmptyPage:
+            contacts = paginator.page(paginator.num_pages)
         except Exception:
             messages.error(self.request,
                            _("Could not retrieve alarm history for %s") % id)
-        return transform_alarm_history(results, name)
+        return transform_alarm_history(contacts, name)
 
     def get_context_data(self, **kwargs):
         context = super(AlarmHistoryView, self).get_context_data(**kwargs)
@@ -203,5 +209,28 @@ class AlarmHistoryView(tables.DataTableView):
             messages.error(self.request,
                            _("Could not retrieve alarm for %s") % id)
         context['alarm'] = alarm
+
+        contacts = []
+        page_offset = self.request.GET.get('page_offset')
+
+        if page_offset == None:
+            page_offset = 0
+        try:
+            results = api.monitor.alarm_history(self.request, id,  page_offset, LIMIT)
+            paginator = Paginator(results, LIMIT)
+            contacts = paginator.page(1)
+        except EmptyPage:
+            contacts = paginator.page(paginator.num_pages)
+        except Exception:
+            messages.error(self.request,
+                           _("Could not retrieve alarm history for %s") % id)
+            return context
+
+        context["contacts"] = contacts
+        if len(contacts.object_list) < LIMIT:
+            context["page_offset"] = None
+        else:
+            context["page_offset"] = contacts.object_list[-1]["id"]
+
         return context
 

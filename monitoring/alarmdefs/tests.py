@@ -20,7 +20,7 @@ class AlarmDefinitionsTest(helpers.TestCase):
             'alarmdef_list.return_value': [],
         }) as mock:
             res = self.client.get(INDEX_URL)
-            self.assertEqual(mock.alarmdef_list.call_count, 1)
+            self.assertEqual(mock.alarmdef_list.call_count, 2)
 
         self.assertTemplateUsed(
             res, 'monitoring/alarmdefs/alarm.html')

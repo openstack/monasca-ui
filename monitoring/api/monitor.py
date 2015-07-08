@@ -75,8 +75,8 @@ def alarm_delete(request, alarm_id):
     return monascaclient(request).alarms.delete(alarm_id=alarm_id)
 
 
-def alarm_history(request, alarm_id):
-    result = monascaclient(request).alarms.history(alarm_id=alarm_id)
+def alarm_history(request, alarm_id, offset=0, limit=10000):
+    result = monascaclient(request).alarms.history(alarm_id=alarm_id, offset=offset, limit=limit)
     return result['elements'] if type(result) is dict else result
 
 
@@ -88,8 +88,8 @@ def alarm_patch(request, **kwargs):
     return monascaclient(request).alarms.patch(**kwargs)
 
 
-def alarmdef_list(request, marker=None, paginate=False):
-    result = monascaclient(request).alarm_definitions.list()
+def alarmdef_list(request, offset=0, limit=10000, marker=None, paginate=False):
+    result = monascaclient(request).alarm_definitions.list(offset=offset, limit=limit)
     return result['elements'] if type(result) is dict else result
 
 
@@ -123,8 +123,8 @@ def alarmdef_patch(request, **kwargs):
     return monascaclient(request).alarm_definitions.patch(**kwargs)
 
 
-def notification_list(request, marker=None, paginate=False):
-    result = monascaclient(request).notifications.list()
+def notification_list(request, offset=0, limit=10000, marker=None, paginate=False):
+    result = monascaclient(request).notifications.list(offset=offset, limit=limit)
     return result['elements'] if type(result) is dict else result
 
 

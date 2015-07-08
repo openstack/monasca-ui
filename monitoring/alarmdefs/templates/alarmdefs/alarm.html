@@ -10,4 +10,11 @@
 
 {% block main %}
     {{ table.render }}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_offset %}
+            <a href="?page_offset={{ page_offset}}">Next Page</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
