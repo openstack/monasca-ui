@@ -65,9 +65,12 @@ def alarm_list(request, offset=0, limit=10000, marker=None, paginate=False):
     return result['elements'] if type(result) is dict else result
 
 
-def alarm_list_by_service(request, service_name, marker=None, paginate=False):
-    service_dim = {'service': service_name}
-    result = monascaclient(request).alarms.list(dimensions=service_dim)
+def alarm_list_by_service(request, service_name,  offset=0, limit=10000,
+                          marker=None, paginate=False):
+    name, value = service_name.split('=')
+    service_dim = {name: value}
+    result = monascaclient(request).alarms.list(offset=offset, limit=limit,
+                                                metric_dimensions=service_dim)
     return result['elements'] if type(result) is dict else result
 
 

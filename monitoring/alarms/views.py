@@ -113,47 +113,69 @@ class AlarmServiceView(tables.DataTableView):
         return super(AlarmServiceView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-
-        page_offset=self.request.GET.get('page_offset')
+        page_offset = self.request.GET.get('page_offset')
         contacts = []
 
         if page_offset == None:
             page_offset = 0
-        try:
-            results = api.monitor.alarm_list(self.request, page_offset, LIMIT)
-            paginator = Paginator(results, LIMIT)
-            contacts = paginator.page(1)
-        except EmptyPage:
-            contacts = paginator.page(paginator.num_pages)
-        except Exception:
-            messages.error(self.request, _("Could not retrieve alarms"))
 
-        return contacts
+        if self.service == 'all':
+            try:
+                results = api.monitor.alarm_list(self.request, page_offset,
+                                                 LIMIT)
+                paginator = Paginator(results, LIMIT)
+                contacts = paginator.page(1)
+            except EmptyPage:
+                contacts = paginator.page(paginator.num_pages)
+            except Exception:
+                messages.error(self.request, _("Could not retrieve alarms"))
+            return contacts
+        else:
+            try:
+                results = api.monitor.alarm_list_by_service(self.request,
+                                                            self.service,
+                                                            page_offset,
+                                                            LIMIT)
+            except Exception:
+                messages.error(self.request, _("Could not retrieve alarms"))
+                results = []
+            return results
 
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
-        contacts = []
+        results = []
         page_offset = self.request.GET.get('page_offset')
 
         if page_offset == None:
             page_offset = 0
-        try:
-            results = api.monitor.alarm_list(self.request, page_offset, LIMIT)
-            paginator = Paginator(results, LIMIT)
-            contacts = paginator.page(1)
-        except EmptyPage:
-            contacts = paginator.page(paginator.num_pages)
-        except Exception:
-            messages.error(self.request, _("Could not retrieve alarms"))
-            return context
 
-        context["contacts"] = contacts
+        if self.service == 'all':
+            try:
+                results = api.monitor.alarm_list(self.request, page_offset,
+                                                 LIMIT)
+                paginator = Paginator(results, LIMIT)
+                results = paginator.page(1)
+            except EmptyPage:
+                results = paginator.page(paginator.num_pages)
+            except Exception:
+                messages.error(self.request, _("Could not retrieve alarms"))
+        else:
+            try:
+                results = api.monitor.alarm_list_by_service(self.request,
+                                                            self.service,
+                                                            page_offset,
+                                                            LIMIT)
+            except Exception:
+                messages.error(self.request, _("Could not retrieve alarms"))
+                results = []
+
+        context["contacts"] = results
         context["service"] = self.service
 
-        if len(contacts.object_list) < LIMIT:
+        if len(results) < LIMIT:
             context["page_offset"] = None
         else:
-            context["page_offset"] = contacts.object_list[-1]["id"]
+            context["page_offset"] = results[-1]["id"]
 
         return context
 
@@ -190,7 +212,8 @@ class AlarmHistoryView(tables.DataTableView):
         if page_offset == None:
             page_offset = 0
         try:
-            results = api.monitor.alarm_history(self.request, id, page_offset, LIMIT)
+            results = api.monitor.alarm_history(self.request, id, page_offset,
+                                                LIMIT)
             paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
         except EmptyPage:
@@ -216,7 +239,8 @@ class AlarmHistoryView(tables.DataTableView):
         if page_offset == None:
             page_offset = 0
         try:
-            results = api.monitor.alarm_history(self.request, id,  page_offset, LIMIT)
+            results = api.monitor.alarm_history(self.request, id,  page_offset,
+                                                LIMIT)
             paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
         except EmptyPage:
