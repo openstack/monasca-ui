@@ -131,15 +131,26 @@ class AlarmServiceView(tables.DataTableView):
                 messages.error(self.request, _("Could not retrieve alarms"))
             return contacts
         else:
-            try:
-                results = api.monitor.alarm_list_by_service(self.request,
-                                                            self.service,
-                                                            page_offset,
-                                                            LIMIT)
-            except Exception:
-                messages.error(self.request, _("Could not retrieve alarms"))
-                results = []
-            return results
+            if self.service[:2] == 'id':
+                try:
+                    name , value = self.service.split("=")
+                    results = [api.monitor.alarm_show(self.request, value)]
+                except Exception as e:
+                    messages.error(self.request, _("Could not retrieve alarms"))
+                    results = []
+                    print "ERROR"
+                    print e
+                return results
+            else:
+                try:
+                    results = api.monitor.alarm_list_by_dimension(self.request,
+                                                                self.service,
+                                                                page_offset,
+                                                                LIMIT)
+                except Exception:
+                    messages.error(self.request, _("Could not retrieve alarms"))
+                    results = []
+                return results
 
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
@@ -160,14 +171,22 @@ class AlarmServiceView(tables.DataTableView):
             except Exception:
                 messages.error(self.request, _("Could not retrieve alarms"))
         else:
-            try:
-                results = api.monitor.alarm_list_by_service(self.request,
-                                                            self.service,
-                                                            page_offset,
-                                                            LIMIT)
-            except Exception:
-                messages.error(self.request, _("Could not retrieve alarms"))
-                results = []
+            if self.service[:2] == 'id':
+                try:
+                    name , value = self.service.split("=")
+                    results = [api.monitor.alarm_show(self.request, value)]
+                except Exception as e:
+                    messages.error(self.request, _("Could not retrieve alarms"))
+                    results = []
+            else:
+                try:
+                    results = api.monitor.alarm_list_by_dimension(self.request,
+                                                                self.service,
+                                                                page_offset,
+                                                                LIMIT)
+                except Exception:
+                    messages.error(self.request, _("Could not retrieve alarms"))
+                    results = []
 
         context["contacts"] = results
         context["service"] = self.service
@@ -257,4 +276,19 @@ class AlarmHistoryView(tables.DataTableView):
             context["page_offset"] = contacts.object_list[-1]["id"]
 
         return context
+
+
+class AlarmFilterView(forms.ModalFormView):
+    template_name = constants.TEMPLATE_PREFIX + 'filter.html'
+    form_class = alarm_forms.CreateAlarmForm
+    def get_context_data(self, **kwargs):
+        context = super(AlarmFilterView, self).get_context_data(**kwargs)
+        context["cancel_url"] = self.get_success_url()
+        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_filter',
+                                        args=())
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy(constants.URL_PREFIX + 'index',
+                            args=())
 

@@ -21,10 +21,14 @@ from monitoring.alarms import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^alarm/filter/$',
+        views.AlarmFilterView.as_view(),
+        name='alarm_filter'),
     url(r'^alarm/(?P<service>[^/]+)/$',
         views.AlarmServiceView.as_view(),
         name='alarm'),
     url(r'^history/(?P<name>[^/]+)/(?P<id>[^/]+)$',
         views.AlarmHistoryView.as_view(),
         name='history'),
+
 )
