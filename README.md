@@ -67,6 +67,9 @@ cp config.monasca.js config.js
 ./run_tests.sh --runserver
 ```
 
+##Removing notification panel
+If you want to disable the notification panel copy over _70_remove_monasca_notification_panel to the openstack_dashboard/enabled directory
+
 #License
 
 Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
