@@ -1,0 +1,60 @@
+{% extends "horizon/common/_modal_form.html" %}
+{% load i18n %}
+{% load url from future %}
+
+
+{% block modal-body %}
+  <script>
+    function isEmpty(str) {
+    return (!str || 0 === str.length);
+    }
+
+    function sendID() {
+      var filterID = document.forms["form0"]["filterID"].value;
+      window.location = "/monitoring/alarms/alarm/id=" + filterID;
+    }
+
+    function sendDimensions() {
+      var dimension = document.forms["form1"]["dimension"].value;
+      var metric = document.forms["form1"]["metric"].value;
+      var location = "/monitoring/alarms/alarm/";
+      if (!isEmpty(metric)) {
+        if (!isEmpty(dimension)) {
+          location = location + "metric=" + metric + ",";
+        }
+        else {
+          location = location + "metric=" + metric;
+        }
+      }
+      if (!isEmpty(dimension)) {
+        location = location + dimension;
+      }
+      window.location = location;
+    }
+  </script>
+
+<div class = "filter_form" >
+  <form></form>
+
+
+  <form method="GET" class="form-group" style="width:400px" onsubmit="sendID()" name="form0">
+      <h3>Alarm ID</h3>
+      Value: <input class="form-control" name="filterID" placeholder="54fdec2f-ae34-4dba-9c85-7b4ad67eea03">
+      <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+  <hr>
+  <hr>
+  <form method="GET" class="form-group" style="width:400px" onsubmit="sendDimensions()" name="form1">
+      <h3>Dimension(s)</h3>
+      Key:Value
+      <input class="form-control" name="dimension" placeholder="hostname=devstack, service=mysql" data-toggle="tooltip" data-placement="right" title="Example: hostname=devstack, service=mysql">
+      <br />
+      Metric Name: <input class="form-control" name="metric" placeholder="http_status">
+      <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+
+</div>
+{% endblock %}
+
+{% block modal-footer %}
+{% endblock %}

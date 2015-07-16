@@ -192,12 +192,21 @@ class DeleteAlarm(tables.DeleteAction):
         api.monitor.alarm_delete(request, obj_id)
 
 
-class AlarmsFilterAction(tables.FilterAction):
-    def filter(self, table, alarms, filter_string):
-        """Naive case-insensitive search."""
-        q = filter_string.lower()
-        return [alarm for alarm in alarms
-                if q in alarm['metrics'][0]['name'].lower()]
+class AlarmsFilterAction(tables.LinkAction):
+    name = "filter"
+    verbose_name = _("Filter Alarms")
+    classes = ("ajax-modal",)
+    icon = "plus"
+    policy_rules = (("alarm", "alarm:filter"),)
+    ajax = True
+
+
+    def get_link_url(self):
+        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_filter',
+                                    args=())
+
+    def allowed(self, request, datum=None):
+        return True
 
 
 class AlarmsTable(tables.DataTable):

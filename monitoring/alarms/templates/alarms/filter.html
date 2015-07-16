@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title="Filter Alarms" %}
+{% endblock page_header %}
+
+{% block main %}
+    {% include 'monitoring/alarms/_filter.html' %}
+{% endblock %}
