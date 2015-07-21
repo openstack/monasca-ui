@@ -11,19 +11,18 @@
 
     function sendID() {
       var filterID = document.forms["form0"]["filterID"].value;
-      window.location = "/monitoring/alarms/alarm/id=" + filterID;
+      var location = "{{ alarm_url }}";
+      window.location = location + "/id=" + filterID;
     }
 
     function sendDimensions() {
       var dimension = document.forms["form1"]["dimension"].value;
       var metric = document.forms["form1"]["metric"].value;
-      var location = "/monitoring/alarms/alarm/";
+      var location = "{{ alarm_url }}";
       if (!isEmpty(metric)) {
+        location = location + "/metric=" + metric;
         if (!isEmpty(dimension)) {
-          location = location + "metric=" + metric + ",";
-        }
-        else {
-          location = location + "metric=" + metric;
+          location = location + ",";
         }
       }
       if (!isEmpty(dimension)) {
@@ -35,7 +34,6 @@
 
 <div class = "filter_form" >
   <form></form>
-
 
   <form method="GET" class="form-group" style="width:400px" onsubmit="sendID()" name="form0">
       <h3>{% trans 'Alarm ID' %}</h3>
