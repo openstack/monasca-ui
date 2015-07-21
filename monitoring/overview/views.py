@@ -69,6 +69,54 @@ priorities = [
 ]
 index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
 
+def get_dashboard_links(request):
+    #
+    # GRAFANA_LINKS is a list of dictionaries, but can either
+    # be a nested list of dictionaries indexed by project name
+    # (or '*'), or simply the list of links to display.  This
+    # code is a bit more complicated as a result but will allow
+    # for backward compatibility and ensure existing installations
+    # that don't take advantage of project specific dashboard
+    # links are unaffected.  The 'non_project_keys' are the
+    # expected dictionary keys for the list of dashboard links,
+    # so if we encounter one of those, we know we're supporting
+    # legacy/non-project specific behavior.
+    #
+    # See examples of both in local_settings.py
+    #
+    non_project_keys = {'fileName','title'}
+    try:
+        for project_link in DASHBOARDS:
+            key = project_link.keys()[0]
+            value = project_link.values()[0]
+            if key in non_project_keys:
+                #
+                # we're not indexed by project, just return
+                # the whole list.
+                #
+                return DASHBOARDS
+            elif key == request.user.project_name:
+                #
+                # we match this project, return the project
+                # specific links.
+                #
+                return value
+            elif key == '*':
+                #
+                # this is a global setting, squirrel it away
+                # in case we exhaust the list without a project
+                # match
+                #
+                return value
+        return DEFAULT_LINKS
+    except Exception:
+        LOG.warn("Failed to parse dashboard links by project, returning defaults.")
+        pass
+    #
+    # Extra safety here -- should have got a match somewhere above,
+    # but fall back to defaults.
+    #
+    return DASHBOARDS
 
 def show_by_dimension(data, dim_name):
     if 'dimensions' in data['metrics'][0]:
@@ -137,7 +185,7 @@ class IndexView(TemplateView):
         proxy_url_path = str(reverse_lazy(constants.URL_PREFIX + 'proxy'))
         api_root = self.request.build_absolute_uri(proxy_url_path)
         context["api"] = api_root
-        context["dashboards"] = DASHBOARDS
+        context["dashboards"] = get_dashboard_links(self.request)
         return context
 
 
