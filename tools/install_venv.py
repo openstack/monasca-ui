@@ -109,7 +109,7 @@ def create_virtualenv(venv=VENV):
 
 
 def pip_install(*args):
-    args = [WITH_VENV, 'pip', 'install', '--upgrade'] + list(args)
+    args = [WITH_VENV, 'pip', 'install'] + list(args)
     run_command(args, redirect_output=False)
 
 
