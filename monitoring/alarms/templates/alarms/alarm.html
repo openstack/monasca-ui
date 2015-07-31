@@ -10,7 +10,7 @@
       <h2>{% trans 'Alarms for ' %} {{ service }}</h2>
     </div>
    {% else %}
-  {% include "horizon/common/_page_header.html" with title="All Alarms" %}
+  {% include "horizon/common/_page_header.html" with title=_("All Alarms") %}
   {% endif %}
 {% endblock page_header %}
 
