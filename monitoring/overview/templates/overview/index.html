@@ -14,6 +14,12 @@
               {% trans dashboard.title %}
           </a>
       {% endfor %}
+      {% if can_access_logs and enable_kibana_button %}
+      <a target="dashboard" href="{% url 'horizon:monitoring:overview:kibana_proxy' url='/' %}" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-dashboard"></span>
+              Log Management
+      </a>
+      {% endif %}
     </div>
     {%  include 'monitoring/overview/monitor.html' %}
 {% endblock %}

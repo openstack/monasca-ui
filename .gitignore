@@ -1,6 +1,7 @@
 *.pyc
 *.swp
 *.sqlite3
+*.lock
 .environment_version
 .selenium_log
 .coverage*

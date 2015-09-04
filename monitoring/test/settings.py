@@ -53,8 +53,6 @@ INSTALLED_APPS = (
     'compressor',
     'horizon',
     'openstack_dashboard',
-    'openstack_dashboard.dashboards.project',
-    'openstack_dashboard.dashboards.admin',
     'monitoring',
     'openstack_dashboard.dashboards.settings',
 )
@@ -64,8 +62,8 @@ AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
 SITE_BRANDING = 'OpenStack'
 
 HORIZON_CONFIG = {
-    'dashboards': ('project',),
-    'default_dashboard': 'project',
+    'dashboards': ('settings', 'monitoring',),
+    'default_dashboard': 'settings',
     "password_validator": {
         "regex": '^.{8,18}$',
         "help_text": _("Password must be between 8 and 18 characters.")
@@ -139,7 +137,7 @@ SECURITY_GROUP_RULES = {
 
 NOSE_ARGS = ['--nocapture',
              '--nologcapture',
-             '--cover-package=openstack_dashboard',
+             '--cover-package=monitoring',
              '--cover-inclusive',
              '--all-modules']
 

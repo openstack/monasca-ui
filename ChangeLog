@@ -1,6 +1,43 @@
 CHANGES
 =======
 
+* Simple Kibana integration
+* Allow per-project grafana dashboards
+* Fix unittests
+* FIX the page title
+* added ability to filter all alarms with parameters in modal
+
+1.0.27
+------
+
+* fixed overview service/hostname bug
+* Added alarm definition pagination and notification
+* Add the ability to disable the notification panel
+* Provide default limit and offset for alarm_list
+* Wrapped the table cells to maintain alignment
+
+1.0.26
+------
+
+* Changed Edit Alarm to Edit Notification
+* Fixed metric selection in both Chrome and Firefox
+* Fix for retrieving alarms
+* Wrapped the metric chooser to handle long metrics
+* Added Alarm Id to the alarms tables
+* Added the SQL pagination for Alarms with offset and limit
+* Added pagination to the alarms table view
+* Response error message changed The error message was changed to make it more user friendly with a message that is more clear about the unsupported operation
+
+2015.1
+------
+
+* Modifying the README for grafana
+
+1.0.25
+------
+
+* Grabbing the list_measurements when getting metrics_list
+* alarams graph link broken
 * Allow dynamic dashboard links
 
 1.0.24

@@ -15,11 +15,10 @@
 #    under the License.
 
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings  # noqa
+from monitoring.config import local_settings as settings
 
 import horizon
 
-service_type = getattr(settings, 'MONITORING_SERVICE_TYPE', 'monitoring')
 
 class Monitoring(horizon.Dashboard):
     name = _("Monitoring")
@@ -27,6 +26,6 @@ class Monitoring(horizon.Dashboard):
     panels = ('overview', 'alarmdefs', 'alarms', 'notifications',)
     default_panel = 'overview'
     policy_rules = (("monitoring", "monitoring:monitoring"),)
-    permissions = (('openstack.services.' + service_type),)
+    permissions = (('openstack.services.' + settings.MONITORING_SERVICE_TYPE),)
 
 horizon.register(Monitoring)

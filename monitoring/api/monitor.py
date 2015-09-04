@@ -14,9 +14,10 @@
 
 import logging
 
-from django.conf import settings  # noqa
 from monascaclient import client as monasca_client
 from openstack_dashboard.api import base
+from monitoring.config import local_settings as settings
+
 
 LOG = logging.getLogger(__name__)
 
@@ -30,8 +31,7 @@ def format_parameters(params):
 
 
 def monasca_endpoint(request):
-    service_type = getattr(settings, 'MONITORING_SERVICE_TYPE', 'monitoring')
-    endpoint = base.url_for(request, service_type)
+    endpoint = base.url_for(request, settings.MONITORING_SERVICE_TYPE)
     if endpoint.endswith('/'):
         endpoint = endpoint[:-1]
     return endpoint
@@ -39,15 +39,13 @@ def monasca_endpoint(request):
 
 def monascaclient(request, password=None):
     api_version = "2_0"
-    insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
-    cacert = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
     endpoint = monasca_endpoint(request)
     LOG.debug('monascaclient connection created using token "%s" , url "%s"' %
               (request.user.token.id, endpoint))
     kwargs = {
         'token': request.user.token.id,
-        'insecure': insecure,
-        'ca_file': cacert,
+        'insecure': settings.OPENSTACK_SSL_NO_VERIFY,
+        'ca_file': settings.OPENSTACK_SSL_CACERT,
         'username': request.user.username,
         'password': password
         # 'timeout': args.timeout,
