@@ -245,7 +245,8 @@ def show_timestamp(data):
 
 class AlarmHistoryTable(tables.DataTable):
     timestamp = tables.Column(transform=show_timestamp,
-                              verbose_name=_('Timestamp'))
+                              verbose_name=_('Timestamp'),
+                              attrs={"data-type": "timestamp"})
     old_state = tables.Column('old_state', verbose_name=_('Old State'))
     new_state = tables.Column('new_state', verbose_name=_('New State'))
     alarmDimensions = tables.Column(transform=show_metric_dimensions,
