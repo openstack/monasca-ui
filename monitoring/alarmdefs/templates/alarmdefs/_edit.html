@@ -24,15 +24,16 @@
     </fieldset>
 
 <script type="text/javascript">
+var fixed_options = $("#id_notifications_1").html();
 
 $('#add_notification_button').click(function(){
-  num = $('#notification_table tr').length;
+  num = $('#notification_table tbody tr').length + 1;
   id = "id_notifications_" + num;
   name = "notifications_" + num;
-  options = $("#id_notifications_" + (num - 1)).html();
+  options = fixed_options;
   options = options.replace('selected="selected"','');
   row = '<tr><td><select id="' + id +'" name="' + name + '">' + options + '</select></td><td><a href="" id="remove_notif_button">X</a></td></tr>'
-  $('#notification_table tr:last').after(row);
+  $('#notification_table tbody').append(row);
   return false;
 });
 $('#notification_table').on('click', '#remove_notif_button', (function(event){
