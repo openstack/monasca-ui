@@ -1,0 +1,21 @@
+#function {
+    width: 100%;
+}
+#metric-chooser {
+    width: 100%;
+    white-space: normal;
+    word-wrap:break-word;
+}
+#comparators {
+    width: auto;
+    float: none;
+}
+#threshold {
+    width: 100%
+}
+#notification_table td.address{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width:100px;
+}

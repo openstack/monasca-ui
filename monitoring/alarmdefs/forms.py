@@ -15,6 +15,7 @@
 # under the License.
 
 import json
+from itertools import chain
 
 from django.template.loader import get_template
 from django.template import Context
@@ -40,7 +41,6 @@ class ExpressionWidget(forms.Widget):
         func = json.dumps([('min', _('min')), ('max', _('max')), ('sum', _('sum')),
         ('count', _('count')), ('avg', _('avg'))])
         comparators = [['>', '>'], ['>=', '>='], ['<', '<'], ['<=', '<=']]
-
 
         local_attrs = {'service': '', 'func': func, 'comparators': comparators}
         local_attrs.update(final_attrs)
@@ -75,53 +75,20 @@ class NotificationCreateWidget(forms.Select):
         super(NotificationCreateWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None, choices=()):
-        output = '<table id="notification_table" ' + \
-            'class="table table-condensed">'
-        output += '<thead><tr><th>%s</th></tr></thead>' % \
-            unicode(_("Name"))
-        if value:
-            idx = 1
-            for notification in value:
-                output += '<tr><td>'
-                output += ('<select id="id_notifications_%d" ' +
-                           'name="notifications_%d"> ') % (idx, idx)
-                options = self.render_options(
-                    choices,
-                    [notification['id']])
-                if options:
-                    output += options
-                output += '</select>'
-                output += '<td><a href="" id="remove_notif_button">X</a></td>'
-                output += '</td></tr>'
-                idx += 1
-        else:
-            output += '<tr><td>'
-            output += '<select id="id_notifications_1" '
-            output += 'name="notifications_1"> '
-            options = self.render_options(choices, [value])
-            if options:
-                output += options
-            output += '</select>'
-            output += '<td><a href="" id="remove_notif_button">X</a></td>'
-            output += '</td></tr>'
-        output += '</table>'
-        label = unicode(_("+ Add more"))
-        output += '<a href="" id="add_notification_button">%s</a>' % (label)
-        return html.format_html(output)
+        final_attrs = self.build_attrs(attrs, name=name)
+        tpl = get_template(constants.TEMPLATE_PREFIX + 'notification_field.html')
+
+        selected = [item['id'] for item in value] if value else []
+        data = []
+        for id, label, type, address in chain(self.choices, choices):
+            data.append((id, label, type, address, id in selected))
+
+        local_attrs = {'data': json.dumps(data)}
+        local_attrs.update(final_attrs)
+        return tpl.render(Context(local_attrs))
 
     def value_from_datadict(self, data, files, name):
-        notifications = []
-        i = 0
-        while True:
-            i += 1
-            notification_id = "%s_%d" % (name, i)
-            if notification_id in data:
-                if len(data[notification_id]) > 0:
-                    notifications.append({"id":
-                                         data[notification_id]})
-            else:
-                break
-        return notifications
+        return [{"id": _id} for _id in data.getlist(name)]
 
 
 class BaseAlarmForm(forms.SelfHandlingForm):
@@ -185,15 +152,11 @@ class BaseAlarmForm(forms.SelfHandlingForm):
             notifications = []
             exceptions.handle(request,
                               _('Unable to retrieve notifications: %s') % e)
-        notification_choices = [(notification['id'], notification['name'])
+        notification_choices = [(notification['id'],
+                                 notification['name'],
+                                 notification['type'],
+                                 notification['address'])
                                 for notification in notifications]
-        if notification_choices:
-            if len(notification_choices) > 1:
-                notification_choices.insert(
-                    0, ("", unicode(_("Select Notification"))))
-        else:
-            notification_choices.insert(
-                0, ("", unicode(_("No notifications available."))))
 
         self.fields['notifications'].choices = notification_choices
 

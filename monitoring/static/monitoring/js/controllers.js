@@ -235,7 +235,73 @@ angular.module('monitoring.controllers', [])
             }
             return uniqueList.sort();
         }
-    });
+    })
+    .controller('alarmNotificationFieldController', NotificationField);
+
+function NotificationField(){
+
+    var vm = this;
+    var allOptions = {};
+
+    vm.empty = true;
+    vm.list = [];
+    vm.select = {
+        model:null,
+        options:[]
+    };
+
+
+    vm.init = function(data){
+        data = JSON.parse(data);
+        vm.empty = data.length === 0;
+        data.forEach(prepareNotify);
+    };
+    vm.add = function(){
+        if(vm.select.model){
+            vm.list.push(allOptions[vm.select.model]);
+
+            removeFromSelect();
+            vm.select.model = null;
+        }
+    };
+    vm.remove = function(id){
+        for(var i = 0;i<vm.list.length;i+=1){
+            if(vm.list[i].id === id){
+                vm.list.splice(i, 1);
+                vm.select.options.push(allOptions[id]);
+                break;
+            }
+        }
+        vm.select.model = null;
+    };
+
+    function prepareNotify(item){
+        var selected = item[4]
+        var notify = {
+            id: item[0],
+            label: item[1] +' ('+ item[2] +')',
+            name: item[1],
+            type: item[2],
+            address: item[3]
+        };
+        allOptions[notify.id] = notify;
+        if(selected){
+            vm.list.push(notify);
+        } else {
+            vm.select.options.push(notify);
+        }
+    }
+
+    function removeFromSelect(){
+         var opts = vm.select.options;
+         for(var i = 0;i<opts.length;i+=1){
+            if(opts[i].id === vm.select.model){
+                opts.splice(i, 1);
+                break;
+            }
+         }
+    }
+}
 
 angular.module('monitoring.filters', [])
     .filter('spacedim', function () {

@@ -1,0 +1,38 @@
+{% load i18n %}
+{% load url from future %}
+<div ng-controller="alarmNotificationFieldController as ctrl" ng-init="ctrl.init('{{ data }}')">
+
+    <div ng-if="ctrl.empty">
+        No notifications available. (<a href="{% url 'horizon:monitoring:notifications:index' %}">{% trans 'Add' %}</a>)
+    </div>
+
+    <table ng-if="ctrl.list.length" class="table table-condensed" id="notification_table">
+        <thead>
+            <tr>
+                <th class="name">{% trans 'Name' %}</th>
+                <th class="type">{% trans 'Type' %}</th>
+                <th class="address">{% trans 'Address' %}</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="notify in ctrl.list">
+                <td class="name">{$ notify.name $}</td>
+                <td class="type">{$ notify.type $}</td>
+                <td class="address" title="{$ notify.address $}">{$ notify.address $}</td>
+                <td>
+                    <a href="#" title="{% trans 'Remove' %}" ng-click="ctrl.remove(notify.id)">X</a>
+                    <input type="hidden" name="notifications" value="{$ notify.id $}" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div ng-if="ctrl.select.options.length">
+        <select ng-model="ctrl.select.model" ng-options="item.id as item.label for item in ctrl.select.options">
+            <option value="">{% trans "Select Notification" %}</option>
+        </select>
+        <a href="#" title="{% trans 'Add' %}" class="btn" ng-click="ctrl.add()">{% trans 'Add' %}</a>
+    </div>
+
+</div>
