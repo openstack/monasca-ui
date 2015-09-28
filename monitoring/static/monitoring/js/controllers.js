@@ -1,5 +1,86 @@
 'use strict';
 angular.module('monitoring.controllers', [])
+    .controller('timestampPickerController', function($scope, $window, $location){
+        var offset = getTimezoneOffset(),
+            queryParams = urlParams()
+
+        $scope.currentFormat = undefined
+        $scope.currentOffset = undefined
+
+        $scope.setUp = setUp;
+
+        function setUp(currentFormat){
+            if(currentFormat){
+                $scope.currentFormat = currentFormat
+            }
+            $scope.$watch('currentFormat', onFormatChange)
+            if(queryParams['ts_mode'] === 'bl'){
+                $scope.currentOffset = queryParams['ts_offset']
+            }
+        }
+
+         function onFormatChange(nval,oval){
+           var location;
+
+           if (nval !== '' && nval !== oval){
+             location = $location.path();
+
+             // overwrite to new values
+             queryParams['ts_mode'] = nval;
+             queryParams['ts_offset'] = offset;
+
+             location = location.concat('?', paramsToSearch(queryParams));
+
+             $window.location = location;
+           }
+        }
+
+        function urlParams(url) {
+            url = url || window.location.href;
+            if (!url || (url.indexOf("?") < 0 && url.indexOf("&") < 0)) {
+                return {};
+            }
+            if (url.indexOf('#') > -1) {
+                url = url.substr(0, url.indexOf('#'));
+            }
+            return urlDecode(url.substr(url.indexOf("?") + 1));
+        }
+
+        function paramsToSearch(queryParams){
+            var str = '';
+
+            angular.forEach(queryParams, function it(val, key){
+                str = str.concat(key, '=', encodeURIComponent(val), '&');
+            });
+
+            str = str.substr(0, str.length-1);
+
+            return str;
+        }
+
+        function urlDecode(string, overwrite) {
+            var obj = {},
+                pairs = string.split('&'),
+                name,
+                value;
+            angular.forEach(pairs, function it(pair) {
+                pair = pair.split('=');
+                name = decodeURIComponent(pair[0]);
+                value = decodeURIComponent(pair[1]);
+                obj[name] = overwrite || !obj[name] ? value : [].concat(obj[name]).concat(value);
+            });
+            return obj;
+        }
+
+        function getTimezoneOffset() {
+            var offset = new Date().getTimezoneOffset();
+            var minutes = Math.abs(offset);
+            var hours = Math.floor(minutes / 60);
+            var prefix = offset < 0 ? "+" : "-";
+            return prefix + hours;
+        }
+
+    })
     .controller('monitoringController', function ($scope, $http, $timeout, $location) {
          $scope.fetchStatus = function() {
             $http({method: 'GET', url: $location.absUrl().concat('status')}).
