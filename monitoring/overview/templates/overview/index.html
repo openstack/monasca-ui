@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load static i18n %}
 {% block title %}{% trans 'Monitoring' %}{% endblock %}
 
 {% block page_header %}
@@ -9,7 +9,7 @@
 {% block main %}
     <div style="padding: 3px;">
       {% for dashboard in dashboards %}
-      <a target={{ dashboard.title }} href="/static/grafana/index.html#/dashboard/file/{{ dashboard.fileName }}?api={{api}}" class="btn btn-default btn-sm">
+      <a target={{ dashboard.title }} href="{% get_static_prefix %}grafana/index.html#/dashboard/file/{{ dashboard.fileName }}?api={{api}}" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-dashboard"></span>
               {% trans dashboard.title %}
           </a>

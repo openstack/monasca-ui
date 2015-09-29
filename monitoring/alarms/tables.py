@@ -16,6 +16,7 @@
 
 import logging
 
+from django.conf import settings
 from django.core import urlresolvers
 from django.core.urlresolvers import reverse_lazy
 from django import template
@@ -160,7 +161,8 @@ class GraphMetric(tables.LinkAction):
         endpoint = str(reverse_lazy(ov_constants.URL_PREFIX + 'proxy'))
         endpoint = self.table.request.build_absolute_uri(endpoint)
         self.attrs['target'] = '_blank'
-        url = '/static/grafana/index.html#/dashboard/script/detail.js'
+        url = (settings.STATIC_URL or '') + \
+            'grafana/index.html#/dashboard/script/detail.js'
         query = "?name=%s&threshold=%s&api=%s" % \
                 (name, threshold, endpoint)
         return url + query
