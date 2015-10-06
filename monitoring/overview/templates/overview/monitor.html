@@ -1,3 +1,5 @@
+{% load static %}
+
 <style>
 .chicklet-container {
  border: 1px solid #F1F1F1;
@@ -49,7 +51,8 @@
 }
 </style>
 <div style="border: 1px solid #dddddd;">
-    <div ng-controller = "monitoringController" ng-init="fetchStatus()">
+    <div ng-controller = "monitoringController"
+         ng-init="fetchStatus('{% get_static_prefix %}')">
         <div class="chicklet-container" ng-repeat="group in _serviceModel">
             <div>
                 {$ group.name $}

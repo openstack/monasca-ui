@@ -1,5 +1,12 @@
 'use strict';
 angular.module('monitoring.controllers', [])
+    .constant('CHICKLET_TO_ICON', {
+        'chicklet-error': '/monitoring/img/critical-icon.png',
+        'chicklet-warning': '/monitoring/img/warning-icon.png',
+        'chicklet-unknown': '/monitoring/img/unknown-icon.png',
+        'chicklet-success': '/monitoring/img/ok-icon.png',
+        'chicklet-notfound': '/monitoring/img/notfound-icon.png'
+    })
     .controller('timestampPickerController', function($scope, $window, $location){
         var offset = getTimezoneOffset(),
             queryParams = urlParams()
@@ -81,39 +88,57 @@ angular.module('monitoring.controllers', [])
         }
 
     })
-    .controller('monitoringController', function ($scope, $http, $timeout, $location) {
-         $scope.fetchStatus = function() {
+    .controller('monitoringController', function ($scope, $http, $timeout,
+                                                  $location, CHICKLET_TO_ICON) {
+        var base_url;
+
+        $scope.fetchStatus = function(statics_url) {
+            if(statics_url && !base_url){
+                base_url = statics_url;
+            }
+
             $http({method: 'GET', url: $location.absUrl().concat('status')}).
                 success(function(data, status, headers, config) {
                   // this callback will be called asynchronously
                   // when the response is available
                     var i;
                     for (i=0; i < data.series.length; i++) {
-                        var group = data.series[i]
+                        var group = data.series[i];
                         for (var j in group.services) {
-                            var service = group.services[j]
-                            service['icon'] = getIcon(service['class'])
+                            var service = group.services[j];
+                            service.icon = getIcon(service.class);
                         }
                     }
-                    $scope._serviceModel = data.series
+                    $scope._serviceModel = data.series;
                }).
                 error(function(data, status, headers, config) {
                     $scope.stop();
                 });
+
+        };
+
+        function getIcon(status) {
+            var url_suffix = CHICKLET_TO_ICON[status];
+            if(url_suffix){
+                return base_url + url_suffix;
+            }
+            return undefined;
         }
+
         $scope.onTimeout = function(){
             mytimeout = $timeout($scope.onTimeout,10000);
-            $scope.fetchStatus()
-        }
+            $scope.fetchStatus();
+        };
         var mytimeout = $timeout($scope.onTimeout,10000);
 
         $scope.stop = function(){
             $timeout.cancel(mytimeout);
-        }
+        };
+
     })
     .controller('alarmEditController', function ($scope, $http, $timeout, $q) {
         $scope.metrics = metricsList;
-        $scope.metricNames = uniqueNames(metricsList, 'name')
+        $scope.metricNames = uniqueNames(metricsList, 'name');
         $scope.currentMetric = $scope.metricNames[0];
         $scope.currentFunction = "max";
         $scope.currentComparator = ">";
@@ -198,7 +223,19 @@ angular.module('monitoring.controllers', [])
             $scope.defaultTag = defaultTag;
             $scope.saveDimension();
         }
-    })
+
+        function uniqueNames(input, key) {
+            var unique = {};
+            var uniqueList = [];
+            for(var i = 0; i < input.length; i++){
+                if(typeof unique[input[i][key]] == "undefined"){
+                    unique[input[i][key]] = "";
+                    uniqueList.push(input[i][key]);
+                }
+            }
+            return uniqueList.sort();
+        }
+    });
 
 angular.module('monitoring.filters', [])
     .filter('spacedim', function () {
@@ -208,29 +245,3 @@ angular.module('monitoring.filters', [])
             return JSON.stringify(text).split(',').join(', ');
         }
     })
-
-
-function uniqueNames(input, key) {
-    var unique = {};
-    var uniqueList = [];
-    for(var i = 0; i < input.length; i++){
-        if(typeof unique[input[i][key]] == "undefined"){
-            unique[input[i][key]] = "";
-            uniqueList.push(input[i][key]);
-        }
-    }
-    return uniqueList.sort();
-}
-
-function getIcon(status) {
-    if (status === 'chicklet-error')
-        return '/static/monitoring/img/critical-icon.png'
-    else if (status === 'chicklet-warning')
-        return '/static/monitoring/img/warning-icon.png'
-    else if (status === 'chicklet-unknown')
-        return '/static/monitoring/img/unknown-icon.png'
-    else if (status === 'chicklet-success')
-        return '/static/monitoring/img/ok-icon.png'
-    else if (status === 'chicklet-notfound')
-        return '/static/monitoring/img/notfound-icon.png'
-}
