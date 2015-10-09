@@ -22,13 +22,26 @@
 {% endblock page_header %}
 
 {% block main %}
+
+    <div class="row" ng-controller="timestampPickerController">
+        <div class="col-sm-3">
+            <select id="timestampFormatDropdownAlarmHistory"
+                    name="ts_mode"
+                    class="form-control"
+                    ng-model="currentFormat"
+                    ng-init="setUp('{{ timestamp_selected | safe }}')">
+                <option value="">{% trans "---Please select---" %}</option>
+                {% for key,label in timestamp_formats %}
+                <option value="{{ key }}" title="{{ label }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <span class="label label-primary"
+              ng-if="currentOffset">{$ currentOffset $}h</span>
+    </div>
+
     {{ table.render }}
-<style>
-.status-icon {
-  vertical-align: top;
-  margin-right: 2px;
-}
-</style>
+
 <div class="pagination">
     <span class="step-links">
         {% if page_offset %}
@@ -36,5 +49,11 @@
         {% endif %}
     </span>
 </div>
+<style>
+.status-icon {
+  vertical-align: top;
+  margin-right: 2px;
+}
+</style>
 {% endblock %}
 

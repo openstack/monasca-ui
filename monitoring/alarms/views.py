@@ -14,24 +14,22 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.import logging
 
-import json
 import logging
 
 from django.conf import settings  # noqa
+from datetime import timedelta
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.shortcuts import redirect
-from django.template import defaultfilters as filters
+from django.utils.dateparse import parse_datetime
 from django.utils.translation import ugettext as _  # noqa
 from django.views.generic import View  # noqa
-from django.views.generic import TemplateView  # noqa
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
-import monascaclient.exc as exc
 from monitoring.alarms import constants
 from monitoring.alarms import forms as alarm_forms
 from monitoring.alarms import tables as alarm_tables
@@ -41,6 +39,8 @@ LOG = logging.getLogger(__name__)
 SERVICES = getattr(settings, 'MONITORING_SERVICES', [])
 
 LIMIT = 10
+
+
 def get_icon(status):
     if status == 'chicklet-success':
         return constants.OK_ICON
@@ -63,6 +63,12 @@ priorities = [
     {'status': 'chicklet-error', 'severity': 'CRITICAL'},
 ]
 index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
+
+alarm_history_default_ts_format = 'utc'
+alarm_history_ts_formats = (
+    ('utc', _('UTC'),),
+    ('bl', _('Browser local'),),
+)
 
 
 def get_status(alarms):
@@ -199,20 +205,30 @@ class AlarmServiceView(tables.DataTableView):
         return context
 
 
-def transform_alarm_history(results, name):
-    newlist = []
+def transform_alarm_history(results, name, ts_mode, ts_offset):
+    new_list = []
+
+    def get_ts_val(val):
+        if ts_mode == 'bl':
+            offset = int((ts_offset or '0').replace('+', ''))
+            dt_val = parse_datetime(val) + timedelta(hours=offset)
+            dt_val_formatter = dt_val.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            return dt_val_formatter.replace('000Z', 'Z')
+        elif ts_mode != 'utc':
+            raise ValueError('%s is not supported timestamp format' % ts_mode)
+        else:
+            return val  # utc case
+
     for item in results:
-        temp = {}
-        temp['alarm_id'] = item['alarm_id']
-        temp['name'] = name
-        temp['old_state'] = item['old_state']
-        temp['new_state'] = item['new_state']
-        temp['timestamp'] = item['timestamp']
-        temp['reason'] = item['reason']
-        temp['metrics'] = item['metrics']
-        temp['reason_data'] = item['reason_data']
-        newlist.append(temp)
-    return newlist
+        new_list.append({'alarm_id': item['alarm_id'],
+                         'name': name,
+                         'old_state': item['old_state'],
+                         'new_state': item['new_state'],
+                         'timestamp': get_ts_val(item['timestamp']),
+                         'reason': item['reason'],
+                         'metrics': item['metrics'],
+                         'reason_data': item['reason_data']})
+    return new_list
 
 
 class AlarmHistoryView(tables.DataTableView):
@@ -223,15 +239,23 @@ class AlarmHistoryView(tables.DataTableView):
         return super(AlarmHistoryView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        page_offset=self.request.GET.get('page_offset')
-        contacts=[]
-        id = self.kwargs['id']
+        page_offset = self.request.GET.get('page_offset')
+        ts_mode = self.request.GET.get('ts_mode')
+        ts_offset = self.request.GET.get('ts_offset')
+
+        contacts = []
+        object_id = self.kwargs['id']
         name = self.kwargs['name']
-        results = []
-        if page_offset == None:
+
+        if not ts_mode:
+            ts_mode = alarm_history_default_ts_format
+        if not page_offset:
             page_offset = 0
+
         try:
-            results = api.monitor.alarm_history(self.request, id, page_offset,
+            results = api.monitor.alarm_history(self.request,
+                                                object_id,
+                                                page_offset,
                                                 LIMIT)
             paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
@@ -239,17 +263,29 @@ class AlarmHistoryView(tables.DataTableView):
             contacts = paginator.page(paginator.num_pages)
         except Exception:
             messages.error(self.request,
-                           _("Could not retrieve alarm history for %s") % id)
-        return transform_alarm_history(contacts, name)
+                           _("Could not retrieve alarm history for %s") % object_id)
+
+        try:
+            return transform_alarm_history(contacts, name, ts_mode, ts_offset)
+        except ValueError as err:
+            LOG.warning('Failed to transform alarm history due to %s' %
+                        err.message)
+            messages.warning(self.request, _('Failed to present alarm '
+                                             'history'))
+        return []
 
     def get_context_data(self, **kwargs):
         context = super(AlarmHistoryView, self).get_context_data(**kwargs)
-        id = self.kwargs['id']
+
+        object_id = kwargs['id']
+        ts_mode = self.request.GET.get('ts_mode')
+        ts_offset = self.request.GET.get('ts_offset')
+
         try:
-            alarm = api.monitor.alarm_get(self.request, id)
+            alarm = api.monitor.alarm_get(self.request, object_id)
         except Exception:
             messages.error(self.request,
-                           _("Could not retrieve alarm for %s") % id)
+                           _("Could not retrieve alarm for %s") % object_id)
         context['alarm'] = alarm
 
         contacts = []
@@ -258,7 +294,7 @@ class AlarmHistoryView(tables.DataTableView):
         if page_offset == None:
             page_offset = 0
         try:
-            results = api.monitor.alarm_history(self.request, id,  page_offset,
+            results = api.monitor.alarm_history(self.request, object_id,  page_offset,
                                                 LIMIT)
             paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
@@ -266,7 +302,7 @@ class AlarmHistoryView(tables.DataTableView):
             contacts = paginator.page(paginator.num_pages)
         except Exception:
             messages.error(self.request,
-                           _("Could not retrieve alarm history for %s") % id)
+                           _("Could not retrieve alarm history for %s") % object_id)
             return context
 
         context["contacts"] = contacts
@@ -275,12 +311,16 @@ class AlarmHistoryView(tables.DataTableView):
         else:
             context["page_offset"] = contacts.object_list[-1]["id"]
 
+        context['timestamp_formats'] = alarm_history_ts_formats
+        context['timestamp_selected'] = ts_mode or ''
+
         return context
 
 
 class AlarmFilterView(forms.ModalFormView):
     template_name = constants.TEMPLATE_PREFIX + 'filter.html'
     form_class = alarm_forms.CreateAlarmForm
+
     def get_context_data(self, **kwargs):
         context = super(AlarmFilterView, self).get_context_data(**kwargs)
         context["cancel_url"] = self.get_success_url()
