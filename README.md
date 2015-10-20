@@ -11,7 +11,7 @@ by monasca-vagrant.
 * ln -s grafana/src horizon/static/grafana
 
 * cd horizon
-* Add git+https://github.com/stackforge/monasca-ui.git  to requirements.txt
+* Add git+https://github.com/openstack/monasca-ui.git  to requirements.txt
 * Edit openstack_dashboard/settings.py to include the following two lines:
 * import monitoring.enabled
 * monitoring.enabled, #Add to the settings.update_dashboards list
@@ -22,7 +22,7 @@ by monasca-vagrant.
 ##Get the Code
 
 ```
-git clone https://github.com/stackforge/monasca-ui.git  # clone monasca-ui
+git clone https://github.com/openstack/monasca-ui.git  # clone monasca-ui
 git clone https://github.com/openstack/horizon.git  # clone horizon
 git clone https://github.com/hpcloud-mon/grafana.git  # clone grafana
 ```
