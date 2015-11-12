@@ -1,18 +1,33 @@
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+# Service group names (global across all projects):
+MONITORING_SERVICES_GROUPS = [
+    {'name': _('OpenStack Services'), 'groupBy': 'service'},
+    {'name': _('Servers'), 'groupBy': 'hostname'}
+]
 
 # Services being monitored
 MONITORING_SERVICES = getattr(
     settings,
-    'MONITORING_SERVICES',
-    [
-        {'name': _('OpenStack Services'),
-         'groupBy': 'service'},
-        {'name': _('Servers'),
-         'groupBy': 'hostname'}
-    ]
+    'MONITORING_SERVICES_GROUPS',
+    MONITORING_SERVICES_GROUPS
 )
+
+#
+# Per project service groups.  If in this form,
+# '*' will be applied to all projects not explicitly listed.
+#
+# Note the above form (flat) is supported for backward compatibility.
+#
+# MONITORING_SERVICES_GROUPS = [
+#    {'admin': [
+#         {'name': _('OpenStack Services'), 'groupBy': 'service'},
+#         {'name': _('Servers'), 'groupBy': 'hostname'}]},
+#    {'*': [
+#         {'name': _('Services'), 'groupBy': 'service'},
+#         {'name': _('Instances'), 'groupBy': 'hostname'}]},
+# ]
 
 MONITORING_SERVICE_TYPE = getattr(
     settings, 'MONITORING_SERVICE_TYPE', 'monitoring'
