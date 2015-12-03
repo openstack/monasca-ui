@@ -1,6 +1,7 @@
 # vim: tabstop=4 shiftwidth=4 softtabstop=4
 
 # Copyright 2013 Hewlett-Packard Development Company, L.P.
+# Copyright 2016 Cray Inc. All rights reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -14,6 +15,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import json
 import logging
 
 from django.conf import settings
@@ -157,7 +159,7 @@ class GraphMetric(tables.LinkAction):
 
     def get_link_url(self, datum):
         name = datum['metrics'][0]['name']
-        threshold = datum['metrics']
+        threshold = json.dumps(datum['metrics'])
         endpoint = str(reverse_lazy(ov_constants.URL_PREFIX + 'proxy'))
         endpoint = self.table.request.build_absolute_uri(endpoint)
         self.attrs['target'] = '_blank'
