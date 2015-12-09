@@ -7,7 +7,9 @@ angular.module('monitoring.controllers', [])
         'chicklet-success': '/monitoring/img/ok-icon.png',
         'chicklet-notfound': '/monitoring/img/notfound-icon.png'
     })
-    .controller('timestampPickerController', function($scope, $window, $location){
+    .controller('timestampPickerController',[
+      "$scope", "$window", "$location",
+      function($scope, $window, $location){
         var offset = getTimezoneOffset(),
             queryParams = urlParams()
 
@@ -87,9 +89,10 @@ angular.module('monitoring.controllers', [])
             return prefix + hours;
         }
 
-    })
-    .controller('monitoringController', function ($scope, $http, $timeout,
-                                                  $location, CHICKLET_TO_ICON) {
+    }])
+    .controller('monitoringController',[
+      "$scope", "$http", "$timeout", "$location", "CHICKLET_TO_ICON",
+      function ($scope, $http, $timeout, $location, CHICKLET_TO_ICON) {
         var base_url;
 
         $scope.fetchStatus = function(statics_url) {
@@ -135,8 +138,10 @@ angular.module('monitoring.controllers', [])
             $timeout.cancel(mytimeout);
         };
 
-    })
-    .controller('alarmEditController', function ($scope, $http, $timeout, $q) {
+    }])
+    .controller('alarmEditController', [
+      "$scope", "$http", "$timeout", "$q",
+      function ($scope, $http, $timeout, $q) {
         $scope.metrics = metricsList;
         $scope.metricNames = uniqueNames(metricsList, 'name');
         $scope.currentMetric = $scope.metricNames[0];
@@ -235,7 +240,7 @@ angular.module('monitoring.controllers', [])
             }
             return uniqueList.sort();
         }
-    })
+    }])
     .controller('alarmNotificationFieldController', NotificationField);
 
 function NotificationField(){
@@ -302,6 +307,8 @@ function NotificationField(){
          }
     }
 }
+
+NotificationField.$inject = [];
 
 angular.module('monitoring.filters', [])
     .filter('spacedim', function () {
