@@ -38,19 +38,19 @@
 
 
   <form method="GET" class="form-group" style="width:400px" onsubmit="sendID()" name="form0">
-      <h3>Alarm ID</h3>
-      Value: <input class="form-control" name="filterID" placeholder="54fdec2f-ae34-4dba-9c85-7b4ad67eea03">
-      <button type="submit" class="btn btn-default">Submit</button>
+      <h3>{% trans 'Alarm ID' %}</h3>
+      {% trans 'Value' %}: <input class="form-control" name="filterID" placeholder="54fdec2f-ae34-4dba-9c85-7b4ad67eea03">
+      <button type="submit" class="btn btn-default">{% trans 'Submit' %}</button>
   </form>
   <hr>
   <hr>
   <form method="GET" class="form-group" style="width:400px" onsubmit="sendDimensions()" name="form1">
-      <h3>Dimension(s)</h3>
-      Key:Value
+      <h3>{% trans 'Dimension(s)' %}</h3>
+      {% trans 'Key' %}:{% trans 'Value' %}
       <input class="form-control" name="dimension" placeholder="hostname=devstack, service=mysql" data-toggle="tooltip" data-placement="right" title="Example: hostname=devstack, service=mysql">
       <br />
-      Metric Name: <input class="form-control" name="metric" placeholder="http_status">
-      <button type="submit" class="btn btn-default">Submit</button>
+      {% trans 'Metric Name' %}: <input class="form-control" name="metric" placeholder="http_status">
+      <button type="submit" class="btn btn-default">{% trans 'Submit' %}</button>
   </form>
 
 </div>
