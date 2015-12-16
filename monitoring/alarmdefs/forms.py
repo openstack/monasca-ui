@@ -103,9 +103,11 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         if create:
             expressionWidget = ExpressionWidget(initial)
             notificationWidget = NotificationCreateWidget()
+            matchByAttr = None
         else:
             expressionWidget = textWidget
             notificationWidget = NotificationCreateWidget()
+            matchByAttr = {'readonly':'readonly'}
 
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
@@ -114,13 +116,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['expression'] = forms.CharField(label=_("Expression"),
                                                     required=required,
                                                     widget=expressionWidget)
-        apply_to = [['1', _('individually')],
-                    ['2', _('as a group')]]
-        self.fields['apply_to'] = forms.ChoiceField(label=_("Apply function to metrics"),
-                                                    choices=apply_to,
-                                                    required=False,
-                                                    widget=forms.RadioSelect(),
-                                                    initial="1")
+        self.fields['match_by'] = forms.CharField(label=_("Match by"),
+                                                  required=False,
+                                                  initial="url,hostname,component,service",
+                                                  widget=forms.TextInput(attrs=matchByAttr))
         self.fields['description'] = forms.CharField(label=_("Description"),
                                                      required=False,
                                                      widget=textWidget)
@@ -191,7 +190,7 @@ class CreateAlarmForm(BaseAlarmForm):
                 expression=data['expression'],
                 description=data['description'],
                 severity=data['severity'],
-                match_by=request.POST['match_by'].split(',') if request.POST['apply_to'] == '1' else None,
+                match_by=data['match_by'].split(',') if data['match_by'] else None,
                 alarm_actions=alarm_actions,
                 ok_actions=alarm_actions,
                 undetermined_actions=alarm_actions,

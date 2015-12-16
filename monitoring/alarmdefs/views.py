@@ -100,7 +100,7 @@ class AlarmCreateView(forms.ModalFormView):
 
 
 def transform_alarm_data(obj):
-    obj['apply_to'] = '1' if obj['match_by'] else '2'
+    obj['match_by'] = ','.join(obj['match_by'])
     return obj
 
 

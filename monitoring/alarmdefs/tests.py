@@ -11,6 +11,8 @@ CREATE_URL = urlresolvers.reverse(
     constants.URL_PREFIX + 'alarm_create',  args=())
 DETAIL_URL = urlresolvers.reverse(
     constants.URL_PREFIX + 'alarm_detail',  args=('12345',))
+EDIT_URL = urlresolvers.reverse(
+    constants.URL_PREFIX + 'alarm_edit',  args=('12345',))
 
 
 class AlarmDefinitionsTest(helpers.TestCase):
@@ -43,7 +45,6 @@ class AlarmDefinitionsTest(helpers.TestCase):
             'spec_set': ['alarmdef_get'],
             'alarmdef_get.return_value': {
                 'alarm_actions': [],
-                'apply_to': '1',
                 'match_by': [],
             }
         }) as mock:
@@ -52,3 +53,17 @@ class AlarmDefinitionsTest(helpers.TestCase):
 
         self.assertTemplateUsed(
             res, 'monitoring/alarmdefs/_detail.html')
+
+    def test_alarmdefs_edit(self):
+        with patch('monitoring.api.monitor', **{
+            'spec_set': ['alarmdef_get'],
+            'alarmdef_get.return_value': {
+                'alarm_actions': [],
+                'match_by': [],
+            }
+        }) as mock:
+            res = self.client.get(EDIT_URL)
+            self.assertEqual(mock.alarmdef_get.call_count, 1)
+
+        self.assertTemplateUsed(
+            res, 'monitoring/alarmdefs/_edit.html')
