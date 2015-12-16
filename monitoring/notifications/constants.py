@@ -25,7 +25,7 @@ class NotificationType(object):
 
     CHOICES = [(EMAIL, _("Email")),
                (WEBHOOK, _("Webhook")),
-               (PAGERDUTY, _("Pagerduty")),]
+               (PAGERDUTY, _("PagerDuty")),]
 
     @staticmethod
     def get_label(key):
