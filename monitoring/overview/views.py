@@ -163,7 +163,7 @@ def show_by_dimension(data, dim_name):
     if 'dimensions' in data['metrics'][0]:
         dimensions = data['metrics'][0]['dimensions']
         if dim_name in dimensions:
-            return str(data['metrics'][0]['dimensions'][dim_name])
+            return str(data['metrics'][0]['dimensions'][dim_name].encode('utf-8'))
     return ""
 
 
