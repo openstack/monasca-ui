@@ -27,12 +27,14 @@ from horizon import tables
 from monitoring.notifications import constants
 from monitoring.notifications import forms as notification_forms
 from monitoring.notifications import tables as notification_tables
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage
 
 from monitoring import api
 
 LOG = logging.getLogger(__name__)
 LIMIT = 10
+PREV_PAGE_LIMIT = 100
+
 
 class IndexView(tables.DataTableView):
     table_class = notification_tables.NotificationsTable
@@ -60,12 +62,20 @@ class IndexView(tables.DataTableView):
         context = super(IndexView, self).get_context_data(**kwargs)
         contacts = []
         results = []
+        prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
 
-        if page_offset == None:
+        if self.request.session.has_key('prev_page_stack'):
+            prev_page_stack = self.request.session['prev_page_stack']
+
+        if page_offset is None:
             page_offset = 0
+            prev_page_stack = []
         try:
-            results = api.monitor.notification_list(self.request, page_offset, LIMIT)
+            # To judge whether there is next page, get LIMIT + 1
+            results = api.monitor.notification_list(self.request, page_offset,
+                                                    LIMIT + 1)
+            num_results = len(results)
             paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
         except EmptyPage:
@@ -76,10 +86,23 @@ class IndexView(tables.DataTableView):
 
         context["contacts"] = contacts
 
-        if len(contacts.object_list) < LIMIT:
+        if num_results < LIMIT + 1:
             context["page_offset"] = None
         else:
             context["page_offset"] = contacts.object_list[-1]["id"]
+
+        if page_offset in prev_page_stack:
+            index = prev_page_stack.index(page_offset)
+            prev_page_stack = prev_page_stack[0:index]
+
+        prev_page_offset = prev_page_stack[-1] if prev_page_stack else None
+        if prev_page_offset is not None:
+            context["prev_page_offset"] = prev_page_offset
+
+        if len(prev_page_stack) > PREV_PAGE_LIMIT:
+            del prev_page_stack[0]
+        prev_page_stack.append(str(page_offset))
+        self.request.session['prev_page_stack'] = prev_page_stack
 
         return context
 

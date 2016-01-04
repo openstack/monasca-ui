@@ -25,7 +25,7 @@ from django.shortcuts import redirect
 from django.utils.dateparse import parse_datetime
 from django.utils.translation import ugettext as _  # noqa
 from django.views.generic import View  # noqa
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage
 
 from horizon import forms
 from horizon import tables
@@ -39,6 +39,7 @@ LOG = logging.getLogger(__name__)
 SERVICES = getattr(settings, 'MONITORING_SERVICES', [])
 
 LIMIT = 10
+PREV_PAGE_LIMIT = 100
 
 
 def get_icon(status):
@@ -139,7 +140,7 @@ class AlarmServiceView(tables.DataTableView):
         else:
             if self.service[:2] == 'id':
                 try:
-                    name , value = self.service.split("=")
+                    name, value = self.service.split("=")
                     results = [api.monitor.alarm_show(self.request, value)]
                 except Exception as e:
                     messages.error(self.request, _("Could not retrieve alarms"))
@@ -150,9 +151,9 @@ class AlarmServiceView(tables.DataTableView):
             else:
                 try:
                     results = api.monitor.alarm_list_by_dimension(self.request,
-                                                                self.service,
-                                                                page_offset,
-                                                                LIMIT)
+                                                                  self.service,
+                                                                  page_offset,
+                                                                  LIMIT)
                 except Exception:
                     messages.error(self.request, _("Could not retrieve alarms"))
                     results = []
@@ -161,15 +162,22 @@ class AlarmServiceView(tables.DataTableView):
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
         results = []
+        prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
 
-        if page_offset == None:
+        if self.request.session.has_key('prev_page_stack'):
+            prev_page_stack = self.request.session['prev_page_stack']
+
+        if page_offset is None:
             page_offset = 0
+            prev_page_stack = []
 
         if self.service == 'all':
             try:
+                # To judge whether there is next page, get LIMIT + 1
                 results = api.monitor.alarm_list(self.request, page_offset,
-                                                 LIMIT)
+                                                 LIMIT + 1)
+                num_results = len(results)
                 paginator = Paginator(results, LIMIT)
                 results = paginator.page(1)
             except EmptyPage:
@@ -179,17 +187,23 @@ class AlarmServiceView(tables.DataTableView):
         else:
             if self.service[:2] == 'id':
                 try:
-                    name , value = self.service.split("=")
+                    name, value = self.service.split("=")
                     results = [api.monitor.alarm_show(self.request, value)]
                 except Exception as e:
                     messages.error(self.request, _("Could not retrieve alarms"))
                     results = []
             else:
                 try:
+                    # To judge whether there is next page, get LIMIT + 1
                     results = api.monitor.alarm_list_by_dimension(self.request,
-                                                                self.service,
-                                                                page_offset,
-                                                                LIMIT)
+                                                                  self.service,
+                                                                  page_offset,
+                                                                  LIMIT + 1)
+                    num_results = len(results)
+                    paginator = Paginator(results, LIMIT)
+                    results = paginator.page(1)
+                except EmptyPage:
+                    results = paginator.page(paginator.num_pages)
                 except Exception:
                     messages.error(self.request, _("Could not retrieve alarms"))
                     results = []
@@ -197,10 +211,23 @@ class AlarmServiceView(tables.DataTableView):
         context["contacts"] = results
         context["service"] = self.service
 
-        if len(results) < LIMIT:
+        if num_results < LIMIT + 1:
             context["page_offset"] = None
         else:
             context["page_offset"] = results[-1]["id"]
+
+        if page_offset in prev_page_stack:
+            index = prev_page_stack.index(page_offset)
+            prev_page_stack = prev_page_stack[0:index]
+
+        prev_page_offset = prev_page_stack[-1] if prev_page_stack else None
+        if prev_page_offset is not None:
+            context["prev_page_offset"] = prev_page_offset
+
+        if len(prev_page_stack) > PREV_PAGE_LIMIT:
+            del prev_page_stack[0]
+        prev_page_stack.append(str(page_offset))
+        self.request.session['prev_page_stack'] = prev_page_stack
 
         return context
 
