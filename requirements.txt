@@ -1,2 +1,2 @@
 python-monascaclient
-django<1.8
+Django<1.9,>=1.8
