@@ -58,7 +58,7 @@ class BaseNotificationMethodForm(forms.SelfHandlingForm):
             help_text=_("The type of notification method (i.e. email)."))
         self.fields['address'] = forms.CharField(label=_("Address"),
                                                  required=required,
-                                                 max_length="100",
+                                                 max_length="512",
                                                  widget=textWidget,
                                                  help_text=_("The email/url address to notify."))
 
