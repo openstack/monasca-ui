@@ -46,17 +46,21 @@ class BaseNotificationMethodForm(forms.SelfHandlingForm):
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
                                               max_length="250",
-                                              widget=textWidget)
+                                              widget=textWidget,
+                                              help_text=_("A descriptive name of "
+                                                          "the notification method."))
         self.fields['type'] = forms.ChoiceField(
             label=_("Type"),
             required=False,
             widget=selectWidget,
             choices=constants.NotificationType.CHOICES,
-            initial=constants.NotificationType.EMAIL)
+            initial=constants.NotificationType.EMAIL,
+            help_text=_("The type of notification method (i.e. email)."))
         self.fields['address'] = forms.CharField(label=_("Address"),
                                                  required=required,
                                                  max_length="100",
-                                                 widget=textWidget)
+                                                 widget=textWidget,
+                                                 help_text=_("The email/url address to notify."))
 
 
 class CreateMethodForm(BaseNotificationMethodForm):

@@ -112,17 +112,22 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
                                               max_length=250,
-                                              widget=textWidget)
+                                              widget=textWidget,
+                                              help_text=_("An unique name of the alarm."))
         self.fields['expression'] = forms.CharField(label=_("Expression"),
                                                     required=required,
-                                                    widget=expressionWidget)
+                                                    widget=expressionWidget,
+                                                    help_text=_("An alarm expression."))
         self.fields['match_by'] = forms.CharField(label=_("Match by"),
                                                   required=False,
                                                   initial="url,hostname,component,service",
-                                                  widget=forms.TextInput(attrs=matchByAttr))
+                                                  widget=forms.TextInput(attrs=matchByAttr),
+                                                  help_text=_("The metric dimensions used "
+                                                              "to create unique alarms."))
         self.fields['description'] = forms.CharField(label=_("Description"),
                                                      required=False,
-                                                     widget=textWidget)
+                                                     widget=textWidget,
+                                                     help_text=_("A description of an alarm."))
         sev_choices = [("LOW", _("Low")),
                        ("MEDIUM", _("Medium")),
                        ("HIGH", _("High")),
@@ -130,7 +135,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['severity'] = forms.ChoiceField(label=_("Severity"),
                                                     choices=sev_choices,
                                                     widget=choiceWidget,
-                                                    required=False)
+                                                    required=False,
+                                                    help_text=_("Severity of an alarm. "
+                                                                "Must be either LOW, MEDIUM, HIGH "
+                                                                "or CRITICAL. Default is LOW."))
         self.fields['state'] = forms.CharField(label=_("State"),
                                                required=False,
                                                widget=textWidget)
@@ -142,7 +150,9 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         self.fields['notifications'] = NotificationField(
             label=_("Notifications"),
             required=False,
-            widget=notificationWidget)
+            widget=notificationWidget,
+            help_text=_("Notification methods. "
+                        "Notifications can be sent when an alarm state transition occurs."))
 
     def set_notification_choices(self, request):
         try:
