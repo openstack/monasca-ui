@@ -317,13 +317,20 @@ class AlarmHistoryView(tables.DataTableView):
         context['alarm'] = alarm
 
         contacts = []
+        prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
 
-        if page_offset == None:
+        if self.request.session.has_key('prev_page_stack'):
+            prev_page_stack = self.request.session['prev_page_stack']
+
+        if page_offset is None:
             page_offset = 0
+            prev_page_stack = []
         try:
+            # To judge whether there is next page, get LIMIT + 1
             results = api.monitor.alarm_history(self.request, object_id,  page_offset,
-                                                LIMIT)
+                                                LIMIT + 1)
+            num_results = len(results)
             paginator = Paginator(results, LIMIT)
             contacts = paginator.page(1)
         except EmptyPage:
@@ -334,13 +341,26 @@ class AlarmHistoryView(tables.DataTableView):
             return context
 
         context["contacts"] = contacts
-        if len(contacts.object_list) < LIMIT:
+        context['timestamp_formats'] = alarm_history_ts_formats
+        context['timestamp_selected'] = ts_mode or ''
+
+        if num_results < LIMIT + 1:
             context["page_offset"] = None
         else:
             context["page_offset"] = contacts.object_list[-1]["id"]
 
-        context['timestamp_formats'] = alarm_history_ts_formats
-        context['timestamp_selected'] = ts_mode or ''
+        if page_offset in prev_page_stack:
+            index = prev_page_stack.index(page_offset)
+            prev_page_stack = prev_page_stack[0:index]
+
+        prev_page_offset = prev_page_stack[-1] if prev_page_stack else None
+        if prev_page_offset is not None:
+            context["prev_page_offset"] = prev_page_offset
+
+        if len(prev_page_stack) > PREV_PAGE_LIMIT:
+            del prev_page_stack[0]
+        prev_page_stack.append(str(page_offset))
+        self.request.session['prev_page_stack'] = prev_page_stack
 
         return context
 
