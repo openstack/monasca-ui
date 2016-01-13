@@ -8,7 +8,7 @@ by monasca-vagrant.
 
 * git clone https://github.com/openstack/horizon.git  # clone horizon
 * git clone https://github.com/hpcloud-mon/grafana.git
-* ln -s grafana/src horizon/static/grafana
+* ln -r -s grafana/src *apache_document_root*/grafana
 
 * cd horizon
 * Add git+https://github.com/openstack/monasca-ui.git  to requirements.txt
@@ -55,8 +55,8 @@ ln -s ../monasca-ui/monitoring monitoring
 ##Set up Grafana
 
 ```
-cd static
-ln -s ../../grafana/src grafana
+cd ..
+ln -r -s grafana/src <apache_document_root>/grafana
 cd grafana
 cp config.monasca.js config.js
 ```
