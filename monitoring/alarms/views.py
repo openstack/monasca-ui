@@ -343,6 +343,7 @@ class AlarmHistoryView(tables.DataTableView):
         context["contacts"] = contacts
         context['timestamp_formats'] = alarm_history_ts_formats
         context['timestamp_selected'] = ts_mode or ''
+        context['timestamp_offset'] = ts_offset or 0
 
         if num_results < LIMIT + 1:
             context["page_offset"] = None
