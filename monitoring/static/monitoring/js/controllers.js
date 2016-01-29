@@ -36,7 +36,11 @@ angular.module('monitoring.controllers', [])
 
              // overwrite to new values
              queryParams['ts_mode'] = nval;
-             queryParams['ts_offset'] = offset;
+             if(nval === 'utc'){
+               queryParams['ts_offset'] = 0
+             } else {
+               queryParams['ts_offset'] = offset;
+             }
 
              location = location.concat('?', paramsToSearch(queryParams));
 
