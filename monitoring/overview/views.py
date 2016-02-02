@@ -359,15 +359,18 @@ class KibanaProxyView(generic.View):
 
     @csrf_exempt
     def dispatch(self, request, url):
-
         if not url:
             url = '/'
 
         if request.method not in self.http_method_names:
             return http.HttpResponseNotAllowed(request.method)
+
+        # passing kbn version explicitly for kibana >= 4.3.x
         headers = {
-            'X-Auth-Token': request.user.token.id
+            'X-Auth-Token': request.user.token.id,
+            'kbn-version': request.META.get('HTTP_KBN_VERSION', '')
         }
+
         return self.read(request.method, url, request.body, headers)
 
     def get_relative_url(self, url):
