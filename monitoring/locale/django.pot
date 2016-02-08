@@ -1,0 +1,647 @@
+# Translations template for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-02-08 06:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.2.0\n"
+
+#: monitoring/dashboard.py:24
+#: monitoring/notifications/templates/notifications/index.html:3
+#: monitoring/overview/templates/overview/index.html:3
+msgid "Monitoring"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:41 monitoring/alarms/forms.py:58
+msgid "min"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:41 monitoring/alarms/forms.py:58
+msgid "max"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:41 monitoring/alarms/forms.py:58
+msgid "sum"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:42 monitoring/alarms/forms.py:59
+msgid "count"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:42 monitoring/alarms/forms.py:59
+msgid "avg"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:112 monitoring/alarmdefs/tables.py:83
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:7
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:25
+#: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:12
+#: monitoring/alarms/forms.py:122 monitoring/alarms/forms.py:185
+#: monitoring/alarms/tables.py:218
+#: monitoring/alarms/templates/alarms/alarm_history.html:14
+#: monitoring/notifications/forms.py:46 monitoring/notifications/tables.py:88
+msgid "Name"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:116
+msgid "An unique name of the alarm."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:117
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:11
+#: monitoring/alarms/forms.py:189
+msgid "Expression"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:120
+msgid "An alarm expression."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:121
+msgid "Match by"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:125
+msgid "The metric dimensions used to create unique alarms."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:127 monitoring/alarmdefs/tables.py:86
+#: monitoring/alarmdefs/templates/alarmdefs/_create.html:11
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:9
+#: monitoring/alarmdefs/templates/alarmdefs/_edit.html:11
+#: monitoring/alarms/forms.py:192
+#: monitoring/notifications/templates/notifications/_create.html:17
+#: monitoring/notifications/templates/notifications/_edit.html:11
+msgid "Description"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:130
+msgid "A description of an alarm."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:131 monitoring/alarms/forms.py:195
+msgid "Low"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:132 monitoring/alarms/forms.py:196
+msgid "Medium"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:133 monitoring/alarms/forms.py:197
+msgid "High"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:134 monitoring/alarms/forms.py:198
+msgid "Critical"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:135
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:13
+#: monitoring/alarms/forms.py:199
+msgid "Severity"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:139
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. "
+"Default is LOW."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:142 monitoring/alarms/forms.py:203
+msgid "State"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:147 monitoring/alarmdefs/tables.py:88
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:15
+#: monitoring/alarms/forms.py:207
+msgid "Notifications Enabled"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:151
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:20
+#: monitoring/alarms/forms.py:211 monitoring/notifications/panel.py:24
+#: monitoring/notifications/tables.py:35 monitoring/notifications/tables.py:100
+msgid "Notifications"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:154
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:163 monitoring/alarms/forms.py:221
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:209
+msgid "Alarm Definition has been created successfully."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:211
+#, python-format
+msgid "Unable to create the alarm definition: %s"
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:244
+msgid "Alarm definition has been updated."
+msgstr ""
+
+#: monitoring/alarmdefs/forms.py:246
+#, python-format
+msgid "%s"
+msgstr ""
+
+#: monitoring/alarmdefs/panel.py:25 monitoring/alarmdefs/tables.py:65
+#: monitoring/alarmdefs/tables.py:98
+#: monitoring/alarmdefs/templates/alarmdefs/alarm.html:5
+msgid "Alarm Definitions"
+msgstr ""
+
+#: monitoring/alarmdefs/tables.py:32
+#: monitoring/alarmdefs/templates/alarmdefs/_create.html:8
+#: monitoring/alarmdefs/templates/alarmdefs/_create.html:35
+#: monitoring/alarmdefs/templates/alarmdefs/create.html:3
+msgid "Create Alarm Definition"
+msgstr ""
+
+#: monitoring/alarmdefs/tables.py:49
+#: monitoring/alarmdefs/templates/alarmdefs/_edit.html:8
+msgid "Edit Alarm Definition"
+msgstr ""
+
+#: monitoring/alarmdefs/tables.py:63
+msgid "Delete Alarm Definition"
+msgstr ""
+
+#: monitoring/alarmdefs/tables.py:64
+msgid "Alarm Definition"
+msgstr ""
+
+#: monitoring/alarmdefs/views.py:55 monitoring/alarmdefs/views.py:81
+msgid "Could not retrieve alarm definitions"
+msgstr ""
+
+#: monitoring/alarmdefs/views.py:151 monitoring/alarmdefs/views.py:201
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr ""
+
+#: monitoring/alarmdefs/views.py:161 monitoring/alarmdefs/views.py:208
+msgid "Unable to retrieve alarm details."
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_create.html:14
+msgid ""
+"\n"
+"      The Name field is used to identify the alarm definition.\n"
+"    "
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_create.html:17
+msgid ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"    "
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_create.html:20
+#: monitoring/alarmdefs/templates/alarmdefs/_edit.html:21
+msgid ""
+"\n"
+"      The Notifications field contains the list of Notifications that "
+"should be sent when transitioning to another ALARM state.\n"
+"    "
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_create.html:37
+#: monitoring/alarmdefs/templates/alarmdefs/_edit.html:29
+#: monitoring/notifications/templates/notifications/_create.html:34
+#: monitoring/notifications/templates/notifications/_edit.html:23
+msgid "Cancel"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:4
+msgid "Info"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:8
+#: monitoring/alarms/templates/alarms/alarm_history.html:15
+msgid "None"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:26
+#: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:13
+#: monitoring/notifications/forms.py:53 monitoring/notifications/tables.py:89
+msgid "Type"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_detail.html:27
+#: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:14
+#: monitoring/notifications/forms.py:59 monitoring/notifications/tables.py:90
+msgid "Address"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_edit.html:14
+#: monitoring/notifications/templates/notifications/_create.html:20
+#: monitoring/notifications/templates/notifications/_edit.html:14
+msgid ""
+"\n"
+"      The Name field is used to identify the notification method.\n"
+"    "
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_edit.html:18
+msgid ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"      See <a href=\"https://github.com/openstack/monasca-"
+"api/blob/master/docs/monasca-api-spec.md#alarm-definition-expressions\" "
+"target=\"_blank\">Alarm Expressions</a> for how to write an expression.\n"
+"    "
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/_edit.html:28
+msgid "Save"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/alarm.html:8
+msgid "\"Alarm Definitions\""
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/detail.html:3
+msgid "Alarm Definition Details"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/detail.html:6
+msgid "\"Alarm Definition Details\""
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/edit.html:3
+msgid "Edit Alarm Definitions"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/expression_field.html:18
+msgid "Add a dimension"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:6
+#: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:35
+msgid "Add"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:24
+msgid "Remove"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:33
+#: monitoring/alarms/forms.py:227
+msgid "Select Notification"
+msgstr ""
+
+#: monitoring/alarms/forms.py:149
+msgid "+ Add more"
+msgstr ""
+
+#: monitoring/alarms/forms.py:230
+msgid "No notifications available."
+msgstr ""
+
+#: monitoring/alarms/forms.py:268
+msgid "Alarm has been created successfully."
+msgstr ""
+
+#: monitoring/alarms/forms.py:270
+#, python-format
+msgid "Unable to create the alarm: %s"
+msgstr ""
+
+#: monitoring/alarms/forms.py:302
+msgid "Alarm has been edited successfully."
+msgstr ""
+
+#: monitoring/alarms/forms.py:304
+#, python-format
+msgid "Unable to edit the alarm: %s"
+msgstr ""
+
+#: monitoring/alarms/panel.py:25 monitoring/alarms/tables.py:188
+#: monitoring/alarms/tables.py:233
+#: monitoring/alarms/templates/alarms/alarm.html:5
+msgid "Alarms"
+msgstr ""
+
+#: monitoring/alarms/tables.py:107
+msgid "Show History"
+msgstr ""
+
+#: monitoring/alarms/tables.py:121
+msgid "Create Alarm"
+msgstr ""
+
+#: monitoring/alarms/tables.py:137
+msgid "Edit Alarm"
+msgstr ""
+
+#: monitoring/alarms/tables.py:151
+msgid "Graph Metric"
+msgstr ""
+
+#: monitoring/alarms/tables.py:176
+msgid "Show Alarm Definition"
+msgstr ""
+
+#: monitoring/alarms/tables.py:186
+msgid "Delete Alarm"
+msgstr ""
+
+#: monitoring/alarms/tables.py:187
+msgid "Alarm"
+msgstr ""
+
+#: monitoring/alarms/tables.py:199
+msgid "Filter Alarms"
+msgstr ""
+
+#: monitoring/alarms/tables.py:215
+msgid "Status"
+msgstr ""
+
+#: monitoring/alarms/tables.py:219
+msgid "Alarm Id"
+msgstr ""
+
+#: monitoring/alarms/tables.py:221
+#: monitoring/alarms/templates/alarms/_filter.html:52
+#: monitoring/alarms/templates/alarms/alarm_history.html:17
+msgid "Metric Name"
+msgstr ""
+
+#: monitoring/alarms/tables.py:223
+msgid "Metric Dimensions"
+msgstr ""
+
+#: monitoring/alarms/tables.py:250
+msgid "Timestamp"
+msgstr ""
+
+#: monitoring/alarms/tables.py:252
+msgid "Old State"
+msgstr ""
+
+#: monitoring/alarms/tables.py:253
+msgid "New State"
+msgstr ""
+
+#: monitoring/alarms/tables.py:255
+msgid "Alarm Metric Dimensions"
+msgstr ""
+
+#: monitoring/alarms/tables.py:256
+msgid "Reason"
+msgstr ""
+
+#: monitoring/alarms/tables.py:264
+#: monitoring/alarms/templates/alarms/alarm_history.html:5
+#: monitoring/alarms/templates/alarms/alarm_history.html:9
+msgid "Alarm History"
+msgstr ""
+
+#: monitoring/alarms/views.py:71
+msgid "UTC"
+msgstr ""
+
+#: monitoring/alarms/views.py:72
+msgid "Browser local"
+msgstr ""
+
+#: monitoring/alarms/views.py:92 monitoring/overview/views.py:186
+#, python-format
+msgid "Unable to list alarms: %s"
+msgstr ""
+
+#: monitoring/alarms/views.py:139 monitoring/alarms/views.py:147
+#: monitoring/alarms/views.py:159 monitoring/alarms/views.py:187
+#: monitoring/alarms/views.py:194 monitoring/alarms/views.py:209
+msgid "Could not retrieve alarms"
+msgstr ""
+
+#: monitoring/alarms/views.py:294 monitoring/alarms/views.py:340
+#, python-format
+msgid "Could not retrieve alarm history for %s"
+msgstr ""
+
+#: monitoring/alarms/views.py:301
+msgid "Failed to present alarm history"
+msgstr ""
+
+#: monitoring/alarms/views.py:316
+#, python-format
+msgid "Could not retrieve alarm for %s"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/_filter.html:41
+msgid "Alarm ID"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/_filter.html:42
+#: monitoring/alarms/templates/alarms/_filter.html:49
+msgid "Value"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/_filter.html:43
+#: monitoring/alarms/templates/alarms/_filter.html:53
+msgid "Submit"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/_filter.html:48
+msgid "Dimension(s)"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/_filter.html:49
+msgid "Key"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/alarm.html:10
+msgid "Alarms for "
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/alarm.html:13
+msgid "\"All Alarms\""
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/alarm_history.html:11
+msgid "Alarm Details"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/alarm_history.html:33
+msgid "---Please select---"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/alarm_meter.html:5
+msgid "Measurements for Alarms"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/alarm_meter.html:17
+msgid "Service Health"
+msgstr ""
+
+#: monitoring/alarms/templates/alarms/alarm_meter.html:18
+msgid "Service :"
+msgstr ""
+
+#: monitoring/config/local_settings.py:6
+msgid "OpenStack Services"
+msgstr ""
+
+#: monitoring/config/local_settings.py:7
+msgid "Servers"
+msgstr ""
+
+#: monitoring/notifications/constants.py:26
+msgid "Email"
+msgstr ""
+
+#: monitoring/notifications/constants.py:27
+msgid "Webhook"
+msgstr ""
+
+#: monitoring/notifications/constants.py:28
+msgid "PagerDuty"
+msgstr ""
+
+#: monitoring/notifications/constants.py:38
+msgid "Address must contain a valid email address."
+msgstr ""
+
+#: monitoring/notifications/constants.py:40
+msgid "Address must contain a valid URL address."
+msgstr ""
+
+#: monitoring/notifications/forms.py:50
+msgid "A descriptive name of the notification method."
+msgstr ""
+
+#: monitoring/notifications/forms.py:58
+msgid "The type of notification method (i.e. email)."
+msgstr ""
+
+#: monitoring/notifications/forms.py:63
+msgid "The email/url address to notify."
+msgstr ""
+
+#: monitoring/notifications/forms.py:93
+msgid "Notification method has been created successfully."
+msgstr ""
+
+#: monitoring/notifications/forms.py:97
+#, python-format
+msgid "Unable to create the notification method: %s"
+msgstr ""
+
+#: monitoring/notifications/forms.py:129
+msgid "Notification has been edited successfully."
+msgstr ""
+
+#: monitoring/notifications/forms.py:132
+#, python-format
+msgid "Unable to edit the notification: %s"
+msgstr ""
+
+#: monitoring/notifications/tables.py:33
+msgid "Delete Notification"
+msgstr ""
+
+#: monitoring/notifications/tables.py:34
+msgid "Notification"
+msgstr ""
+
+#: monitoring/notifications/tables.py:46
+#, python-format
+msgid "Unable to delete notification: %s"
+msgstr ""
+
+#: monitoring/notifications/tables.py:52
+#: monitoring/notifications/templates/notifications/edit.html:3
+msgid "Create Notification"
+msgstr ""
+
+#: monitoring/notifications/tables.py:68
+#: monitoring/notifications/templates/notifications/_edit.html:8
+msgid "Edit Notification"
+msgstr ""
+
+#: monitoring/notifications/views.py:58 monitoring/notifications/views.py:84
+msgid "Could not retrieve notifications"
+msgstr ""
+
+#: monitoring/notifications/views.py:142
+msgid "Unable to retrieve notification details."
+msgstr ""
+
+#: monitoring/notifications/templates/notifications/_create.html:8
+#: monitoring/notifications/templates/notifications/_create.html:33
+#: monitoring/notifications/templates/notifications/create.html:3
+msgid "Create Notification Method"
+msgstr ""
+
+#: monitoring/notifications/templates/notifications/_create.html:23
+msgid ""
+"\n"
+"      The Type field indicates how the notification is sent when an alarm"
+" is triggered.\n"
+"    "
+msgstr ""
+
+#: monitoring/notifications/templates/notifications/_create.html:27
+msgid ""
+"\n"
+"      The Address field indicates the email address, URL, or PagerDuty "
+"service\n"
+"      key to be notified.\n"
+"    "
+msgstr ""
+
+#: monitoring/notifications/templates/notifications/_detail.html:8
+#: monitoring/notifications/templates/notifications/detail.html:3
+msgid "Notification Method Details"
+msgstr ""
+
+#: monitoring/notifications/templates/notifications/_detail.html:17
+msgid "Close"
+msgstr ""
+
+#: monitoring/notifications/templates/notifications/_edit.html:22
+msgid "Save Notification"
+msgstr ""
+
+#: monitoring/notifications/templates/notifications/index.html:6
+msgid "\"Notifications\""
+msgstr ""
+
+#: monitoring/overview/panel.py:25
+msgid "Overview"
+msgstr ""
+
+#: monitoring/overview/templates/overview/index.html:6
+msgid "\"Monitoring\""
+msgstr ""
+
+#: monitoring/test/settings.py:69
+msgid "Password must be between 8 and 18 characters."
+msgstr ""
+

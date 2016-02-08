@@ -1,0 +1,326 @@
+# haruki yamanashi <h.yamanashi@jp.fujitsu.com>, 2016. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-02-04 14:18+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-02-03 06:15+0000\n"
+"Last-Translator: haruki yamanashi <h.yamanashi@jp.fujitsu.com>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"X-Generator: Zanata 3.7.3\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+msgid "+ Add more"
+msgstr "+ さらに追加"
+
+msgid "---Please select---"
+msgstr "---選択してください---"
+
+msgid "Add"
+msgstr "追加"
+
+msgid "Add a dimension"
+msgstr "ディメンジョンの追加"
+
+msgid "Address"
+msgstr "アドレス"
+
+msgid "Address must contain a valid URL address."
+msgstr "アドレスフィールドには、有効な URL を入力する必要があります。"
+
+msgid "Address must contain a valid email address."
+msgstr "アドレスフィールドには、有効なメールアドレスを入力する必要があります。"
+
+msgid "Alarm"
+msgstr "アラーム"
+
+msgid "Alarm Definition"
+msgstr "アラーム定義"
+
+msgid "Alarm Definition Details"
+msgstr "アラーム定義の詳細"
+
+msgid "Alarm Definition has been created successfully."
+msgstr "アラーム定義が正常に作成されました。"
+
+msgid "Alarm Definitions"
+msgstr "アラーム定義"
+
+msgid "Alarm Details"
+msgstr "アラームの詳細"
+
+msgid "Alarm History"
+msgstr "アラーム履歴"
+
+msgid "Alarm ID"
+msgstr "アラーム ID"
+
+msgid "Alarm Id"
+msgstr "アラーム ID"
+
+msgid "Alarm Metric Dimensions"
+msgstr "ディメンジョン"
+
+msgid "Alarm definition has been updated."
+msgstr "アラーム定義が正常に更新されました。"
+
+msgid "Alarm has been created successfully."
+msgstr "アラームが正常に作成されました。"
+
+msgid "Alarm has been edited successfully."
+msgstr "アラームが正常に更新されました。"
+
+msgid "Alarms"
+msgstr "アラーム"
+
+msgid "Browser local"
+msgstr "ローカルタイム"
+
+msgid "Cancel"
+msgstr "取り消し"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Could not retrieve alarm definitions"
+msgstr "アラーム定義を取得できませんでした"
+
+#, python-format
+msgid "Could not retrieve alarm for %s"
+msgstr "%s へのアラームが取得できませんでした"
+
+#, python-format
+msgid "Could not retrieve alarm history for %s"
+msgstr "%s へのアラームの履歴が取得できませんでした"
+
+msgid "Could not retrieve alarms"
+msgstr "アラームを取得できませんでした"
+
+msgid "Could not retrieve notifications"
+msgstr "通知を取得できませんでした"
+
+msgid "Create Alarm"
+msgstr "アラームの作成"
+
+msgid "Create Alarm Definition"
+msgstr "アラーム定義の作成"
+
+msgid "Create Notification"
+msgstr "通知の作成"
+
+msgid "Create Notification Method"
+msgstr "通知方法の作成"
+
+msgid "Critical"
+msgstr "Critical"
+
+msgid "Delete Alarm"
+msgstr "アラームの削除"
+
+msgid "Delete Alarm Definition"
+msgstr "アラーム定義の削除"
+
+msgid "Delete Notification"
+msgstr "通知の削除"
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Edit Alarm"
+msgstr "アラームの編集"
+
+msgid "Edit Alarm Definition"
+msgstr "アラーム定義の編集"
+
+msgid "Edit Alarm Definitions"
+msgstr "アラーム定義の編集"
+
+msgid "Edit Notification"
+msgstr "通知の編集"
+
+msgid "Email"
+msgstr "メール"
+
+msgid "Expression"
+msgstr "条件式"
+
+msgid "Failed to present alarm history"
+msgstr "アラームの履歴の表示に失敗しました"
+
+msgid "Filter Alarms"
+msgstr "アラームのフィルター"
+
+msgid "Graph Metric"
+msgstr "グラフの表示"
+
+msgid "High"
+msgstr "High"
+
+msgid "Info"
+msgstr "情報"
+
+msgid "Low"
+msgstr "Low"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Metric Dimensions"
+msgstr "ディメンジョン"
+
+msgid "Metric Name"
+msgstr "メトリクス名"
+
+msgid "Monitoring"
+msgstr "モニタリング"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "New State"
+msgstr "後状態"
+
+msgid "No notifications available."
+msgstr "通知がありません。"
+
+msgid "None"
+msgstr "なし"
+
+msgid "Notification"
+msgstr "通知"
+
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr "通知「%s」はすでに削除されています。"
+
+msgid "Notification Method Details"
+msgstr "通知方法の詳細"
+
+msgid "Notification has been edited successfully."
+msgstr "通知は正常に更新されました。"
+
+msgid "Notification method has been created successfully."
+msgstr "通知方法は正常に作成されました。"
+
+msgid "Notifications"
+msgstr "通知"
+
+msgid "Notifications Enabled"
+msgstr "通知の有効化"
+
+msgid "Old State"
+msgstr "前状態"
+
+msgid "OpenStack Services"
+msgstr "OpenStack サービス"
+
+msgid "Overview"
+msgstr "概要"
+
+msgid "PagerDuty"
+msgstr "Pagerduty"
+
+msgid "Password must be between 8 and 18 characters."
+msgstr "パスワードは8文字以上、18文字以下で指定する必要があります。"
+
+msgid "Reason"
+msgstr "理由"
+
+msgid "Remove"
+msgstr "削除"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save Notification"
+msgstr "通知の保存"
+
+msgid "Select Notification"
+msgstr "通知の選択"
+
+msgid "Servers"
+msgstr "サーバー"
+
+msgid "Severity"
+msgstr "重大度"
+
+msgid "Show Alarm Definition"
+msgstr "アラーム定義の表示"
+
+msgid "Show History"
+msgstr "履歴の表示"
+
+msgid "State"
+msgstr "状態"
+
+msgid "Status"
+msgstr "ステータス"
+
+msgid "Timestamp"
+msgstr "タイムスタンプ"
+
+msgid "Type"
+msgstr "種別"
+
+msgid "UTC"
+msgstr "UTC"
+
+#, python-format
+msgid "Unable to create the alarm definition: %s"
+msgstr "アラーム定義が作成できません: %s"
+
+#, python-format
+msgid "Unable to create the alarm: %s"
+msgstr "アラームを作成できません: %s"
+
+#, python-format
+msgid "Unable to create the notification method: %s"
+msgstr "通知方法を作成できません: %s"
+
+#, python-format
+msgid "Unable to delete notification: %s"
+msgstr "通知を削除できません: %s"
+
+#, python-format
+msgid "Unable to edit the alarm: %s"
+msgstr "アラームを編集できません: %s"
+
+#, python-format
+msgid "Unable to edit the notification: %s"
+msgstr "通知を編集できません: %s"
+
+#, python-format
+msgid "Unable to list alarms: %s"
+msgstr "アラームの一覧を表示できません: %s"
+
+msgid "Unable to retrieve alarm details."
+msgstr "アラームの詳細を取得できません。"
+
+msgid "Unable to retrieve notification details."
+msgstr "通知の詳細を取得できません"
+
+msgid "Webhook"
+msgstr "Webhook"
+
+msgid "avg"
+msgstr "avg"
+
+msgid "count"
+msgstr "count"
+
+msgid "max"
+msgstr "max"
+
+msgid "min"
+msgstr "min"
+
+msgid "sum"
+msgstr "sum"
