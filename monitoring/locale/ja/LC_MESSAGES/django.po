@@ -1,3 +1,6 @@
+# KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>, 2016. #zanata
+# Shinichi Take <chantake33@gmail.com>, 2016. #zanata
+# Shinya Kawabata <s-kawabata@wx.jp.nec.com>, 2016. #zanata
 # haruki yamanashi <h.yamanashi@jp.fujitsu.com>, 2016. #zanata
 msgid ""
 msgstr ""
@@ -7,12 +10,106 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-02-03 06:15+0000\n"
-"Last-Translator: haruki yamanashi <h.yamanashi@jp.fujitsu.com>\n"
+"PO-Revision-Date: 2016-02-17 07:00+0000\n"
+"Last-Translator: Shinya Kawabata <s-kawabata@wx.jp.nec.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
 "X-Generator: Zanata 3.7.3\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+
+msgid ""
+"\n"
+"      The Address field indicates the email address, URL, or PagerDuty "
+"service\n"
+"      key to be notified.\n"
+"    "
+msgstr ""
+"\n"
+"      アドレスフィールドは通知を受け取るメールアドレス、URL、またはPagerDuty"
+"サービス\n"
+"      キーを示します。\n"
+"    "
+
+msgid ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"    "
+msgstr ""
+"\n"
+"      条件式フィールドは、その式が真となった場合に通知が発行されます。\n"
+"    "
+
+msgid ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"      See <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
+"\">Alarm Expressions</a> for how to write an expression.\n"
+"    "
+msgstr ""
+"\n"
+"      条件式フィールドは、その式が真となった場合に通知が発行されます。\n"
+"      条件式の記述方法は、 <a href=\"https://github.com/openstack/monasca-"
+"api/blob/master/docs/monasca-api-spec.md#alarm-definition-expressions\" "
+"target=\"_blank\">Alarm Expressions</a>を参照してください。\n"
+"    "
+
+msgid ""
+"\n"
+"      The Name field is used to identify the alarm definition.\n"
+"    "
+msgstr ""
+"\n"
+"      名前フィールドはアラーム定義を識別するために使用されます。\n"
+"    "
+
+msgid ""
+"\n"
+"      The Name field is used to identify the notification method.\n"
+"    "
+msgstr ""
+"\n"
+"      名前フィールドは通知方法を識別するために使用されます。\n"
+"    "
+
+msgid ""
+"\n"
+"      The Notifications field contains the list of Notifications that should "
+"be sent when transitioning to another ALARM state.\n"
+"    "
+msgstr ""
+"\n"
+"      通知フィールドには、アラーム状態が遷移した時に送信される通知のリストが"
+"含まれます。\n"
+"    "
+
+msgid ""
+"\n"
+"      The Type field indicates how the notification is sent when an alarm is "
+"triggered.\n"
+"    "
+msgstr ""
+"\n"
+"      種別フィールドはアラームが発生した時にどのように通知が行われるかを示し"
+"ます。\n"
+"    "
+
+msgid "\"Alarm Definition Details\""
+msgstr "アラーム定義詳細"
+
+msgid "\"Alarm Definitions\""
+msgstr "アラーム定義"
+
+msgid "\"All Alarms\""
+msgstr "全アラーム"
+
+msgid "\"Monitoring\""
+msgstr "\"モニタリング\""
+
+msgid "\"Notifications\""
+msgstr "\"通知\""
 
 #, python-format
 msgid "%s"
@@ -24,11 +121,17 @@ msgstr "+ さらに追加"
 msgid "---Please select---"
 msgstr "---選択してください---"
 
+msgid "A description of an alarm."
+msgstr "アラームの説明"
+
+msgid "A descriptive name of the notification method."
+msgstr "通知方法の名前"
+
 msgid "Add"
 msgstr "追加"
 
 msgid "Add a dimension"
-msgstr "ディメンジョンの追加"
+msgstr "ディメンションの追加"
 
 msgid "Address"
 msgstr "アドレス"
@@ -67,7 +170,7 @@ msgid "Alarm Id"
 msgstr "アラーム ID"
 
 msgid "Alarm Metric Dimensions"
-msgstr "ディメンジョン"
+msgstr "ディメンション"
 
 msgid "Alarm definition has been updated."
 msgstr "アラーム定義が正常に更新されました。"
@@ -80,6 +183,15 @@ msgstr "アラームが正常に更新されました。"
 
 msgid "Alarms"
 msgstr "アラーム"
+
+msgid "Alarms for "
+msgstr "アラーム対象："
+
+msgid "An alarm expression."
+msgstr "アラーム条件式"
+
+msgid "An unique name of the alarm."
+msgstr "アラームのユニークな名前"
 
 msgid "Browser local"
 msgstr "ローカルタイム"
@@ -95,11 +207,11 @@ msgstr "アラーム定義を取得できませんでした"
 
 #, python-format
 msgid "Could not retrieve alarm for %s"
-msgstr "%s へのアラームが取得できませんでした"
+msgstr "アラームが取得できませんでした: %s"
 
 #, python-format
 msgid "Could not retrieve alarm history for %s"
-msgstr "%s へのアラームの履歴が取得できませんでした"
+msgstr "アラーム履歴が取得できませんでした: %s"
 
 msgid "Could not retrieve alarms"
 msgstr "アラームを取得できませんでした"
@@ -134,6 +246,9 @@ msgstr "通知の削除"
 msgid "Description"
 msgstr "説明"
 
+msgid "Dimension(s)"
+msgstr "ディメンション"
+
 msgid "Edit Alarm"
 msgstr "アラームの編集"
 
@@ -153,7 +268,7 @@ msgid "Expression"
 msgstr "条件式"
 
 msgid "Failed to present alarm history"
-msgstr "アラームの履歴の表示に失敗しました"
+msgstr "アラーム履歴の表示に失敗しました"
 
 msgid "Filter Alarms"
 msgstr "アラームのフィルター"
@@ -167,17 +282,26 @@ msgstr "High"
 msgid "Info"
 msgstr "情報"
 
+msgid "Key"
+msgstr "キー"
+
 msgid "Low"
 msgstr "Low"
+
+msgid "Match by"
+msgstr "マッチ"
+
+msgid "Measurements for Alarms"
+msgstr "アラームの測定項目"
 
 msgid "Medium"
 msgstr "Medium"
 
 msgid "Metric Dimensions"
-msgstr "ディメンジョン"
+msgstr "ディメンション"
 
 msgid "Metric Name"
-msgstr "メトリクス名"
+msgstr "メトリック名"
 
 msgid "Monitoring"
 msgstr "モニタリング"
@@ -210,6 +334,11 @@ msgstr "通知は正常に更新されました。"
 msgid "Notification method has been created successfully."
 msgstr "通知方法は正常に作成されました。"
 
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr "通知方法。アラーム状態遷移が起こると通知が送られます。"
+
 msgid "Notifications"
 msgstr "通知"
 
@@ -226,10 +355,10 @@ msgid "Overview"
 msgstr "概要"
 
 msgid "PagerDuty"
-msgstr "Pagerduty"
+msgstr "PagerDuty"
 
 msgid "Password must be between 8 and 18 characters."
-msgstr "パスワードは8文字以上、18文字以下で指定する必要があります。"
+msgstr "パスワードは 8 文字以上、18 文字以下で指定する必要があります。"
 
 msgid "Reason"
 msgstr "理由"
@@ -249,8 +378,21 @@ msgstr "通知の選択"
 msgid "Servers"
 msgstr "サーバー"
 
+msgid "Service :"
+msgstr "サービス :"
+
+msgid "Service Health"
+msgstr "サービスヘルス"
+
 msgid "Severity"
 msgstr "重大度"
+
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+msgstr ""
+"アラームの重大度。LOW、MEDIUM、HIGH、または CRITICAL のいずれかです。デフォル"
+"トは LOW です。"
 
 msgid "Show Alarm Definition"
 msgstr "アラーム定義の表示"
@@ -263,6 +405,18 @@ msgstr "状態"
 
 msgid "Status"
 msgstr "ステータス"
+
+msgid "Submit"
+msgstr "送信"
+
+msgid "The email/url address to notify."
+msgstr "通知先の メール/URL アドレス"
+
+msgid "The metric dimensions used to create unique alarms."
+msgstr "一意なアラームを生成するために使われるメトリックのディメンション。"
+
+msgid "The type of notification method (i.e. email)."
+msgstr "通知方法の種別 (例 メール)"
 
 msgid "Timestamp"
 msgstr "タイムスタンプ"
@@ -306,6 +460,13 @@ msgstr "アラームの詳細を取得できません。"
 
 msgid "Unable to retrieve notification details."
 msgstr "通知の詳細を取得できません"
+
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr "通知を取得できません: %s"
+
+msgid "Value"
+msgstr "値"
 
 msgid "Webhook"
 msgstr "Webhook"
