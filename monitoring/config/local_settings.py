@@ -35,8 +35,8 @@ MONITORING_SERVICE_TYPE = getattr(
 
 # Grafana button titles/file names (global across all projects):
 GRAFANA_LINKS = [
-    {'title': 'Dashboard', 'fileName': 'openstack.json'},
-    {'title': 'Monasca Health', 'fileName': 'monasca.json'}
+    {'title': _('Dashboard'), 'fileName': 'openstack.json'},
+    {'title': _('Monasca Health'), 'fileName': 'monasca.json'}
 ]
 
 DEFAULT_LINKS = GRAFANA_LINKS
@@ -50,12 +50,12 @@ DASHBOARDS = getattr(settings, 'GRAFANA_LINKS', GRAFANA_LINKS)
 #
 #GRAFANA_LINKS = [
 #    {'admin': [
-#        {'title': 'Dashboard', 'fileName': 'openstack.json'},
-#        {'title': 'RabbitMQ', 'fileName': 'rabbit.json'},
-#        {'title': 'Project Utilization', 'fileName': 'libvirt.json'}]},
+#        {'title': _('Dashboard'), 'fileName': 'openstack.json'},
+#        {'title': _('RabbitMQ'), 'fileName': 'rabbit.json'},
+#        {'title': _('Project Utilization'), 'fileName': 'libvirt.json'}]},
 #    {'*': [
-#        {'title': 'OpenStack Dashboard', 'fileName': 'project.json'},
-#        {'title': 'Add New Dashboard', 'fileName': 'empty.json'}]}
+#        {'title': _('OpenStack Dashboard'), 'fileName': 'project.json'},
+#        {'title': _('Add New Dashboard'), 'fileName': 'empty.json'}]}
 #]
 
 ENABLE_KIBANA_BUTTON = getattr(settings, 'ENABLE_KIBANA_BUTTON', False)

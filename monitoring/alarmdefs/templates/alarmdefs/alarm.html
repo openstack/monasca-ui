@@ -13,10 +13,10 @@
 <div class="pagination">
     <span class="step-links">
         {% if prev_page_offset != None %}
-            <a href="?page_offset={{ prev_page_offset }}" class="btn btn-default btn-sm" style="position:relative;top:-35px;">Previous Page</a>
+            <a href="?page_offset={{ prev_page_offset }}" class="btn btn-default btn-sm" style="position:relative;top:-35px;">{% trans 'Previous Page' %}</a>
         {% endif %}
         {% if page_offset %}
-            <a href="?page_offset={{ page_offset}}" class="btn btn-default btn-sm" style="position:relative;top:-35px;">Next Page</a>
+            <a href="?page_offset={{ page_offset}}" class="btn btn-default btn-sm" style="position:relative;top:-35px;">{% trans 'Next Page' %}</a>
         {% endif %}
     </span>
 </div>
