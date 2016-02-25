@@ -107,7 +107,7 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         else:
             expressionWidget = textWidget
             notificationWidget = NotificationCreateWidget()
-            matchByAttr = {'readonly':'readonly'}
+            matchByAttr = {'readonly': 'readonly'}
 
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
@@ -134,14 +134,12 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                        ("CRITICAL", _("Critical"))]
         self.fields['severity'] = forms.ChoiceField(label=_("Severity"),
                                                     choices=sev_choices,
+                                                    initial=sev_choices[0],
                                                     widget=choiceWidget,
                                                     required=False,
                                                     help_text=_("Severity of an alarm. "
                                                                 "Must be either LOW, MEDIUM, HIGH "
                                                                 "or CRITICAL. Default is LOW."))
-        self.fields['state'] = forms.CharField(label=_("State"),
-                                               required=False,
-                                               widget=textWidget)
         if not create:
             self.fields['actions_enabled'] = \
                 forms.BooleanField(label=_("Notifications Enabled"),
@@ -188,7 +186,6 @@ class CreateAlarmForm(BaseAlarmForm):
         super(CreateAlarmForm, self)._init_fields(readOnly=False, create=True,
                                                   initial=kwargs['initial'])
         super(CreateAlarmForm, self).set_notification_choices(request)
-        self.fields.pop('state')
 
     def handle(self, request, data):
         try:
@@ -218,7 +215,6 @@ class EditAlarmForm(BaseAlarmForm):
         super(EditAlarmForm, self).__init__(request, *args, **kwargs)
         super(EditAlarmForm, self)._init_fields(readOnly=False)
         super(EditAlarmForm, self).set_notification_choices(request)
-        self.fields.pop('state')
 
     def handle(self, request, data):
         try:

@@ -51,7 +51,7 @@ class BaseNotificationMethodForm(forms.SelfHandlingForm):
                                                           "the notification method."))
         self.fields['type'] = forms.ChoiceField(
             label=_("Type"),
-            required=False,
+            required=required,
             widget=selectWidget,
             choices=constants.NotificationType.CHOICES,
             initial=constants.NotificationType.EMAIL,
