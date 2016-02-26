@@ -72,6 +72,8 @@ alarm_history_ts_formats = (
     ('bl', ugettext_lazy('Browser local'),),
 )
 
+default_service = 'all'
+
 
 def get_status(alarms):
     if not alarms:
@@ -116,8 +118,13 @@ class AlarmServiceView(tables.DataTableView):
     template_name = constants.TEMPLATE_PREFIX + 'alarm.html'
 
     def dispatch(self, *args, **kwargs):
-        self.service = kwargs['service']
-        del kwargs['service']
+
+        if 'service' in kwargs:
+            self.service = kwargs['service']
+            del kwargs['service']
+        else:
+            self.service = default_service
+
         return super(AlarmServiceView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
@@ -127,7 +134,7 @@ class AlarmServiceView(tables.DataTableView):
         if page_offset == None:
             page_offset = 0
 
-        if self.service == 'all':
+        if self.service == default_service:
             try:
                 results = api.monitor.alarm_list(self.request, page_offset,
                                                  LIMIT)
@@ -163,6 +170,7 @@ class AlarmServiceView(tables.DataTableView):
     def get_context_data(self, **kwargs):
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
         results = []
+        num_results = 0  # make sure variable is set
         prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
 
@@ -375,9 +383,10 @@ class AlarmFilterView(forms.ModalFormView):
         context["cancel_url"] = self.get_success_url()
         context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_filter',
                                         args=())
+        context["alarm_url"] = reverse_lazy(constants.URL_PREFIX + 'alarm_all',
+                                            args=())
         return context
 
     def get_success_url(self):
         return reverse_lazy(constants.URL_PREFIX + 'index',
                             args=())
-
