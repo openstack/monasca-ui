@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-08 06:45+0000\n"
+"POT-Creation-Date: 2016-02-29 06:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,54 +112,50 @@ msgstr ""
 msgid "Severity"
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:139
+#: monitoring/alarmdefs/forms.py:140
 msgid ""
 "Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. "
 "Default is LOW."
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:142 monitoring/alarms/forms.py:203
-msgid "State"
-msgstr ""
-
-#: monitoring/alarmdefs/forms.py:147 monitoring/alarmdefs/tables.py:88
+#: monitoring/alarmdefs/forms.py:145 monitoring/alarmdefs/tables.py:88
 #: monitoring/alarmdefs/templates/alarmdefs/_detail.html:15
 #: monitoring/alarms/forms.py:207
 msgid "Notifications Enabled"
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:151
+#: monitoring/alarmdefs/forms.py:149
 #: monitoring/alarmdefs/templates/alarmdefs/_detail.html:20
 #: monitoring/alarms/forms.py:211 monitoring/notifications/panel.py:24
 #: monitoring/notifications/tables.py:35 monitoring/notifications/tables.py:100
 msgid "Notifications"
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:154
+#: monitoring/alarmdefs/forms.py:152
 msgid ""
 "Notification methods. Notifications can be sent when an alarm state "
 "transition occurs."
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:163 monitoring/alarms/forms.py:221
+#: monitoring/alarmdefs/forms.py:161 monitoring/alarms/forms.py:221
 #, python-format
 msgid "Unable to retrieve notifications: %s"
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:209
+#: monitoring/alarmdefs/forms.py:206
 msgid "Alarm Definition has been created successfully."
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:211
+#: monitoring/alarmdefs/forms.py:208
 #, python-format
 msgid "Unable to create the alarm definition: %s"
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:244
+#: monitoring/alarmdefs/forms.py:240
 msgid "Alarm definition has been updated."
 msgstr ""
 
-#: monitoring/alarmdefs/forms.py:246
+#: monitoring/alarmdefs/forms.py:242
 #, python-format
 msgid "%s"
 msgstr ""
@@ -283,6 +279,20 @@ msgstr ""
 msgid "\"Alarm Definitions\""
 msgstr ""
 
+#: monitoring/alarmdefs/templates/alarmdefs/alarm.html:16
+#: monitoring/alarms/templates/alarms/alarm.html:22
+#: monitoring/alarms/templates/alarms/alarm_history.html:49
+#: monitoring/notifications/templates/notifications/index.html:14
+msgid "Previous Page"
+msgstr ""
+
+#: monitoring/alarmdefs/templates/alarmdefs/alarm.html:19
+#: monitoring/alarms/templates/alarms/alarm.html:25
+#: monitoring/alarms/templates/alarms/alarm_history.html:53
+#: monitoring/notifications/templates/notifications/index.html:17
+msgid "Next Page"
+msgstr ""
+
 #: monitoring/alarmdefs/templates/alarmdefs/detail.html:3
 msgid "Alarm Definition Details"
 msgstr ""
@@ -315,6 +325,10 @@ msgstr ""
 
 #: monitoring/alarms/forms.py:149
 msgid "+ Add more"
+msgstr ""
+
+#: monitoring/alarms/forms.py:203
+msgid "State"
 msgstr ""
 
 #: monitoring/alarms/forms.py:230
@@ -386,7 +400,7 @@ msgid "Alarm Id"
 msgstr ""
 
 #: monitoring/alarms/tables.py:221
-#: monitoring/alarms/templates/alarms/_filter.html:52
+#: monitoring/alarms/templates/alarms/_filter.html:50
 #: monitoring/alarms/templates/alarms/alarm_history.html:17
 msgid "Metric Name"
 msgstr ""
@@ -429,50 +443,50 @@ msgstr ""
 msgid "Browser local"
 msgstr ""
 
-#: monitoring/alarms/views.py:92 monitoring/overview/views.py:186
+#: monitoring/alarms/views.py:94 monitoring/overview/views.py:186
 #, python-format
 msgid "Unable to list alarms: %s"
 msgstr ""
 
-#: monitoring/alarms/views.py:139 monitoring/alarms/views.py:147
-#: monitoring/alarms/views.py:159 monitoring/alarms/views.py:187
-#: monitoring/alarms/views.py:194 monitoring/alarms/views.py:209
+#: monitoring/alarms/views.py:146 monitoring/alarms/views.py:154
+#: monitoring/alarms/views.py:166 monitoring/alarms/views.py:195
+#: monitoring/alarms/views.py:202 monitoring/alarms/views.py:217
 msgid "Could not retrieve alarms"
 msgstr ""
 
-#: monitoring/alarms/views.py:294 monitoring/alarms/views.py:340
+#: monitoring/alarms/views.py:302 monitoring/alarms/views.py:348
 #, python-format
 msgid "Could not retrieve alarm history for %s"
 msgstr ""
 
-#: monitoring/alarms/views.py:301
+#: monitoring/alarms/views.py:309
 msgid "Failed to present alarm history"
 msgstr ""
 
-#: monitoring/alarms/views.py:316
+#: monitoring/alarms/views.py:324
 #, python-format
 msgid "Could not retrieve alarm for %s"
 msgstr ""
 
-#: monitoring/alarms/templates/alarms/_filter.html:41
+#: monitoring/alarms/templates/alarms/_filter.html:39
 msgid "Alarm ID"
 msgstr ""
 
-#: monitoring/alarms/templates/alarms/_filter.html:42
-#: monitoring/alarms/templates/alarms/_filter.html:49
+#: monitoring/alarms/templates/alarms/_filter.html:40
+#: monitoring/alarms/templates/alarms/_filter.html:47
 msgid "Value"
 msgstr ""
 
-#: monitoring/alarms/templates/alarms/_filter.html:43
-#: monitoring/alarms/templates/alarms/_filter.html:53
+#: monitoring/alarms/templates/alarms/_filter.html:41
+#: monitoring/alarms/templates/alarms/_filter.html:51
 msgid "Submit"
 msgstr ""
 
-#: monitoring/alarms/templates/alarms/_filter.html:48
+#: monitoring/alarms/templates/alarms/_filter.html:46
 msgid "Dimension(s)"
 msgstr ""
 
-#: monitoring/alarms/templates/alarms/_filter.html:49
+#: monitoring/alarms/templates/alarms/_filter.html:47
 msgid "Key"
 msgstr ""
 
@@ -510,6 +524,14 @@ msgstr ""
 
 #: monitoring/config/local_settings.py:7
 msgid "Servers"
+msgstr ""
+
+#: monitoring/config/local_settings.py:38
+msgid "Dashboard"
+msgstr ""
+
+#: monitoring/config/local_settings.py:39
+msgid "Monasca Health"
 msgstr ""
 
 #: monitoring/notifications/constants.py:26
