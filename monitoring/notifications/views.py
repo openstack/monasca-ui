@@ -17,6 +17,7 @@
 import logging
 
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.utils.translation import ugettext as _  # noqa
 
@@ -27,8 +28,6 @@ from horizon import tables
 from monitoring.notifications import constants
 from monitoring.notifications import forms as notification_forms
 from monitoring.notifications import tables as notification_tables
-from django.core.paginator import Paginator, EmptyPage
-
 from monitoring import api
 
 LOG = logging.getLogger(__name__)
@@ -44,9 +43,9 @@ class IndexView(tables.DataTableView):
         return super(IndexView, self).dispatch(*args, **kwargs)
 
     def get_data(self):
-        page_offset=self.request.GET.get('page_offset')
+        page_offset = self.request.GET.get('page_offset')
         results = []
-        if page_offset == None:
+        if page_offset is None:
             page_offset = 0
         try:
             results = api.monitor.notification_list(self.request, page_offset, LIMIT)
@@ -62,10 +61,11 @@ class IndexView(tables.DataTableView):
         context = super(IndexView, self).get_context_data(**kwargs)
         contacts = []
         results = []
+        num_results = 0
         prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
 
-        if self.request.session.has_key('prev_page_stack'):
+        if 'prev_page_stack' in self.request.session:
             prev_page_stack = self.request.session['prev_page_stack']
 
         if page_offset is None:

@@ -14,19 +14,18 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.import logging
 
+from datetime import timedelta
 import logging
 
 from django.conf import settings  # noqa
-from datetime import timedelta
-
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.shortcuts import redirect
 from django.utils.dateparse import parse_datetime
 from django.utils.translation import ugettext as _  # noqa
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View  # noqa
-from django.core.paginator import Paginator, EmptyPage
 
 from horizon import forms
 from horizon import tables
@@ -131,7 +130,7 @@ class AlarmServiceView(tables.DataTableView):
         page_offset = self.request.GET.get('page_offset')
         contacts = []
 
-        if page_offset == None:
+        if page_offset is None:
             page_offset = 0
 
         if self.service == default_service:
@@ -174,12 +173,14 @@ class AlarmServiceView(tables.DataTableView):
         prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
 
-        if self.request.session.has_key('prev_page_stack'):
+        if 'prev_page_stack' in self.request.session:
             prev_page_stack = self.request.session['prev_page_stack']
 
         if page_offset is None:
             page_offset = 0
             prev_page_stack = []
+        else:
+            page_offset = int(page_offset)
 
         if self.service == 'all':
             try:
@@ -223,7 +224,7 @@ class AlarmServiceView(tables.DataTableView):
         if num_results < LIMIT + 1:
             context["page_offset"] = None
         else:
-            context["page_offset"] = results[-1]["id"]
+            context["page_offset"] = page_offset + LIMIT
 
         if page_offset in prev_page_stack:
             index = prev_page_stack.index(page_offset)
@@ -235,7 +236,7 @@ class AlarmServiceView(tables.DataTableView):
 
         if len(prev_page_stack) > PREV_PAGE_LIMIT:
             del prev_page_stack[0]
-        prev_page_stack.append(str(page_offset))
+        prev_page_stack.append(page_offset)
         self.request.session['prev_page_stack'] = prev_page_stack
 
         return context
@@ -324,11 +325,12 @@ class AlarmHistoryView(tables.DataTableView):
                            _("Could not retrieve alarm for %s") % object_id)
         context['alarm'] = alarm
 
+        num_results = 0
         contacts = []
         prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
 
-        if self.request.session.has_key('prev_page_stack'):
+        if 'prev_page_stack' in self.request.session:
             prev_page_stack = self.request.session['prev_page_stack']
 
         if page_offset is None:
@@ -336,7 +338,7 @@ class AlarmHistoryView(tables.DataTableView):
             prev_page_stack = []
         try:
             # To judge whether there is next page, get LIMIT + 1
-            results = api.monitor.alarm_history(self.request, object_id,  page_offset,
+            results = api.monitor.alarm_history(self.request, object_id, page_offset,
                                                 LIMIT + 1)
             num_results = len(results)
             paginator = Paginator(results, LIMIT)
