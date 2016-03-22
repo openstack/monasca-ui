@@ -34,29 +34,25 @@ MONITORING_SERVICE_TYPE = getattr(
 )
 
 # Grafana button titles/file names (global across all projects):
-GRAFANA_LINKS = [
-    {'title': _('Dashboard'), 'fileName': 'openstack.json'},
-    {'title': _('Monasca Health'), 'fileName': 'monasca.json'}
-]
-
-DEFAULT_LINKS = GRAFANA_LINKS
+GRAFANA_LINKS = []
 DASHBOARDS = getattr(settings, 'GRAFANA_LINKS', GRAFANA_LINKS)
 
 #
-# Per project grafana button titles/file names.  If in this form,
-# '*' will be applied to all projects not explicitly listed.
+# Horizon will link to the grafana home page when using Grafana2.
+# For any Grafana version additional links to specific dashboards can be
+# created in two formats.
+# Flat:
+# GRAFANA_LINKS = [ {'title': _('Dashboard'), 'path': 'openstack'} ]
 #
-# Note the above form (flat) is supported for backward compatibility.
-#
-#GRAFANA_LINKS = [
+# Per project: '*' will be applied to all projects not explicitly listed.
+# GRAFANA_LINKS = [
 #    {'admin': [
-#        {'title': _('Dashboard'), 'fileName': 'openstack.json'},
-#        {'title': _('RabbitMQ'), 'fileName': 'rabbit.json'},
-#        {'title': _('Project Utilization'), 'fileName': 'libvirt.json'}]},
+#        {'title': _('Dashboard'), 'path': 'openstack'}]},
 #    {'*': [
-#        {'title': _('OpenStack Dashboard'), 'fileName': 'project.json'},
-#        {'title': _('Add New Dashboard'), 'fileName': 'empty.json'}]}
-#]
+#        {'title': _('OpenStack Dashboard'), 'path': 'project'}]}
+# ]
+
+GRAFANA_URL = getattr(settings, 'GRAFANA_URL', None)
 
 ENABLE_KIBANA_BUTTON = getattr(settings, 'ENABLE_KIBANA_BUTTON', False)
 KIBANA_HOST = getattr(settings, 'KIBANA_HOST', 'http://192.168.10.4:5601/')

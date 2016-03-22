@@ -223,9 +223,14 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        proxy_url_path = str(reverse_lazy(constants.URL_PREFIX + 'proxy'))
-        api_root = self.request.build_absolute_uri(proxy_url_path)
-        context["api"] = api_root
+        try:
+            region = self.request.user.services_region
+            context["grafana_url"] = getattr(settings, 'GRAFANA_URL').get(region, '')
+        except AttributeError:
+            # Catches case where Grafana 2 is not enabled.
+            proxy_url_path = str(reverse_lazy(constants.URL_PREFIX + 'proxy'))
+            api_root = self.request.build_absolute_uri(proxy_url_path)
+            context["api"] = api_root
         context["dashboards"] = get_dashboard_links(self.request)
         context['can_access_logs'] = policy.check(
             (('identity', 'admin_required'), ), self.request

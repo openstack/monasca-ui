@@ -1,6 +1,63 @@
 CHANGES
 =======
 
+* Updates for grafana 2
+* Dump thresholds as JSON, not python repr()
+* Fix pagination of alarm_definitions and alarms
+
+1.0.30
+------
+
+* Imported Translations from Zanata
+
+1.0.29
+------
+
+* Fix functions of translation
+* Remove unused field, add translation target and some adjustments
+* Imported Translations from Zanata
+* Display all alarms without service
+* Imported Translations from Zanata
+* KibanaProxyView does not forward headers
+* Change Git URL from GitHub to OpenStack
+
+1.0.28
+------
+
+* This is a preparation for using Zanata
+* Make timezone memorized when press next(prev) button in alarm history
+* Fix the label
+* Enhance changing page button of list in monasca-ui
+* Fix edit notification page field is too small
+* Add help tooltips to creating dialogues
+* Add rouded borders to the dimension field
+* Drop MANIFEST.in - it's not needed with PBR
+* Enhance changing page button of list in monasca-ui
+* remove python 2.6 trove classifier
+* FIX Overview page to be able to handle multibyte characters
+* Move Grafana to Apache's DocumentRoot
+* Sync Django with Horizon requirement
+* Fix letter case of some words
+* FIX the page title
+* FIX the description for Notification
+* FIX the alarm filter dialog for i18n
+* Deprecated tox -downloadcache option removed
+* Adding support for ng strict checks
+* Delete python bytecode before every test run
+* Change link from stackforge to openstack
+* Make alarm groups configurable on overview page
+* Make match_by item configurable in create alarm definition dialog
+* UTC/Browser time as timestamp display format
+* Make notification more readable - leftover
+* Notification more readable in create alarm dialog
+* Change repositories from stackforge to openstack
+* Update .gitreview for new namespace
+* Allow to specify different static url in js
+* Scope requests to horizon scoped region
+* Read STATIC_URL from Horizon settings
+* UTC/Browser time as timestamp display format
+* Fix sorting timestamp column in alarm history table
+* The "Create Alarm Definition" dialog is closed unintentionally
 * Simple Kibana integration
 * Allow per-project grafana dashboards
 * Fix unittests
