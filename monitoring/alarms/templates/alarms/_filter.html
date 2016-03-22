@@ -12,7 +12,7 @@
     function sendID() {
       var filterID = document.forms["form0"]["filterID"].value;
       var location = "{{ alarm_url }}";
-      window.location = location + "/id=" + filterID;
+      window.location = location + "id=" + filterID;
     }
 
     function sendDimensions() {
@@ -20,7 +20,7 @@
       var metric = document.forms["form1"]["metric"].value;
       var location = "{{ alarm_url }}";
       if (!isEmpty(metric)) {
-        location = location + "/metric=" + metric;
+        location = location + "metric=" + metric;
         if (!isEmpty(dimension)) {
           location = location + ",";
         }
