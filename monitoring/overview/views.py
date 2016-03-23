@@ -250,9 +250,9 @@ class MonascaProxyView(TemplateView):
             for dimension in dimensions_str_array:
                 dimension_name_value = dimension.split(':')
                 if len(dimension_name_value) == 2:
-                    name = dimension_name_value[0]
-                    value = dimension_name_value[1]
-                    dim_dict[name] = urllib.unquote(value).decode('utf8')
+                    name = dimension_name_value[0].encode('utf8')
+                    value = dimension_name_value[1].encode('utf8')
+                    dim_dict[name] = urllib.unquote(value)
                 else:
                     raise Exception('Dimensions are malformed')
 
