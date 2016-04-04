@@ -1,12 +1,6 @@
 # Hacking already pins down pep8, pyflakes and flake8
 hacking>=0.9.2,<0.10
 
-# fix version problems
-cffi>0.9
-oslo.i18n==1.7.0
-oslo.utils==1.9.0
-oslo.serialization==1.7.0
-
 coverage>=3.6
 django-nose
 mock>=1.0
