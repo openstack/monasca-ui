@@ -177,8 +177,7 @@ class GraphMetric(tables.LinkAction):
             threshold = json.dumps(datum['metrics'])
             endpoint = str(reverse_lazy(ov_constants.URL_PREFIX + 'proxy'))
             endpoint = self.table.request.build_absolute_uri(endpoint)
-            url = (settings.STATIC_URL or '') + \
-                'grafana/index.html#/dashboard/script/detail.js'
+            url = '/grafana/index.html#/dashboard/script/detail.js'
             query = "?name=%s&threshold=%s&api=%s" % \
                 (name, threshold, endpoint)
         return url + query
