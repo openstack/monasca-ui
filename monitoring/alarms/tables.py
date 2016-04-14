@@ -27,6 +27,7 @@ from django.utils.translation import ugettext_lazy as _  # noqa
 from horizon import tables
 
 from monitoring.alarms import constants
+from monitoring.config import local_settings
 from monitoring.overview import constants as ov_constants
 from monitoring import api
 
@@ -163,7 +164,7 @@ class GraphMetric(tables.LinkAction):
         self.attrs['target'] = '_blank'
         try:
             region = self.table.request.user.services_region
-            grafana_url = getattr(settings, 'GRAFANA_URL').get(region, '')
+            grafana_url = getattr(local_settings, 'GRAFANA_URL').get(region, '')
             url = grafana_url + \
                 '/dashboard/script/drilldown.js'
             metric = datum['metrics'][0]['name']
