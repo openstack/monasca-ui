@@ -1,17 +1,15 @@
-# KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>, 2016. #zanata
-# Shinichi Take <chantake33@gmail.com>, 2016. #zanata
-# Shinya Kawabata <s-kawabata@wx.jp.nec.com>, 2016. #zanata
-# haruki yamanashi <h.yamanashi@jp.fujitsu.com>, 2016. #zanata
+# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Sayako Kondo <kondoh.sayako@jp.fujitsu.com>, 2016. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-26 20:19+0000\n"
+"POT-Creation-Date: 2016-04-12 19:43+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-02-26 05:48+0000\n"
-"Last-Translator: KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>\n"
+"PO-Revision-Date: 2016-04-15 07:35+0000\n"
+"Last-Translator: Sayako Kondo <kondoh.sayako@jp.fujitsu.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
 "X-Generator: Zanata 3.7.3\n"
@@ -96,21 +94,6 @@ msgstr ""
 "ます。\n"
 "    "
 
-msgid "\"Alarm Definition Details\""
-msgstr "アラーム定義詳細"
-
-msgid "\"Alarm Definitions\""
-msgstr "アラーム定義"
-
-msgid "\"All Alarms\""
-msgstr "全アラーム"
-
-msgid "\"Monitoring\""
-msgstr "\"モニタリング\""
-
-msgid "\"Notifications\""
-msgstr "\"通知\""
-
 #, python-format
 msgid "%s"
 msgstr "%s"
@@ -187,6 +170,9 @@ msgstr "アラーム"
 msgid "Alarms for "
 msgstr "アラーム対象："
 
+msgid "All Alarms"
+msgstr "全アラーム"
+
 msgid "An alarm expression."
 msgstr "アラーム条件式"
 
@@ -233,9 +219,6 @@ msgstr "通知方法の作成"
 
 msgid "Critical"
 msgstr "Critical"
-
-msgid "Dashboard"
-msgstr "ダッシュボード"
 
 msgid "Delete Alarm"
 msgstr "アラームの削除"
@@ -305,9 +288,6 @@ msgstr "ディメンション"
 
 msgid "Metric Name"
 msgstr "メトリック名"
-
-msgid "Monasca Health"
-msgstr "Monasca ヘルス"
 
 msgid "Monitoring"
 msgstr "モニタリング"

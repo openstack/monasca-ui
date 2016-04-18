@@ -1,14 +1,14 @@
-# Translations template for PROJECT.
+# Translations template for monasca-ui.
 # Copyright (C) 2016 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
+# This file is distributed under the same license as the monasca-ui project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-29 06:27+0000\n"
+"Project-Id-Version: monasca-ui 1.0.32.dev5\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
+"POT-Creation-Date: 2016-04-18 06:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,7 @@ msgstr ""
 #: monitoring/dashboard.py:24
 #: monitoring/notifications/templates/notifications/index.html:3
 #: monitoring/overview/templates/overview/index.html:3
+#: monitoring/overview/templates/overview/index.html:6
 msgid "Monitoring"
 msgstr ""
 
@@ -48,7 +49,7 @@ msgstr ""
 #: monitoring/alarmdefs/templates/alarmdefs/_detail.html:25
 #: monitoring/alarmdefs/templates/alarmdefs/notification_field.html:12
 #: monitoring/alarms/forms.py:122 monitoring/alarms/forms.py:185
-#: monitoring/alarms/tables.py:218
+#: monitoring/alarms/tables.py:234
 #: monitoring/alarms/templates/alarms/alarm_history.html:14
 #: monitoring/notifications/forms.py:46 monitoring/notifications/tables.py:88
 msgid "Name"
@@ -128,6 +129,7 @@ msgstr ""
 #: monitoring/alarmdefs/templates/alarmdefs/_detail.html:20
 #: monitoring/alarms/forms.py:211 monitoring/notifications/panel.py:24
 #: monitoring/notifications/tables.py:35 monitoring/notifications/tables.py:100
+#: monitoring/notifications/templates/notifications/index.html:6
 msgid "Notifications"
 msgstr ""
 
@@ -163,6 +165,7 @@ msgstr ""
 #: monitoring/alarmdefs/panel.py:25 monitoring/alarmdefs/tables.py:65
 #: monitoring/alarmdefs/tables.py:98
 #: monitoring/alarmdefs/templates/alarmdefs/alarm.html:5
+#: monitoring/alarmdefs/templates/alarmdefs/alarm.html:8
 msgid "Alarm Definitions"
 msgstr ""
 
@@ -186,16 +189,16 @@ msgstr ""
 msgid "Alarm Definition"
 msgstr ""
 
-#: monitoring/alarmdefs/views.py:55 monitoring/alarmdefs/views.py:81
+#: monitoring/alarmdefs/views.py:55 monitoring/alarmdefs/views.py:85
 msgid "Could not retrieve alarm definitions"
 msgstr ""
 
-#: monitoring/alarmdefs/views.py:151 monitoring/alarmdefs/views.py:201
+#: monitoring/alarmdefs/views.py:155 monitoring/alarmdefs/views.py:205
 #, python-format
 msgid "Notification %s has already been deleted."
 msgstr ""
 
-#: monitoring/alarmdefs/views.py:161 monitoring/alarmdefs/views.py:208
+#: monitoring/alarmdefs/views.py:165 monitoring/alarmdefs/views.py:212
 msgid "Unable to retrieve alarm details."
 msgstr ""
 
@@ -275,10 +278,6 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: monitoring/alarmdefs/templates/alarmdefs/alarm.html:8
-msgid "\"Alarm Definitions\""
-msgstr ""
-
 #: monitoring/alarmdefs/templates/alarmdefs/alarm.html:16
 #: monitoring/alarms/templates/alarms/alarm.html:22
 #: monitoring/alarms/templates/alarms/alarm_history.html:49
@@ -294,11 +293,8 @@ msgid "Next Page"
 msgstr ""
 
 #: monitoring/alarmdefs/templates/alarmdefs/detail.html:3
-msgid "Alarm Definition Details"
-msgstr ""
-
 #: monitoring/alarmdefs/templates/alarmdefs/detail.html:6
-msgid "\"Alarm Definition Details\""
+msgid "Alarm Definition Details"
 msgstr ""
 
 #: monitoring/alarmdefs/templates/alarmdefs/edit.html:3
@@ -353,117 +349,117 @@ msgstr ""
 msgid "Unable to edit the alarm: %s"
 msgstr ""
 
-#: monitoring/alarms/panel.py:25 monitoring/alarms/tables.py:188
-#: monitoring/alarms/tables.py:233
+#: monitoring/alarms/panel.py:25 monitoring/alarms/tables.py:204
+#: monitoring/alarms/tables.py:249
 #: monitoring/alarms/templates/alarms/alarm.html:5
 msgid "Alarms"
 msgstr ""
 
-#: monitoring/alarms/tables.py:107
+#: monitoring/alarms/tables.py:110
 msgid "Show History"
 msgstr ""
 
-#: monitoring/alarms/tables.py:121
+#: monitoring/alarms/tables.py:124
 msgid "Create Alarm"
 msgstr ""
 
-#: monitoring/alarms/tables.py:137
+#: monitoring/alarms/tables.py:140
 msgid "Edit Alarm"
 msgstr ""
 
-#: monitoring/alarms/tables.py:151
+#: monitoring/alarms/tables.py:154
 msgid "Graph Metric"
 msgstr ""
 
-#: monitoring/alarms/tables.py:176
+#: monitoring/alarms/tables.py:192
 msgid "Show Alarm Definition"
 msgstr ""
 
-#: monitoring/alarms/tables.py:186
+#: monitoring/alarms/tables.py:202
 msgid "Delete Alarm"
 msgstr ""
 
-#: monitoring/alarms/tables.py:187
+#: monitoring/alarms/tables.py:203
 msgid "Alarm"
 msgstr ""
 
-#: monitoring/alarms/tables.py:199
+#: monitoring/alarms/tables.py:215
 msgid "Filter Alarms"
 msgstr ""
 
-#: monitoring/alarms/tables.py:215
+#: monitoring/alarms/tables.py:231
 msgid "Status"
 msgstr ""
 
-#: monitoring/alarms/tables.py:219
+#: monitoring/alarms/tables.py:235
 msgid "Alarm Id"
 msgstr ""
 
-#: monitoring/alarms/tables.py:221
+#: monitoring/alarms/tables.py:237
 #: monitoring/alarms/templates/alarms/_filter.html:50
 #: monitoring/alarms/templates/alarms/alarm_history.html:17
 msgid "Metric Name"
 msgstr ""
 
-#: monitoring/alarms/tables.py:223
+#: monitoring/alarms/tables.py:239
 msgid "Metric Dimensions"
 msgstr ""
 
-#: monitoring/alarms/tables.py:250
+#: monitoring/alarms/tables.py:266
 msgid "Timestamp"
 msgstr ""
 
-#: monitoring/alarms/tables.py:252
+#: monitoring/alarms/tables.py:268
 msgid "Old State"
 msgstr ""
 
-#: monitoring/alarms/tables.py:253
+#: monitoring/alarms/tables.py:269
 msgid "New State"
 msgstr ""
 
-#: monitoring/alarms/tables.py:255
+#: monitoring/alarms/tables.py:271
 msgid "Alarm Metric Dimensions"
 msgstr ""
 
-#: monitoring/alarms/tables.py:256
+#: monitoring/alarms/tables.py:272
 msgid "Reason"
 msgstr ""
 
-#: monitoring/alarms/tables.py:264
+#: monitoring/alarms/tables.py:280
 #: monitoring/alarms/templates/alarms/alarm_history.html:5
 #: monitoring/alarms/templates/alarms/alarm_history.html:9
 msgid "Alarm History"
 msgstr ""
 
-#: monitoring/alarms/views.py:71
+#: monitoring/alarms/views.py:70
 msgid "UTC"
 msgstr ""
 
-#: monitoring/alarms/views.py:72
+#: monitoring/alarms/views.py:71
 msgid "Browser local"
 msgstr ""
 
-#: monitoring/alarms/views.py:94 monitoring/overview/views.py:186
+#: monitoring/alarms/views.py:93 monitoring/overview/views.py:186
 #, python-format
 msgid "Unable to list alarms: %s"
 msgstr ""
 
-#: monitoring/alarms/views.py:146 monitoring/alarms/views.py:154
-#: monitoring/alarms/views.py:166 monitoring/alarms/views.py:195
-#: monitoring/alarms/views.py:202 monitoring/alarms/views.py:217
+#: monitoring/alarms/views.py:145 monitoring/alarms/views.py:153
+#: monitoring/alarms/views.py:165 monitoring/alarms/views.py:196
+#: monitoring/alarms/views.py:203 monitoring/alarms/views.py:218
 msgid "Could not retrieve alarms"
 msgstr ""
 
-#: monitoring/alarms/views.py:302 monitoring/alarms/views.py:348
+#: monitoring/alarms/views.py:303 monitoring/alarms/views.py:350
 #, python-format
 msgid "Could not retrieve alarm history for %s"
 msgstr ""
 
-#: monitoring/alarms/views.py:309
+#: monitoring/alarms/views.py:310
 msgid "Failed to present alarm history"
 msgstr ""
 
-#: monitoring/alarms/views.py:324
+#: monitoring/alarms/views.py:325
 #, python-format
 msgid "Could not retrieve alarm for %s"
 msgstr ""
@@ -495,7 +491,7 @@ msgid "Alarms for "
 msgstr ""
 
 #: monitoring/alarms/templates/alarms/alarm.html:13
-msgid "\"All Alarms\""
+msgid "All Alarms"
 msgstr ""
 
 #: monitoring/alarms/templates/alarms/alarm_history.html:11
@@ -524,14 +520,6 @@ msgstr ""
 
 #: monitoring/config/local_settings.py:7
 msgid "Servers"
-msgstr ""
-
-#: monitoring/config/local_settings.py:38
-msgid "Dashboard"
-msgstr ""
-
-#: monitoring/config/local_settings.py:39
-msgid "Monasca Health"
 msgstr ""
 
 #: monitoring/notifications/constants.py:26
@@ -607,7 +595,7 @@ msgstr ""
 msgid "Edit Notification"
 msgstr ""
 
-#: monitoring/notifications/views.py:58 monitoring/notifications/views.py:84
+#: monitoring/notifications/views.py:57 monitoring/notifications/views.py:84
 msgid "Could not retrieve notifications"
 msgstr ""
 
@@ -651,16 +639,8 @@ msgstr ""
 msgid "Save Notification"
 msgstr ""
 
-#: monitoring/notifications/templates/notifications/index.html:6
-msgid "\"Notifications\""
-msgstr ""
-
 #: monitoring/overview/panel.py:25
 msgid "Overview"
-msgstr ""
-
-#: monitoring/overview/templates/overview/index.html:6
-msgid "\"Monitoring\""
 msgstr ""
 
 #: monitoring/test/settings.py:69
