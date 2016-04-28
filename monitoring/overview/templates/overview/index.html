@@ -22,6 +22,9 @@
       {% else %}
       {% for dashboard in dashboards %}
       <a target={{ dashboard.title }} href="/grafana/index.html#/dashboard/file/{{ dashboard.fileName }}?api={{api}}" class="btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-dashboard"></span>
+              {% trans dashboard.title %}
+      </a>
       {% endfor %}
       {% endif %}
       {% if can_access_logs and enable_kibana_button %}
