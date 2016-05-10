@@ -32,7 +32,7 @@
                     <input type="hidden" name="ok_actions" value="{$ notify.id $}" ng-if="notify.ok"/>
                 </td>
                 <td class="undetermined">
-                    <input type="checkbox" ng-model="notify.undetermined">
+                    <input type="checkbox" ng-model="notify.undetermined" ng-disabled="ctrl.isDeterministic">
                     <input type="hidden" name="undetermined_actions" value="{$ notify.id $}" ng-if="notify.undetermined"/>
                 </td>
                 <td>

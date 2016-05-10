@@ -6,16 +6,30 @@
     white-space: normal;
     word-wrap:break-word;
 }
-#comparators {
-    width: auto;
-    float: none;
-}
-#threshold {
-    width: 100%
-}
 #notification_table td.address{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width:100px;
 }
+
+.alarm-expression .expression-details {
+    display: inline-flex;
+    width: 100%;
+}
+
+.alarm-expression .expression-details > * {
+    float: left;
+    width: 100%
+}
+
+.alarm-expression .expression-details .checkbox {
+    margin-left: 10px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.alarm-expression .expression-details .checkbox span {
+    font-weight: bold;
+}
+

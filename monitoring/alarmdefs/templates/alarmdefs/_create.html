@@ -18,6 +18,10 @@
     <p>{% blocktrans %}
       The Notifications field contains the list of Notifications that should be sent when transitioning to another ALARM state.
     {% endblocktrans %}</p>
+    <p>{% blocktrans %}
+      The deterministic alarms never enter UNDETERMINED state.
+      Use them for metrics that are received sporadically.
+    {% endblocktrans %}</p>
     <fieldset>
         <div ng-controller="alarmEditController" ng-init="init('{{ service }}')">
             {% include "horizon/common/_form_fields.html" %}

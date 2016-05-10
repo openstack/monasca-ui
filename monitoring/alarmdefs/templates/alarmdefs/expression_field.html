@@ -1,17 +1,43 @@
 {% load i18n %}
-<div>
-    <input type="hidden" name="{{ name }}" id="dimension"/>
+<div class="alarm-expression">
+    <input type="hidden" name="{{ name }}" id="expression"/>
     <div style="margin-bottom:5px;">
-        <select id="function" class="form-control"
-                ng-model="currentFunction" ng-options="f[0] as f[1] for f in {{func}}" ng-change="saveExpression()"></select>
-        <select id="metric-chooser" class="form-control"
+        <select id="function"
+                class="form-control"
+                ng-model="currentFunction"
+                ng-options="f[0] as f[1] for f in {{func}}"
+                ng-change="saveExpression()"></select>
+        <select id="metric-chooser"
+                class="form-control"
                 ng-model="currentMetric"
                 ng-options="metric for metric in metricNames"
-                ng-change="metricChanged()">
-                </select>
-        <select id="comparators" class="form-control"
-                ng-model="currentComparator" ng-options="f[0] as f[1] for f in {{comparators}}" ng-change="saveExpression()"></select>
-        <input type="number" step="any" id="threshold" class="form-control" ng-model="currentThreshold" ng-change="saveExpression()"/>
+                ng-change="metricChanged()"></select>
+        <div class="expression-details">
+            <select class="form-control"
+                    ng-model="currentComparator"
+                    aria-label="{% trans 'Comparator' %}"
+                    ng-options="f[0] as f[1] for f in {{comparators}}"
+                    ng-change="saveExpression()"></select>
+            <input type="number"
+                   step="any"
+                   class="form-control"
+                   aria-label="{% trans 'Threshold' %}"
+                   ng-model="currentThreshold"
+                   ng-change="saveExpression()"/>
+            <div class="checkbox">
+               <label>
+                    <input type="checkbox"
+                           data-toggle="tooltip"
+                           data-placement="left"
+                           title="{% trans 'Deterministic' %}"
+                           data-original-title="{% trans 'Deterministic' %}"
+                           aria-label="{% trans 'Deterministic' %}"
+                           ng-model="currentIsDeterministic"
+                           ng-change="saveExpression()">
+                   <span>{% trans 'Deterministic' %}</span>
+               </label>
+            </div>
+        </div>
     </div>
     <tags-input id="dimension-chooser" ng-model="tags"
                 placeholder="{% trans 'Add a dimension' %}"
