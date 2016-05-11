@@ -45,6 +45,8 @@ class AlarmDefinitionsTest(helpers.TestCase):
             'spec_set': ['alarmdef_get'],
             'alarmdef_get.return_value': {
                 'alarm_actions': [],
+                'ok_actions': [],
+                'undetermined_actions': [],
                 'match_by': [],
             }
         }) as mock:
@@ -59,6 +61,8 @@ class AlarmDefinitionsTest(helpers.TestCase):
             'spec_set': ['alarmdef_get'],
             'alarmdef_get.return_value': {
                 'alarm_actions': [],
+                'ok_actions': [],
+                'undetermined_actions': [],
                 'match_by': [],
             }
         }) as mock:

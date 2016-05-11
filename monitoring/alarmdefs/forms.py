@@ -19,7 +19,6 @@ from itertools import chain
 
 from django.template.loader import get_template
 from django.template import Context
-from django.utils import html
 from django.utils.translation import ugettext as _  # noqa
 
 from horizon import exceptions
@@ -78,10 +77,19 @@ class NotificationCreateWidget(forms.Select):
         final_attrs = self.build_attrs(attrs, name=name)
         tpl = get_template(constants.TEMPLATE_PREFIX + 'notification_field.html')
 
-        selected = [item['id'] for item in value] if value else []
+        selected = {}
+        for item in value if value else []:
+            selected[item['id']] = {'alarm': item['alarm'],
+                                    'ok': item['ok'],
+                                    'undetermined': item['undetermined']}
         data = []
         for id, label, type, address in chain(self.choices, choices):
-            data.append((id, label, type, address, id in selected))
+            if id in selected:
+                actions = selected[id]
+                data.append((id, label, type, address, actions['alarm'],
+                             actions['ok'], actions['undetermined'], True))
+            else:
+                data.append((id, label, type, address, True, True, True, False))
 
         local_attrs = {'data': json.dumps(data)}
         local_attrs.update(final_attrs)
@@ -151,6 +159,15 @@ class BaseAlarmForm(forms.SelfHandlingForm):
             widget=notificationWidget,
             help_text=_("Notification methods. "
                         "Notifications can be sent when an alarm state transition occurs."))
+        self.fields['alarm_actions'] = NotificationField(
+            label=_("Alarm Actions"),
+            widget=forms.MultipleHiddenInput())
+        self.fields['ok_actions'] = NotificationField(
+            label=_("OK Actions"),
+            widget=forms.MultipleHiddenInput())
+        self.fields['undetermined_actions'] = NotificationField(
+            label=_("Undetermined Actions"),
+            widget=forms.MultipleHiddenInput())
 
     def set_notification_choices(self, request):
         try:
@@ -189,8 +206,6 @@ class CreateAlarmForm(BaseAlarmForm):
 
     def handle(self, request, data):
         try:
-            alarm_actions = [notification.get('id')
-                             for notification in data['notifications']]
             api.monitor.alarmdef_create(
                 request,
                 name=data['name'],
@@ -198,9 +213,9 @@ class CreateAlarmForm(BaseAlarmForm):
                 description=data['description'],
                 severity=data['severity'],
                 match_by=data['match_by'].split(',') if data['match_by'] else None,
-                alarm_actions=alarm_actions,
-                ok_actions=alarm_actions,
-                undetermined_actions=alarm_actions,
+                alarm_actions=data['alarm_actions'],
+                ok_actions=data['ok_actions'],
+                undetermined_actions=data['undetermined_actions'],
             )
             messages.success(request,
                              _('Alarm Definition has been created successfully.'))
@@ -218,11 +233,7 @@ class EditAlarmForm(BaseAlarmForm):
 
     def handle(self, request, data):
         try:
-            alarm_actions = []
             alarm_def = api.monitor.alarmdef_get(request, self.initial['id'])
-            if data['notifications']:
-                alarm_actions = [notification.get('id')
-                                 for notification in data['notifications']]
             api.monitor.alarmdef_update(
                 request,
                 alarm_id=self.initial['id'],
@@ -230,11 +241,11 @@ class EditAlarmForm(BaseAlarmForm):
                 name=data['name'],
                 expression=data['expression'],
                 description=data['description'],
-                match_by = alarm_def['match_by'],
+                match_by=alarm_def['match_by'],
                 actions_enabled=data['actions_enabled'],
-                alarm_actions=alarm_actions,
-                ok_actions=alarm_actions,
-                undetermined_actions=alarm_actions,
+                alarm_actions=data['alarm_actions'],
+                ok_actions=data['ok_actions'],
+                undetermined_actions=data['undetermined_actions'],
             )
             messages.success(request,
                              _('Alarm definition has been updated.'))

@@ -144,11 +144,17 @@ class AlarmDetailView(TemplateView):
             self._object = api.monitor.alarmdef_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
-            for id in self._object["alarm_actions"]:
+            all_actions = set(self._object["alarm_actions"] +
+                              self._object["ok_actions"] +
+                              self._object["undetermined_actions"])
+            for id in all_actions:
                 try:
                     notification = api.monitor.notification_get(
                         self.request,
                         id)
+                    notification['alarm'] = False
+                    notification['ok'] = False
+                    notification['undetermined'] = False
                     notifications.append(notification)
                 # except exceptions.NOT_FOUND:
                 except exc.HTTPException:
@@ -157,6 +163,15 @@ class AlarmDetailView(TemplateView):
                                           "name": unicode(msg),
                                           "type": "",
                                           "address": ""})
+
+            for notification in notifications:
+                if notification['id'] in self._object["alarm_actions"]:
+                    notification['alarm'] = True
+                if notification['id'] in self._object["ok_actions"]:
+                    notification['ok'] = True
+                if notification['id'] in self._object["undetermined_actions"]:
+                    notification['undetermined'] = True
+
             self._object["notifications"] = notifications
             return self._object
         except Exception:
@@ -194,16 +209,35 @@ class AlarmEditView(forms.ModalFormView):
             self._object = api.monitor.alarmdef_get(self.request, id)
             notifications = []
             # Fetch the notification object for each alarm_actions
-            for id in self._object["alarm_actions"]:
+            all_actions = set(self._object["alarm_actions"] +
+                              self._object["ok_actions"] +
+                              self._object["undetermined_actions"])
+            for id in all_actions:
                 try:
                     notification = api.monitor.notification_get(
                         self.request,
                         id)
+                    notification['alarm'] = False
+                    notification['ok'] = False
+                    notification['undetermined'] = False
                     notifications.append(notification)
                 # except exceptions.NOT_FOUND:
                 except exc.HTTPException:
                     msg = _("Notification %s has already been deleted.") % id
                     messages.warning(self.request, msg)
+
+            for notification in notifications:
+                if notification['id'] in self._object["alarm_actions"]:
+                    notification['alarm'] = True
+                if notification['id'] in self._object["ok_actions"]:
+                    notification['ok'] = True
+                if notification['id'] in self._object["undetermined_actions"]:
+                    notification['undetermined'] = True
+
+            del self._object["alarm_actions"]
+            del self._object["ok_actions"]
+            del self._object["undetermined_actions"]
+
             self._object["notifications"] = notifications
             return self._object
         except Exception:

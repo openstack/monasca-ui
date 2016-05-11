@@ -37,7 +37,7 @@ angular.module('monitoring.controllers', [])
              // overwrite to new values
              queryParams['ts_mode'] = nval;
              if(nval === 'utc'){
-               queryParams['ts_offset'] = 0
+               queryParams['ts_offset'] = 0;
              } else {
                queryParams['ts_offset'] = offset;
              }
@@ -285,13 +285,16 @@ function NotificationField(){
     };
 
     function prepareNotify(item){
-        var selected = item[4]
+        var selected = item[7]
         var notify = {
             id: item[0],
             label: item[1] +' ('+ item[2] +')',
             name: item[1],
             type: item[2],
-            address: item[3]
+            address: item[3],
+            alarm: item[4],
+            ok: item[5],
+            undetermined: item[6]
         };
         allOptions[notify.id] = notify;
         if(selected){

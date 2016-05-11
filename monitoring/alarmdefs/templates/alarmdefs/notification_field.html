@@ -12,6 +12,9 @@
                 <th class="name">{% trans 'Name' %}</th>
                 <th class="type">{% trans 'Type' %}</th>
                 <th class="address">{% trans 'Address' %}</th>
+                <th class="alarm">{% trans 'Alarm' %}</th>
+                <th class="ok">{% trans 'OK' %}</th>
+                <th class="undetermined">{% trans 'Undetermined' %}</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -19,10 +22,21 @@
             <tr ng-repeat="notify in ctrl.list">
                 <td class="name">{$ notify.name $}</td>
                 <td class="type">{$ notify.type $}</td>
-                <td class="address" title="{$ notify.address $}">{$ notify.address $}</td>
+                <td class="address">{$ notify.address $}</td>
+                <td class="alarm">
+                    <input type="checkbox" ng-model="notify.alarm">
+                    <input type="hidden" name="alarm_actions" value="{$ notify.id $}" ng-if="notify.alarm"/>
+                </td>
+                <td class="ok">
+                    <input type="checkbox" ng-model="notify.ok">
+                    <input type="hidden" name="ok_actions" value="{$ notify.id $}" ng-if="notify.ok"/>
+                </td>
+                <td class="undetermined">
+                    <input type="checkbox" ng-model="notify.undetermined">
+                    <input type="hidden" name="undetermined_actions" value="{$ notify.id $}" ng-if="notify.undetermined"/>
+                </td>
                 <td>
                     <a href="#" title="{% trans 'Remove' %}" ng-click="ctrl.remove(notify.id)">X</a>
-                    <input type="hidden" name="notifications" value="{$ notify.id $}" />
                 </td>
             </tr>
         </tbody>

@@ -25,6 +25,9 @@
                 <th>{% trans "Name" %}</th>
                 <th>{% trans "Type" %}</th>
                 <th>{% trans "Address" %}</th>
+                <th>{% trans "Alarm" %}</th>
+                <th>{% trans "OK" %}</th>
+                <th>{% trans "Undetermined" %}</th>
             </tr>
         </thead>
         {% for row in alarm.notifications %}
@@ -32,6 +35,9 @@
             <td>{{ row.name }}</td>
             <td>{{ row.type }}</td>
             <td>{{ row.address }}</td>
+            <td>{{ row.alarm }}</td>
+            <td>{{ row.ok }}</td>
+            <td>{{ row.undetermined }}</td>
         </tr>
         {% endfor %}
         </table>
