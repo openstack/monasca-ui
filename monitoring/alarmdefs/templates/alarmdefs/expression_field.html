@@ -1,7 +1,6 @@
 {% load i18n %}
 <div ng-controller="alarmEditController" ng-init="init('{{ service }}')">
     <input type="hidden" name="{{ name }}" id="dimension"/>
-    <input type="hidden" name="match_by" id="match"/>
     <div style="margin-bottom:5px;">
         <select id="function" class="form-control"
                 ng-model="currentFunction" ng-options="f[0] as f[1] for f in {{func}}" ng-change="saveExpression()"></select>
