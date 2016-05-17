@@ -10,9 +10,13 @@
     }
 
     function sendID() {
-      var filterID = document.forms["form0"]["filterID"].value;
       var location = "{{ alarm_url }}";
-      window.location = location + "id=" + filterID;
+      var filterID = document.forms["form0"]["filterID"].value;
+      if (!isEmpty(filterID)) {
+        window.location = location + "id=" + filterID;
+      } else {
+        window.location = location;
+      }
     }
 
     function sendDimensions() {
