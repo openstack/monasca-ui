@@ -20,21 +20,21 @@ import logging
 import urllib
 import urllib2
 
+from django import http
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse  # noqa
-from django.views.generic import TemplateView  # noqa
 from django.utils.translation import ugettext_lazy as _  # noqa
-from django import http
-from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView  # noqa
+from openstack_auth import utils as auth_utils
 from openstack_dashboard import policy
 
 from monitoring import api
 from monitoring.alarms import tables as alarm_tables
 from monitoring.config import local_settings as settings
 from monitoring.overview import constants
-
 
 LOG = logging.getLogger(__name__)
 
@@ -372,6 +372,13 @@ class KibanaProxyView(generic.View):
         if request.method not in self.http_method_names:
             return http.HttpResponseNotAllowed(request.method)
 
+        if not self._can_access_kibana():
+            error_msg = (_('User %s does not have sufficient '
+                           'privileges to access Kibana')
+                         % auth_utils.get_user(request))
+            LOG.error(error_msg)
+            return http.HttpResponseForbidden(content=error_msg)
+
         # passing kbn version explicitly for kibana >= 4.3.x
         headers = {
             'X-Auth-Token': request.user.token.id,
@@ -390,3 +397,8 @@ class KibanaProxyView(generic.View):
 
     def get_absolute_url(self, url):
         return self.base_url + self.get_relative_url(url).lstrip('/')
+
+    def _can_access_kibana(self):
+        return policy.check(
+            (('identity', 'admin_required'),), self.request
+        )
