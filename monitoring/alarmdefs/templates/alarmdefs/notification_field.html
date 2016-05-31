@@ -3,7 +3,7 @@
 <div ng-controller="alarmNotificationFieldController as ctrl" ng-init="ctrl.init('{{ data }}')">
 
     <div ng-if="ctrl.empty">
-        No notifications available. (<a href="{% url 'horizon:monitoring:notifications:index' %}">{% trans 'Add' %}</a>)
+        {% trans 'No notifications available.' %} (<a href="{% url 'horizon:monitoring:notifications:index' %}">{% trans 'Add' %}</a>)
     </div>
 
     <table ng-if="ctrl.list.length" class="table table-condensed" id="notification_table">
