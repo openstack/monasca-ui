@@ -351,7 +351,9 @@ class KibanaProxyView(generic.View):
 
         except urllib2.HTTPError as e:
             return http.HttpResponse(
-                e.read(), status=e.code
+                e.read(),
+                status=e.code,
+                content_type=e.hdrs['content-type']
             )
         except urllib2.URLError as e:
             return http.HttpResponse(e.reason, 404)
