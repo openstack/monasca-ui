@@ -324,4 +324,4 @@ angular.module('monitoring.filters', [])
                 return text;
             return JSON.stringify(text).split(',').join(', ');
         }
-    })
+    });
