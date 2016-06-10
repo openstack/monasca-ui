@@ -1,0 +1,12 @@
+{% load i18n %}
+<div>
+    <input type="hidden" name="{{ name }}" id="id_{{ name }}"/>
+    <tags-input id="dimkey-chooser" ng-model="matchByTags"
+                placeholder="{% trans 'Add a match by' %}"
+                add-from-autocomplete-only="true"
+                on-tag-added="saveDimKey()" on-tag-removed="saveDimKey()">
+        <auto-complete source="possibleDimKeys($query)"
+                       max-results-to-show="30" min-length="1">
+        </auto-complete>
+    </tags-input>
+</div>

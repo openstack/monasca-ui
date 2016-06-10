@@ -154,26 +154,42 @@ angular.module('monitoring.controllers', [])
         $scope.currentThreshold = 0;
         $scope.matchingMetrics= [];
         $scope.tags = [];
+        $scope.matchByTags = [];
         $scope.possibleDimensions = function(query) {
-            var deferred = $q.defer();
-            var dim = {}
-            var dimList = []
-            angular.forEach($scope.matchingMetrics, function(value, name) {
-                for (var key in value.dimensions) {
-                    if (value.dimensions.hasOwnProperty(key)) {
-                        var dimStr = key + "=" + value.dimensions[key]
-                        if (dimStr.indexOf(query) === 0) {
-                            dim[dimStr] = dimStr;
+            return $q(function(resolve, reject) {
+                var dim = {}
+                var dimList = []
+                angular.forEach($scope.matchingMetrics, function(value, name) {
+                    for (var key in value.dimensions) {
+                        if (value.dimensions.hasOwnProperty(key)) {
+                            var dimStr = key + "=" + value.dimensions[key]
+                            if (dimStr.indexOf(query) === 0) {
+                                dim[dimStr] = dimStr;
+                            }
                         }
                     }
-                }
+                });
+                angular.forEach(dim, function(value, name) {
+                    dimList.push(value);
+                });
+                resolve(dimList);
             });
-            angular.forEach(dim, function(value, name) {
-                dimList.push(value)
-            });
-            deferred.resolve(dimList);
-            return deferred.promise;
         };
+        $scope.possibleDimKeys = function(query) {
+            return $q(function(resolve, reject) {
+                var dimList = []
+                angular.forEach($scope.matchingMetrics, function(value, name) {
+                    for (var key in value.dimensions) {
+                        if (key.indexOf(query) === 0) {
+                            if (dimList.indexOf(key) < 0) {
+                                dimList.push(key);
+                            }
+                        }
+                    }
+                });
+                resolve(dimList);
+            });
+        }
         $scope.metricChanged = function() {
             if ($scope.defaultTag.length > 0) {
                 $scope.tags = [{text: $scope.defaultTag}];
@@ -205,6 +221,13 @@ angular.module('monitoring.controllers', [])
             $scope.matchingMetrics = mm
             $scope.dimnames = ['name', 'dimensions'];
             $('#match').val($scope.formatMatchBy());
+        }
+        $scope.saveDimKey = function() {
+            var matchByTags = []
+            for (var i = 0; i < $scope.matchByTags.length; i++) {
+                matchByTags.push($scope.matchByTags[i]['text'])
+            }
+            $('#id_match_by').val(matchByTags.join(','));
         }
         $scope.formatDimension = function() {
             var dim = ''

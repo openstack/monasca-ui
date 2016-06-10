@@ -47,6 +47,21 @@ class ExpressionWidget(forms.Widget):
         return t.render(context)
 
 
+class MatchByWidget(forms.Widget):
+    def __init__(self, initial, attrs=None):
+        super(MatchByWidget, self).__init__(attrs)
+        self.initial = initial
+
+    def render(self, name, value, attrs):
+        final_attrs = self.build_attrs(attrs, name=name)
+        t = get_template(constants.TEMPLATE_PREFIX + 'match_by_field.html')
+
+        local_attrs = {'service': ''}
+        local_attrs.update(final_attrs)
+        context = Context(local_attrs)
+        return t.render(context)
+
+
 class NotificationField(forms.MultiValueField):
     def __init__(self, *args, **kwargs):
         super(NotificationField, self).__init__(*args, **kwargs)
@@ -110,12 +125,12 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         choiceWidget = forms.Select
         if create:
             expressionWidget = ExpressionWidget(initial)
+            matchByWidget = MatchByWidget(initial)
             notificationWidget = NotificationCreateWidget()
-            matchByAttr = None
         else:
             expressionWidget = textWidget
+            matchByWidget = forms.TextInput(attrs={'readonly': 'readonly'})
             notificationWidget = NotificationCreateWidget()
-            matchByAttr = {'readonly': 'readonly'}
 
         self.fields['name'] = forms.CharField(label=_("Name"),
                                               required=required,
@@ -128,8 +143,7 @@ class BaseAlarmForm(forms.SelfHandlingForm):
                                                     help_text=_("An alarm expression."))
         self.fields['match_by'] = forms.CharField(label=_("Match by"),
                                                   required=False,
-                                                  initial="url,hostname,component,service",
-                                                  widget=forms.TextInput(attrs=matchByAttr),
+                                                  widget=matchByWidget,
                                                   help_text=_("The metric dimensions used "
                                                               "to create unique alarms."))
         self.fields['description'] = forms.CharField(label=_("Description"),
@@ -212,7 +226,7 @@ class CreateAlarmForm(BaseAlarmForm):
                 expression=data['expression'],
                 description=data['description'],
                 severity=data['severity'],
-                match_by=data['match_by'].split(',') if data['match_by'] else None,
+                match_by=data['match_by'].split(',') if data['match_by'] else [],
                 alarm_actions=data['alarm_actions'],
                 ok_actions=data['ok_actions'],
                 undetermined_actions=data['undetermined_actions'],

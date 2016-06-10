@@ -19,7 +19,9 @@
       The Notifications field contains the list of Notifications that should be sent when transitioning to another ALARM state.
     {% endblocktrans %}</p>
     <fieldset>
-    {% include "horizon/common/_form_fields.html" %}
+        <div ng-controller="alarmEditController" ng-init="init('{{ service }}')">
+            {% include "horizon/common/_form_fields.html" %}
+        </div>
     </fieldset>
 
 <script type="text/javascript">
