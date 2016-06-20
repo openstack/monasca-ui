@@ -1,0 +1,16 @@
+<noscript><h3>{{ step }}</h3></noscript>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            {{ step.get_help_text }}
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12"
+           ng-controller="alarmEditController"
+           ng-init="init('{{ service }}')">
+        {% include "horizon/common/_form_fields.html" %}
+      </div>
+    </div>
+</div>

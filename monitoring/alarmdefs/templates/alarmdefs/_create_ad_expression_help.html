@@ -1,0 +1,16 @@
+{% load i18n %}
+
+{% block help_message %}
+<div class="clearfix">
+    <p class="text-info">
+        {% blocktrans %}
+        Each alarm definition is defined by its expression composed out of:
+        mathematical function, metric, threshold and comparator for metric's
+        value and the threshold. Additionally it is possible to narrow
+        evaluation of the alarm to certain entities by choosing their
+        dimensions. The deterministic alarms never enter UNDETERMINED state.
+        Use them for metrics that are received sporadically.
+        {% endblocktrans %}
+    </p>
+</div>
+{% endblock %}

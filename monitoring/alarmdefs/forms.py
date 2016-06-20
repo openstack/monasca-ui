@@ -29,22 +29,58 @@ from monitoring import api
 from monitoring.alarmdefs import constants
 
 
+def _get_metrics(request):
+    metrics = api.monitor.metrics_list(request)
+    return json.dumps(metrics)
+
+
+def _get_notifications(request):
+    notifications = api.monitor.notification_list(request)
+    return [(notification['id'],
+             notification['name'],
+             notification['type'],
+             notification['address'])
+            for notification in notifications]
+
+
 class ExpressionWidget(forms.Widget):
+
+    func = json.dumps(
+        [('min', _('min')), ('max', _('max')), ('sum', _('sum')),
+         ('count', _('count')), ('avg', _('avg'))])
+    comparators = [['>', '>'], ['>=', '>='], ['<', '<'], ['<=', '<=']]
+    operators = json.dumps([('AND', _('AND')), ('OR', _('OR'))])
+
     def __init__(self, initial, attrs=None):
         super(ExpressionWidget, self).__init__(attrs)
         self.initial = initial
 
-    def render(self, name, value, attrs):
+    def render(self, name, value, attrs=None):
         final_attrs = self.build_attrs(attrs, name=name)
         t = get_template(constants.TEMPLATE_PREFIX + 'expression_field.html')
-        func = json.dumps([('min', _('min')), ('max', _('max')), ('sum', _('sum')),
-        ('count', _('count')), ('avg', _('avg'))])
-        comparators = [['>', '>'], ['>=', '>='], ['<', '<'], ['<=', '<=']]
 
-        local_attrs = {'service': '', 'func': func, 'comparators': comparators}
+        local_attrs = {
+            'service': '',
+            'func': ExpressionWidget.func,
+            'comparators': ExpressionWidget.comparators,
+            'operators': ExpressionWidget.operators,
+            'metrics': self.metrics
+        }
+
         local_attrs.update(final_attrs)
-        context = Context(local_attrs)
-        return t.render(context)
+
+        return t.render(Context(local_attrs))
+
+
+class ExpressionField(forms.CharField):
+
+    def _get_metrics(self):
+        return self._metrics
+
+    def _set_metrics(self, value):
+        self._metrics = self.widget.metrics = value
+
+    metrics = property(_get_metrics, _set_metrics)
 
 
 class MatchByWidget(forms.Widget):
@@ -52,7 +88,7 @@ class MatchByWidget(forms.Widget):
         super(MatchByWidget, self).__init__(attrs)
         self.initial = initial
 
-    def render(self, name, value, attrs):
+    def render(self, name, value, attrs=None):
         final_attrs = self.build_attrs(attrs, name=name)
         t = get_template(constants.TEMPLATE_PREFIX + 'match_by_field.html')
 
@@ -114,7 +150,13 @@ class NotificationCreateWidget(forms.Select):
         return [{"id": _id} for _id in data.getlist(name)]
 
 
-class BaseAlarmForm(forms.SelfHandlingForm):
+class EditAlarmForm(forms.SelfHandlingForm):
+
+    def __init__(self, request, *args, **kwargs):
+        super(EditAlarmForm, self).__init__(request, *args, **kwargs)
+        self._init_fields(readOnly=False)
+        self.set_notification_choices(request)
+
     @classmethod
     def _instantiate(cls, request, *args, **kwargs):
         return cls(request, *args, **kwargs)
@@ -209,41 +251,6 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         # Always return the cleaned data, whether you have changed it or
         # not.
         return data
-
-
-class CreateAlarmForm(BaseAlarmForm):
-    def __init__(self, request, *args, **kwargs):
-        super(CreateAlarmForm, self).__init__(request, *args, **kwargs)
-        super(CreateAlarmForm, self)._init_fields(readOnly=False, create=True,
-                                                  initial=kwargs['initial'])
-        super(CreateAlarmForm, self).set_notification_choices(request)
-
-    def handle(self, request, data):
-        try:
-            api.monitor.alarmdef_create(
-                request,
-                name=data['name'],
-                expression=data['expression'],
-                description=data['description'],
-                severity=data['severity'],
-                match_by=data['match_by'].split(',') if data['match_by'] else [],
-                alarm_actions=data['alarm_actions'],
-                ok_actions=data['ok_actions'],
-                undetermined_actions=data['undetermined_actions'],
-            )
-            messages.success(request,
-                             _('Alarm Definition has been created successfully.'))
-        except Exception as e:
-            exceptions.handle(request, _('Unable to create the alarm definition: %s') % e)
-            return False
-        return True
-
-
-class EditAlarmForm(BaseAlarmForm):
-    def __init__(self, request, *args, **kwargs):
-        super(EditAlarmForm, self).__init__(request, *args, **kwargs)
-        super(EditAlarmForm, self)._init_fields(readOnly=False)
-        super(EditAlarmForm, self).set_notification_choices(request)
 
     def handle(self, request, data):
         try:

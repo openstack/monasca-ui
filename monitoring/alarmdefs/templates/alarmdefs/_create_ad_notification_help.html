@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% block help_message %}
+<div class="clearfix">
+    <p class="text-info">
+        {% blocktrans %}
+        The Notifications field contains the list of Notifications that should
+        be sent when transitioning to another state.
+        {% endblocktrans %}
+    </p>
+    <p class="text-info">
+        {% blocktrans %}
+        If for some transitions notifications should not be sent they can be
+        disabled.
+        {% endblocktrans %}
+    </p>
+</div>
+{% endblock %}

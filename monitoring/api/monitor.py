@@ -130,6 +130,13 @@ def alarmdef_get(request, alarm_id):
     return monascaclient(request).alarm_definitions.get(alarm_id=alarm_id)
 
 
+def alarmdef_get_by_name(request, name):
+    return monascaclient(request).alarm_definitions.list(
+        name=name,
+        limit=1
+    )
+
+
 def alarmdef_create(request, password=None, **kwargs):
     return monascaclient(request, password).alarm_definitions.create(**kwargs)
 

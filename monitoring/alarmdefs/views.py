@@ -14,8 +14,6 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import json
-
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
@@ -25,11 +23,13 @@ from django.views.generic import TemplateView  # noqa
 from horizon import exceptions
 from horizon import forms
 from horizon import tables
+from horizon import workflows
 
 import monascaclient.exc as exc
 from monitoring.alarmdefs import constants
 from monitoring.alarmdefs import forms as alarm_forms
 from monitoring.alarmdefs import tables as alarm_tables
+from monitoring.alarmdefs import workflows as alarm_workflows
 from monitoring import api
 
 LIMIT = 10
@@ -108,23 +108,8 @@ class IndexView(tables.DataTableView):
         return context
 
 
-class AlarmCreateView(forms.ModalFormView):
-    form_class = alarm_forms.CreateAlarmForm
-    template_name = constants.TEMPLATE_PREFIX + 'create.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(AlarmCreateView, self).get_context_data(**kwargs)
-        context["cancel_url"] = self.get_success_url()
-        context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_create',
-                                        args=())
-        metrics = api.monitor.metrics_list(self.request)
-
-        context["metrics"] = json.dumps(metrics)
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy(constants.URL_PREFIX + 'index',
-                            args=())
+class AlarmCreateView(workflows.WorkflowView):
+    workflow_class = alarm_workflows.AlarmDefinitionWorkflow
 
 
 def transform_alarm_data(obj):

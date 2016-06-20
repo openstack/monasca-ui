@@ -144,18 +144,21 @@ angular.module('monitoring.controllers', [])
 
     }])
     .controller('alarmEditController', [
-      "$scope", "$http", "$timeout", "$q",
-      function ($scope, $http, $timeout, $q) {
-        $scope.metrics = metricsList;
-        $scope.metricNames = uniqueNames(metricsList, 'name');
-        $scope.currentMetric = $scope.metricNames[0];
+      "$window", "$scope", "$http", "$timeout", "$q",
+      function ($window, $scope, $http, $timeout, $q) {
+
+        $scope.metrics = [];
+        $scope.metricNames = []
+        $scope.currentMetric = undefined;
+
         $scope.currentFunction = "max";
         $scope.currentComparator = ">";
         $scope.currentThreshold = 0;
         $scope.currentIsDeterministic = false;
-        $scope.matchingMetrics= [];
+        $scope.matchingMetrics = [];
         $scope.tags = [];
         $scope.matchByTags = [];
+
         $scope.possibleDimensions = function(query) {
             return $q(function(resolve, reject) {
                 var dim = {}
@@ -176,6 +179,7 @@ angular.module('monitoring.controllers', [])
                 resolve(dimList);
             });
         };
+
         $scope.possibleDimKeys = function(query) {
             return $q(function(resolve, reject) {
                 var dimList = []
@@ -191,15 +195,18 @@ angular.module('monitoring.controllers', [])
                 resolve(dimList);
             });
         }
+
         $scope.metricChanged = function() {
             if ($scope.defaultTag.length > 0) {
                 $scope.tags = [{text: $scope.defaultTag}];
             }
             $scope.saveDimension();
         }
+
         $scope.saveExpression = function() {
             $('#expression').val($scope.formatDimension());
         }
+
         $scope.saveDimension = function() {
             $scope.saveExpression();
 
@@ -223,6 +230,7 @@ angular.module('monitoring.controllers', [])
             $scope.dimnames = ['name', 'dimensions'];
             $('#match').val($scope.formatMatchBy());
         }
+
         $scope.saveDimKey = function() {
             var matchByTags = []
             for (var i = 0; i < $scope.matchByTags.length; i++) {
@@ -230,6 +238,7 @@ angular.module('monitoring.controllers', [])
             }
             $('#id_match_by').val(matchByTags.join(','));
         }
+
         $scope.formatDimension = function() {
             var dim = '';
             angular.forEach($scope.tags, function(value, key) {
@@ -248,6 +257,7 @@ angular.module('monitoring.controllers', [])
                     + ' '
                     + $scope.currentThreshold;
         }
+
         $scope.formatMatchBy = function() {
             var dimNames = {}
             for (var i = 0; i < $scope.matchingMetrics.length; i++) {
@@ -257,11 +267,21 @@ angular.module('monitoring.controllers', [])
             for (var attrname in dimNames) { matches.push(attrname); }
             return matches;
         }
+
         $scope.init = function(defaultTag) {
+
             if (defaultTag.length > 0) {
                 $scope.tags = [{text: defaultTag}];
             }
+
             $scope.defaultTag = defaultTag;
+
+            metrics = $window._alarm_edit_ctrl_metrics
+
+            $scope.metrics = metrics && metrics.length ? metrics : [];
+            $scope.metricNames = uniqueNames($scope.metrics, 'name');
+            $scope.currentMetric = $scope.metricNames[0];
+
             $scope.saveDimension();
         }
 

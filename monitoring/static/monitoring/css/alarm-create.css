@@ -1,35 +1,12 @@
-#function {
-    width: 100%;
+.alarm-expression .row {
+    margin-left: -5px;
+    margin-right: -5px;
 }
-#metric-chooser {
-    width: 100%;
-    white-space: normal;
-    word-wrap:break-word;
-}
-#notification_table td.address{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width:100px;
-}
-
 .alarm-expression .expression-details {
-    display: inline-flex;
-    width: 100%;
+    margin-bottom: 5px;
 }
-
-.alarm-expression .expression-details > * {
-    float: left;
-    width: 100%
-}
-
-.alarm-expression .expression-details .checkbox {
-    margin-left: 10px;
-    font-weight: bold;
-    overflow: hidden;
-}
-
-.alarm-expression .expression-details .checkbox span {
-    font-weight: bold;
+.alarm-expression .expression-details > div {
+   padding-left: 2px;
+   padding-right: 2px;
 }
 
