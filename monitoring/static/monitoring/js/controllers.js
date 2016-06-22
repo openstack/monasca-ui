@@ -127,173 +127,63 @@ angular.module('monitoring.controllers', [])
         };
 
     }])
-    .controller('alarmEditController', [
-      "$window", "$scope", "$http", "$timeout", "$q",
-      function ($window, $scope, $http, $timeout, $q) {
+    .controller('alarmNotificationFieldController',
+        ['$rootScope', NotificationField]
+    )
+    .controller('alarmMatchByController',
+        ['$q', '$rootScope', MatchByController]
+    );
 
-        $scope.metrics = [];
-        $scope.metricNames = []
-        $scope.currentMetric = undefined;
+function MatchByController($q, $rootScope) {
+    // model
+    var vm = this;
 
-        $scope.currentFunction = "max";
-        $scope.currentComparator = ">";
-        $scope.currentThreshold = 0;
-        $scope.currentIsDeterministic = false;
-        $scope.matchingMetrics = [];
-        $scope.tags = [];
-        $scope.matchByTags = [];
+    vm.matchBy = [];
+    vm.matchByTags = [];
 
-        $scope.possibleDimensions = function(query) {
-            return $q(function(resolve, reject) {
-                var dim = {}
-                var dimList = []
-                angular.forEach($scope.matchingMetrics, function(value, name) {
-                    for (var key in value.dimensions) {
-                        if (value.dimensions.hasOwnProperty(key)) {
-                            var dimStr = key + "=" + value.dimensions[key]
-                            if (dimStr.indexOf(query) === 0) {
-                                dim[dimStr] = dimStr;
-                            }
-                        }
-                    }
-                });
-                angular.forEach(dim, function(value, name) {
+    // api
+    vm.saveDimKey = saveDimKey;
+    vm.possibleDimKeys = possibleDimKeys;
+
+    function possibleDimKeys(query) {
+        return $q(function(resolve, reject) {
+            var dimList = [];
+            angular.forEach(vm.matchBy, function(value) {
+                if (value.indexOf(query) === 0) {
                     dimList.push(value);
-                });
-                resolve(dimList);
-            });
-        };
-
-        $scope.possibleDimKeys = function(query) {
-            return $q(function(resolve, reject) {
-                var dimList = []
-                angular.forEach($scope.matchingMetrics, function(value, name) {
-                    for (var key in value.dimensions) {
-                        if (key.indexOf(query) === 0) {
-                            if (dimList.indexOf(key) < 0) {
-                                dimList.push(key);
-                            }
-                        }
-                    }
-                });
-                resolve(dimList);
-            });
-        }
-
-        $scope.metricChanged = function() {
-            if ($scope.defaultTag.length > 0) {
-                $scope.tags = [{text: $scope.defaultTag}];
-            }
-            $scope.saveDimension();
-        }
-
-        $scope.saveExpression = function() {
-            $('#expression').val($scope.formatDimension());
-        }
-
-        $scope.saveDimension = function() {
-            $scope.saveExpression();
-
-            var mm = []
-            angular.forEach($scope.metrics, function(value, key) {
-                if (value.name === $scope.currentMetric) {
-                    var match = true;
-                    for (var i = 0; i < $scope.tags.length; i++) {
-                        var vals = $scope.tags[i]['text'].split('=');
-                        if (value.dimensions[vals[0]] !== vals[1]) {
-                            match = false;
-                            break;
-                        }
-                    }
-                    if (match) {
-                        mm.push(value)
-                    }
                 }
             });
-            $scope.matchingMetrics = mm
-            $scope.dimnames = ['name', 'dimensions'];
-            $('#match').val($scope.formatMatchBy());
+            resolve(dimList);
+        });
+    }
+
+    function saveDimKey() {
+        var matchByTags = []
+        for (var i = 0; i < vm.matchByTags.length; i++) {
+            matchByTags.push(vm.matchByTags[i]['text'])
+        }
+        $('#id_match_by').val(matchByTags.join(','));
+    }
+
+    // init
+    $rootScope.$on('$destroy', (function() {
+
+        var watcher = $rootScope.$on('mon_match_by_changed', onMatchByChange);
+
+        return function destroyer() {
+            watcher();
         }
 
-        $scope.saveDimKey = function() {
-            var matchByTags = []
-            for (var i = 0; i < $scope.matchByTags.length; i++) {
-                matchByTags.push($scope.matchByTags[i]['text'])
-            }
-            $('#id_match_by').val(matchByTags.join(','));
-        }
-
-        $scope.formatDimension = function() {
-            var dim = '';
-            angular.forEach($scope.tags, function(value, key) {
-                if (dim.length) {
-                    dim += ',';
-                }
-                dim += value['text'];
-            })
-            return $scope.currentFunction
-                    + '('
-                    + $scope.currentMetric
-                    + '{' + dim + '}'
-                    + ($scope.currentIsDeterministic ? ',deterministic' : '')
-                    + ') '
-                    + $scope.currentComparator
-                    + ' '
-                    + $scope.currentThreshold;
-        }
-
-        $scope.formatMatchBy = function() {
-            var dimNames = {}
-            for (var i = 0; i < $scope.matchingMetrics.length; i++) {
-                for (var attrname in $scope.matchingMetrics[i].dimensions) { dimNames[attrname] = true; }
-            }
-            var matches = [];
-            for (var attrname in dimNames) { matches.push(attrname); }
-            return matches;
-        }
-
-        $scope.init = function(defaultTag) {
-
-            if (defaultTag.length > 0) {
-                $scope.tags = [{text: defaultTag}];
-            }
-
-            $scope.defaultTag = defaultTag;
-
-            metrics = $window._alarm_edit_ctrl_metrics
-
-            $scope.metrics = metrics && metrics.length ? metrics : [];
-            $scope.metricNames = uniqueNames($scope.metrics, 'name');
-            $scope.currentMetric = $scope.metricNames[0];
-
-            $scope.saveDimension();
-        }
-
-        $scope.$on('$destroy', (function() {
-            var detWatcher = $scope.$watch('currentIsDeterministic', function detWatcher(newValue, oldValue) {
-                if(newValue != oldValue){
-                    $scope.$emit('mon_deterministic_changed', newValue);
-                }
+        function onMatchByChange(event, matchBy) {
+            // remove from tags those match by that do not match
+            vm.matchByTags = vm.matchByTags.filter(function filter(tag){
+                return matchBy.indexOf(tag['text']) >= 0;
             });
-            return function() {
-                // destroy watchers
-                detWatcher();
-            }
-        }()));
-
-        function uniqueNames(input, key) {
-            var unique = {};
-            var uniqueList = [];
-            for(var i = 0; i < input.length; i++){
-                if(typeof unique[input[i][key]] == "undefined"){
-                    unique[input[i][key]] = "";
-                    uniqueList.push(input[i][key]);
-                }
-            }
-            return uniqueList.sort();
+            vm.matchBy = matchBy || [];
         }
-    }])
-    .controller('alarmNotificationFieldController', NotificationField);
+
+    }()));
+}
 
 function NotificationField($rootScope) {
 
@@ -316,11 +206,18 @@ function NotificationField($rootScope) {
         data.forEach(prepareNotify);
     };
     vm.add = function(){
-        if(vm.select.model){
-            vm.list.push(allOptions[vm.select.model]);
+        var opt;
+        if (vm.select.model) {
+            opt = allOptions[vm.select.model];
+
+            oldUndetermined[opt.id] = opt.undetermined;
+            opt.undetermined = !vm.isDeterministic;
+
+            vm.list.push(opt);
 
             removeFromSelect();
-            vm.select.model = null;
+            vm.select.model = undefined;
+
         }
     };
     vm.remove = function(id){
@@ -337,7 +234,7 @@ function NotificationField($rootScope) {
         }
     };
 
-    $rootScope.$on('mon_deterministic_changed', onDeterministicChange)
+    $rootScope.$on('mon_deterministic_changed', onDeterministicChange);
 
     function prepareNotify(item){
         var selected = item[7]
@@ -371,9 +268,7 @@ function NotificationField($rootScope) {
 
     function onDeterministicChange(event, isDeterministic) {
 
-        if (!(vm.list && vm.list.length)) {
-            return;
-        } else if (isDeterministic === vm.isDeterministic) {
+        if (isDeterministic === vm.isDeterministic) {
             return;
         }
 
@@ -393,14 +288,3 @@ function NotificationField($rootScope) {
         });
     }
 }
-
-NotificationField.$inject = ['$rootScope'];
-
-angular.module('monitoring.filters', [])
-    .filter('spacedim', function () {
-        return function(text) {
-            if (typeof text == "string")
-                return text;
-            return JSON.stringify(text).split(',').join(', ');
-        }
-    });

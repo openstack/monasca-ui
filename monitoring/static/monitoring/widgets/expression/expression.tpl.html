@@ -1,0 +1,103 @@
+<div class="alarm-expression">
+
+    <input id="expression"
+           name="expression"
+           type="hidden">
+
+    <div class="alert alert-warning"
+         role="alert"
+         ng-if="!vm.metrics.length"
+         translate>
+        No metric available
+    </div>
+
+    <div class="container-fluid" ng-if="vm.metrics.length">
+
+        <div class="row center-block" ng-if="vm.expression">
+            <pre class="text-primary expression-preview"
+                 ng-class="{'expression-valid': vm.expressionValid, 'expression-invalid': !vm.expressionValid}">{{ vm.expression }}</pre>
+        </div>
+
+        <div class="row"
+             ng-repeat="expr in vm.subExpressions track by $id(expr)" ng-cloak>
+
+            <div class="container-fluid"
+                 style="padding-left:0px;padding-right:0px">
+                <div class="row">
+                    <!-- :: one time binding -->
+
+                    <mon-alarm-sub-expression metrics="vm.metrics"
+                                              functions="::vm.functions"
+                                              comparators="::vm.comparators"
+                                              operators="::vm.operators"
+                                              sub-expression="vm.subExpressions[$index]"
+                                              preview="expr.preview"
+                                              connectable="expr.connectable"
+                                              class="alarm-sub-expression"
+                                              ng-class="{'col-lg-11 col-md-11 col-sm-11 col-xs-11': !expr.preview, 'col-lg-9 col-md-9 col-sm-9 col-xs-9': expr.preview}"
+                                              ng-cloak></mon-alarm-sub-expression>
+                    <div ng-class="{'col-lg-1 col-md-1 col-sm-1 col-xs-1': !expr.preview, 'col-lg-3 col-md-3 col-sm-3 col-xs-3': expr.preview}">
+
+                        <button role="button"
+                                title="{$ 'Edit'|translate $}"
+                                class="btn btn-default btn-xs"
+                                ng-class="{'btn-block': !expr.preview}"
+                                ng-if="expr.preview"
+                                ng-click="expr.preview = false">
+                            <span class="fa fa-edit" aria-hidden="true"></span>
+                        </button>
+                        <button role="button"
+                                title="{$ 'Submit'|translate $}"
+                                class="btn btn-default btn-xs"
+                                ng-class="{'btn-block': !expr.preview}"
+                                ng-if="!expr.preview"
+                                ng-disabled="!expr.$valid"
+                                ng-click="expr.preview = true">
+                            <span class="fa fa-check"
+                                  aria-hidden="true"></span>
+                        </button>
+
+                        <button class="btn btn-default btn-xs"
+                                role="button"
+                                title="{$ 'Up'|translate $}"
+                                ng-class="{'btn-block': !expr.preview}"
+                                ng-disabled="$index === 0 || !expr.$valid"
+                                ng-click="vm.reorderExpression($event, $index, $index - 1)">
+                            <span class="fa fa-sort-asc"
+                                  aria-hidden="true"></span>
+                        </button>
+                        <button class="btn btn-default btn-xs"
+                                role="button"
+                                title="{$ 'Add'|translate $}"
+                                ng-class="{'btn-block': !expr.preview}"
+                                ng-disabled="!expr.$valid"
+                                ng-click="vm.addExpression($event, $index + 1)">
+                            <span class="fa fa-plus" aria-hidden="true"></span>
+                        </button>
+                        <button class="btn btn-default btn-xs"
+                                role="button"
+                                title="{$ 'Remove'|translate $}"
+                                ng-class="{'btn-block': !expr.preview}"
+                                ng-disabled="vm.subExpressions.length === 1"
+                                ng-click="vm.removeExpression($event, $index)">
+                            <span class="fa fa-minus"
+                                  aria-hidden="true"></span>
+                        </button>
+                        <button class="btn btn-default btn-xs"
+                                role="button"
+                                title="{$ 'Down'|translate $}"
+                                ng-class="{'btn-block': !expr.preview}"
+                                ng-disabled="$index === vm.subExpressions.length - 1 || !expr.$valid"
+                                ng-click="vm.reorderExpression($event, $index, $index + 1)">
+                            <span class="fa fa-sort-desc"
+                                  aria-hidden="true"></span>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

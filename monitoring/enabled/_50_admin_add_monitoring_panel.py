@@ -8,8 +8,14 @@ ADD_ANGULAR_MODULES = ['monitoringApp']
 
 # A list of javascript files to be included for all pages
 ADD_JS_FILES = ['monitoring/js/app.js',
+                'monitoring/js/filters.js',
                 'monitoring/js/controllers.js',
+                'monitoring/js/directives.js',
+                'monitoring/js/services.js',
                 'monitoring/js/ng-tags-input.js']
+
+ADD_SCSS_FILES = [
+    'monitoring/css/alarm-create.scss']
 
 from monascaclient import exc
 # A dictionary of exception classes to be added to HORIZON['exceptions'].

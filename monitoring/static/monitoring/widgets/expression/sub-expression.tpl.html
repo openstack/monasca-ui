@@ -1,0 +1,155 @@
+<div ng-if="vm.preview" class="sub-expression-preview">
+    <span class="text-muted">{{ vm.model | monExpression:false }}</span>
+</div>
+
+<form name="subExpressionForm" ng-if="!vm.preview" novalidate>
+
+    <div class="row expression-details" ng-if="vm.connectable">
+        <div class="col-md-2 col-xs-6">
+            <label class="control-label" for="expressionOperator">
+                <span class="field-label">{{ 'Operator'|translate }}</span>
+                <span class="hz-icon-required fa fa-asterisk"></span>
+            </label>
+            <select id="expressionOperator"
+                    name="operator"
+                    class="form-control input-sm"
+                    title="{$ 'Operators'|translate $}"
+                    aria-label="{$ 'Operators'|translate $}"
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    required
+                    ng-change="vm.updateExpression()"
+                    ng-model="vm.model.op"
+                    ng-options="f[0] as f[1] for f in vm.operators"
+                    ng-class="{'has-error': subExpressionForm.operator.$invalid && !subExpressionForm.$pristine}"
+                    aria-describedby="helpBlock"></select>
+        </div>
+    </div>
+
+    <div class="row expression-details">
+        <div class="col-md-2 col-xs-6">
+            <label class="control-label" for="expressionFunction">
+                <span class="field-label">{{ 'Function'|translate }}</span>
+                <span class="hz-icon-required fa fa-asterisk"></span>
+            </label>
+            <select id="expressionFunction"
+                    name="function"
+                    class="form-control input-sm"
+                    aria-label="{$ 'Function'|translate $}"
+                    title="{$ 'Function'|translate $}"
+                    required
+                    ng-change="vm.updateExpression()"
+                    ng-model="vm.model.fun"
+                    ng-options="f[0] as f[1] for f in vm.functions"
+                    ng-class="{'has-error': subExpressionForm.function.$invalid && !subExpressionForm.$pristine}"
+                    aria-describedby="helpBlock"></select>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <label class="control-label" for="expressionFunction">
+                <span class="field-label">{{ 'Metric'|translate }}</span>
+                <span class="hz-icon-required fa fa-asterisk"></span>
+            </label>
+            <select id="expressionMetric"
+                    name="metric"
+                    class="form-control input-sm"
+                    aria-label="{$ 'Metric'|translate $}"
+                    title="{$ 'Metric'|translate $}"
+                    required
+                    ng-change="vm.resetExpression();vm.onMetricChanged(vm.model.metric)"
+                    ng-model="vm.model.metric"
+                    ng-options="metric.name for metric in vm.metrics|monUniqueMetric|orderBy:'name'"
+                    ng-class="{'has-error': subExpressionForm.metric.$invalid && !subExpressionForm.$pristine}"
+                    aria-describedby="helpBlock"></select>
+        </div>
+        <div class="col-md-2 col-xs-6">
+            <label class="control-label" for="expressionFunction">
+                <span class="field-label">{{ 'Comparator'|translate }}</span>
+                <span class="hz-icon-required fa fa-asterisk"></span>
+            </label>
+            <select id="expressionComparator"
+                    name="comparator"
+                    class="form-control input-sm"
+                    title="{$ 'Comparator'|translate $}"
+                    aria-label="{$ 'Comparator'|translate $}"
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    required
+                    ng-change="vm.updateExpression()"
+                    ng-model="vm.model.cmp"
+                    ng-options="f[0] as f[1] for f in vm.comparators"
+                    ng-class="{'has-error': subExpressionForm.comparator.$invalid && !subExpressionForm.$pristine}"
+                    aria-describedby="helpBlock"></select>
+        </div>
+        <div class="col-md-2 col-xs-6">
+            <label class="control-label" for="expressionFunction">
+                <span class="field-label">{{ 'Threshold'|translate }}</span>
+                <span class="hz-icon-required fa fa-asterisk"></span>
+            </label>
+            <input id="expressionThreshold"
+                   name="threshold"
+                   type="number"
+                   step="any"
+                   class="form-control input-sm"
+                   aria-label="{$ 'Threshold'|translate $}"
+                   title="{$ 'Threshold'|translate $}"
+                   required
+                   ng-change="vm.updateExpression()"
+                   ng-model="vm.model.threshold"
+                   ng-class="{'has-error': subExpressionForm.threshold.$invalid && !subExpressionForm.$pristine}"
+                   aria-describedby="helpBlock"/>
+        </div>
+    </div>
+
+    <div class="row expression-details">
+        <div class="col-md-10 col-xs-10">
+            <tags-input id="dimension-chooser"
+                        ng-model="vm.tags"
+                        placeholder="{$ 'Add a dimension'|translate $}"
+                        add-from-autocomplete-only="true"
+                        on-tag-added="vm.onDimensionsUpdated()"
+                        on-tag-removed="vm.onDimensionsUpdated()">
+                <auto-complete source="vm.possibleDimensions($query)"
+                               max-results-to-show="30"
+                               min-length="1">
+                </auto-complete>
+            </tags-input>
+        </div>
+        <div class="col-md-2 col-xs-2">
+            <div class="form-group">
+                <label class="btn expression-deterministic"
+                       ng-class="{'btn-primary active': vm.model.deterministic, 'btn-default': !vm.model.deterministic}"
+                       ng-click="vm.model.deterministic = !vm.model.deterministic; vm.updateExpression()"
+                       translate>Deterministic</label>
+                <input name="deterministic"
+                       type="hidden"
+                       ng-model="vm.model.deterministic">
+            </div>
+        </div>
+    </div>
+
+    <!-- if window is small enough better hide this div to save some space -->
+    <div class="row expression-details hidden-sm hidden-xs"
+         ng-if="vm.matchingMetrics.length">
+        <div class="topologyBalloon" id="metrics"
+             style="position:static;display: block;">
+            <div class="contentBody">
+                <table class="detailInfoTable">
+                    <caption translate>Matching Metrics</caption>
+                    <tbody>
+                    <tr>
+                        <th translate>name</th>
+                        <th translate>dimensions</th>
+                    </tr>
+                    <tr ng-repeat="metric in vm.matchingMetrics track by $id(metric)">
+                        <td>{$ metric.name $}</td>
+                        <td style="white-space:normal">{$ metric.dimensions |
+                            json $}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</form>

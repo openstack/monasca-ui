@@ -156,12 +156,13 @@ class SetAlarmDefinitionExpressionAction(workflows.Action):
 class SetDetailsStep(workflows.Step):
     action_class = SetAlarmDefinitionAction
     contributes = ('name', 'description', 'severity')
+    template_name = 'monitoring/alarmdefs/workflow_step.html'
 
 
 class SetExpressionStep(workflows.Step):
     action_class = SetAlarmDefinitionExpressionAction
     contributes = ('expression', 'match_by')
-    template_name = 'monitoring/alarmdefs/expression_step.html'
+    template_name = 'monitoring/alarmdefs/workflow_step.html'
 
     def contribute(self, data, context):
         context = (super(SetExpressionStep, self)
@@ -181,7 +182,7 @@ class SetExpressionStep(workflows.Step):
 class SetNotificationsStep(workflows.Step):
     action_class = SetAlarmNotificationsAction
     contributes = ('alarm_actions', 'ok_actions', 'undetermined_actions')
-    template_name = 'monitoring/alarmdefs/notification_step.html'
+    template_name = 'monitoring/alarmdefs/workflow_step.html'
 
 
 class AlarmDefinitionWorkflow(workflows.Workflow):

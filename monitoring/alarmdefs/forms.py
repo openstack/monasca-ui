@@ -60,7 +60,6 @@ class ExpressionWidget(forms.Widget):
         t = get_template(constants.TEMPLATE_PREFIX + 'expression_field.html')
 
         local_attrs = {
-            'service': '',
             'func': ExpressionWidget.func,
             'comparators': ExpressionWidget.comparators,
             'operators': ExpressionWidget.operators,

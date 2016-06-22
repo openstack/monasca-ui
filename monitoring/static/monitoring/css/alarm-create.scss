@@ -1,0 +1,60 @@
+.alarm-expression {
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    pre.expression-preview {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+    }
+
+    pre.expression-valid {
+        border-color: #00B700;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
+
+    pre.expression-invalid {
+        border-color: #A94442;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
+
+    .alarm-sub-expression {
+
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+        padding: 10px;
+
+        .sub-expression-preview {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .expression-details {
+            margin-bottom: 5px;
+
+            div {
+               padding-left: 2px;
+               padding-right: 2px;
+            }
+        }
+
+        form {
+
+            .has-error {
+                border-color: #a94442;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            }
+
+        }
+
+    }
+
+}

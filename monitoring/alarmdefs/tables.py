@@ -17,6 +17,7 @@
 import logging
 
 from django.core import urlresolvers
+from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon import tables
@@ -30,11 +31,10 @@ LOG = logging.getLogger(__name__)
 class CreateAlarm(tables.LinkAction):
     name = "create_alarm"
     verbose_name = _("Create Alarm Definition")
-    classes = ("ajax-modal",)
+    classes = ("ajax-modal", "btn-create")
     icon = "plus"
     policy_rules = (("alarm", "alarm:create"),)
     ajax = True
-
 
     def get_link_url(self):
         return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_create',

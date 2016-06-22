@@ -1,12 +1,15 @@
 {% load i18n %}
-<div>
+<div ng-controller="alarmMatchByController as ctrl">
     <input type="hidden" name="{{ name }}" id="id_{{ name }}"/>
-    <tags-input id="dimkey-chooser" ng-model="matchByTags"
+    <tags-input id="dimkey-chooser"
+                ng-model="ctrl.matchByTags"
                 placeholder="{% trans 'Add a match by' %}"
                 add-from-autocomplete-only="true"
-                on-tag-added="saveDimKey()" on-tag-removed="saveDimKey()">
-        <auto-complete source="possibleDimKeys($query)"
-                       max-results-to-show="30" min-length="1">
+                on-tag-added="ctrl.saveDimKey()"
+                on-tag-removed="ctrl.saveDimKey()">
+        <auto-complete source="ctrl.possibleDimKeys($query)"
+                       max-results-to-show="30"
+                       min-length="1">
         </auto-complete>
     </tags-input>
 </div>

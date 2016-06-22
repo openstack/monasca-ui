@@ -82,7 +82,7 @@ class AlarmDefinitionsTest(helpers.TestCase):
         self.assertContains(res, '<select class="form-control" '
                                  'id="id_severity"')
 
-        self.assertContains(res, '<input type="hidden" name="expression"')
+        self.assertContains(res, '<mon-alarm-expression')
 
         self.assertContains(res, '<input type="hidden" name="alarm_actions"')
         self.assertContains(res, '<input type="hidden" name="ok_actions"')

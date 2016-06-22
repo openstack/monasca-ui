@@ -1,0 +1,15 @@
+<noscript><h3>{{ step }}</h3></noscript>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- hide if window gets very small to save some space -->
+        <div class="col-sm-12 col-md-12 col-lg-12 hidden-xs">
+            {{ step.get_help_text }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            {% include "horizon/common/_form_fields.html" %}
+        </div>
+    </div>
+</div>
