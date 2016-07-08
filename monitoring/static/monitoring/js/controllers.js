@@ -108,14 +108,6 @@ angular.module('monitoring.controllers', [])
                 success(function(data, status, headers, config) {
                   // this callback will be called asynchronously
                   // when the response is available
-                    var i;
-                    for (i=0; i < data.series.length; i++) {
-                        var group = data.series[i];
-                        for (var j in group.services) {
-                            var service = group.services[j];
-                            service.icon = getIcon(service.class);
-                        }
-                    }
                     $scope._serviceModel = data.series;
                }).
                 error(function(data, status, headers, config) {
@@ -123,14 +115,6 @@ angular.module('monitoring.controllers', [])
                 });
 
         };
-
-        function getIcon(status) {
-            var url_suffix = CHICKLET_TO_ICON[status];
-            if(url_suffix){
-                return base_url + url_suffix;
-            }
-            return undefined;
-        }
 
         $scope.onTimeout = function(){
             mytimeout = $timeout($scope.onTimeout,10000);

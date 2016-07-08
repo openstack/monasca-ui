@@ -39,28 +39,26 @@ from monitoring.overview import constants
 LOG = logging.getLogger(__name__)
 
 
+STATUS_FA_ICON_MAP = {'btn-success': "fa-check",
+                      'btn-danger': "fa-exclamation-triangle",
+                      'btn-warning': "fa-exclamation",
+                      'btn-default': "fa-question-circle"}
+
+
 def get_icon(status):
-    if status == 'chicklet-success':
-        return constants.OK_ICON
-    if status == 'chicklet-error':
-        return constants.CRITICAL_ICON
-    if status == 'chicklet-warning':
-        return constants.WARNING_ICON
-    if status == 'chicklet-unknown':
-        return constants.UNKNOWN_ICON
-    if status == 'chicklet-notfound':
-        return constants.NOTFOUND_ICON
+    return STATUS_FA_ICON_MAP.get(status,  "fa-question-circle")
 
 
 priorities = [
-    {'status': 'chicklet-success', 'severity': 'OK'},
-    {'status': 'chicklet-unknown', 'severity': 'UNDETERMINED'},
-    {'status': 'chicklet-warning', 'severity': 'LOW'},
-    {'status': 'chicklet-warning', 'severity': 'MEDIUM'},
-    {'status': 'chicklet-warning', 'severity': 'HIGH'},
-    {'status': 'chicklet-error', 'severity': 'CRITICAL'},
+    {'status': 'btn-success', 'severity': 'OK'},
+    {'status': 'btn-default', 'severity': 'UNDETERMINED'},
+    {'status': 'btn-warning', 'severity': 'LOW'},
+    {'status': 'btn-warning', 'severity': 'MEDIUM'},
+    {'status': 'btn-warning', 'severity': 'HIGH'},
+    {'status': 'btn-danger', 'severity': 'CRITICAL'},
 ]
 index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
+
 
 def get_dashboard_links(request):
     #
@@ -77,7 +75,7 @@ def get_dashboard_links(request):
     #
     # See examples of both in local_settings.py
     #
-    non_project_keys = {'fileName','title'}
+    non_project_keys = {'fileName', 'title'}
     try:
         for project_link in settings.DASHBOARDS:
             key = project_link.keys()[0]
@@ -110,6 +108,7 @@ def get_dashboard_links(request):
     # but fall back to defaults.
     #
     return settings.DASHBOARDS
+
 
 def get_monitoring_services(request):
     #
@@ -159,6 +158,7 @@ def get_monitoring_services(request):
     # but fall back to defaults.
     #
     return settings.MONITORING_SERVICES
+
 
 def show_by_dimension(data, dim_name):
     if 'dimensions' in data['metrics'][0]:
@@ -270,7 +270,7 @@ class MonascaProxyView(TemplateView):
             # dimension for all metrics (mini-mon for one).
             #
             if 'region' in dim_dict and dim_dict['region'] == 'INJECT_REGION':
-                 dim_dict['region'] = self.request.user.services_region
+                dim_dict['region'] = self.request.user.services_region
             req_kwargs['dimensions'] = dim_dict
 
         return req_kwargs

@@ -59,15 +59,9 @@
             </div>
             <div ng-repeat="service in group.services" style="display:inline-block; margin-bottom:4px; margin-right:4px;">
                 <a href="{% url 'horizon:monitoring:alarms:index' %}alarm/{$ service.name $}">
-                 <div class="base-chicklet {$ service.class $}">
-                    <div>
-                        <div class="status-icon-holder" >
-                            <img ng-src="{$ service.icon $}"/>
-                        </div>
-                        <div class="service-text">
-                        {$ service.display $}
-                        </div>
-                    </div>
+                 <div class="btn {$ service.class $}">
+                    <div class="fa {$ service.icon $}"> </div>
+                    {$ service.display $}
                  </div>
                  </a>
             </div>

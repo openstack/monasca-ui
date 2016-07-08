@@ -9,27 +9,27 @@
 {% block main %}
     <div style="padding: 3px;">
       {% if grafana_url %}
-      <a target="Grafana Home" href="{{grafana_url}}" class="btn btn-default btn-sm">
-          <span class="glyphicon glyphicon-dashboard"></span>
+      <a target="Grafana Home" href="{{grafana_url}}" class="btn btn-primary">
+          <span class="fa fa-bar-chart"></span>
           Grafana Home
       </a>
       {% for dashboard in dashboards %}
-      <a target={{ dashboard.title }} href="{{grafana_url}}/dashboard/db/{{ dashboard.path }}" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-dashboard"></span>
+      <a target={{ dashboard.title }} href="{{grafana_url}}/dashboard/db/{{ dashboard.path }}" class="btn btn-default">
+              <span class="fa fa-bar-chart"></span>
               {% trans dashboard.title %}
           </a>
       {% endfor %}
       {% else %}
       {% for dashboard in dashboards %}
-      <a target={{ dashboard.title }} href="/grafana/index.html#/dashboard/file/{{ dashboard.fileName }}?api={{api}}" class="btn btn-default btn-sm">
-          <span class="glyphicon glyphicon-dashboard"></span>
+      <a target={{ dashboard.title }} href="/grafana/index.html#/dashboard/file/{{ dashboard.fileName }}?api={{api}}" class="btn btn-default">
+          <span class="fa fa-bar-chart"></span>
               {% trans dashboard.title %}
       </a>
       {% endfor %}
       {% endif %}
       {% if can_access_logs and enable_kibana_button %}
-      <a target="dashboard" href="{% url 'horizon:monitoring:overview:kibana_proxy' url='/' %}" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-dashboard"></span>
+      <a target="dashboard" href="{% url 'horizon:monitoring:overview:kibana_proxy' url='/' %}" class="btn btn-default">
+              <span class="fa fa-bar-chart"></span>
               Log Management
       </a>
       {% endif %}

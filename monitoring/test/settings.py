@@ -18,20 +18,9 @@ from django.utils.translation import ugettext_lazy as _  # noqa
 from horizon.test.settings import *  # noqa
 from horizon.utils import secret_key as secret_key_utils
 
+from openstack_dashboard.test.settings import *  # noqa
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-TEST_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_PATH = os.path.abspath(os.path.join(TEST_DIR, ".."))
-
-MEDIA_ROOT = os.path.abspath(os.path.join(ROOT_PATH, '..', 'media'))
-MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.abspath(os.path.join(ROOT_PATH, '..', 'static'))
-STATIC_URL = '/static/'
-
-SECRET_KEY = secret_key_utils.generate_or_read_from_file(
-    os.path.join(TEST_DIR, '.secret_key_store'))
 ROOT_URLCONF = 'monitoring.test.urls'
 TEMPLATE_DIRS = (
     os.path.join(TEST_DIR, 'templates'),
@@ -140,13 +129,3 @@ NOSE_ARGS = ['--nocapture',
              '--cover-package=monitoring',
              '--cover-inclusive',
              '--all-modules']
-
-TUSKAR_ENDPOINT_URL = "http://127.0.0.1:8585"
-
-OVERCLOUD_CREDS = {
-    'enabled': True,
-    'user': 'admin',
-    'password': 'password',
-    'tenant': 'admin',
-    'auth_url': 'http://localhost:5000/v2.0/',
-}
