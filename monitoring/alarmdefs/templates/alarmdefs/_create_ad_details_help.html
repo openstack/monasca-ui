@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% block help_message %}
+<div class="clearfix center-block">
+    <p class="text-info">
+        {% blocktrans %}
+        The Name field is used to identify the alarm definition.
+        {% endblocktrans %}
+    </p>
+    <p class="text-info">
+        {% blocktrans %}
+        The Description field can be used to describe alarm definition's
+        purpose.
+        {% endblocktrans %}
+    </p>
+    <p class="text-info">
+        {% blocktrans %}
+        The Severity field allows to specify the importance of alarm
+        definition.
+        {% endblocktrans %}
+    </p>
+</div>
+{% endblock %}

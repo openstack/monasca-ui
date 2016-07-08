@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
+
 {% load i18n %}
 {% load url from future %}
+{% load compress %}
 
 {% block title %}{% trans 'Alarm Definitions' %}{% endblock %}
+{% block css %}
+    {% include "_stylesheets.html" %}
+    <link href='{{ STATIC_URL }}monitoring/css/ng-tags-input.css' type="text/css" rel="stylesheet"/>
+    <link href='{{ STATIC_URL }}monitoring/css/alarm-create.css' type="text/css" rel="stylesheet"/>
+{% endblock %}
 
 {% block page_header %}
 {% include "horizon/common/_page_header.html" with title=_("Alarm Definitions") %}
