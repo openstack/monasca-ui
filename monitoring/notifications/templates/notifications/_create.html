@@ -25,6 +25,10 @@
       The Address field indicates the email address, URL, or PagerDuty service
       key to be notified.
     {% endblocktrans %}</p>
+    <p>{% blocktrans %}
+      A non-zero value in the period field indicates how frequently a notification
+      should be resent (only valid for webhook urls).
+    {% endblocktrans %}</p>
   </div>
 
 {% endblock %}

@@ -88,6 +88,7 @@ class NotificationsTable(tables.DataTable):
     target = tables.Column('name', verbose_name=_('Name'))
     type = tables.Column('type', verbose_name=_('Type'))
     address = tables.Column('address', verbose_name=_('Address'))
+    period = tables.Column('period', verbose_name=_('Period'))
 
     def get_object_id(self, obj):
         return obj['id']
