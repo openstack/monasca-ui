@@ -2,20 +2,97 @@
 # Sayako Kondo <kondoh.sayako@jp.fujitsu.com>, 2016. #zanata
 # Shinya Kawabata <s-kawabata@wx.jp.nec.com>, 2016. #zanata
 # Shu Muto <shu-mutou@rf.jp.nec.com>, 2016. #zanata
+# haruki yamanashi <h.yamanashi@jp.fujitsu.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: monasca-ui 1.0.32.dev14\n"
+"Project-Id-Version: monasca-ui 1.1.1.dev4\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2016-06-01 05:21+0000\n"
+"POT-Creation-Date: 2016-07-20 19:23+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-05-19 10:15+0000\n"
-"Last-Translator: Shinya Kawabata <s-kawabata@wx.jp.nec.com>\n"
+"PO-Revision-Date: 2016-07-13 02:48+0000\n"
+"Last-Translator: haruki yamanashi <h.yamanashi@jp.fujitsu.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
 "X-Generator: Zanata 3.7.3\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+
+msgid ""
+"\n"
+"        Each alarm definition is defined by its expression composed out of:\n"
+"        mathematical function, metric, threshold and comparator for "
+"metric's\n"
+"        value and the threshold. Additionally it is possible to narrow\n"
+"        evaluation of the alarm to certain entities by choosing their\n"
+"        dimensions. The deterministic alarms never enter UNDETERMINED "
+"state.\n"
+"        Use them for metrics that are received sporadically.\n"
+"        "
+msgstr ""
+"\n"
+"        アラーム定義は数学関数、メトリック、閾値、比較演算子によって\n"
+"        定義されます。\n"
+"        また、ディメンションを選択することでアラームの評価範囲を\n"
+"        絞ることができます。\n"
+"        決定的なアラームは不明状態になりません。\n"
+"        散発的に収集されるメトリックのために使用してください。\n"
+"        "
+
+msgid ""
+"\n"
+"        If for some transitions notifications should not be sent they can "
+"be\n"
+"        disabled.\n"
+"        "
+msgstr ""
+"\n"
+"       特定のアラーム状態遷移時の通知を無効にすることができます。\n"
+"       \n"
+"        "
+
+msgid ""
+"\n"
+"        The Description field can be used to describe alarm definition's\n"
+"        purpose.\n"
+"        "
+msgstr ""
+"\n"
+"        説明フィールドはアラーム定義の用途を説明するために\n"
+"        使用されます。\n"
+"        "
+
+msgid ""
+"\n"
+"        The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"        名前フィールドはアラーム定義を識別するために使用されます。\n"
+"        "
+
+msgid ""
+"\n"
+"        The Notifications field contains the list of Notifications that "
+"should\n"
+"        be sent when transitioning to another state.\n"
+"        "
+msgstr ""
+"\n"
+"        通知フィールドには、アラーム状態が遷移した時に送信される\n"
+"        通知のリストが含まれます。\n"
+"        "
+
+msgid ""
+"\n"
+"        The Severity field allows to specify the importance of alarm\n"
+"        definition.\n"
+"        "
+msgstr ""
+"\n"
+"        重大度フィールドはアラーム定義の重要性を特定するために\n"
+"        使用されます。\n"
+"        "
 
 msgid ""
 "\n"
@@ -34,16 +111,6 @@ msgid ""
 "\n"
 "      The Expression field  which if true, triggers a notification to be "
 "sent.\n"
-"    "
-msgstr ""
-"\n"
-"      条件式フィールドは、その式が真となった場合に通知が発行されます。\n"
-"    "
-
-msgid ""
-"\n"
-"      The Expression field  which if true, triggers a notification to be "
-"sent.\n"
 "      See <a href=\"https://github.com/openstack/monasca-api/blob/master/"
 "docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
 "\">Alarm Expressions</a> for how to write an expression.\n"
@@ -54,15 +121,6 @@ msgstr ""
 "      条件式の記述方法は、 <a href=\"https://github.com/openstack/monasca-"
 "api/blob/master/docs/monasca-api-spec.md#alarm-definition-expressions\" "
 "target=\"_blank\">Alarm Expressions</a>を参照してください。\n"
-"    "
-
-msgid ""
-"\n"
-"      The Name field is used to identify the alarm definition.\n"
-"    "
-msgstr ""
-"\n"
-"      名前フィールドはアラーム定義を識別するために使用されます。\n"
 "    "
 
 msgid ""
@@ -112,11 +170,17 @@ msgstr "アラームの説明"
 msgid "A descriptive name of the notification method."
 msgstr "通知方法の名前"
 
+msgid "AND"
+msgstr "AND"
+
 msgid "Add"
 msgstr "追加"
 
 msgid "Add a dimension"
 msgstr "ディメンションの追加"
+
+msgid "Add a match by"
+msgstr "マッチの追加"
 
 msgid "Address"
 msgstr "アドレス"
@@ -139,9 +203,6 @@ msgstr "アラーム定義"
 msgid "Alarm Definition Details"
 msgstr "アラーム定義の詳細"
 
-msgid "Alarm Definition has been created successfully."
-msgstr "アラーム定義が正常に作成されました。"
-
 msgid "Alarm Definitions"
 msgstr "アラーム定義"
 
@@ -160,8 +221,16 @@ msgstr "アラーム ID"
 msgid "Alarm Metric Dimensions"
 msgstr "ディメンション"
 
+#, python-format
+msgid "Alarm definition %s has been created"
+msgstr "アラーム定義「%s」が作成されました"
+
 msgid "Alarm definition has been updated."
 msgstr "アラーム定義が正常に更新されました。"
+
+#, python-format
+msgid "Alarm definition with %s name already exists"
+msgstr "アラーム定義「%s」は既に存在しています"
 
 msgid "Alarm has been created successfully."
 msgstr "アラームが正常に作成されました。"
@@ -192,6 +261,9 @@ msgstr "取り消し"
 
 msgid "Close"
 msgstr "閉じる"
+
+msgid "Comparator"
+msgstr "比較演算子"
 
 msgid "Could not retrieve alarm definitions"
 msgstr "アラーム定義を取得できませんでした"
@@ -237,6 +309,12 @@ msgstr "通知の削除"
 msgid "Description"
 msgstr "説明"
 
+msgid "Details"
+msgstr "詳細"
+
+msgid "Deterministic"
+msgstr "決定的"
+
 msgid "Dimension(s)"
 msgstr "ディメンション"
 
@@ -261,8 +339,14 @@ msgstr "条件式"
 msgid "Failed to present alarm history"
 msgstr "アラーム履歴の表示に失敗しました"
 
+msgid "Failed to validate name"
+msgstr "検証に失敗しました"
+
 msgid "Filter Alarms"
 msgstr "アラームのフィルター"
+
+msgid "Function"
+msgstr "関数"
 
 msgid "Graph Metric"
 msgstr "グラフの表示"
@@ -287,6 +371,9 @@ msgstr "アラームの測定項目"
 
 msgid "Medium"
 msgstr "Medium"
+
+msgid "Metric"
+msgstr "メトリック"
 
 msgid "Metric Dimensions"
 msgstr "ディメンション"
@@ -344,6 +431,9 @@ msgstr "OK"
 
 msgid "OK Actions"
 msgstr "OK アクション"
+
+msgid "OR"
+msgstr "OR"
 
 msgid "Old State"
 msgstr "前状態"
@@ -421,6 +511,9 @@ msgstr "一意なアラームを生成するために使われるメトリック
 msgid "The type of notification method (i.e. email)."
 msgstr "通知方法の種別 (例 メール)"
 
+msgid "Threshold"
+msgstr "閾値"
+
 msgid "Timestamp"
 msgstr "タイムスタンプ"
 
@@ -431,8 +524,8 @@ msgid "UTC"
 msgstr "UTC"
 
 #, python-format
-msgid "Unable to create the alarm definition: %s"
-msgstr "アラーム定義が作成できません: %s"
+msgid "Unable to create alarm definition %s"
+msgstr "アラーム定義「%s」を作成できません"
 
 #, python-format
 msgid "Unable to create the alarm: %s"
@@ -461,6 +554,9 @@ msgstr "アラームの一覧を表示できません: %s"
 msgid "Unable to retrieve alarm details."
 msgstr "アラームの詳細を取得できません。"
 
+msgid "Unable to retrieve metrics"
+msgstr "メトリックを取得できません"
+
 msgid "Unable to retrieve notification details."
 msgstr "通知の詳細を取得できません"
 
@@ -473,6 +569,13 @@ msgstr "不明"
 
 msgid "Undetermined Actions"
 msgstr "不明のアクション"
+
+msgid "Unknown name"
+msgstr "不明"
+
+#, python-format
+msgid "User %s does not have sufficient privileges to access Kibana"
+msgstr "ユーザー %s はKibanaにアクセスするための権限がありません"
 
 msgid "Value"
 msgstr "値"
