@@ -27,6 +27,7 @@ from django.utils.translation import ugettext as _  # noqa
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View  # noqa
 
+from horizon import exceptions
 from horizon import forms
 from horizon import tables
 
@@ -34,6 +35,8 @@ from monitoring.alarms import constants
 from monitoring.alarms import forms as alarm_forms
 from monitoring.alarms import tables as alarm_tables
 from monitoring import api
+
+from openstack_dashboard import policy
 
 LOG = logging.getLogger(__name__)
 SERVICES = getattr(settings, 'MONITORING_SERVICES', [])
@@ -167,6 +170,8 @@ class AlarmServiceView(tables.DataTableView):
                 return results
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(AlarmServiceView, self).get_context_data(**kwargs)
         results = []
         num_results = 0  # make sure variable is set
@@ -312,6 +317,8 @@ class AlarmHistoryView(tables.DataTableView):
         return []
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(AlarmHistoryView, self).get_context_data(**kwargs)
 
         object_id = kwargs['id']
@@ -381,6 +388,8 @@ class AlarmFilterView(forms.ModalFormView):
     form_class = alarm_forms.CreateAlarmForm
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(AlarmFilterView, self).get_context_data(**kwargs)
         context["cancel_url"] = self.get_success_url()
         context["action_url"] = reverse(constants.URL_PREFIX + 'alarm_filter',

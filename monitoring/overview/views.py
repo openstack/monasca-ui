@@ -31,6 +31,8 @@ from django.views.generic import TemplateView  # noqa
 from openstack_auth import utils as auth_utils
 from openstack_dashboard import policy
 
+from horizon import exceptions
+
 from monitoring import api
 from monitoring.alarms import tables as alarm_tables
 from monitoring.config import local_settings as settings
@@ -224,6 +226,8 @@ class IndexView(TemplateView):
     template_name = constants.TEMPLATE_PREFIX + 'index.html'
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(IndexView, self).get_context_data(**kwargs)
         try:
             region = self.request.user.services_region

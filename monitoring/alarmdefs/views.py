@@ -32,6 +32,8 @@ from monitoring.alarmdefs import tables as alarm_tables
 from monitoring.alarmdefs import workflows as alarm_workflows
 from monitoring import api
 
+from openstack_dashboard import policy
+
 LIMIT = 10
 PREV_PAGE_LIMIT = 100
 
@@ -57,6 +59,8 @@ class IndexView(tables.DataTableView):
         return results
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(IndexView, self).get_context_data(**kwargs)
         num_results = 0
         contacts = []
@@ -171,6 +175,8 @@ class AlarmDetailView(TemplateView):
         return transform_alarm_data(self.alarm)
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(AlarmDetailView, self).get_context_data(**kwargs)
         self.get_initial()
         context["alarm"] = self.alarm
@@ -237,6 +243,8 @@ class AlarmEditView(forms.ModalFormView):
         return transform_alarm_data(self.alarm)
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(AlarmEditView, self).get_context_data(**kwargs)
         id = self.kwargs['id']
         context["cancel_url"] = self.get_success_url()
