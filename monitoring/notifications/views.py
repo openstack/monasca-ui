@@ -30,6 +30,8 @@ from monitoring.notifications import forms as notification_forms
 from monitoring.notifications import tables as notification_tables
 from monitoring import api
 
+from openstack_dashboard import policy
+
 LOG = logging.getLogger(__name__)
 LIMIT = 10
 PREV_PAGE_LIMIT = 100
@@ -58,6 +60,8 @@ class IndexView(tables.DataTableView):
         return results
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(IndexView, self).get_context_data(**kwargs)
         contacts = []
         results = []
@@ -113,6 +117,8 @@ class NotificationCreateView(forms.ModalFormView):
     success_url = reverse_lazy(constants.URL_PREFIX + 'index')
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(NotificationCreateView, self). \
             get_context_data(**kwargs)
         context["cancel_url"] = self.get_success_url()
@@ -148,6 +154,8 @@ class NotificationEditView(forms.ModalFormView):
         return self.notification
 
     def get_context_data(self, **kwargs):
+        if not policy.check((('monitoring', 'monitoring:monitoring'), ), self.request):
+            raise exceptions.NotAuthorized()
         context = super(NotificationEditView, self).get_context_data(**kwargs)
         id = self.kwargs['id']
         context["cancel_url"] = self.get_success_url()
