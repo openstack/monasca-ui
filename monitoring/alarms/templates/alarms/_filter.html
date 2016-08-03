@@ -23,14 +23,19 @@
       var dimension = document.forms["form1"]["dimension"].value;
       var metric = document.forms["form1"]["metric"].value;
       var location = "{{ alarm_url }}";
+      var param = '';
       if (!isEmpty(metric)) {
-        location = location + "metric=" + metric;
+        param = 'metric=' + metric;
         if (!isEmpty(dimension)) {
-          location = location + ",";
+          param = param + ',';
         }
       }
       if (!isEmpty(dimension)) {
-        location = location + dimension;
+        param = param + dimension;
+      }
+      if (!isEmpty(param)) {
+        param = btoa(param).replace(/\+/g, '-').replace(/\//g, '_');
+        location = location + 'b64:' + param;
       }
       window.location = location;
     }
@@ -48,7 +53,7 @@
   <hr>
   <form method="GET" class="form-group" style="width:400px" onsubmit="sendDimensions()" name="form1">
       <h3>{% trans 'Dimension(s)' %}</h3>
-      {% trans 'Key' %}:{% trans 'Value' %}
+      {% trans 'Key' %}[={% trans 'Value' %}]
       <input class="form-control" name="dimension" placeholder="hostname=devstack, service=mysql" data-toggle="tooltip" data-placement="right" title="Example: hostname=devstack, service=mysql">
       <br />
       {% trans 'Metric Name' %}: <input class="form-control" name="metric" placeholder="http_status">

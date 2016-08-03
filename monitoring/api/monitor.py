@@ -70,11 +70,14 @@ def alarm_list_by_dimension(request, dimensions, offset=0, limit=10000,
     dimensions = dimensions.replace(" ", "")
     dimensions = dimensions.split(",")
     for item in dimensions:
-        name, value = item.split("=")
-        if name == 'metric':
-            metric = value
+        if '=' in item:
+            name, value = item.split('=')
+            if name == 'metric':
+                metric = value
+            else:
+                dim_dict[name] = value
         else:
-            dim_dict[name] = value
+            dim_dict[item] = None
     if metric:
         result = monascaclient(request).alarms.list(offset=offset, limit=limit,
                                                 metric_dimensions=dim_dict,

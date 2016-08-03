@@ -14,6 +14,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import base64
 from datetime import timedelta
 import logging
 
@@ -157,6 +158,9 @@ class AlarmServiceView(tables.DataTableView):
                 return results
             else:
                 try:
+                    if self.service[:3] == 'b64':
+                        name, value = self.service.split(":")
+                        self.service = base64.urlsafe_b64decode(str(value))
                     results = api.monitor.alarm_list_by_dimension(self.request,
                                                                   self.service,
                                                                   page_offset,
