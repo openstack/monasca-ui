@@ -14,6 +14,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import base64
 import copy
 import json
 import logging
@@ -205,9 +206,12 @@ def generate_status(request):
                     group_alarms.append(a)
             services = []
             for group, group_alarms in alarms_by_group.items():
+                name = '%s=%s' % (row['groupBy'], group)
+                # Encode as base64url to be able to include '/'
+                name = 'b64:' + base64.urlsafe_b64encode(name)
                 service = {
                     'display': group,
-                    'name': "%s=%s" % (row['groupBy'], group),
+                    'name': name,
                     'class': get_status(group_alarms)
                 }
                 service['icon'] = get_icon(service['class'])
