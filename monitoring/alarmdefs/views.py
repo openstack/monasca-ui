@@ -23,6 +23,7 @@ from django.views.generic import TemplateView  # noqa
 from horizon import exceptions
 from horizon import forms
 from horizon import tables
+from horizon.utils import functions as utils
 from horizon import workflows
 
 import monascaclient.exc as exc
@@ -34,7 +35,7 @@ from monitoring import api
 
 from openstack_dashboard import policy
 
-LIMIT = 10
+
 PREV_PAGE_LIMIT = 100
 
 
@@ -47,9 +48,10 @@ class IndexView(tables.DataTableView):
         results = []
         if page_offset is None:
             page_offset = 0
+        limit = utils.get_page_size(self.request)    
         try:
-            results = api.monitor.alarmdef_list(self.request, page_offset, LIMIT)
-            paginator = Paginator(results, LIMIT)
+            results = api.monitor.alarmdef_list(self.request, page_offset, limit)
+            paginator = Paginator(results, limit)
             results = paginator.page(1)
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
@@ -76,12 +78,13 @@ class IndexView(tables.DataTableView):
         else:
             page_offset = int(page_offset)
 
+        limit = utils.get_page_size(self.request)
         try:
-            # To judge whether there is next page, get LIMIT + 1
+            # To judge whether there is next page, get limit + 1
             results = api.monitor.alarmdef_list(self.request, page_offset,
-                                                LIMIT + 1)
+                                                limit + 1)
             num_results = len(results)
-            paginator = Paginator(results, LIMIT)
+            paginator = Paginator(results, limit)
             contacts = paginator.page(1)
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
@@ -91,10 +94,10 @@ class IndexView(tables.DataTableView):
 
         context["contacts"] = contacts
 
-        if num_results < LIMIT + 1:
+        if num_results < limit + 1:
             context["page_offset"] = None
         else:
-            context["page_offset"] = page_offset + LIMIT
+            context["page_offset"] = page_offset + limit
 
         if page_offset in prev_page_stack:
             index = prev_page_stack.index(page_offset)

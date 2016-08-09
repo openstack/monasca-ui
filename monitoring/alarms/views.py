@@ -31,6 +31,7 @@ from django.views.generic import View  # noqa
 from horizon import exceptions
 from horizon import forms
 from horizon import tables
+from horizon.utils import functions as utils
 
 from monitoring.alarms import constants
 from monitoring.alarms import forms as alarm_forms
@@ -42,7 +43,6 @@ from openstack_dashboard import policy
 LOG = logging.getLogger(__name__)
 SERVICES = getattr(settings, 'MONITORING_SERVICES', [])
 
-LIMIT = 10
 PREV_PAGE_LIMIT = 100
 
 
@@ -137,11 +137,12 @@ class AlarmServiceView(tables.DataTableView):
         if page_offset is None:
             page_offset = 0
 
+        limit = utils.get_page_size(self.request)
         if self.service == default_service:
             try:
                 results = api.monitor.alarm_list(self.request, page_offset,
-                                                 LIMIT)
-                paginator = Paginator(results, LIMIT)
+                                                 limit)
+                paginator = Paginator(results, limit)
                 contacts = paginator.page(1)
             except EmptyPage:
                 contacts = paginator.page(paginator.num_pages)
@@ -167,7 +168,7 @@ class AlarmServiceView(tables.DataTableView):
                     results = api.monitor.alarm_list_by_dimension(self.request,
                                                                   self.service,
                                                                   page_offset,
-                                                                  LIMIT)
+                                                                  limit)
                 except Exception:
                     messages.error(self.request, _("Could not retrieve alarms"))
                     results = []
@@ -190,14 +191,14 @@ class AlarmServiceView(tables.DataTableView):
             prev_page_stack = []
         else:
             page_offset = int(page_offset)
-
+        limit = utils.get_page_size(self.request)
         if self.service == 'all':
             try:
-                # To judge whether there is next page, get LIMIT + 1
+                # To judge whether there is next page, get limit + 1
                 results = api.monitor.alarm_list(self.request, page_offset,
-                                                 LIMIT + 1)
+                                                 limit + 1)
                 num_results = len(results)
-                paginator = Paginator(results, LIMIT)
+                paginator = Paginator(results, limit)
                 results = paginator.page(1)
             except EmptyPage:
                 results = paginator.page(paginator.num_pages)
@@ -213,13 +214,13 @@ class AlarmServiceView(tables.DataTableView):
                     results = []
             else:
                 try:
-                    # To judge whether there is next page, get LIMIT + 1
+                    # To judge whether there is next page, get limit + 1
                     results = api.monitor.alarm_list_by_dimension(self.request,
                                                                   self.service,
                                                                   page_offset,
-                                                                  LIMIT + 1)
+                                                                  limit + 1)
                     num_results = len(results)
-                    paginator = Paginator(results, LIMIT)
+                    paginator = Paginator(results, limit)
                     results = paginator.page(1)
                 except EmptyPage:
                     results = paginator.page(paginator.num_pages)
@@ -230,10 +231,10 @@ class AlarmServiceView(tables.DataTableView):
         context["contacts"] = results
         context["service"] = self.service
 
-        if num_results < LIMIT + 1:
+        if num_results < limit + 1:
             context["page_offset"] = None
         else:
-            context["page_offset"] = page_offset + LIMIT
+            context["page_offset"] = page_offset + limit
 
         if page_offset in prev_page_stack:
             index = prev_page_stack.index(page_offset)
@@ -297,13 +298,13 @@ class AlarmHistoryView(tables.DataTableView):
             ts_mode = alarm_history_default_ts_format
         if not page_offset:
             page_offset = 0
-
+        limit = utils.get_page_size(request)
         try:
             results = api.monitor.alarm_history(self.request,
                                                 object_id,
                                                 page_offset,
-                                                LIMIT)
-            paginator = Paginator(results, LIMIT)
+                                                limit)
+            paginator = Paginator(results, limit)
             contacts = paginator.page(1)
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
@@ -340,7 +341,7 @@ class AlarmHistoryView(tables.DataTableView):
         contacts = []
         prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
-
+        limit = utils.get_page_size(request)
         if 'prev_page_stack' in self.request.session:
             prev_page_stack = self.request.session['prev_page_stack']
 
@@ -348,11 +349,11 @@ class AlarmHistoryView(tables.DataTableView):
             page_offset = 0
             prev_page_stack = []
         try:
-            # To judge whether there is next page, get LIMIT + 1
+            # To judge whether there is next page, get limit + 1
             results = api.monitor.alarm_history(self.request, object_id, page_offset,
-                                                LIMIT + 1)
+                                                limit + 1)
             num_results = len(results)
-            paginator = Paginator(results, LIMIT)
+            paginator = Paginator(results, limit)
             contacts = paginator.page(1)
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
@@ -366,7 +367,7 @@ class AlarmHistoryView(tables.DataTableView):
         context['timestamp_selected'] = ts_mode or ''
         context['timestamp_offset'] = ts_offset or 0
 
-        if num_results < LIMIT + 1:
+        if num_results < limit + 1:
             context["page_offset"] = None
         else:
             context["page_offset"] = contacts.object_list[-1]["id"]
