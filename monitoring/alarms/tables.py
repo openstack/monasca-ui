@@ -46,7 +46,7 @@ def get_status(index):
 
 
 def show_status(data):
-    status = data
+    status = data.upper()
     img_tag = '<img src="{img}" title="{label}" class="status-icon" />{label}'
     if status == 'CRITICAL':
         return img_tag.format(img=constants.CRITICAL_ICON, label=status)
@@ -63,9 +63,9 @@ def show_severity(data):
     severity = data['alarm_definition']['severity']
     state = data['state']
     if state == 'ALARM':
-        return severity
+        return severity.upper()
     else:
-        return state
+        return state.upper()
 
 def show_alarm_id(data):
     return data['id']

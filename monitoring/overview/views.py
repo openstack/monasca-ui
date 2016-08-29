@@ -177,7 +177,7 @@ def get_status(alarms):
     status_index = 0
     for a in alarms:
         severity = alarm_tables.show_severity(a)
-        severity_index = index_by_severity[severity]
+        severity_index = index_by_severity.get(severity, None)
         status_index = max(status_index, severity_index)
     return priorities[status_index]['status']
 
