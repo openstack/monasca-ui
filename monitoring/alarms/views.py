@@ -298,7 +298,7 @@ class AlarmHistoryView(tables.DataTableView):
             ts_mode = alarm_history_default_ts_format
         if not page_offset:
             page_offset = 0
-        limit = utils.get_page_size(request)
+        limit = utils.get_page_size(self.request)
         try:
             results = api.monitor.alarm_history(self.request,
                                                 object_id,
@@ -341,7 +341,7 @@ class AlarmHistoryView(tables.DataTableView):
         contacts = []
         prev_page_stack = []
         page_offset = self.request.GET.get('page_offset')
-        limit = utils.get_page_size(request)
+        limit = utils.get_page_size(self.request)
         if 'prev_page_stack' in self.request.session:
             prev_page_stack = self.request.session['prev_page_stack']
 
