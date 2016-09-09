@@ -239,18 +239,6 @@ class EditAlarmForm(forms.SelfHandlingForm):
 
         self.fields['notifications'].choices = notification_choices
 
-    def clean_expression(self):
-        data = self.cleaned_data['expression']
-        value = data.split(' ')[2]
-        try:
-            float(value)
-        except ValueError:
-            raise forms.ValidationError("Value must be a number")
-
-        # Always return the cleaned data, whether you have changed it or
-        # not.
-        return data
-
     def handle(self, request, data):
         try:
             alarm_def = api.monitor.alarmdef_get(request, self.initial['id'])
