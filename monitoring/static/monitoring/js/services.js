@@ -38,7 +38,7 @@ function expressionBuilder() {
                 (expr.deterministic ? ',deterministic': ''),
                 expr.fun && ')',
                 expr.cmp || '',
-                expr.threshold || ''
+                expr.threshold === 0 ? 0 : expr.threshold || ''
             ].join('');
             tmp.push(exprAsStr);
         });
