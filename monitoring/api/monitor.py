@@ -67,7 +67,6 @@ def alarm_list_by_dimension(request, dimensions, offset=0, limit=10000,
                           marker=None, paginate=False):
     dim_dict = {}
     metric = None
-    dimensions = dimensions.replace(" ", "")
     dimensions = dimensions.split(",")
     for item in dimensions:
         if '=' in item:
