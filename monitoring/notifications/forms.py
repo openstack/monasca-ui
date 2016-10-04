@@ -72,7 +72,7 @@ class BaseNotificationMethodForm(forms.SelfHandlingForm):
         '''
         data = self.cleaned_data
         if data['type'] != constants.NotificationType.WEBHOOK and data['period'] != 0:
-            raise forms.ValidationError("Period must be zero except for type webhook.")
+            raise forms.ValidationError(_("Period must be zero except for type webhook."))
 
         return data['period']
 

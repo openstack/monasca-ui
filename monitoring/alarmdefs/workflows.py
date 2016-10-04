@@ -105,8 +105,8 @@ class SetAlarmDefinitionAction(workflows.Action):
             alarm_def_name)
         if not is_name_valid:
             self.add_error('name',
-                           _('Alarm definition with %s name already exists'
-                             % alarm_def_name))
+                           _('Alarm definition with %s name already exists')
+                             % alarm_def_name)
 
     def _is_alarm_def_name_unique_validator(self, value):
         try:
