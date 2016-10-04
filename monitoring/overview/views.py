@@ -104,7 +104,7 @@ def get_dashboard_links(request):
                 return value
         return settings.DEFAULT_LINKS
     except Exception:
-        LOG.warn("Failed to parse dashboard links by project, returning defaults.")
+        LOG.warning("Failed to parse dashboard links by project, returning defaults.")
         pass
     #
     # Extra safety here -- should have got a match somewhere above,
@@ -154,7 +154,7 @@ def get_monitoring_services(request):
                 return value
         return settings.MONITORING_SERVICES
     except Exception:
-        LOG.warn("Failed to parse monitoring services by project, returning defaults.")
+        LOG.warning("Failed to parse monitoring services by project, returning defaults.")
         pass
     #
     # Extra safety here -- should have got a match somewhere above,
@@ -305,7 +305,7 @@ class MonascaProxyView(TemplateView):
                            metrics_measurement_list(request,
                                                     **req_kwargs)}
         if not results:
-            LOG.warn("There was a request made for the path %s that"
+            LOG.warning("There was a request made for the path %s that"
                      " is not supported." % restpath)
             results = {}
         return HttpResponse(json.dumps(results),
