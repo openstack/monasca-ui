@@ -47,7 +47,7 @@ class ExpressionWidget(forms.Widget):
 
     func = json.dumps(
         [('min', _('min')), ('max', _('max')), ('sum', _('sum')),
-         ('count', _('count')), ('avg', _('avg'))])
+         ('count', _('count')), ('avg', _('avg')), ('last', _('last'))])
     comparators = [['>', '>'], ['>=', '>='], ['<', '<'], ['<=', '<=']]
     operators = json.dumps([('AND', _('AND')), ('OR', _('OR'))])
 
