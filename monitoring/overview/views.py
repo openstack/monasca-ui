@@ -366,11 +366,14 @@ class KibanaProxyView(generic.View):
 
         else:
             status = response.getcode()
-            return http.StreamingHttpResponse(
+            proxy_response = http.StreamingHttpResponse(
                 proxy_stream_generator(response),
                 status=status,
                 content_type=response.headers['content-type']
             )
+            if 'set-cookie' in response.headers:
+                proxy_response['set-cookie'] = response.headers['set-cookie']
+            return proxy_response
 
     @csrf_exempt
     def dispatch(self, request, url):
@@ -390,7 +393,8 @@ class KibanaProxyView(generic.View):
         # passing kbn version explicitly for kibana >= 4.3.x
         headers = {
             'X-Auth-Token': request.user.token.id,
-            'kbn-version': request.META.get('HTTP_KBN_VERSION', '')
+            'kbn-version': request.META.get('HTTP_KBN_VERSION', ''),
+            'Cookie': request.META.get('HTTP_COOKIE', '')
         }
 
         return self.read(request.method, url, request.body, headers)
