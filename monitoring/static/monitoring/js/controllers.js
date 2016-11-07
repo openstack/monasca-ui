@@ -11,20 +11,20 @@ angular.module('monitoring.controllers', [])
       "$scope", "$window", "$location",
       function($scope, $window, $location){
         var offset = getTimezoneOffset(),
-            queryParams = urlParams()
+            queryParams = urlParams();
 
-        $scope.currentFormat = undefined
-        $scope.currentOffset = undefined
+        $scope.currentFormat = undefined;
+        $scope.currentOffset = undefined;
 
         $scope.setUp = setUp;
 
         function setUp(currentFormat){
             if(currentFormat){
-                $scope.currentFormat = currentFormat
+                $scope.currentFormat = currentFormat;
             }
-            $scope.$watch('currentFormat', onFormatChange)
+            $scope.$watch('currentFormat', onFormatChange);
             if(queryParams['ts_mode'] === 'bl'){
-                $scope.currentOffset = queryParams['ts_offset']
+                $scope.currentOffset = queryParams['ts_offset'];
             }
         }
 
@@ -36,7 +36,7 @@ angular.module('monitoring.controllers', [])
 
              // overwrite to new values
              queryParams['ts_mode'] = nval;
-             if(nval === 'utc'){
+             if (nval === 'utc') {
                queryParams['ts_offset'] = 0;
              } else {
                queryParams['ts_offset'] = offset;
@@ -158,9 +158,9 @@ function MatchByController($q, $rootScope) {
     }
 
     function saveDimKey() {
-        var matchByTags = []
+        var matchByTags = [];
         for (var i = 0; i < vm.matchByTags.length; i++) {
-            matchByTags.push(vm.matchByTags[i]['text'])
+            matchByTags.push(vm.matchByTags[i]['text']);
         }
         $('#id_match_by').val(matchByTags.join(','));
     }
@@ -172,7 +172,7 @@ function MatchByController($q, $rootScope) {
 
         return function destroyer() {
             watcher();
-        }
+        };
 
         function onMatchByChange(event, matchBy) {
             // remove from tags those match by that do not match
@@ -221,7 +221,7 @@ function NotificationField($rootScope) {
         }
     };
     vm.remove = function(id){
-        for(var i = 0;i<vm.list.length;i+=1){
+        for (var i = 0; i<vm.list.length; i+=1) {
             if(vm.list[i].id === id){
                 vm.list.splice(i, 1);
                 vm.select.options.push(allOptions[id]);
@@ -237,7 +237,7 @@ function NotificationField($rootScope) {
     $rootScope.$on('mon_deterministic_changed', onDeterministicChange);
 
     function prepareNotify(item){
-        var selected = item[7]
+        var selected = item[7];
         var notify = {
             id: item[0],
             label: item[1] +' ('+ item[2] +')',
@@ -258,7 +258,7 @@ function NotificationField($rootScope) {
 
     function removeFromSelect(){
          var opts = vm.select.options;
-         for(var i = 0;i<opts.length;i+=1){
+         for (var i = 0; i<opts.length; i+=1) {
             if(opts[i].id === vm.select.model){
                 opts.splice(i, 1);
                 break;

@@ -21,17 +21,6 @@ class NotificationType(object):
     WEBHOOK = "WEBHOOK"
     PAGERDUTY = "PAGERDUTY"
 
-    CHOICES = [(EMAIL, _("Email")),
-               (WEBHOOK, _("Webhook")),
-               (PAGERDUTY, _("PagerDuty")), ]
-
-    @staticmethod
-    def get_label(key):
-        for choice in NotificationType.CHOICES:
-            if choice[0] == key:
-                return choice[1]
-        return key
-
 EMAIL_VALIDATOR = validators.EmailValidator(
     message=_("Address must contain a valid email address."))
 WEBHOOK_VALIDATOR = validators.URLValidator(

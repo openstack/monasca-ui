@@ -26,20 +26,27 @@ class AlarmsTest(helpers.TestCase):
             res, 'monitoring/notifications/index.html')
 
     def test_notifications_create(self):
-        res = self.client.get(CREATE_URL)
+        with patch('monitoring.api.monitor', **{
+            'spec_set': ['notification_type_list'],
+            'notification_type_list.return_value': [],
+        }) as mock:
+            res = self.client.get(CREATE_URL)
+            self.assertEqual(mock. notification_type_list.call_count, 1)
 
         self.assertTemplateUsed(
             res, 'monitoring/notifications/_create.html')
 
     def test_notifications_edit(self):
         with patch('monitoring.api.monitor', **{
-            'spec_set': ['notification_get'],
+            'spec_set': ['notification_get', 'notification_type_list'],
             'notification_get.return_value': {
                 'alarm_actions': []
-            }
+            },
+            'notification_type_list.return_value': [],
         }) as mock:
             res = self.client.get(EDIT_URL)
             self.assertEqual(mock.notification_get.call_count, 1)
+            self.assertEqual(mock.notification_type_list.call_count, 1)
 
         self.assertTemplateUsed(
             res, 'monitoring/notifications/_edit.html')
