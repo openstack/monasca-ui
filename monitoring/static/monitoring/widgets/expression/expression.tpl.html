@@ -78,7 +78,7 @@
                                 role="button"
                                 title="{$ 'Remove'|translate $}"
                                 ng-class="{'btn-block': !expr.preview}"
-                                ng-disabled="vm.subExpressions.length === 1"
+                                ng-disabled="!expr.$valid"
                                 ng-click="vm.removeExpression($event, $index)">
                             <span class="fa fa-minus"
                                   aria-hidden="true"></span>
