@@ -14,8 +14,6 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import logging
-
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
@@ -32,7 +30,6 @@ from monitoring import api
 
 from openstack_dashboard import policy
 
-LOG = logging.getLogger(__name__)
 LIMIT = 10
 PREV_PAGE_LIMIT = 100
 

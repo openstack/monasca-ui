@@ -14,8 +14,6 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import logging
-
 from django.core import urlresolvers
 from django.utils.translation import ugettext_lazy as _  # noqa
 
@@ -24,8 +22,6 @@ from horizon import tables
 
 from monitoring import api
 from monitoring.notifications import constants
-
-LOG = logging.getLogger(__name__)
 
 
 class DeleteNotification(tables.DeleteAction):

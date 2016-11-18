@@ -16,7 +16,6 @@
 #    under the License.
 
 import json
-import logging
 
 from django.conf import settings
 from django.core import urlresolvers
@@ -30,9 +29,6 @@ from monitoring.alarms import constants
 from monitoring.config import local_settings
 from monitoring.overview import constants as ov_constants
 from monitoring import api
-
-
-LOG = logging.getLogger(__name__)
 
 
 STATUS = ["OK", "WARNING", "CRITICAL", "UNKNOWN"]
