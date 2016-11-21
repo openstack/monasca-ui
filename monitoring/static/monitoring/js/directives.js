@@ -77,7 +77,7 @@ function monAlarmExpressionsDirective(staticPath){
             if ($index >= 1 && vm.subExpressions[$index - 1].$valid) {
                 // hide previous expression
                 // if it is valid
-                vm.subExpressions[$index -1]['preview'] = true;
+                vm.subExpressions[$index - 1]['preview'] = true;
             }
 
             applyConnectable();
@@ -93,6 +93,11 @@ function monAlarmExpressionsDirective(staticPath){
 
             applyConnectable();
             touch();
+
+            if (vm.subExpressions.length === 0) {
+                vm.expression = '';
+                vm.subExpressions.push({});
+            }
 
             return true;
         }
@@ -139,13 +144,13 @@ function monAlarmExpressionsDirective(staticPath){
 
             return true;
 
-            function subExpressionIt(expr){
+            function subExpressionIt(expr) {
                 if (!expr.$valid) {
                     return !(hasInvalid = true);
                 }
 
-                angular.forEach(expr.matchBy || [], function it(mb){
-                    if(matchBy.indexOf(mb) < 0){
+                angular.forEach(expr.matchBy || [], function it(mb) {
+                    if(matchBy.indexOf(mb) < 0) {
                         matchBy.push(mb);
                     }
                 });
@@ -242,7 +247,6 @@ function monAlarmSubExpressionDirective(staticPath) {
 
         vm.updateExpression = updateExpression;
         vm.resetExpression = resetExpression;
-        vm.updateExpression = updateExpression;
 
         // init
         $scope.$on('$destroy', destroyerFactory());
