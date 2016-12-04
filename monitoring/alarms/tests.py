@@ -8,9 +8,10 @@ from monitoring.alarms import constants
 INDEX_URL = urlresolvers.reverse(
     constants.URL_PREFIX + 'index')
 ALARMS_URL_BY_DIMENSION = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm',  args=('nova',))
+    constants.URL_PREFIX + 'alarm', args=('nova',))
 ALARMS_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm',  args=('all',))
+    constants.URL_PREFIX + 'alarm', args=('all',))
+
 
 class AlarmsTest(helpers.TestCase):
     def test_alarms_get_by_dimension(self):

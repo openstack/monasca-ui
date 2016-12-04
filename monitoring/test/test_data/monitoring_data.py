@@ -17,11 +17,15 @@ monasca = {
     "name": "Monitoring",
     "endpoints_links": [],
     "endpoints": [
-     {"region": "RegionOne",
-      "adminURL": "http://admin.monasca.example.com:8386/v1.1",
-      "publicURL": "http://public.monasca.example.com:8386/v1.1",
-      "internalURL": "http://int.monasca.example.com:8386/v1.1"}]}
+        {"region": "RegionOne",
+         "adminURL": "http://admin.monasca.example.com:8386/v1.1",
+         "publicURL": "http://public.monasca.example.com:8386/v1.1",
+         "internalURL": "http://int.monasca.example.com:8386/v1.1"}]
+}
+
+
 keystone_data.SERVICE_CATALOG.append(monasca)
+
 
 def data(TEST):
     pass

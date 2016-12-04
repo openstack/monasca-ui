@@ -61,8 +61,10 @@ def show_severity(data):
     else:
         return state.upper()
 
+
 def show_alarm_id(data):
     return data['id']
+
 
 def show_metric_name(data):
     return data['metrics'][0]['name']
@@ -211,7 +213,6 @@ class AlarmsFilterAction(tables.LinkAction):
     icon = "plus"
     policy_rules = (("alarm", "alarm:filter"),)
     ajax = True
-
 
     def get_link_url(self):
         return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_filter',

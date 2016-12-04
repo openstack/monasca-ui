@@ -47,7 +47,7 @@ STATUS_FA_ICON_MAP = {'btn-success': "fa-check",
 
 
 def get_icon(status):
-    return STATUS_FA_ICON_MAP.get(status,  "fa-question-circle")
+    return STATUS_FA_ICON_MAP.get(status, "fa-question-circle")
 
 
 priorities = [

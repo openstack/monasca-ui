@@ -45,8 +45,7 @@ class EditAlarm(tables.LinkAction):
 
     def get_link_url(self, datum):
         return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_edit',
-                                    args=(
-                                          datum['id'], ))
+                                    args=(datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
@@ -96,4 +95,4 @@ class AlarmsTable(tables.DataTable):
         table_actions = (CreateAlarm,
                          AlarmsFilterAction,
                          DeleteAlarm,
-                        )
+                         )

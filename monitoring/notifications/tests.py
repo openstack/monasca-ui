@@ -10,7 +10,7 @@ INDEX_URL = urlresolvers.reverse(
 CREATE_URL = urlresolvers.reverse(
     constants.URL_PREFIX + 'notification_create')
 EDIT_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'notification_edit',  args=('12345',))
+    constants.URL_PREFIX + 'notification_edit', args=('12345',))
 
 
 class AlarmsTest(helpers.TestCase):
