@@ -13,7 +13,6 @@
 #    under the License.
 
 from django.core import urlresolvers
-from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon import tables
