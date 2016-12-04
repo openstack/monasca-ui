@@ -149,7 +149,7 @@ class SetAlarmDefinitionExpressionAction(workflows.Action):
 
         try:
             self.fields['expression'].metrics = ad_forms._get_metrics(request)
-        except Exception as ex:
+        except Exception:
             exceptions.handle(request, _('Unable to retrieve metrics'))
 
 
