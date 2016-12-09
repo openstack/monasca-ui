@@ -11,7 +11,12 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from monascaclient.openstack.common.apiclient import exceptions as monascacli
+# NOTE(dmllr): Remove me when we require monascaclient >= 1.3.0
+try:
+    from monascaclient.apiclient import exceptions as monascacli
+except ImportError:
+    from monascaclient.openstack.common.apiclient import exceptions as monascacli
+
 from openstack_dashboard.test.test_data import exceptions
 
 
