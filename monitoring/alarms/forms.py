@@ -49,7 +49,6 @@ class ExpressionWidget(forms.Widget):
         return t.render(context)
 
 
-
 class SimpleExpressionWidget(django_forms.MultiWidget):
     def __init__(self, initial, attrs=None):
         comparators = [('>', '>'), ('>=', '>='), ('<', '<'), ('<=', '<=')]

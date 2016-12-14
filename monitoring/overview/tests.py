@@ -28,7 +28,7 @@ class KibanaProxyViewTest(helpers.TestCase):
         self.request_factory = RequestFactory()
 
     def test_get_relative_url_with_unicode(self):
-        """Tests if it properly converts multibyte characters"""
+        """Tests if it properly converts multibyte characters."""
         import urlparse
 
         self.view.request = self.request_factory.get(

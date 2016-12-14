@@ -46,7 +46,7 @@ class IndexView(tables.DataTableView):
         results = []
         if page_offset is None:
             page_offset = 0
-        limit = utils.get_page_size(self.request)    
+        limit = utils.get_page_size(self.request)
         try:
             results = api.monitor.alarmdef_list(self.request, page_offset, limit)
             paginator = Paginator(results, limit)

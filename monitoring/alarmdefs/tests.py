@@ -25,11 +25,11 @@ from monitoring.alarmdefs import workflows
 INDEX_URL = urlresolvers.reverse(
     constants.URL_PREFIX + 'index')
 CREATE_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm_create',  args=())
+    constants.URL_PREFIX + 'alarm_create', args=())
 DETAIL_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm_detail',  args=('12345',))
+    constants.URL_PREFIX + 'alarm_detail', args=('12345',))
 EDIT_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm_edit',  args=('12345',))
+    constants.URL_PREFIX + 'alarm_edit', args=('12345',))
 
 
 class AlarmDefinitionsTest(helpers.TestCase):
