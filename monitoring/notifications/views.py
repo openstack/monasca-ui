@@ -49,7 +49,7 @@ class IndexView(tables.DataTableView):
             paginator = Paginator(results, LIMIT)
             results = paginator.page(1)
         except EmptyPage:
-            contacts = paginator.page(paginator.num_pages)
+            results = paginator.page(paginator.num_pages)
         except Exception:
             messages.error(self.request, _("Could not retrieve notifications"))
         return results
