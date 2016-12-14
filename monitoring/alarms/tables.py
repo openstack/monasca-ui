@@ -15,7 +15,6 @@
 
 import json
 
-from django.conf import settings
 from django.core import urlresolvers
 from django.core.urlresolvers import reverse_lazy
 from django import template

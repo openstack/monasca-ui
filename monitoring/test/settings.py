@@ -17,7 +17,6 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon.test.settings import *  # noqa
-from horizon.utils import secret_key as secret_key_utils
 
 from openstack_dashboard.test.settings import *  # noqa
 
