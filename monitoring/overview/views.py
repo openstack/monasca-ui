@@ -241,7 +241,7 @@ class IndexView(TemplateView):
             context["api"] = api_root
         context["dashboards"] = get_dashboard_links(self.request)
         context['can_access_logs'] = policy.check(
-            (('identity', 'admin_required'), ), self.request
+            ((getattr(settings, 'KIBANA_POLICY_SCOPE'), getattr(settings, 'KIBANA_POLICY_RULE')), ), self.request
         )
         context['enable_kibana_button'] = settings.ENABLE_KIBANA_BUTTON
         return context
@@ -412,5 +412,5 @@ class KibanaProxyView(generic.View):
 
     def _can_access_kibana(self):
         return policy.check(
-            (('identity', 'admin_required'),), self.request
+            ((getattr(settings, 'KIBANA_POLICY_SCOPE'), getattr(settings, 'KIBANA_POLICY_RULE')), ), self.request
         )

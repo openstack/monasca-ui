@@ -55,6 +55,8 @@ DASHBOARDS = getattr(settings, 'GRAFANA_LINKS', GRAFANA_LINKS)
 GRAFANA_URL = getattr(settings, 'GRAFANA_URL', None)
 
 ENABLE_KIBANA_BUTTON = getattr(settings, 'ENABLE_KIBANA_BUTTON', False)
+KIBANA_POLICY_RULE = getattr(settings, 'KIBANA_POLICY_RULE', 'admin_required')
+KIBANA_POLICY_SCOPE = getattr(settings, 'KIBANA_POLICY_SCOPE', 'identity')
 KIBANA_HOST = getattr(settings, 'KIBANA_HOST', 'http://192.168.10.4:5601/')
 
 OPENSTACK_SSL_NO_VERIFY = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
