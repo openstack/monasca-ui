@@ -173,6 +173,11 @@ def notification_update(request, notification_id, **kwargs):
         update(notification_id=notification_id, **kwargs)
 
 
+def notification_type_list(request, **kwargs):
+    result = monascaclient(request).notificationtypes.list(**kwargs)
+    return result['elements'] if type(result) is dict else result
+
+
 def metrics_list(request, **kwargs):
     result = monascaclient(request).metrics.list(**kwargs)
     return result['elements'] if type(result) is dict else result

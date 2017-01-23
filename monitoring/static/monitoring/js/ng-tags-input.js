@@ -275,7 +275,7 @@ tagsInput.directive('tagsInput', ["$timeout","$document","tagsInputConfig", func
                         ngModelCtrl.$setValidity('leftoverText', options.allowLeftoverText ? true : !scope.newTag.text);
                     }
                     else {
-                      scope.newTag.text = ''   // added by Rob to clear leftover text
+                        scope.newTag.text = '';   // added by Rob to clear leftover text
                     }
                 });
 
