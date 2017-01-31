@@ -128,4 +128,5 @@ NOSE_ARGS = ['--nocapture',
              '--nologcapture',
              '--cover-package=monitoring',
              '--cover-inclusive',
+             '--with-xunit',
              '--all-modules']

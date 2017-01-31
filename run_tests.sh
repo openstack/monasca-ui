@@ -319,8 +319,8 @@ function run_tests_all {
   if [ $with_coverage -eq 1 ]; then
     echo "Generating coverage reports"
     ${command_wrapper} ${COVERAGE_CMD} combine
-    ${command_wrapper} ${COVERAGE_CMD} xml -i --omit='/usr*,setup.py,*egg*,.venv/*'
-    ${command_wrapper} ${COVERAGE_CMD} html -i --omit='/usr*,setup.py,*egg*,.venv/*' -d reports
+    ${command_wrapper} ${COVERAGE_CMD} xml -i --omit='monitoring/**/tests.py,monitoring/test/*,**/shiningpanda/**,/usr*,setup.py,*egg*,.venv/*'
+    ${command_wrapper} ${COVERAGE_CMD} html -i --omit='monitoring/**/tests.py,monitoring/test/*,**/shiningpanda/**,/usr*,setup.py,*egg*,.venv/*' -d reports
   fi
   # Remove the leftover coverage files from the -p flag earlier.
   rm -f .coverage.*
