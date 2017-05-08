@@ -14,6 +14,7 @@
 
 from django.core import urlresolvers
 from django.utils.translation import ugettext_lazy as _  # noqa
+from django.utils.translation import ungettext_lazy
 
 from horizon import exceptions
 from horizon import tables
@@ -25,8 +26,22 @@ from monitoring.notifications import constants
 class DeleteNotification(tables.DeleteAction):
     name = "delete_notification"
     verbose_name = _("Delete Notification")
-    data_type_singular = _("Notification")
-    data_type_plural = _("Notifications")
+
+    @staticmethod
+    def action_present(count):
+        return ungettext_lazy(
+            u"Delete Notification",
+            u"Delete Notifications",
+            count
+        )
+
+    @staticmethod
+    def action_past(count):
+        return ungettext_lazy(
+            u"Deleted Notification",
+            u"Deleted Notifications",
+            count
+        )
 
     def allowed(self, request, datum=None):
         return True

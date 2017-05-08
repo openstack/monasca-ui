@@ -14,6 +14,7 @@
 
 from django.core import urlresolvers
 from django.utils.translation import ugettext_lazy as _  # noqa
+from django.utils.translation import ungettext_lazy
 
 from horizon import tables
 
@@ -53,8 +54,22 @@ class EditAlarm(tables.LinkAction):
 class DeleteAlarm(tables.DeleteAction):
     name = "delete_alarm"
     verbose_name = _("Delete Alarm Definition")
-    data_type_singular = _("Alarm Definition")
-    data_type_plural = _("Alarm Definitions")
+
+    @staticmethod
+    def action_present(count):
+        return ungettext_lazy(
+            u"Delete Alarm Definition",
+            u"Delete Alarm Definitions",
+            count
+        )
+
+    @staticmethod
+    def action_past(count):
+        return ungettext_lazy(
+            u"Deleted Alarm Definition",
+            u"Deleted Alarm Definitions",
+            count
+        )
 
     def allowed(self, request, datum=None):
         return True
