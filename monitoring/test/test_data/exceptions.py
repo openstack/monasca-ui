@@ -12,17 +12,14 @@
 #    under the License.
 
 # NOTE(dmllr): Remove me when we require monascaclient >= 1.3.0
-try:
-    from monascaclient.apiclient import exceptions as monascacli
-except ImportError:
-    from monascaclient.openstack.common.apiclient import exceptions as monascacli
 
+from monascaclient import exc
 from openstack_dashboard.test.test_data import exceptions
 
 
 def data(TEST):
     TEST.exceptions = exceptions.data
 
-    monitoring_exception = monascacli.ClientException
+    monitoring_exception = exc.ClientException
     TEST.exceptions.monitoring = exceptions.create_stubbed_exception(
         monitoring_exception)

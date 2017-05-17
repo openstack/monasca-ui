@@ -297,9 +297,9 @@ class AlarmHistoryView(tables.DataTableView):
         limit = utils.get_page_size(self.request)
         try:
             results = api.monitor.alarm_history(self.request,
-                                                object_id,
-                                                page_offset,
-                                                limit)
+                                            object_id,
+                                            page_offset,
+                                            limit)
             paginator = Paginator(results, limit)
             contacts = paginator.page(1)
         except EmptyPage:

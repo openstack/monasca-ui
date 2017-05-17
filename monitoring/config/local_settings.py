@@ -41,8 +41,15 @@ MONITORING_SERVICES = getattr(
 #         {'name': _('Instances'), 'groupBy': 'hostname'}]},
 # ]
 
+MONITORING_SERVICE_VERSION = getattr(
+    settings, 'MONITORING_SERVICE_VERSION', '2_0'
+)
 MONITORING_SERVICE_TYPE = getattr(
     settings, 'MONITORING_SERVICE_TYPE', 'monitoring'
+)
+MONITORING_ENDPOINT_TYPE = getattr(
+    # NOTE(trebskit) # will default to OPENSTACK_ENDPOINT_TYPE
+    settings, 'MONITORING_ENDPOINT_TYPE', None
 )
 
 # Grafana button titles/file names (global across all projects):

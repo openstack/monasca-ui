@@ -10,6 +10,8 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
+from monascaclient import exc
+
 DASHBOARD = "monitoring"
 
 # A list of applications to be added to INSTALLED_APPS.
@@ -29,10 +31,15 @@ ADD_JS_FILES = ['monitoring/js/app.js',
 ADD_SCSS_FILES = [
     'monitoring/css/alarm-create.scss']
 
-from monascaclient import exc
 # A dictionary of exception classes to be added to HORIZON['exceptions'].
+_RECOVERABLE_ERRORS = (exc.UnprocessableEntity, exc.Conflict,
+                       exc.BadRequest, exc.ConnectionError,
+                       exc.Forbidden, exc.InternalServerError)
+_NOT_FOUND_ERRORS = (exc.NotFound,)
+_UNAUTHORIZED_ERRORS = (exc.Unauthorized,)
+
 ADD_EXCEPTIONS = {
-    'recoverable': (exc.HTTPUnProcessable, exc.HTTPConflict, exc.HTTPException),
-    'not_found': (exc.HTTPNotFound,),
-    'unauthorized': (exc.HTTPUnauthorized,),
+    'recoverable': _RECOVERABLE_ERRORS,
+    'not_found': _NOT_FOUND_ERRORS,
+    'unauthorized': _UNAUTHORIZED_ERRORS,
 }

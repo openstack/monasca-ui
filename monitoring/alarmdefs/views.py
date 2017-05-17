@@ -12,6 +12,8 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import logging
+
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
@@ -24,7 +26,7 @@ from horizon import tables
 from horizon.utils import functions as utils
 from horizon import workflows
 
-import monascaclient.exc as exc
+from monascaclient import exc
 from monitoring.alarmdefs import constants
 from monitoring.alarmdefs import forms as alarm_forms
 from monitoring.alarmdefs import tables as alarm_tables
@@ -34,6 +36,7 @@ from monitoring import api
 from openstack_dashboard import policy
 
 
+LOG = logging.getLogger(__name__)
 PREV_PAGE_LIMIT = 100
 
 
@@ -53,7 +56,8 @@ class IndexView(tables.DataTableView):
             results = paginator.page(1)
         except EmptyPage:
             results = paginator.page(paginator.num_pages)
-        except Exception:
+        except Exception as ex:
+            LOG.exception(str(ex))
             messages.error(self.request, _("Could not retrieve alarm definitions"))
 
         return results
@@ -147,7 +151,7 @@ class AlarmDetailView(TemplateView):
                     notification['undetermined'] = False
                     notifications.append(notification)
                 # except exceptions.NOT_FOUND:
-                except exc.HTTPException:
+                except exc.HttpError:
                     msg = _("Notification %s has already been deleted.") % id
                     notifications.append({"id": id,
                                           "name": unicode(msg),
@@ -214,7 +218,7 @@ class AlarmEditView(forms.ModalFormView):
                     notification['undetermined'] = False
                     notifications.append(notification)
                 # except exceptions.NOT_FOUND:
-                except exc.HTTPException:
+                except exc.HttpError:
                     msg = _("Notification %s has already been deleted.") % id
                     messages.warning(self.request, msg)
 
