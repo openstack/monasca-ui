@@ -5,7 +5,6 @@
 {% block page_header %}
   {% include 'horizon/common/_page_header.html' with title=_("Monitoring") %}
 {% endblock page_header %}
-{% load url from future %}
 {% block main %}
     <div style="padding: 3px;">
       {% if grafana_url %}

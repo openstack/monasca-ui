@@ -26,9 +26,9 @@ TEMPLATE_DIRS = (
     os.path.join(TEST_DIR, 'templates'),
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + [
     'openstack_dashboard.context_processors.openstack',
-)
+]
 
 INSTALLED_APPS = (
     'django.contrib.contenttypes',

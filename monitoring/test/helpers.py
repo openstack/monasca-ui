@@ -12,10 +12,10 @@
 #    under the License.
 
 import os
+import unittest
 import warnings
 
 from django.core.handlers import wsgi
-from django.utils import unittest
 
 from monitoring.test.test_data import utils as test_data_utils
 from openstack_dashboard.test import helpers as openstack_dashboard_helpers
