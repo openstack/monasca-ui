@@ -53,8 +53,11 @@ For more details go to http://docs.openstack.org/developer/horizon/quickstart.ht
 * Link monasca into Horizon:
 
 ```
-cp ../monasca-ui/monitoring/enabled/_50_admin_add_monitoring_panel.py openstack_dashboard/enabled/.
-ln -s ../monasca-ui/monitoring monitoring
+ln -sf $(pwd)/../monasca-ui/monitoring/enabled/_50_admin_add_monitoring_panel.py \
+    $(pwd)/openstack_dashboard/enabled/_50_admin_add_monitoring_panel.py
+ln -sf $(pwd)/../monasca-ui/monitoring/conf/monitoring_policy.json \
+    $(pwd)/openstack_dashboard/conf/monitoring_policy.json
+ln -sfF $(pwd)/../monasca-ui/monitoring $(pwd)/monitoring
 ./run_tests #load monasca-client into virtualenv
 ```
 
@@ -86,7 +89,7 @@ you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
-    
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
