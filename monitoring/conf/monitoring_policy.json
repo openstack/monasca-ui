@@ -1,0 +1,12 @@
+{
+    "owner" : "user_id:%(user_id)s",
+    "admin_required": "role:admin or is_admin:1",
+    "admin_or_owner": "rule:admin_required or rule:owner",
+
+    "monasca_user_role": "role:monasca-user",
+
+    "default": "@",
+
+    "monitoring:monitoring": "rule:admin_or_owner",
+    "monitoring:kibana_access": "rule:monasca_user_role"
+}

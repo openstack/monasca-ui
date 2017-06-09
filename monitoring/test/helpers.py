@@ -12,13 +12,14 @@
 #    under the License.
 
 import os
+import unittest
 import warnings
 
 from django.core.handlers import wsgi
-from django.utils import unittest
+import mock
+from openstack_dashboard.test import helpers
 
 from monitoring.test.test_data import utils as test_data_utils
-from openstack_dashboard.test import helpers as openstack_dashboard_helpers
 
 
 # Makes output of failing mox tests much easier to read.
@@ -30,53 +31,30 @@ warnings.filterwarnings('ignore', 'With-statements now directly support '
                         r'^tuskar_ui[.].*[._]tests$')
 
 
-def create_stubs(stubs_to_create={}):
-    return openstack_dashboard_helpers.create_stubs(stubs_to_create)
+def create_stubs(stubs_to_create=None):
+    if stubs_to_create is None:
+        stubs_to_create = {}
+    return helpers.create_stubs(stubs_to_create)
+
+
+class MonitoringTestsMixin(object):
+    def _setup_test_data(self):
+        super(MonitoringTestsMixin, self)._setup_test_data()
+        test_data_utils.load_test_data(self)
+        self.policy_patcher = mock.patch(
+            'openstack_auth.policy.check', lambda action, request: True)
+        self.policy_check = self.policy_patcher.start()
 
 
 @unittest.skipIf(os.environ.get('SKIP_UNITTESTS', False),
                  "The SKIP_UNITTESTS env variable is set.")
-class TestCase(openstack_dashboard_helpers.TestCase):
-    """Specialized base test case class for Horizon which gives access to
-    numerous additional features:
-
-      * A full suite of test data through various attached objects and
-        managers (e.g. ``self.servers``, ``self.user``, etc.). See the
-        docs for :class:`~horizon.tests.test_data.utils.TestData` for more
-        information.
-      * The ``mox`` mocking framework via ``self.mox``.
-      * A set of request context data via ``self.context``.
-      * A ``RequestFactory`` class which supports Django's ``contrib.messages``
-        framework via ``self.factory``.
-      * A ready-to-go request object via ``self.request``.
-      * The ability to override specific time data controls for easier testing.
-      * Several handy additional assertion methods.
-    """
-    def setUp(self):
-        super(TestCase, self).setUp()
-
-        # load tuskar-specific test data
-        test_data_utils.load_test_data(self)
+class TestCase(MonitoringTestsMixin, helpers.TestCase):
+    pass
 
 
-class BaseAdminViewTests(openstack_dashboard_helpers.BaseAdminViewTests):
-    """A ``TestCase`` subclass which sets an active user with the "admin" role
-    for testing admin-only views and functionality.
-    """
-    def setUp(self):
-        super(BaseAdminViewTests, self).setUp()
-
-        # load tuskar-specific test data
-        test_data_utils.load_test_data(self)
+class BaseAdminViewTests(MonitoringTestsMixin, helpers.BaseAdminViewTests):
+    pass
 
 
-class APITestCase(openstack_dashboard_helpers.APITestCase):
-    """The ``APITestCase`` class is for use with tests which deal with the
-    underlying clients rather than stubbing out the
-    openstack_dashboard.api.* methods.
-    """
-    def setUp(self):
-        super(APITestCase, self).setUp()
-
-        # load tuskar-specfic test data
-        test_data_utils.load_test_data(self)
+class APITestCase(MonitoringTestsMixin, helpers.APITestCase):
+    pass

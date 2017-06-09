@@ -67,9 +67,15 @@ DASHBOARDS = getattr(settings, 'GRAFANA_LINKS', GRAFANA_LINKS)
 GRAFANA_URL = getattr(settings, 'GRAFANA_URL', None)
 
 ENABLE_KIBANA_BUTTON = getattr(settings, 'ENABLE_KIBANA_BUTTON', False)
-KIBANA_POLICY_RULE = getattr(settings, 'KIBANA_POLICY_RULE', 'admin_required')
-KIBANA_POLICY_SCOPE = getattr(settings, 'KIBANA_POLICY_SCOPE', 'identity')
+KIBANA_POLICY_RULE = getattr(settings, 'KIBANA_POLICY_RULE',
+                             'monitoring:kibana_access')
+KIBANA_POLICY_SCOPE = getattr(settings, 'KIBANA_POLICY_SCOPE',
+                              'monitoring')
 KIBANA_HOST = getattr(settings, 'KIBANA_HOST', 'http://192.168.10.4:5601/')
 
 OPENSTACK_SSL_NO_VERIFY = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
 OPENSTACK_SSL_CACERT = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
+
+POLICY_FILES = getattr(settings, 'POLICY_FILES', {})
+POLICY_FILES.update({'monitoring': 'monitoring_policy.json',}) # noqa
+setattr(settings, 'POLICY_FILES', POLICY_FILES)
