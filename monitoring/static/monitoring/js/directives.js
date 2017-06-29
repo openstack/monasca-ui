@@ -117,7 +117,7 @@ function monAlarmExpressionsDirective(staticPath){
 
         function touch() {
             var hasInvalid = false;
-                expression = undefined;
+            var expression = undefined;
 
             matchBy = [];
             deterministic = true;
