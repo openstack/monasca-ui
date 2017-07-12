@@ -11,16 +11,13 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-
-from django.conf.urls import patterns  # noqa
 from django.conf.urls import url  # noqa
 
 from monitoring.overview import views
 from monitoring.config import local_settings as settings
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^status', views.StatusView.as_view(), name='status'),
     url(r'^proxy\/(?P<restpath>.*)$', views.MonascaProxyView.as_view()),
@@ -28,5 +25,5 @@ urlpatterns = patterns(
     url(r'^logs_proxy(?P<url>.*)$',
         views.KibanaProxyView.as_view(
             base_url=settings.KIBANA_HOST), name='kibana_proxy'
-        ),
-)
+        )
+]

@@ -13,7 +13,6 @@
 
 import os
 
-from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _  # noqa
 
 from horizon.test.settings import *  # noqa
@@ -25,10 +24,6 @@ ROOT_URLCONF = 'monitoring.test.urls'
 TEMPLATE_DIRS = (
     os.path.join(TEST_DIR, 'templates'),
 )
-
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + [
-    'openstack_dashboard.context_processors.openstack',
-]
 
 INSTALLED_APPS = (
     'django.contrib.contenttypes',

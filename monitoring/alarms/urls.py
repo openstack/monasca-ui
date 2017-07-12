@@ -11,13 +11,11 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from django.conf.urls import patterns  # noqa
 from django.conf.urls import url  # noqa
 
 from monitoring.alarms import views
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^alarm/filter/$',
         views.AlarmFilterView.as_view(),
@@ -30,6 +28,5 @@ urlpatterns = patterns(
         name='alarm_all'),
     url(r'^history/(?P<name>[^/]+)/(?P<id>[^/]+)$',
         views.AlarmHistoryView.as_view(),
-        name='history'),
-
-)
+        name='history')
+]
