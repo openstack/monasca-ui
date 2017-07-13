@@ -2,4 +2,4 @@
 # of appearance. Changing the order has an impact on the overall integration
 # process, which may cause wedges in the gate later.
 python-monascaclient>=1.1.0 # Apache-2.0
-Django<1.10,>=1.8 # BSD
+Django<1.11,>=1.8 # BSD
