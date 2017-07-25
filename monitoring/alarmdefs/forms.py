@@ -1,4 +1,5 @@
 # Copyright 2013 Hewlett-Packard Development Company, L.P.
+# Copyright 2017 FUJITSU LIMITED
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -16,7 +17,6 @@ import json
 from itertools import chain
 
 from django.template.loader import get_template
-from django.template import Context
 from django.utils.translation import ugettext as _  # noqa
 
 from horizon import exceptions
@@ -34,11 +34,7 @@ def _get_metrics(request):
 
 def _get_notifications(request):
     notifications = api.monitor.notification_list(request)
-    return [(notification['id'],
-             notification['name'],
-             notification['type'],
-             notification['address'])
-            for notification in notifications]
+    return [(notification['id'], notification) for notification in notifications]
 
 
 class ExpressionWidget(forms.Widget):
@@ -54,7 +50,7 @@ class ExpressionWidget(forms.Widget):
         self.initial = initial
 
     def render(self, name, value, attrs=None):
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(attrs, {'name': name})
         t = get_template(constants.TEMPLATE_PREFIX + 'expression_field.html')
 
         local_attrs = {
@@ -65,8 +61,7 @@ class ExpressionWidget(forms.Widget):
         }
 
         local_attrs.update(final_attrs)
-
-        return t.render(Context(local_attrs))
+        return t.render(local_attrs)
 
 
 class ExpressionField(forms.CharField):
@@ -86,13 +81,12 @@ class MatchByWidget(forms.Widget):
         self.initial = initial
 
     def render(self, name, value, attrs=None):
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(attrs, {'name': name})
         t = get_template(constants.TEMPLATE_PREFIX + 'match_by_field.html')
 
         local_attrs = {'service': ''}
         local_attrs.update(final_attrs)
-        context = Context(local_attrs)
-        return t.render(context)
+        return t.render(local_attrs)
 
 
 class NotificationField(forms.MultiValueField):
@@ -122,7 +116,7 @@ class NotificationCreateWidget(forms.Select):
         super(NotificationCreateWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None, choices=()):
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(attrs, {'name': name})
         tpl = get_template(constants.TEMPLATE_PREFIX + 'notification_field.html')
 
         selected = {}
@@ -131,17 +125,22 @@ class NotificationCreateWidget(forms.Select):
                                     'ok': item['ok'],
                                     'undetermined': item['undetermined']}
         data = []
-        for id, label, type, address in chain(self.choices, choices):
-            if id in selected:
-                actions = selected[id]
-                data.append((id, label, type, address, actions['alarm'],
+
+        for pk, notification in chain(self.choices, choices):
+            nt_label = notification['name']
+            nt_address = notification['address']
+            nt_type = notification['type']
+
+            if pk in selected:
+                actions = selected[pk]
+                data.append((pk, nt_label, nt_type, nt_address, actions['alarm'],
                              actions['ok'], actions['undetermined'], True))
             else:
-                data.append((id, label, type, address, True, True, True, False))
+                data.append((pk, nt_label, nt_type, nt_address, True, True, True, False))
 
         local_attrs = {'data': json.dumps(data)}
         local_attrs.update(final_attrs)
-        return tpl.render(Context(local_attrs))
+        return tpl.render(local_attrs)
 
     def value_from_datadict(self, data, files, name):
         return [{"id": _id} for _id in data.getlist(name)]
@@ -229,11 +228,7 @@ class EditAlarmForm(forms.SelfHandlingForm):
             notifications = []
             exceptions.handle(request,
                               _('Unable to retrieve notifications: %s') % e)
-        notification_choices = [(notification['id'],
-                                 notification['name'],
-                                 notification['type'],
-                                 notification['address'])
-                                for notification in notifications]
+        notification_choices = [(notification['id'], notification) for notification in notifications]
 
         self.fields['notifications'].choices = notification_choices
 
