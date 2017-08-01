@@ -77,7 +77,7 @@ class AlarmDefinitionsTest(helpers.TestCase):
         self.assertIsNotNone(step)
 
         self.assertContains(res, '<input type="text" name="description" '
-                                 'id="id_description" class="form-control" />')
+                                 'class="form-control" id="id_description" />')
         self.assertContains(res, '<select class="form-control" '
                                  'id="id_severity"')
 
