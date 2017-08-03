@@ -76,8 +76,6 @@ class AlarmDefinitionsTest(helpers.TestCase):
         step = workflow.get_step('setalarmnotificationsaction')
         self.assertIsNotNone(step)
 
-        self.assertContains(res, '<input type="text" name="description" '
-                                 'class="form-control" id="id_description" />')
         self.assertContains(res, '<select class="form-control" '
                                  'id="id_severity"')
 
