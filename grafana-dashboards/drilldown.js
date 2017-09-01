@@ -19,6 +19,22 @@ var dashboard;
 // All url parameters are available via the ARGS object
 var ARGS;
 
+// Setup the metric dimensions.
+var dimensions = [];
+
+for (var key in ARGS) {
+  var isDimParam = key.startsWith("dim_");
+  if (isDimParam)  {
+     var value = ARGS[key];
+     var dim = {
+       "key":  key.substring(4),
+       "value": value
+     };
+     dimensions.push(dim);
+  }
+}
+
+
 // Intialize a skeleton with nothing but a rows array and service object
 dashboard = {
   rows : [],
@@ -38,7 +54,6 @@ dashboard.time = {
 var rows = 1;
 var metricName = '';
 var hostname = '';
-var region = '';
 
 if(!_.isUndefined(ARGS.rows)) {
   rows = parseInt(ARGS.rows, 10);
@@ -50,10 +65,6 @@ if(!_.isUndefined(ARGS.metric)) {
 
 if(!_.isUndefined(ARGS.hostname)) {
   hostname = ARGS.hostname;
-}
-
-if(!_.isUndefined(ARGS.region)) {
-  region = ARGS.region;
 }
 
 for (var i = 0; i < rows; i++) {
@@ -72,16 +83,7 @@ for (var i = 0; i < rows; i++) {
           {
             "aggregator": "avg",
             "alias": hostname,
-            "dimensions": [
-              {
-                "key": "hostname",
-                "value": hostname
-              },
-              {
-                "key": "region",
-                "value": region
-              }
-            ],
+            "dimensions": dimensions,
             "metric": metricName,
             "period": "300",
           }
@@ -93,6 +95,5 @@ for (var i = 0; i < rows; i++) {
     ]
   });
 }
-
 
 return dashboard;
