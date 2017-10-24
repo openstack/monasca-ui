@@ -9,27 +9,6 @@ BRANCH_NAME=master
 PACKAGE_NAME=monasca-ui
 requirements_installed=$(echo "import openstack_requirements" | python 2>/dev/null ; echo $?)
 
-function install_client_depends_on() {
-    local client_location
-    if [ -x "$ZUUL_CLONER" ]; then
-        # install in gate environment
-        pushd $mydir
-        $ZUUL_CLONER --cache-dir \
-            /opt/git \
-            git://git.openstack.org \
-            openstack/python-monascaclient
-        cd openstack/python-monascaclient
-        echo "Using python-monascaclient $(git log -n 1 --oneline)"
-        client_location="file://$PWD#egg=python_monascaclient"
-        popd
-    else
-        echo "Using python-monascaclient@master"
-        client_location="git+https://git.openstack.org/openstack/python-monascaclient@master#egg=python_monascaclient"
-    fi
-    edit-constraints $localfile -- "python-monascaclient" "$client_location"
-    $install_cmd -U "$client_location"
-}
-
 set -e
 
 git config --global url.https://git.openstack.org/.insteadOf git://git.openstack.org/
@@ -72,7 +51,6 @@ fi
 # the current repo. It is listed in constraints file and thus any
 # install will be constrained and we need to unconstrain it.
 edit-constraints $localfile -- $PACKAGE_NAME "-e file://$PWD#egg=$PACKAGE_NAME"
-install_client_depends_on
 
 $install_cmd -U $*
 exit $?
