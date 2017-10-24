@@ -1,0 +1,619 @@
+# Andi Chandler <andi@gowling.com>, 2016. #zanata
+# Andi Chandler <andi@gowling.com>, 2017. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: monasca-ui 1.8.1.dev5\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
+"POT-Creation-Date: 2017-09-18 04:08+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-10-21 09:18+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
+"Language-Team: English (United Kingdom)\n"
+"Language: en-GB\n"
+"X-Generator: Zanata 3.9.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid ""
+"\n"
+"        Each alarm definition is defined by its expression composed out of:\n"
+"        mathematical function, metric, threshold and comparator for "
+"metric's\n"
+"        value and the threshold. Additionally it is possible to narrow\n"
+"        evaluation of the alarm to certain entities by choosing their\n"
+"        dimensions. The deterministic alarms never enter UNDETERMINED "
+"state.\n"
+"        Use them for metrics that are received sporadically.\n"
+"        "
+msgstr ""
+"\n"
+"        Each alarm definition is defined by its expression composed out of:\n"
+"        mathematical function, metric, threshold and comparator for "
+"metric's\n"
+"        value and the threshold. Additionally it is possible to narrow\n"
+"        evaluation of the alarm to certain entities by choosing their\n"
+"        dimensions. The deterministic alarms never enter UNDETERMINED "
+"state.\n"
+"        Use them for metrics that are received sporadically.\n"
+"        "
+
+msgid ""
+"\n"
+"        If for some transitions notifications should not be sent they can "
+"be\n"
+"        disabled.\n"
+"        "
+msgstr ""
+"\n"
+"        If for some transitions notifications should not be sent they can "
+"be\n"
+"        disabled.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Description field can be used to describe alarm definition's\n"
+"        purpose.\n"
+"        "
+msgstr ""
+"\n"
+"        The Description field can be used to describe alarm definition's\n"
+"        purpose.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"        The Name field is used to identify the alarm definition.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Notifications field contains the list of Notifications that "
+"should\n"
+"        be sent when transitioning to another state.\n"
+"        "
+msgstr ""
+"\n"
+"        The Notifications field contains the list of Notifications that "
+"should\n"
+"        be sent when transitioning to another state.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Severity field allows to specify the importance of alarm\n"
+"        definition.\n"
+"        "
+msgstr ""
+"\n"
+"        The Severity field allows to specify the importance of alarm\n"
+"        definition.\n"
+"        "
+
+msgid ""
+"\n"
+"      A non-zero value in the period field indicates how frequently a "
+"notification\n"
+"      should be resent (only valid for webhook urls).\n"
+"    "
+msgstr ""
+"\n"
+"      A non-zero value in the period field indicates how frequently a "
+"notification\n"
+"      should be resent (only valid for webhook URLs).\n"
+"    "
+
+msgid ""
+"\n"
+"      The Address field indicates the email address, URL, or PagerDuty "
+"service\n"
+"      key to be notified.\n"
+"    "
+msgstr ""
+"\n"
+"      The Address field indicates the email address, URL, or PagerDuty "
+"service\n"
+"      key to be notified.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"      See <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
+"\">Alarm Expressions</a> for how to write an expression.\n"
+"    "
+msgstr ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"      See <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
+"\">Alarm Expressions</a> for how to write an expression.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Name field is used to identify the notification method.\n"
+"    "
+msgstr ""
+"\n"
+"      The Name field is used to identify the notification method.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Notifications field contains the list of Notifications that should "
+"be sent when transitioning to another ALARM state.\n"
+"    "
+msgstr ""
+"\n"
+"      The Notifications field contains the list of Notifications that should "
+"be sent when transitioning to another ALARM state.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Type field indicates how the notification is sent when an alarm is "
+"triggered.\n"
+"    "
+msgstr ""
+"\n"
+"      The Type field indicates how the notification is sent when an alarm is "
+"triggered.\n"
+"    "
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+msgid "+ Add more"
+msgstr "+ Add more"
+
+msgid "---Please select---"
+msgstr "---Please select---"
+
+msgid "A description of an alarm."
+msgstr "A description of an alarm."
+
+msgid "A descriptive name of the notification method."
+msgstr "A descriptive name of the notification method."
+
+msgid "AND"
+msgstr "AND"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "Add a match by"
+msgstr "Add a match by"
+
+msgid "Address"
+msgstr "Address"
+
+msgid "Address must contain a valid URL address."
+msgstr "Address must contain a valid URL address."
+
+msgid "Address must contain a valid email address."
+msgstr "Address must contain a valid email address."
+
+msgid "Alarm"
+msgstr "Alarm"
+
+msgid "Alarm Actions"
+msgstr "Alarm Actions"
+
+msgid "Alarm Definition Details"
+msgstr "Alarm Definition Details"
+
+msgid "Alarm Definitions"
+msgstr "Alarm Definitions"
+
+msgid "Alarm Details"
+msgstr "Alarm Details"
+
+msgid "Alarm History"
+msgstr "Alarm History"
+
+msgid "Alarm ID"
+msgstr "Alarm ID"
+
+msgid "Alarm Id"
+msgstr "Alarm Id"
+
+msgid "Alarm Metric Dimensions"
+msgstr "Alarm Metric Dimensions"
+
+#, python-format
+msgid "Alarm definition %s has been created"
+msgstr "Alarm definition %s has been created"
+
+msgid "Alarm definition has been updated."
+msgstr "Alarm definition has been updated."
+
+#, python-format
+msgid "Alarm definition with %s name already exists"
+msgstr "Alarm definition with %s name already exists"
+
+msgid "Alarm has been created successfully."
+msgstr "Alarm has been created successfully."
+
+msgid "Alarm has been edited successfully."
+msgstr "Alarm has been edited successfully."
+
+msgid "Alarms"
+msgstr "Alarms"
+
+msgid "Alarms for "
+msgstr "Alarms for "
+
+msgid "All Alarms"
+msgstr "All Alarms"
+
+msgid "An alarm expression."
+msgstr "An alarm expression."
+
+msgid "An unique name of the alarm."
+msgstr "An unique name of the alarm."
+
+msgid "Browser local"
+msgstr "Browser local"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Could not retrieve alarm definitions"
+msgstr "Could not retrieve alarm definitions"
+
+#, python-format
+msgid "Could not retrieve alarm for %s"
+msgstr "Could not retrieve alarm for %s"
+
+#, python-format
+msgid "Could not retrieve alarm history for %s"
+msgstr "Could not retrieve alarm history for %s"
+
+msgid "Could not retrieve alarms"
+msgstr "Could not retrieve alarms"
+
+msgid "Could not retrieve notifications"
+msgstr "Could not retrieve notifications"
+
+msgid "Create Alarm"
+msgstr "Create Alarm"
+
+msgid "Create Alarm Definition"
+msgstr "Create Alarm Definition"
+
+msgid "Create Notification"
+msgstr "Create Notification"
+
+msgid "Create Notification Method"
+msgstr "Create Notification Method"
+
+msgid "Critical"
+msgstr "Critical"
+
+msgid "Delete Alarm"
+msgid_plural "Delete Alarms"
+msgstr[0] "Delete Alarm"
+msgstr[1] "Delete Alarms"
+
+msgid "Delete Alarm Definition"
+msgid_plural "Delete Alarm Definitions"
+msgstr[0] "Delete Alarm Definition"
+msgstr[1] "Delete Alarm Definitions"
+
+msgid "Delete Notification"
+msgid_plural "Delete Notifications"
+msgstr[0] "Delete Notification"
+msgstr[1] "Delete Notifications"
+
+msgid "Deleted Alarm"
+msgid_plural "Deleted Alarms"
+msgstr[0] "Deleted Alarm"
+msgstr[1] "Deleted Alarms"
+
+msgid "Deleted Alarm Definition"
+msgid_plural "Deleted Alarm Definitions"
+msgstr[0] "Deleted Alarm Definition"
+msgstr[1] "Deleted Alarm Definitions"
+
+msgid "Deleted Notification"
+msgid_plural "Deleted Notifications"
+msgstr[0] "Deleted Notification"
+msgstr[1] "Deleted Notifications"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Deterministic"
+msgstr "Deterministic"
+
+msgid "Dimension(s)"
+msgstr "Dimension(s)"
+
+msgid "Edit Alarm"
+msgstr "Edit Alarm"
+
+msgid "Edit Alarm Definition"
+msgstr "Edit Alarm Definition"
+
+msgid "Edit Alarm Definitions"
+msgstr "Edit Alarm Definitions"
+
+msgid "Edit Notification"
+msgstr "Edit Notification"
+
+msgid "Expression"
+msgstr "Expression"
+
+msgid "Failed to present alarm history"
+msgstr "Failed to present alarm history"
+
+msgid "Failed to validate name"
+msgstr "Failed to validate name"
+
+msgid "Filter Alarms"
+msgstr "Filter Alarms"
+
+msgid "Graph Metric"
+msgstr "Graph Metric"
+
+msgid "High"
+msgstr "High"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Key"
+msgstr "Key"
+
+msgid "Low"
+msgstr "Low"
+
+msgid "Match by"
+msgstr "Match by"
+
+msgid "Measurements for Alarms"
+msgstr "Measurements for Alarms"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Metric Dimensions"
+msgstr "Metric Dimensions"
+
+msgid "Metric Name"
+msgstr "Metric Name"
+
+msgid "Monitoring"
+msgstr "Monitoring"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "New State"
+msgstr "New State"
+
+msgid "Next Page"
+msgstr "Next Page"
+
+msgid "No notifications available."
+msgstr "No notifications available."
+
+msgid "None"
+msgstr "None"
+
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr "Notification %s has already been deleted."
+
+msgid "Notification Method Details"
+msgstr "Notification Method Details"
+
+msgid "Notification has been edited successfully."
+msgstr "Notification has been edited successfully."
+
+msgid "Notification method has been created successfully."
+msgstr "Notification method has been created successfully."
+
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+
+msgid "Notifications"
+msgstr "Notifications"
+
+msgid "Notifications Enabled"
+msgstr "Notifications Enabled"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "OK Actions"
+msgstr "OK Actions"
+
+msgid "OR"
+msgstr "OR"
+
+msgid "Old State"
+msgstr "Old State"
+
+msgid "OpenStack Services"
+msgstr "OpenStack Services"
+
+msgid "Overview"
+msgstr "Overview"
+
+msgid "Password must be between 8 and 18 characters."
+msgstr "Password must be between 8 and 18 characters."
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Period must be zero except for type webhook."
+msgstr "Period must be zero except for type webhook."
+
+msgid "Previous Page"
+msgstr "Previous Page"
+
+msgid "Reason"
+msgstr "Reason"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Save Notification"
+msgstr "Save Notification"
+
+msgid "Select Notification"
+msgstr "Select Notification"
+
+msgid "Servers"
+msgstr "Servers"
+
+msgid "Service :"
+msgstr "Service :"
+
+msgid "Service Health"
+msgstr "Service Health"
+
+msgid "Severity"
+msgstr "Severity"
+
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+msgstr ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+
+msgid "Show Alarm Definition"
+msgstr "Show Alarm Definition"
+
+msgid "Show History"
+msgstr "Show History"
+
+msgid "State"
+msgstr "State"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "The email/url address to notify."
+msgstr "The email/URL address to notify."
+
+msgid "The metric dimensions used to create unique alarms."
+msgstr "The metric dimensions used to create unique alarms."
+
+msgid "The notification period."
+msgstr "The notification period."
+
+msgid "The type of notification method (i.e. email)."
+msgstr "The type of notification method (i.e. email)."
+
+msgid "Timestamp"
+msgstr "Timestamp"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "UTC"
+msgstr "UTC"
+
+#, python-format
+msgid "Unable to create alarm definition %s"
+msgstr "Unable to create alarm definition %s"
+
+#, python-format
+msgid "Unable to create the alarm: %s"
+msgstr "Unable to create the alarm: %s"
+
+#, python-format
+msgid "Unable to create the notification method: %s"
+msgstr "Unable to create the notification method: %s"
+
+#, python-format
+msgid "Unable to delete notification: %s"
+msgstr "Unable to delete notification: %s"
+
+#, python-format
+msgid "Unable to edit the alarm: %s"
+msgstr "Unable to edit the alarm: %s"
+
+#, python-format
+msgid "Unable to edit the notification: %s"
+msgstr "Unable to edit the notification: %s"
+
+#, python-format
+msgid "Unable to list alarms: %s"
+msgstr "Unable to list alarms: %s"
+
+msgid "Unable to retrieve alarm details."
+msgstr "Unable to retrieve alarm details."
+
+msgid "Unable to retrieve metrics"
+msgstr "Unable to retrieve metrics"
+
+msgid "Unable to retrieve notification details."
+msgstr "Unable to retrieve notification details."
+
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr "Unable to retrieve notifications: %s"
+
+msgid "Undetermined"
+msgstr "Undetermined"
+
+msgid "Undetermined Actions"
+msgstr "Undetermined Actions"
+
+msgid "Unknown name"
+msgstr "Unknown name"
+
+#, python-format
+msgid "User %s does not have sufficient privileges to access Kibana"
+msgstr "User %s does not have sufficient privileges to access Kibana"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "avg"
+msgstr "avg"
+
+msgid "count"
+msgstr "count"
+
+msgid "last"
+msgstr "last"
+
+msgid "max"
+msgstr "max"
+
+msgid "min"
+msgstr "min"
+
+msgid "sum"
+msgstr "sum"
