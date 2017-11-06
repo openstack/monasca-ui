@@ -61,17 +61,48 @@ DASHBOARDS = getattr(settings, 'GRAFANA_LINKS', GRAFANA_LINKS)
 # For any Grafana version additional links to specific dashboards can be
 # created in two formats.
 # Flat:
-# GRAFANA_LINKS = [ {'title': _('Dashboard'), 'path': 'openstack'} ]
+# GRAFANA_LINKS = [ {'title': _('Dashboard'), 'path': 'openstack', 'raw': False} ]
 #
 # Per project: '*' will be applied to all projects not explicitly listed.
 # GRAFANA_LINKS = [
 #    {'admin': [
-#        {'title': _('Dashboard'), 'path': 'openstack'}]},
+#        {'title': _('Dashboard'), 'path': 'openstack', 'raw': False}]},
 #    {'*': [
-#        {'title': _('OpenStack Dashboard'), 'path': 'project'}]}
+#        {'title': _('OpenStack Dashboard'), 'path': 'project', 'raw': False}]}
 # ]
+#
+# If GRAFANA_URL is specified, the dashboard file name/raw URL must be
+# specified through the 'path' attribute as shown above.
+#
+# Flat:
+# GRAFANA_LINKS = [ {'title': _('Dashboard'), 'fileName': 'openstack.json', 'raw': False} ]
+#
+# GRAFANA_LINKS = [
+#    {'admin': [
+#        {'fileName': _('Dashboard'), 'fileName': 'openstack.json', 'raw': False}]},
+#    {'*': [
+#        {'title': _('OpenStack Dashboard'), 'fileName': 'project.json': False}]}
+# ]
+#
+# If GRAFANA_URL is unspecified the dashboard file name must be specified
+# through the fileName attribute.
+#
+# Both with and without GRAFANA_URL, the links have an optional 'raw' attribute
+# which defaults to False if unspecified. If it is False, the value of 'path'
+# (or 'fileName', respectively) is interpreted as a dashboard name and a link
+# to the dashboard based on the dashboard's name will be generated. If it is
+# True, the value of 'path' or 'fileName' will be treated as a URL to be used
+# verbatim.
+
+
 
 GRAFANA_URL = getattr(settings, 'GRAFANA_URL', None)
+
+# If GRAFANA_URL is specified, an additional link will be shown that points to
+# Grafana's list of dashboards. If you do not wish this, set SHOW_GRAFANA_HOME
+# to False (by default this setting is True and the link will thus be shown).
+
+SHOW_GRAFANA_HOME = getattr(settings, 'SHOW_GRAFANA_HOME', True)
 
 ENABLE_KIBANA_BUTTON = getattr(settings, 'ENABLE_KIBANA_BUTTON', False)
 KIBANA_POLICY_RULE = getattr(settings, 'KIBANA_POLICY_RULE',

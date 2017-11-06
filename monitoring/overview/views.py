@@ -240,10 +240,14 @@ class IndexView(TemplateView):
             api_root = self.request.build_absolute_uri(proxy_url_path)
             context["api"] = api_root
         context["dashboards"] = get_dashboard_links(self.request)
+        # Ensure all links have a 'raw' attribute
+        for link in context["dashboards"]:
+            link['raw'] = link.get('raw', False)
         context['can_access_logs'] = policy.check(
             ((getattr(settings, 'KIBANA_POLICY_SCOPE'), getattr(settings, 'KIBANA_POLICY_RULE')), ), self.request
         )
         context['enable_kibana_button'] = settings.ENABLE_KIBANA_BUTTON
+        context['show_grafana_home'] = settings.SHOW_GRAFANA_HOME
         return context
 
 
@@ -261,7 +265,9 @@ class MonascaProxyView(TemplateView):
             dimensions_str = req_kwargs['dimensions'][0]
             dimensions_str_array = dimensions_str.split(',')
             for dimension in dimensions_str_array:
-                dimension_name_value = dimension.split(':')
+                # limit splitting since value may contain a ':' such as in
+                # the `url` dimension of the service_status check.
+                dimension_name_value = dimension.split(':', 1)
                 if len(dimension_name_value) == 2:
                     name = dimension_name_value[0].encode('utf8')
                     value = dimension_name_value[1].encode('utf8')

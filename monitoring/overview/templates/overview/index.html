@@ -8,19 +8,29 @@
 {% block main %}
     <div style="padding: 3px;">
       {% if grafana_url %}
+      {% if show_grafana_home %}
       <a target="Grafana Home" href="{{grafana_url}}" class="btn btn-primary">
           <span class="fa fa-bar-chart"></span>
           Grafana Home
       </a>
+      {% endif %}
       {% for dashboard in dashboards %}
+      {% if dashboard.raw %}
+      <a target={{ dashboard.title }} href="{{ dashboard.path }}" class="btn btn-default">
+      {% else %}
       <a target={{ dashboard.title }} href="{{grafana_url}}/dashboard/db/{{ dashboard.path }}" class="btn btn-default">
+      {% endif %}
               <span class="fa fa-bar-chart"></span>
               {% trans dashboard.title %}
           </a>
       {% endfor %}
       {% else %}
       {% for dashboard in dashboards %}
+      {% if dashboard.raw %}
+      <a target={{ dashboard.title }} href="{{ dashboard.fileName }}" class="btn btn-default">
+      {% else %}
       <a target={{ dashboard.title }} href="/grafana/index.html#/dashboard/file/{{ dashboard.fileName }}?api={{api}}" class="btn btn-default">
+      {% endif %}
           <span class="fa fa-bar-chart"></span>
               {% trans dashboard.title %}
       </a>
