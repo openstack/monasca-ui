@@ -154,8 +154,8 @@ def notification_delete(request, notification_id):
 
 @profiler.trace
 def notification_get(request, notification_id):
-    return client.monascaclient(request).notifications. \
-        get(notification_id=notification_id)
+    return (client.monascaclient(request).notifications.
+            get(notification_id=notification_id))
 
 
 @profiler.trace
@@ -165,8 +165,8 @@ def notification_create(request, **kwargs):
 
 @profiler.trace
 def notification_update(request, notification_id, **kwargs):
-    return client.monascaclient(request).notifications. \
-        update(notification_id=notification_id, **kwargs)
+    return (client.monascaclient(request).notifications.
+            update(notification_id=notification_id, **kwargs))
 
 
 @profiler.trace
