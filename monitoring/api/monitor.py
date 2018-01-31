@@ -160,8 +160,7 @@ def notification_delete(request, notification_id):
 
 
 def notification_get(request, notification_id):
-    return monascaclient(request).notifications. \
-        get(notification_id=notification_id)
+    return monascaclient(request).notifications.get(notification_id=notification_id)
 
 
 def notification_create(request, **kwargs):
@@ -169,8 +168,7 @@ def notification_create(request, **kwargs):
 
 
 def notification_update(request, notification_id, **kwargs):
-    return monascaclient(request).notifications. \
-        update(notification_id=notification_id, **kwargs)
+    return monascaclient(request).notifications.update(notification_id=notification_id, **kwargs)
 
 
 def notification_type_list(request, **kwargs):
