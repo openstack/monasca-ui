@@ -8,9 +8,9 @@
 
 {% block modal-body %}
     <h3>{% trans "Description" %}:</h3>
-    <p>{% blocktrans %}
-      The Name field is used to identify the notification method.
-    {% endblocktrans %}</p>
+        <p>{% blocktrans %}
+          The Name field is used to identify the alarm definition.
+        {% endblocktrans %}</p>
     <p>{% blocktrans %}
       The Expression field  which if true, triggers a notification to be sent.
       See <a href="https://github.com/openstack/monasca-api/blob/master/docs/monasca-api-spec.md#alarm-definition-expressions" target="_blank">Alarm Expressions</a> for how to write an expression.
