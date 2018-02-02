@@ -2,6 +2,13 @@
 {% load i18n %}
 {% block title %}{% trans 'Monitoring' %}{% endblock %}
 
+{% block breadcrumb_nav %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item-truncate">{% trans "Monitoring" %}</li>
+    <li class="breadcrumb-item-truncate active">{% trans "Overview" %}</li>
+  </ol>
+{% endblock %}
+
 {% block page_header %}
   {% include 'horizon/common/_page_header.html' with title=_("Monitoring") %}
 {% endblock page_header %}
