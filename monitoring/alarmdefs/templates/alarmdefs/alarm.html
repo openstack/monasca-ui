@@ -9,6 +9,13 @@
     <link href='{{ STATIC_URL }}monitoring/css/ng-tags-input.css' type="text/css" rel="stylesheet"/>
 {% endblock %}
 
+{% block breadcrumb_nav %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item-truncate">{% trans "Monitoring" %}</li>
+    <li class="breadcrumb-item-truncate active">{% trans "Alarm Definitions" %}</li>
+  </ol>
+{% endblock %}
+
 {% block page_header %}
 {% include "horizon/common/_page_header.html" with title=_("Alarm Definitions") %}
 {% endblock page_header %}
