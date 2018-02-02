@@ -6,6 +6,14 @@
   {% include 'horizon/common/_page_header.html' with title=_("Notifications") %}
 {% endblock page_header %}
 {% load url from future %}
+
+{% block breadcrumb_nav %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item-truncate">{% trans "Monitoring" %}</li>
+    <li class="breadcrumb-item-truncate active">{% trans "Notifications" %}</li>
+  </ol>
+{% endblock %}
+
 {% block main %}
     {{ table.render }}
 <div class="pagination">

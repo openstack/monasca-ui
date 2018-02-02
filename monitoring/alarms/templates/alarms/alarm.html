@@ -3,7 +3,6 @@
 {% load url from future %}
 
 {% block title %}{% trans 'Alarms' %}{% endblock %}
-
 {% block page_header %}
   {% if service != 'all'%}
     <div class="page-header">
@@ -13,6 +12,13 @@
   {% include "horizon/common/_page_header.html" with title=_("All Alarms") %}
   {% endif %}
 {% endblock page_header %}
+
+{% block breadcrumb_nav %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item-truncate">{% trans "Monitoring" %}</li>
+    <li class="breadcrumb-item-truncate active">{% trans "Alarms" %}</li>
+  </ol>
+{% endblock %}
 
 {% block main %}
     {{ table.render }}
