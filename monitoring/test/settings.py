@@ -125,3 +125,8 @@ NOSE_ARGS = ['--nocapture',
              '--cover-inclusive',
              '--with-xunit',
              '--all-modules']
+
+
+OPENSTACK_SSL_NO_VERIFY = False
+
+OPENSTACK_SSL_CACERT = '/etc/ssl/certs/some2.crt'
