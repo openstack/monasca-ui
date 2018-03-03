@@ -1,6 +1,4 @@
-# Andi Chandler <andi@gowling.com>, 2016. #zanata
-# Andi Chandler <andi@gowling.com>, 2017. #zanata
-# Andi Chandler <andi@gowling.com>, 2018. #zanata
+# suhartono <cloudsuhartono@gmail.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
@@ -9,12 +7,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-02-01 09:54+0000\n"
-"Last-Translator: Andi Chandler <andi@gowling.com>\n"
-"Language-Team: English (United Kingdom)\n"
-"Language: en_GB\n"
+"PO-Revision-Date: 2018-03-02 01:55+0000\n"
+"Last-Translator: suhartono <cloudsuhartono@gmail.com>\n"
+"Language-Team: Indonesian\n"
+"Language: id\n"
 "X-Generator: Zanata 4.3.3\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
 msgid ""
 "\n"
@@ -22,8 +20,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"          The Name field is used to identify the alarm definition.\n"
-"        "
+"Name field digunakan untuk mengidentifikasi definisi alarm.        "
 
 msgid ""
 "\n"
@@ -38,14 +35,14 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        Each alarm definition is defined by its expression composed out of:\n"
-"        mathematical function, metric, threshold and comparator for "
-"metric's\n"
-"        value and the threshold. Additionally it is possible to narrow\n"
-"        evaluation of the alarm to certain entities by choosing their\n"
-"        dimensions. The deterministic alarms never enter UNDETERMINED "
-"state.\n"
-"        Use them for metrics that are received sporadically.\n"
+"Setiap definisi alarm didefinisikan oleh ekspresinya yang terdiri dari:\n"
+"         fungsi matematis, metrik, ambang batas dan komparator untuk nilai "
+"metrik\n"
+"         dan ambang batas. Selain itu adalah mungkin untuk mempersempit\n"
+"         evaluasi alarm untuk entitas tertentu dengan memilih\n"
+"         dimensinya. Alarm deterministik tidak pernah masuk status "
+"UNDETERMINED.\n"
+"         Gunakan mereka untuk metrik yang diterima secara sporadis.\n"
 "        "
 
 msgid ""
@@ -56,10 +53,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        If for some transitions notifications should not be sent they can "
-"be\n"
-"        disabled.\n"
-"        "
+"Jika untuk beberapa notifikasi transisi seharusnya tidak terkirim, mereka "
+"dapat di non aktif."
 
 msgid ""
 "\n"
@@ -68,8 +63,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        The Description field can be used to describe alarm definition's\n"
-"        purpose.\n"
+"Description field dapat digunakan untuk menjelaskan tujuan definisi alarm.\n"
 "        "
 
 msgid ""
@@ -78,8 +72,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        The Name field is used to identify the alarm definition.\n"
-"        "
+"Name field digunakan untuk mengidentifikasi definisi alarm.        "
 
 msgid ""
 "\n"
@@ -89,9 +82,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        The Notifications field contains the list of Notifications that "
-"should\n"
-"        be sent when transitioning to another state.\n"
+"Notifications field berisi daftar Notifications yang seharusnya\n"
+"         dikirim saat beralih ke status bagian lain.\n"
 "        "
 
 msgid ""
@@ -101,8 +93,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        The Severity field allows to specify the importance of alarm\n"
-"        definition.\n"
+"Severity field memungkinkan untuk menentukan pentingnya definisi alarm.\n"
 "        "
 
 msgid ""
@@ -113,9 +104,9 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      A non-zero value in the period field indicates how frequently a "
-"notification\n"
-"      should be resent (only valid for webhook URLs).\n"
+"Nilai non-zero pada Period field menunjukkan seberapa sering sebuah "
+"notifikasi\n"
+"       harus dikirim ulang (hanya berlaku untuk url webhook).\n"
 "    "
 
 msgid ""
@@ -126,9 +117,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      The Address field indicates the email address, URL, or PagerDuty "
-"service\n"
-"      key to be notified.\n"
+"Address field menunjukkan alamat email, URL, atau PagerDuty\n"
+"       kunci layanan untuk diberitahu\n"
 "    "
 
 msgid ""
@@ -141,11 +131,10 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      The Expression field  which if true, triggers a notification to be "
-"sent.\n"
-"      See <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"Expression field jika benar, memicu notifikasi untuk dikirim.\n"
+"       Lihat <a href=\"https://github.com/openstack/monasca-api/blob/master/"
 "docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
-"\">Alarm Expressions</a> for how to write an expression.\n"
+"\">Alarm Expressions</a> untuk bagaimana menulis sebuah ekspresi.\n"
 "    "
 
 msgid ""
@@ -154,8 +143,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      The Name field is used to identify the notification method.\n"
-"    "
+"Name field digunakan untuk mengidentifikasi metode notifikasi.    "
 
 msgid ""
 "\n"
@@ -164,8 +152,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      The Notifications field contains the list of Notifications that should "
-"be sent when transitioning to another ALARM state.\n"
+"Notifications field berisi daftar Notifications yang harus dikirim saat "
+"beralih ke status ALARM lainnya.\n"
 "    "
 
 msgid ""
@@ -175,9 +163,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      The Type field indicates how the notification is sent when an alarm is "
-"triggered.\n"
-"    "
+"Type field menunjukkan bagaimana notifikasi dikirim saat alarm dipicu.    "
 
 #, python-format
 msgid "%s"
@@ -190,10 +176,10 @@ msgid "---Please select---"
 msgstr "---Please select---"
 
 msgid "A description of an alarm."
-msgstr "A description of an alarm."
+msgstr "Penjelasan alarm"
 
 msgid "A descriptive name of the notification method."
-msgstr "A descriptive name of the notification method."
+msgstr "Nama deskriptif dari metode notifikasi."
 
 msgid "AND"
 msgstr "AND"
@@ -202,28 +188,28 @@ msgid "Add"
 msgstr "Add"
 
 msgid "Add a match by"
-msgstr "Add a match by"
+msgstr "Tambahkan kecocokan dengan"
 
 msgid "Address"
 msgstr "Address"
 
 msgid "Address must contain a valid URL address."
-msgstr "Address must contain a valid URL address."
+msgstr "Alamat harus berisi alamat URL yang valid."
 
 msgid "Address must contain a valid email address."
-msgstr "Address must contain a valid email address."
+msgstr "Alamat harus berisi alamat email yang valid."
 
 msgid "Alarm"
 msgstr "Alarm"
 
 msgid "Alarm Actions"
-msgstr "Alarm Actions"
+msgstr "Tindakan Alarm"
 
 msgid "Alarm Definition Details"
 msgstr "Alarm Definition Details"
 
 msgid "Alarm Definitions"
-msgstr "Alarm Definitions"
+msgstr "Definisi alarm"
 
 msgid "Alarm Details"
 msgstr "Alarm Details"
@@ -242,38 +228,38 @@ msgstr "Alarm Metric Dimensions"
 
 #, python-format
 msgid "Alarm definition %s has been created"
-msgstr "Alarm definition %s has been created"
+msgstr "Alarm definition %s telah dibuat"
 
 msgid "Alarm definition has been updated."
-msgstr "Alarm definition has been updated."
+msgstr "Definisi alarm telah diperbarui."
 
 #, python-format
 msgid "Alarm definition with %s name already exists"
-msgstr "Alarm definition with %s name already exists"
+msgstr "Definisi alarm dengan nama %s sudah ada"
 
 msgid "Alarm has been created successfully."
-msgstr "Alarm has been created successfully."
+msgstr "Alarm telah berhasil dibuat."
 
 msgid "Alarm has been edited successfully."
-msgstr "Alarm has been edited successfully."
+msgstr "Alarm telah berhasil diedit."
 
 msgid "Alarms"
-msgstr "Alarms"
+msgstr "Alarm"
 
 msgid "Alarms for "
-msgstr "Alarms for "
+msgstr "Alarm untuk"
 
 msgid "All Alarms"
-msgstr "All Alarms"
+msgstr "Semua Alarms"
 
 msgid "An alarm expression."
-msgstr "An alarm expression."
+msgstr "Sebuah ekspresi alarm."
 
 msgid "An unique name of the alarm."
-msgstr "An unique name of the alarm."
+msgstr "Nama unik dari alarm."
 
 msgid "Browser local"
-msgstr "Browser local"
+msgstr "Browser lokal"
 
 msgid "Cancel"
 msgstr "Cancel"
@@ -282,27 +268,27 @@ msgid "Close"
 msgstr "Close"
 
 msgid "Could not retrieve alarm definitions"
-msgstr "Could not retrieve alarm definitions"
+msgstr "Tidak dapat mengambil definisi alarm"
 
 #, python-format
 msgid "Could not retrieve alarm for %s"
-msgstr "Could not retrieve alarm for %s"
+msgstr "Tidak dapat mengambil alarm untuk %s"
 
 #, python-format
 msgid "Could not retrieve alarm history for %s"
-msgstr "Could not retrieve alarm history for %s"
+msgstr "Tidak dapat mengambil riwayat alarm untuk %s"
 
 msgid "Could not retrieve alarms"
-msgstr "Could not retrieve alarms"
+msgstr "Tidak dapat mengambil alarm"
 
 msgid "Could not retrieve notifications"
-msgstr "Could not retrieve notifications"
+msgstr "Tidak dapat mengambil notifikasi"
 
 msgid "Create Alarm"
 msgstr "Create Alarm"
 
 msgid "Create Alarm Definition"
-msgstr "Create Alarm Definition"
+msgstr "Buat Definisi Alarm"
 
 msgid "Create Notification"
 msgstr "Create Notification"
@@ -311,43 +297,37 @@ msgid "Create Notification Method"
 msgstr "Create Notification Method"
 
 msgid "Critical"
-msgstr "Critical"
+msgstr "Critical (kritis)"
 
 msgid "Delete Alarm"
 msgid_plural "Delete Alarms"
 msgstr[0] "Delete Alarm"
-msgstr[1] "Delete Alarms"
 
 msgid "Delete Alarm Definition"
 msgid_plural "Delete Alarm Definitions"
 msgstr[0] "Delete Alarm Definition"
-msgstr[1] "Delete Alarm Definitions"
 
 msgid "Delete Notification"
 msgid_plural "Delete Notifications"
 msgstr[0] "Delete Notification"
-msgstr[1] "Delete Notifications"
 
 msgid "Deleted Alarm"
 msgid_plural "Deleted Alarms"
 msgstr[0] "Deleted Alarm"
-msgstr[1] "Deleted Alarms"
 
 msgid "Deleted Alarm Definition"
 msgid_plural "Deleted Alarm Definitions"
 msgstr[0] "Deleted Alarm Definition"
-msgstr[1] "Deleted Alarm Definitions"
 
 msgid "Deleted Notification"
 msgid_plural "Deleted Notifications"
 msgstr[0] "Deleted Notification"
-msgstr[1] "Deleted Notifications"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Deskripsi"
 
 msgid "Details"
-msgstr "Details"
+msgstr "Rincian"
 
 msgid "Deterministic"
 msgstr "Deterministic"
@@ -359,7 +339,7 @@ msgid "Edit Alarm"
 msgstr "Edit Alarm"
 
 msgid "Edit Alarm Definition"
-msgstr "Edit Alarm Definition"
+msgstr "Edit Definisi Alarm"
 
 msgid "Edit Alarm Definitions"
 msgstr "Edit Alarm Definitions"
@@ -368,13 +348,13 @@ msgid "Edit Notification"
 msgstr "Edit Notification"
 
 msgid "Expression"
-msgstr "Expression"
+msgstr "Ekspresi"
 
 msgid "Failed to present alarm history"
-msgstr "Failed to present alarm history"
+msgstr "Gagal menampilkan riwayat alarm"
 
 msgid "Failed to validate name"
-msgstr "Failed to validate name"
+msgstr "Gagal memvalidasi nama"
 
 msgid "Filter Alarms"
 msgstr "Filter Alarms"
@@ -383,7 +363,7 @@ msgid "Graph Metric"
 msgstr "Graph Metric"
 
 msgid "High"
-msgstr "High"
+msgstr "High (tinggi)"
 
 msgid "Info"
 msgstr "Info"
@@ -392,16 +372,16 @@ msgid "Key"
 msgstr "Key"
 
 msgid "Low"
-msgstr "Low"
+msgstr "Low (rendah)"
 
 msgid "Match by"
-msgstr "Match by"
+msgstr "Match by (cocok dengan)"
 
 msgid "Measurements for Alarms"
-msgstr "Measurements for Alarms"
+msgstr "Measurements untuk Alarms"
 
 msgid "Medium"
-msgstr "Medium"
+msgstr "Medium (sedang)"
 
 msgid "Metric Dimensions"
 msgstr "Metric Dimensions"
@@ -422,42 +402,42 @@ msgid "Next Page"
 msgstr "Next Page"
 
 msgid "No notifications available."
-msgstr "No notifications available."
+msgstr "Tidak ada pemberitahuan yang tersedia."
 
 msgid "None"
 msgstr "None"
 
 #, python-format
 msgid "Notification %s has already been deleted."
-msgstr "Notification %s has already been deleted."
+msgstr "Notifikasi %s telah dihapus."
 
 msgid "Notification Method Details"
 msgstr "Notification Method Details"
 
 msgid "Notification has been edited successfully."
-msgstr "Notification has been edited successfully."
+msgstr "Notifikasi berhasil diedit."
 
 msgid "Notification method has been created successfully."
-msgstr "Notification method has been created successfully."
+msgstr "Metode notifikasi telah berhasil dibuat."
 
 msgid ""
 "Notification methods. Notifications can be sent when an alarm state "
 "transition occurs."
 msgstr ""
-"Notification methods. Notifications can be sent when an alarm state "
-"transition occurs."
+"Metode pemberitahuan Pemberitahuan dapat dikirim saat terjadi transisi "
+"status alarm."
 
 msgid "Notifications"
-msgstr "Notifications"
+msgstr "Pemberitahuan"
 
 msgid "Notifications Enabled"
-msgstr "Notifications Enabled"
+msgstr "Pemberitahuan Diaktifkan"
 
 msgid "OK"
 msgstr "OK"
 
 msgid "OK Actions"
-msgstr "OK Actions"
+msgstr "OK Aksi"
 
 msgid "OR"
 msgstr "OR"
@@ -472,13 +452,13 @@ msgid "Overview"
 msgstr "Overview"
 
 msgid "Password must be between 8 and 18 characters."
-msgstr "Password must be between 8 and 18 characters."
+msgstr "Password harus antara 8 dan 18 karakter."
 
 msgid "Period"
 msgstr "Period"
 
 msgid "Period must be zero except for type webhook."
-msgstr "Period must be zero except for type webhook."
+msgstr "Periode harus nol kecuali untuk jenis webhook."
 
 msgid "Previous Page"
 msgstr "Previous Page"
@@ -508,14 +488,14 @@ msgid "Service Health"
 msgstr "Service Health"
 
 msgid "Severity"
-msgstr "Severity"
+msgstr "Severity (keparahan)"
 
 msgid ""
 "Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
 "is LOW."
 msgstr ""
-"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
-"is LOW."
+"Tingkat keparahan alarm. Harus berupa LOW, MEDIUM, HIGH or CRITICAL. Default "
+"adalah  LOW."
 
 msgid "Show Alarm Definition"
 msgstr "Show Alarm Definition"
@@ -533,16 +513,16 @@ msgid "Submit"
 msgstr "Submit"
 
 msgid "The email/url address to notify."
-msgstr "The email/URL address to notify."
+msgstr "Alamat email/url untuk diberitahu"
 
 msgid "The metric dimensions used to create unique alarms."
-msgstr "The metric dimensions used to create unique alarms."
+msgstr "Dimensi metrik digunakan untuk membuat alarm unik."
 
 msgid "The notification period."
-msgstr "The notification period."
+msgstr "Periode notifikasi."
 
 msgid "The type of notification method (i.e. email)."
-msgstr "The type of notification method (i.e. email)."
+msgstr "Jenis metode pemberitahuan (yaitu email)."
 
 msgid "Timestamp"
 msgstr "Timestamp"
@@ -555,57 +535,57 @@ msgstr "UTC"
 
 #, python-format
 msgid "Unable to create alarm definition %s"
-msgstr "Unable to create alarm definition %s"
+msgstr "Tidak dapat membuat definisi alarm %s"
 
 #, python-format
 msgid "Unable to create the alarm: %s"
-msgstr "Unable to create the alarm: %s"
+msgstr "Tidak dapat membuat alarm: %s"
 
 #, python-format
 msgid "Unable to create the notification method: %s"
-msgstr "Unable to create the notification method: %s"
+msgstr "Tidak dapat membuat metode notifikasi: %s"
 
 #, python-format
 msgid "Unable to delete notification: %s"
-msgstr "Unable to delete notification: %s"
+msgstr "Tidak dapat menghapus pemberitahuan: %s"
 
 #, python-format
 msgid "Unable to edit the alarm: %s"
-msgstr "Unable to edit the alarm: %s"
+msgstr "Tidak dapat mengedit alarm: %s"
 
 #, python-format
 msgid "Unable to edit the notification: %s"
-msgstr "Unable to edit the notification: %s"
+msgstr "Tidak dapat mengedit pemberitahuan: %s"
 
 #, python-format
 msgid "Unable to list alarms: %s"
-msgstr "Unable to list alarms: %s"
+msgstr "Tidak dapat menampilkan alarm: %s"
 
 msgid "Unable to retrieve alarm details."
-msgstr "Unable to retrieve alarm details."
+msgstr "Tidak dapat mengambil rincian alarm"
 
 msgid "Unable to retrieve metrics"
-msgstr "Unable to retrieve metrics"
+msgstr "Tidak dapat mengambil metrik"
 
 msgid "Unable to retrieve notification details."
-msgstr "Unable to retrieve notification details."
+msgstr "Tidak dapat mengambil detail notifikasi."
 
 #, python-format
 msgid "Unable to retrieve notifications: %s"
-msgstr "Unable to retrieve notifications: %s"
+msgstr "Tidak dapat mengambil notifikasi: %s"
 
 msgid "Undetermined"
 msgstr "Undetermined"
 
 msgid "Undetermined Actions"
-msgstr "Undetermined Actions"
+msgstr "Aksi yang Belum ditentukan"
 
 msgid "Unknown name"
-msgstr "Unknown name"
+msgstr "Nama tidak dikenal"
 
 #, python-format
 msgid "User %s does not have sufficient privileges to access Kibana"
-msgstr "User %s does not have sufficient privileges to access Kibana"
+msgstr "Pengguna %s tidak memiliki hak yang cukup untuk mengakses Kibana"
 
 msgid "Value"
 msgstr "Value"
