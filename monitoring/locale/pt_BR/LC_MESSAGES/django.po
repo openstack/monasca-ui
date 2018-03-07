@@ -1,0 +1,472 @@
+# Fernando Pimenta <fernando.c.pimenta@gmail.com>, 2018. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: monasca-ui VERSION\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
+"POT-Creation-Date: 2018-03-06 16:05+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-03-06 11:50+0000\n"
+"Last-Translator: Fernando Pimenta <fernando.c.pimenta@gmail.com>\n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"X-Generator: Zanata 4.3.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid ""
+"\n"
+"          The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"          O campo Nome é usado para identificar a definição do alarme.\n"
+"        "
+
+msgid ""
+"\n"
+"        If for some transitions notifications should not be sent they can "
+"be\n"
+"        disabled.\n"
+"        "
+msgstr ""
+"\n"
+"        Se por algumas transições as notificações não devam ser enviadas, "
+"elas podem ser\n"
+"        desativadas.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Description field can be used to describe alarm definition's\n"
+"        purpose.\n"
+"        "
+msgstr ""
+"\n"
+"        O campo Descrição pode ser usado para descrever o propósito das "
+"definições\n"
+"        do alarme.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"        O campo Nome é usado para identificar a definição do alarme.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Notifications field contains the list of Notifications that "
+"should\n"
+"        be sent when transitioning to another state.\n"
+"        "
+msgstr ""
+"\n"
+"        O campo Notificações contém a lista de Notificações que devem\n"
+"        ser enviadas quando da transição para outro estado.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Severity field allows to specify the importance of alarm\n"
+"        definition.\n"
+"        "
+msgstr ""
+"\n"
+"        O campo Severidade permite especificar a importância da definição\n"
+"        do alarme.\n"
+"        "
+
+msgid ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"      See <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
+"\">Alarm Expressions</a> for how to write an expression.\n"
+"    "
+msgstr ""
+"\n"
+"      O campo Expressão que se verdadeiro, dispara uma notificação a ser "
+"enviada.\n"
+"      Veja <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
+"\">Expressões de Alarme</a> para como escrever uma expressão.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Notifications field contains the list of Notifications that should "
+"be sent when transitioning to another ALARM state.\n"
+"    "
+msgstr ""
+"\n"
+"      O campo Notificações contém a lista de Notificações que devem ser "
+"enviadas quando em transição para outro estado de ALARM.\n"
+"    "
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+msgid "+ Add more"
+msgstr "+ Adicionar mais"
+
+msgid "---Please select---"
+msgstr "---Por favor, selecione---"
+
+msgid "A description of an alarm."
+msgstr "A descrição de um alarme."
+
+msgid "AND"
+msgstr "E"
+
+msgid "Add"
+msgstr "Adicionar"
+
+msgid "Add a match by"
+msgstr "Adicionar uma correspondência por"
+
+msgid "Address"
+msgstr "Endereço"
+
+msgid "Alarm"
+msgstr "Alarme"
+
+msgid "Alarm Actions"
+msgstr "Ações de Alarme"
+
+msgid "Alarm Definition Details"
+msgstr "Detalhes de Definição do Alarme"
+
+msgid "Alarm Definitions"
+msgstr "Definições de Alarme"
+
+msgid "Alarm Details"
+msgstr "Detalhes do Alarme"
+
+msgid "Alarm History"
+msgstr "Histórico do Alarme"
+
+msgid "Alarm ID"
+msgstr "ID do Alarme"
+
+msgid "Alarm Id"
+msgstr "ID do Alarme"
+
+msgid "Alarm Metric Dimensions"
+msgstr "Dimensões das Métricas do Alarme"
+
+#, python-format
+msgid "Alarm definition %s has been created"
+msgstr "A definição de alarme %s foi criada"
+
+msgid "Alarm definition has been updated."
+msgstr "A definição de alarme foi atualizada."
+
+#, python-format
+msgid "Alarm definition with %s name already exists"
+msgstr "Uma definição de alarme com nome %s já existe"
+
+msgid "Alarm has been created successfully."
+msgstr "O alarme foi criado com sucesso."
+
+msgid "Alarm has been edited successfully."
+msgstr "O alarme foi editado com sucesso."
+
+msgid "Alarms"
+msgstr "Alarmes"
+
+msgid "Alarms for "
+msgstr "Alarmes para"
+
+msgid "All Alarms"
+msgstr "Todos os Alarmes"
+
+msgid "An alarm expression."
+msgstr "Uma expressão de alarme."
+
+msgid "An unique name of the alarm."
+msgstr "Um nome único do alarme."
+
+msgid "Browser local"
+msgstr "Navegador local"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "Could not retrieve alarm definitions"
+msgstr "Não é possível obter as definições de alarme"
+
+#, python-format
+msgid "Could not retrieve alarm for %s"
+msgstr "Não foi possível obter o alarme para %s"
+
+#, python-format
+msgid "Could not retrieve alarm history for %s"
+msgstr "Não foi possível obter o histórico do alarme para %s"
+
+msgid "Could not retrieve alarms"
+msgstr "Não foi possível obter os alarmes"
+
+msgid "Create Alarm"
+msgstr "Criar Alarme"
+
+msgid "Create Alarm Definition"
+msgstr "Criar Definição de Alarme"
+
+msgid "Create Notification Method"
+msgstr "Criar Método de Notificação"
+
+msgid "Critical"
+msgstr "Crítica"
+
+msgid "Delete Alarm"
+msgid_plural "Delete Alarms"
+msgstr[0] "Excluir Alarme"
+msgstr[1] "Excluir Alarmes"
+
+msgid "Delete Alarm Definition"
+msgid_plural "Delete Alarm Definitions"
+msgstr[0] "Excluir Definição de Alarme"
+msgstr[1] "Excluir Definições de Alarme"
+
+msgid "Deleted Alarm"
+msgid_plural "Deleted Alarms"
+msgstr[0] "Alarme Excluído"
+msgstr[1] "Alarmes Excluídos"
+
+msgid "Deleted Alarm Definition"
+msgid_plural "Deleted Alarm Definitions"
+msgstr[0] "Definição de Alarme Excluída"
+msgstr[1] "Definições de Alarme Excluídas"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Details"
+msgstr "Detalhes"
+
+msgid "Deterministic"
+msgstr "Determinístico"
+
+msgid "Edit Alarm"
+msgstr "Editar Alarme"
+
+msgid "Edit Alarm Definition"
+msgstr "Editar Definição de Alarme"
+
+msgid "Edit Alarm Definitions"
+msgstr "Editar Definições do Alarme"
+
+msgid "Expression"
+msgstr "Expressão"
+
+msgid "Failed to present alarm history"
+msgstr "Falha ao apresentar o histórico do alarme"
+
+msgid "Failed to validate name"
+msgstr "Falha ao validar nome"
+
+msgid "Filter Alarms"
+msgstr "Filtrar Alarmes"
+
+msgid "Graph Metric"
+msgstr "Métrica Gráfica"
+
+msgid "High"
+msgstr "Alta"
+
+msgid "Info"
+msgstr "Informação"
+
+msgid "Key"
+msgstr "Chave"
+
+msgid "Low"
+msgstr "Baixa"
+
+msgid "Match by"
+msgstr "Coincidir por"
+
+msgid "Measurements for Alarms"
+msgstr "Medições para Alarmes"
+
+msgid "Medium"
+msgstr "Média"
+
+msgid "Metric Dimensions"
+msgstr "Dimensões da métrica"
+
+msgid "Metric Name"
+msgstr "Nome da Métrica"
+
+msgid "Monitoring"
+msgstr "Monitoramento"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "New State"
+msgstr "Novo Estado"
+
+msgid "Next Page"
+msgstr "Próxima Página"
+
+msgid "No notifications available."
+msgstr "Nenhuma notificação disponível."
+
+msgid "None"
+msgstr "Nenhum"
+
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr "A notificação %s já foi excluída."
+
+msgid "Notification Method Details"
+msgstr "Detalhes do Método de Notificação"
+
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr ""
+"Métodos de notificação.  As notificações podem ser enviadas quando uma "
+"transição de estado de um alarme ocorrer."
+
+msgid "Notifications"
+msgstr "Notificações"
+
+msgid "Notifications Enabled"
+msgstr "Notificações Ativadas"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "OK Actions"
+msgstr "Ações OK"
+
+msgid "OR"
+msgstr "OU"
+
+msgid "Old State"
+msgstr "Estado Antigo"
+
+msgid "Overview"
+msgstr "Visão Geral"
+
+msgid "Previous Page"
+msgstr "Página Anterior"
+
+msgid "Reason"
+msgstr "Motivo"
+
+msgid "Remove"
+msgstr "Remover"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Save Notification"
+msgstr "Salvar Notificação"
+
+msgid "Select Notification"
+msgstr "Selecionar Notificação"
+
+msgid "Severity"
+msgstr "Severidade"
+
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+msgstr ""
+"Severidade de um alarme. Pode ser BAIXA, MÉDIA, ALTA ou CRÍTICA. O padrão é "
+"BAIXA."
+
+msgid "Show Alarm Definition"
+msgstr "Mostrar Definição do Alarme"
+
+msgid "Show History"
+msgstr "Mostrar Histórico"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "The metric dimensions used to create unique alarms."
+msgstr "As dimensões da métrica utilizadas para criar alarmes únicos."
+
+msgid "Timestamp"
+msgstr "Timestamp"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "UTC"
+msgstr "UTC"
+
+#, python-format
+msgid "Unable to create alarm definition %s"
+msgstr "Não é possível criar a definição de alarme %s"
+
+#, python-format
+msgid "Unable to create the alarm: %s"
+msgstr "Não é possível criar o alarme: %s"
+
+#, python-format
+msgid "Unable to edit the alarm: %s"
+msgstr "Não é possível editar o alarme: %s"
+
+#, python-format
+msgid "Unable to list alarms: %s"
+msgstr "Não é possível listar os alarmes: %s"
+
+msgid "Unable to retrieve alarm details."
+msgstr "Não é possível obter detalhes do alarme."
+
+msgid "Unable to retrieve metrics"
+msgstr "Não é possível obter as métricas"
+
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr "Não é possível obter as notificações: %s"
+
+msgid "Undetermined"
+msgstr "Indeterminado"
+
+msgid "Undetermined Actions"
+msgstr "Ações Indeterminadas"
+
+msgid "Unknown name"
+msgstr "Nome desconhecido"
+
+msgid "Value"
+msgstr "Valor"
+
+msgid "avg"
+msgstr "média"
+
+msgid "count"
+msgstr "contador"
+
+msgid "last"
+msgstr "último"
+
+msgid "max"
+msgstr "máximo"
+
+msgid "min"
+msgstr "mínimo"
+
+msgid "sum"
+msgstr "soma"
