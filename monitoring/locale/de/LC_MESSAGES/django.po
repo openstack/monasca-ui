@@ -1,14 +1,15 @@
 # Frank Kloeker <eumel@arcor.de>, 2018. #zanata
+# Robert Simai <robert.simai@suse.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2018-03-06 16:04+0000\n"
+"POT-Creation-Date: 2018-03-20 12:17+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-02-10 09:29+0000\n"
-"Last-Translator: Frank Kloeker <eumel@arcor.de>\n"
+"PO-Revision-Date: 2018-03-20 02:34+0000\n"
+"Last-Translator: Robert Simai <robert.simai@suse.com>\n"
 "Language-Team: German\n"
 "Language: de\n"
 "X-Generator: Zanata 4.3.3\n"
@@ -172,6 +173,10 @@ msgstr ""
 "Alarm\n"
 "    ausgelöst wird."
 
+#, python-format
+msgid "%s"
+msgstr "%s"
+
 msgid "+ Add more"
 msgstr "+ Fügen Sie weitere hinzu"
 
@@ -205,8 +210,14 @@ msgstr "Die Adresse muss eine gültige E-Mail-Adresse enthalten."
 msgid "Alarm"
 msgstr "Alarm"
 
+msgid "Alarm Actions"
+msgstr "Alarmaktionen"
+
 msgid "Alarm Definition Details"
 msgstr "Details zur Alarmdefinition"
+
+msgid "Alarm Definitions"
+msgstr "Alarmdefinitionen"
 
 msgid "Alarm Details"
 msgstr "Alarmdetails"
@@ -226,6 +237,9 @@ msgstr "Alarm Metrische Abmessungen"
 #, python-format
 msgid "Alarm definition %s has been created"
 msgstr "Die Alarmdefinition %s wurde erstellt"
+
+msgid "Alarm definition has been updated."
+msgstr "Die Alarmdefinition wurde aktualisiert."
 
 #, python-format
 msgid "Alarm definition with %s name already exists"
@@ -261,6 +275,9 @@ msgstr "Stornieren"
 msgid "Close"
 msgstr "Schließen"
 
+msgid "Could not retrieve alarm definitions"
+msgstr "Alarmdefinitionen konnten nicht abgerufen werden"
+
 #, python-format
 msgid "Could not retrieve alarm for %s"
 msgstr "Der Alarm für %s konnte nicht abgerufen werden"
@@ -278,16 +295,27 @@ msgstr "Benachrichtigungen konnten nicht abgerufen werden"
 msgid "Create Alarm"
 msgstr "Alarm erstellen"
 
+msgid "Create Alarm Definition"
+msgstr "Alarmdefinition erstellen"
+
 msgid "Create Notification"
 msgstr "Benachrichtigung erstellen"
 
 msgid "Create Notification Method"
 msgstr "Benachrichtigungsmethode erstellen"
 
+msgid "Critical"
+msgstr "Kritisch"
+
 msgid "Delete Alarm"
 msgid_plural "Delete Alarms"
 msgstr[0] "Lösche Alarm"
 msgstr[1] "Lösche Alarme"
+
+msgid "Delete Alarm Definition"
+msgid_plural "Delete Alarm Definitions"
+msgstr[0] "Lösche Alarmdefinition"
+msgstr[1] "Lösche Alarmdefinitionen"
 
 msgid "Delete Notification"
 msgid_plural "Delete Notifications"
@@ -298,6 +326,11 @@ msgid "Deleted Alarm"
 msgid_plural "Deleted Alarms"
 msgstr[0] "Gelöschter Alarm"
 msgstr[1] "Gelöschte Alarme"
+
+msgid "Deleted Alarm Definition"
+msgid_plural "Deleted Alarm Definitions"
+msgstr[0] "Gelöschte Alarmdefinition"
+msgstr[1] "Gelöschte Alarmdefinitionen"
 
 msgid "Deleted Notification"
 msgid_plural "Deleted Notifications"
@@ -318,6 +351,9 @@ msgstr "Maß(e)"
 
 msgid "Edit Alarm"
 msgstr "Alarm bearbeiten"
+
+msgid "Edit Alarm Definition"
+msgstr "Alarmdefinition bearbeiten"
 
 msgid "Edit Alarm Definitions"
 msgstr "Bearbeiten Sie Alarmdefinitionen"
@@ -385,6 +421,10 @@ msgstr "Keine Benachrichtigungen verfügbar."
 msgid "None"
 msgstr "Keiner"
 
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr "Die Benachrichtigung %s wurde bereits gelöscht."
+
 msgid "Notification Method Details"
 msgstr "Details zur Benachrichtigungsmethode"
 
@@ -394,8 +434,24 @@ msgstr "Die Benachrichtigung wurde erfolgreich bearbeitet."
 msgid "Notification method has been created successfully."
 msgstr "Die Benachrichtigungsmethode wurde erfolgreich erstellt."
 
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr ""
+"Benachrichtigungsmethoden. Benachrichtigungen können gesendet werden, wenn "
+"ein Alarmstatusübergang auftritt."
+
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+msgid "Notifications Enabled"
+msgstr "Benachrichtigungen aktiviert"
+
 msgid "OK"
 msgstr "OK"
+
+msgid "OK Actions"
+msgstr "OK Aktionen"
 
 msgid "OR"
 msgstr "ODER"
@@ -444,6 +500,16 @@ msgstr "Dienst :"
 
 msgid "Service Health"
 msgstr "Dienste-Gesundheit"
+
+msgid "Severity"
+msgstr "Schwere"
+
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+msgstr ""
+"Schweregrad eines Alarms. Muss entweder LOW, MEDIUM, HIGH oder CRITICAL "
+"sein. Standard ist LOW."
 
 msgid "Show Alarm Definition"
 msgstr "Alarmdefinition anzeigen"
@@ -511,14 +577,24 @@ msgstr "Die Benachrichtigung kann nicht bearbeitet werden: %s"
 msgid "Unable to list alarms: %s"
 msgstr "Alarme können nicht aufgelistet werden: %s"
 
+msgid "Unable to retrieve alarm details."
+msgstr "Die Alarmdetails können nicht abgerufen werden."
+
 msgid "Unable to retrieve metrics"
 msgstr "Die Messwerte konnten nicht abgerufen werden"
 
 msgid "Unable to retrieve notification details."
 msgstr "Die Benachrichtigungsdetails konnten nicht abgerufen werden."
 
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr "Benachrichtigungen können nicht abgerufen werden: %s"
+
 msgid "Undetermined"
 msgstr "Unbestimmt"
+
+msgid "Undetermined Actions"
+msgstr "Unbestimmte Aktionen"
 
 msgid "Unknown name"
 msgstr "Unbekannter Name"
