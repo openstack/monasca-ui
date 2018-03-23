@@ -26,6 +26,7 @@ INDEX_URL = urlresolvers.reverse(
 
 
 class OverviewTest(helpers.TestCase):
+
     def test_index_get(self):
         res = self.client.get(INDEX_URL)
         self.assertTemplateUsed(

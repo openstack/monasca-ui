@@ -33,7 +33,6 @@ EDIT_URL = urlresolvers.reverse(
 
 
 class AlarmDefinitionsTest(helpers.TestCase):
-
     def test_alarmdefs_get(self):
         with patch('monitoring.api.monitor', **{
             'spec_set': ['alarmdef_list'],

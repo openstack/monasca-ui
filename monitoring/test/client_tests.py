@@ -59,7 +59,6 @@ def _expected_session_args(verify):
 
 
 class ClientTests(helpers.TestCase):
-
     @override_settings(OPENSTACK_SSL_NO_VERIFY=False)
     @override_settings(OPENSTACK_SSL_CACERT='/etc/ssl/certs/some.crt')
     def test_ssl_verify_with_cert(self):

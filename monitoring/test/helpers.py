@@ -31,12 +31,6 @@ warnings.filterwarnings('ignore', 'With-statements now directly support '
                         r'^tuskar_ui[.].*[._]tests$')
 
 
-def create_stubs(stubs_to_create=None):
-    if stubs_to_create is None:
-        stubs_to_create = {}
-    return helpers.create_stubs(stubs_to_create)
-
-
 class MonitoringTestsMixin(object):
     def _setup_test_data(self):
         super(MonitoringTestsMixin, self)._setup_test_data()
@@ -49,6 +43,7 @@ class MonitoringTestsMixin(object):
 @unittest.skipIf(os.environ.get('SKIP_UNITTESTS', False),
                  "The SKIP_UNITTESTS env variable is set.")
 class TestCase(MonitoringTestsMixin, helpers.TestCase):
+    use_mox = False
     pass
 
 

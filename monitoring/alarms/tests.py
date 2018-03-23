@@ -26,6 +26,7 @@ ALARMS_URL = urlresolvers.reverse(
 
 
 class AlarmsTest(helpers.TestCase):
+
     def test_alarms_get_by_dimension(self):
         with patch('monitoring.api.monitor', **{
             'spec_set': ['alarm_list_by_dimension'],

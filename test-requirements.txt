@@ -8,7 +8,6 @@ coverage!=4.4,>=4.0 # Apache-2.0
 django-nose>=1.4.4 # BSD
 mock>=2.0.0 # BSD
 funcsigs>=1.0.0;python_version=='2.7' or python_version=='2.6' # Apache-2.0
-mox3>=0.20.0 # Apache-2.0
 nodeenv>=0.9.4 # BSD
 nose>=1.3.7 # LGPL
 nose-exclude>=0.3.0 # LGPL
