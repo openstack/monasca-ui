@@ -20,6 +20,7 @@ from mock import Mock
 from mock import patch
 
 from monascaclient import client as mon_client
+from monascaclient import v2_0
 
 from monitoring.test import helpers
 from monitoring.api.client import _get_auth_params_from_request
@@ -142,7 +143,7 @@ class ClientTests(helpers.TestCase):
         mock_session.assert_called_with(_expected_session_args(cert))
 
     @patch('monascaclient.client.Client')
-    def test_client(self, mock_Client):
+    def test_api_monascaclient_calls_client_with_correct_parameters(self, mock_Client):
         with patch('openstack_dashboard.api.base.url_for',
                    side_effect=_mock_url_for):
             with patch('monitoring.api.client._get_auth_params_from_request',
@@ -158,3 +159,10 @@ class ClientTests(helpers.TestCase):
             token='22',
             user_domain_id=923,
             verify='/etc/ssl/certs/some2.crt')
+
+    def test_api_monascaclient_returns_correct_type(self):
+        with patch('openstack_dashboard.api.base.url_for',
+                   side_effect=_mock_url_for):
+            returned_api_client = api_mon_client(_mock_request())
+
+        self.assertIsInstance(returned_api_client, v2_0.Client)
