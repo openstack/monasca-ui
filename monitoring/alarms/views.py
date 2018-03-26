@@ -25,6 +25,7 @@ from django.utils.dateparse import parse_datetime
 from django.utils.translation import ugettext as _  # noqa
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View  # noqa
+import six
 
 from horizon import exceptions
 from horizon import forms
@@ -100,12 +101,12 @@ def generate_status(request):
         service_alarms = alarms_by_service.setdefault(service, [])
         service_alarms.append(a)
     for row in SERVICES:
-        row['name'] = unicode(row['name'])
+        row['name'] = six.text_type(row['name'])
         for service in row['services']:
             service_alarms = alarms_by_service.get(service['name'], [])
             service['class'] = get_status(service_alarms)
             service['icon'] = get_icon(service['class'])
-            service['display'] = unicode(service['display'])
+            service['display'] = six.text_type(service['display'])
     return SERVICES
 
 

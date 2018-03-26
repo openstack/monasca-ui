@@ -43,7 +43,7 @@ class KibanaProxyViewTest(helpers.TestCase):
 
     def test_get_relative_url_with_unicode(self):
         """Tests if it properly converts multibyte characters."""
-        import urlparse
+        from six.moves.urllib import parse as urlparse
 
         self.view.request = self.request_factory.get(
             '/', data={'a': 1, 'b': 2}

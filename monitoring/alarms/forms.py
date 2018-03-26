@@ -19,6 +19,7 @@ from django import forms as django_forms
 from django.template.loader import get_template
 from django.utils import html
 from django.utils.translation import ugettext_lazy as _  # noqa
+import six
 
 from horizon import exceptions
 from horizon import forms
@@ -116,7 +117,7 @@ class NotificationCreateWidget(forms.Select):
         output = '<table id="notification_table" ' + \
             'class="table table-condensed">'
         output += '<thead><tr><th>%s</th></tr></thead>' % \
-            unicode(_("Name"))
+            six.text_type(_("Name"))
         if value:
             idx = 1
             for notification in value:
@@ -143,7 +144,7 @@ class NotificationCreateWidget(forms.Select):
             output += '<td><a href="" id="remove_notif_button">X</a></td>'
             output += '</td></tr>'
         output += '</table>'
-        label = unicode(_("+ Add more"))
+        label = six.text_type(_("+ Add more"))
         output += '<a href="" id="add_notification_button">%s</a>' % (label)
         return html.format_html(output)
 
@@ -221,10 +222,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
         if notification_choices:
             if len(notification_choices) > 1:
                 notification_choices.insert(
-                    0, ("", unicode(_("Select Notification"))))
+                    0, ("", six.text_type(_("Select Notification"))))
         else:
             notification_choices.insert(
-                0, ("", unicode(_("No notifications available."))))
+                0, ("", six.text_type(_("No notifications available."))))
 
         self.fields['notifications'].choices = notification_choices
 

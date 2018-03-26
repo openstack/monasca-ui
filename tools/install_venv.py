@@ -22,6 +22,8 @@
 Installation script for the OpenStack Dashboard development virtualenv.
 """
 
+from __future__ import print_function
+
 import os
 import subprocess
 import sys
@@ -69,12 +71,12 @@ HAS_VIRTUALENV = bool(run_command(['which', 'virtualenv'],
 def check_dependencies():
     """Make sure virtualenv is in the path."""
 
-    print 'Checking dependencies...'
+    print('Checking dependencies...')
     if not HAS_VIRTUALENV:
-        print 'Virtual environment not found.'
+        print('Virtual environment not found.')
         # Try installing it via easy_install...
         if HAS_EASY_INSTALL:
-            print 'Installing virtualenv via easy_install...',
+            print('Installing virtualenv via easy_install...', end=' ')
             run_command(['easy_install', 'virtualenv'],
                         die_message='easy_install failed to install virtualenv'
                                     '\ndevelopment requires virtualenv, please'
@@ -84,28 +86,28 @@ def check_dependencies():
                     ' requires virtualenv, please install it using your'
                     ' favorite package management tool and ensure'
                     ' virtualenv is in your path')
-            print 'virtualenv installation done.'
+            print('virtualenv installation done.')
         else:
             die('easy_install not found.\n\nInstall easy_install'
                 ' (python-setuptools in ubuntu) or virtualenv by hand,'
                 ' then rerun.')
-    print 'dependency check done.'
+    print('dependency check done.')
 
 
 def create_virtualenv(venv=VENV):
     """Creates the virtual environment and installs PIP only into the
     virtual environment
     """
-    print 'Creating venv...',
+    print('Creating venv...', end=' ')
     run_command(['virtualenv', '-q', '--no-site-packages', VENV])
-    print 'done.'
-    print 'Installing pip in virtualenv...',
+    print('done.')
+    print('Installing pip in virtualenv...', end=' ')
     if not run_command([WITH_VENV, 'easy_install', 'pip']).strip():
         die("Failed to install pip.")
-    print 'done.'
-    print 'Installing distribute in virtualenv...'
+    print('done.')
+    print('Installing distribute in virtualenv...')
     pip_install('distribute>=0.6.24')
-    print 'done.'
+    print('done.')
 
 
 def pip_install(*args):
@@ -114,8 +116,8 @@ def pip_install(*args):
 
 
 def install_dependencies(venv=VENV):
-    print "Installing dependencies..."
-    print "(This may take several minutes, don't panic)"
+    print("Installing dependencies...")
+    print("(This may take several minutes, don't panic)")
     pip_install('-r', TEST_REQUIRES)
     pip_install('-r', PIP_REQUIRES)
 
@@ -127,7 +129,7 @@ def install_dependencies(venv=VENV):
 
 
 def install_horizon():
-    print 'Installing horizon module in development mode...'
+    print('Installing horizon module in development mode...')
     run_command([WITH_VENV, 'python', 'setup.py', 'develop'], cwd=ROOT)
 
 
@@ -140,7 +142,7 @@ can run:
 
 $ source .venv/bin/activate
 """
-    print summary
+    print(summary)
 
 
 def main():

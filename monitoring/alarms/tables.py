@@ -166,7 +166,7 @@ class GraphMetric(tables.LinkAction):
             metric = datum['metrics'][0]['name']
             dimensions = datum['metrics'][0].get('dimensions', {})
             query = "?metric=%s" % metric
-            for key, value in dimensions.iteritems():
+            for key, value in dimensions.items():
                 query += "&dim_%s=%s" % (key, value)
         except AttributeError:
             # Catches case where Grafana 2 is not enabled.
