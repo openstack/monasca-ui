@@ -13,10 +13,26 @@
   <dl>
     <dt>{% trans "Name" %}</dt>
     <dd>{{ alarm.alarm_definition.name|default:_("None") }}</dd>
+    <dt>{% trans "Associated Metrics" %}</dt>
+    <dd><ul>
     {% for metric in alarm.metrics %}
-    <dt>{% trans "Metric Name"  %} {{forloop.counter}}</dt>
-    <dd>{{ metric.name }}</dd>
+      {% if metric.dimensions %}
+        <li>
+          {{ metric.name }}
+          {
+          {% for k, v in metric.dimensions.items %}
+            {{ k }}={{ v }}
+            {% if not forloop.last %}
+              {{ ',' }}
+            {% endif %}
+          {% endfor %}
+          }
+        </li>
+      {% else %}
+        <li>{{ metric.name }}</li>
+      {% endif %}
     {% endfor %}
+    </ul></dd>
   </dl>
 
 {% endblock page_header %}
