@@ -67,7 +67,13 @@ def show_alarm_id(data):
 
 
 def show_metric_name(data):
-    return data['metrics'][0]['name']
+    if len(data['metrics']) > 1:
+        names = []
+        for metric in data['metrics']:
+            names.append(metric['name'])
+        return ', '.join(['%s' % (n) for n in names])
+    else:
+        return data['metrics'][0]['name']
 
 
 def show_def_name(data):
