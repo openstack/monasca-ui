@@ -19,6 +19,7 @@ from django.core.paginator import Paginator, EmptyPage
 from django.core.urlresolvers import reverse_lazy, reverse  # noqa
 from django.utils.translation import ugettext as _  # noqa
 from django.views.generic import TemplateView  # noqa
+import six
 
 from horizon import exceptions
 from horizon import forms
@@ -154,7 +155,7 @@ class AlarmDetailView(TemplateView):
                 except exc.HttpError:
                     msg = _("Notification %s has already been deleted.") % id
                     notifications.append({"id": id,
-                                          "name": unicode(msg),
+                                          "name": six.text_type(msg),
                                           "type": "",
                                           "address": ""})
 

@@ -16,8 +16,6 @@ import base64
 import copy
 import json
 import logging
-import urllib
-import urllib2
 
 from django import http
 from django.contrib import messages
@@ -29,6 +27,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView  # noqa
 from openstack_auth import utils as auth_utils
 from openstack_dashboard import policy
+import six
+from six.moves import urllib
 
 from horizon import exceptions
 
@@ -79,8 +79,8 @@ def get_dashboard_links(request):
     non_project_keys = {'fileName', 'title'}
     try:
         for project_link in settings.DASHBOARDS:
-            key = project_link.keys()[0]
-            value = project_link.values()[0]
+            key = list(project_link)[0]
+            value = list(project_link.values())[0]
             if key in non_project_keys:
                 #
                 # we're not indexed by project, just return
@@ -129,8 +129,8 @@ def get_monitoring_services(request):
     non_project_keys = {'name', 'groupBy'}
     try:
         for group in settings.MONITORING_SERVICES:
-            key = group.keys()[0]
-            value = group.values()[0]
+            key = list(group.keys())[0]
+            value = list(group.values())[0]
             if key in non_project_keys:
                 #
                 # we're not indexed by project, just return
@@ -194,7 +194,7 @@ def generate_status(request):
         service_alarms.append(a)
     monitoring_services = copy.deepcopy(get_monitoring_services(request))
     for row in monitoring_services:
-        row['name'] = unicode(row['name'])
+        row['name'] = six.text_type(row['name'])
         if 'groupBy' in row:
             alarms_by_group = {}
             for a in alarms:
@@ -220,7 +220,7 @@ def generate_status(request):
                 service_alarms = alarms_by_service.get(service['name'], [])
                 service['class'] = get_status(service_alarms)
                 service['icon'] = get_icon(service['class'])
-                service['display'] = unicode(service['display'])
+                service['display'] = six.text_type(service['display'])
     return monitoring_services
 
 
@@ -271,7 +271,7 @@ class MonascaProxyView(TemplateView):
                 if len(dimension_name_value) == 2:
                     name = dimension_name_value[0].encode('utf8')
                     value = dimension_name_value[1].encode('utf8')
-                    dim_dict[name] = urllib.unquote(value)
+                    dim_dict[name] = urllib.parse.unquote(value)
                 else:
                     raise Exception('Dimensions are malformed')
 
@@ -329,10 +329,10 @@ class StatusView(TemplateView):
                             content_type='application/json')
 
 
-class _HttpMethodRequest(urllib2.Request):
+class _HttpMethodRequest(urllib.request.Request):
 
     def __init__(self, method, url, **kwargs):
-        urllib2.Request.__init__(self, url, **kwargs)
+        urllib.request.Request.__init__(self, url, **kwargs)
         self.method = method
 
     def get_method(self):
@@ -359,15 +359,15 @@ class KibanaProxyView(generic.View):
             method, proxy_request_url, data=data, headers=headers
         )
         try:
-            response = urllib2.urlopen(proxy_request)
+            response = urllib.request.urlopen(proxy_request)
 
-        except urllib2.HTTPError as e:
+        except urllib.error.HTTPError as e:
             return http.HttpResponse(
                 e.read(),
                 status=e.code,
                 content_type=e.hdrs['content-type']
             )
-        except urllib2.URLError as e:
+        except urllib.error.URLError as e:
             return http.HttpResponse(e.reason, 404)
 
         else:
@@ -406,7 +406,7 @@ class KibanaProxyView(generic.View):
         return self.read(request.method, url, request.body, headers)
 
     def get_relative_url(self, url):
-        url = urllib.quote(url.encode('utf-8'))
+        url = urllib.parse.quote(url.encode('utf-8'))
         params_str = self.request.GET.urlencode()
 
         if params_str:
