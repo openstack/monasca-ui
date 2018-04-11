@@ -1,0 +1,11 @@
+- project:
+    check:
+      jobs:
+        - openstack-tox-lower-constraints:
+            required-projects:
+              - openstack/horizon
+    gate:
+      jobs:
+        - openstack-tox-lower-constraints:
+            required-projects:
+              - openstack/horizon
