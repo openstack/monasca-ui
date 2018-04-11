@@ -24,9 +24,9 @@ from django.utils.translation import ungettext_lazy
 from horizon import tables
 
 from monitoring.alarms import constants
+from monitoring import api
 from monitoring.config import local_settings
 from monitoring.overview import constants as ov_constants
-from monitoring import api
 
 
 STATUS = ["OK", "WARNING", "CRITICAL", "UNKNOWN"]
@@ -254,7 +254,7 @@ class AlarmsTable(tables.DataTable):
     def get_object_display(self, obj):
         return obj['id']
 
-    class Meta:
+    class Meta(object):
         name = "alarms"
         verbose_name = _("Alarms")
         row_actions = (GraphMetric,
@@ -285,6 +285,6 @@ class AlarmHistoryTable(tables.DataTable):
     def get_object_id(self, obj):
         return obj['alarm_id'] + obj['timestamp']
 
-    class Meta:
+    class Meta(object):
         name = "history"
         verbose_name = _("Alarm History")

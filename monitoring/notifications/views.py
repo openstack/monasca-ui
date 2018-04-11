@@ -13,8 +13,10 @@
 #    under the License.
 
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage
-from django.core.urlresolvers import reverse_lazy, reverse  # noqa
+from django.core.paginator import EmptyPage
+from django.core.paginator import Paginator
+from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext as _  # noqa
 
 from horizon import exceptions
@@ -22,10 +24,10 @@ from horizon import forms
 from horizon import tables
 from horizon.utils import functions as utils
 
+from monitoring import api
 from monitoring.notifications import constants
 from monitoring.notifications import forms as notification_forms
 from monitoring.notifications import tables as notification_tables
-from monitoring import api
 
 from openstack_dashboard import policy
 

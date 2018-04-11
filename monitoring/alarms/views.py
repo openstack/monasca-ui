@@ -16,15 +16,17 @@ import base64
 from datetime import timedelta
 import logging
 
-from django.conf import settings  # noqa
+from django.conf import settings
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage
-from django.core.urlresolvers import reverse_lazy, reverse  # noqa
+from django.core.paginator import EmptyPage
+from django.core.paginator import Paginator
+from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.utils.dateparse import parse_datetime
 from django.utils.translation import ugettext as _  # noqa
 from django.utils.translation import ugettext_lazy
-from django.views.generic import View  # noqa
+from django.views.generic import View
 import six
 
 from horizon import exceptions
@@ -297,10 +299,7 @@ class AlarmHistoryView(tables.DataTableView):
             page_offset = 0
         limit = utils.get_page_size(self.request)
         try:
-            results = api.monitor.alarm_history(self.request,
-                                            object_id,
-                                            page_offset,
-                                            limit)
+            results = api.monitor.alarm_history(self.request, object_id, page_offset, limit)
             paginator = Paginator(results, limit)
             contacts = paginator.page(1)
         except EmptyPage:

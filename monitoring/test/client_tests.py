@@ -22,10 +22,10 @@ from mock import patch
 from monascaclient import client as mon_client
 from monascaclient import v2_0
 
-from monitoring.test import helpers
 from monitoring.api.client import _get_auth_params_from_request
 from monitoring.api.client import _get_to_verify
 from monitoring.api.client import monascaclient as api_mon_client
+from monitoring.test import helpers
 
 
 def _mock_url_for(request, service_name):

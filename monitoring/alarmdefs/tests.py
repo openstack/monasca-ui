@@ -14,12 +14,12 @@
 # under the License.
 
 from django.core import urlresolvers
-from mock import patch, call  # noqa
+from mock import patch
 
-from monitoring.test import helpers
 from monitoring.alarmdefs import constants
 from monitoring.alarmdefs import views
 from monitoring.alarmdefs import workflows
+from monitoring.test import helpers
 
 
 INDEX_URL = urlresolvers.reverse(

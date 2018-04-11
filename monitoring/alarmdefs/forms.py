@@ -13,8 +13,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import json
 from itertools import chain
+import json
 
 from django.template.loader import get_template
 from django.utils.translation import ugettext as _  # noqa
@@ -23,8 +23,8 @@ from horizon import exceptions
 from horizon import forms
 from horizon import messages
 
-from monitoring import api
 from monitoring.alarmdefs import constants
+from monitoring import api
 
 
 def _get_metrics(request):
@@ -228,7 +228,8 @@ class EditAlarmForm(forms.SelfHandlingForm):
             notifications = []
             exceptions.handle(request,
                               _('Unable to retrieve notifications: %s') % e)
-        notification_choices = [(notification['id'], notification) for notification in notifications]
+        notification_choices = [
+            (notification['id'], notification) for notification in notifications]
 
         self.fields['notifications'].choices = notification_choices
 

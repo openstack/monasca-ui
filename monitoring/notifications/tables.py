@@ -105,7 +105,7 @@ class NotificationsTable(tables.DataTable):
     def get_object_display(self, obj):
         return obj['name']
 
-    class Meta:
+    class Meta(object):
         name = "notifications"
         verbose_name = _("Notifications")
         row_actions = (EditNotification, DeleteNotification, )

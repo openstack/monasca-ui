@@ -100,7 +100,7 @@ class AlarmsTable(tables.DataTable):
     def get_object_display(self, obj):
         return obj['name']
 
-    class Meta:
+    class Meta(object):
         name = "alarms"
         verbose_name = _("Alarm Definitions")
         row_actions = (EditAlarm,
