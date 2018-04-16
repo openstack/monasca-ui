@@ -4,11 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2018-03-20 12:17+0000\n"
+"POT-Creation-Date: 2018-04-16 05:54+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-03-20 02:34+0000\n"
+"PO-Revision-Date: 2018-04-13 12:56+0000\n"
 "Last-Translator: Robert Simai <robert.simai@suse.com>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -266,6 +266,9 @@ msgstr "Ein Alarmausdruck."
 msgid "An unique name of the alarm."
 msgstr "Ein eindeutiger Name des Alarms."
 
+msgid "Associated Metrics"
+msgstr "Verbundene Metriken"
+
 msgid "Browser local"
 msgstr "Browser lokal"
 
@@ -470,6 +473,9 @@ msgstr "Das Passwort muss zwischen 8 und 18 Zeichen lang sein."
 
 msgid "Period"
 msgstr "Zeitraum"
+
+msgid "Period must be 0 or 60."
+msgstr "Zeitraum muss 0 oder 60 sein."
 
 msgid "Period must be zero except for type webhook."
 msgstr "Die Periode muss null sein, außer für den Typ webhook."
