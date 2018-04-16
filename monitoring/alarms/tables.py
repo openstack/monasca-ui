@@ -66,14 +66,9 @@ def show_alarm_id(data):
     return data['id']
 
 
-def show_metric_name(data):
-    if len(data['metrics']) > 1:
-        names = []
-        for metric in data['metrics']:
-            names.append(metric['name'])
-        return ', '.join(['%s' % (n) for n in names])
-    else:
-        return data['metrics'][0]['name']
+def show_metric_names(data):
+    names = set(metric['name'] for metric in data['metrics'])
+    return ', '.join(names)
 
 
 def show_def_name(data):
@@ -248,8 +243,8 @@ class AlarmsTable(tables.DataTable):
                           filters=[show_status, template.defaultfilters.safe])
     name = tables.Column(transform=show_def_name, verbose_name=_('Name'))
     alarmId = tables.Column(transform=show_alarm_id, verbose_name=_('Alarm Id'))
-    metrics = tables.Column(transform=show_metric_name,
-                            verbose_name=_('Metric Name'))
+    metrics = tables.Column(transform=show_metric_names,
+                            verbose_name=_('Metric Names'))
     dimensions = tables.Column(transform=show_metric_dimensions,
                                verbose_name=_('Metric Dimensions'))
 
