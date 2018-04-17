@@ -15,7 +15,7 @@ from mock import patch, call  # noqa
 
 from monitoring.test import helpers
 from monitoring.alarms import constants
-
+from monitoring.alarms import tables
 
 INDEX_URL = urlresolvers.reverse(
     constants.URL_PREFIX + 'index')
@@ -47,3 +47,20 @@ class AlarmsTest(helpers.TestCase):
 
         self.assertTemplateUsed(
             res, 'monitoring/alarms/alarm.html')
+
+    def test_metric_conversion_single(self):
+        res = tables.show_metric_names({"metrics": [{"name": "mem.used_bytes"}]})
+        self.assertEqual(res, "mem.used_bytes")
+
+    def test_metric_conversion_multiple(self):
+        res = tables.show_metric_names({"metrics": [{"name": "mem.used_bytes"},
+                                                   {"name": "mem.total_bytes"}]})
+        table_res = res.split(', ')
+        self.assertEqual(len(table_res), 2)
+        self.assertTrue("mem.used_bytes" in table_res)
+        self.assertTrue("mem.total_bytes" in table_res)
+
+    def test_metric_conversion_unique(self):
+        res = tables.show_metric_names({"metrics": [{"name": "mem.used_bytes"},
+                                                   {"name": "mem.used_bytes"}]})
+        self.assertEqual(res, "mem.used_bytes")
