@@ -72,6 +72,7 @@ class BaseNotificationMethodForm(forms.SelfHandlingForm):
 
     def clean_period(self):
         '''Check to make sure period is zero unless type is WEBHOOK.
+
         For WEBHOOK period must be set to 0 or 60.
         '''
         data = self.cleaned_data
@@ -85,8 +86,8 @@ class BaseNotificationMethodForm(forms.SelfHandlingForm):
         return data['period']
 
     def clean_address(self):
-        '''Check to make sure address is the correct format depending on the
-        type of notification.
+        '''Check to make sure address is the correct format depending on the type of notification.
+
         '''
         data = self.cleaned_data
         if data['type'] == constants.NotificationType.EMAIL:

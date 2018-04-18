@@ -43,13 +43,13 @@ def alarm_list_by_dimension(request, dimensions, offset=0, limit=10000,
             dim_dict[item] = None
     if metric:
         result = client.monascaclient(request).alarms.list(offset=offset,
-                                                        limit=limit,
-                                                        metric_dimensions=dim_dict,
-                                                        metric_name=metric)
+                                                           limit=limit,
+                                                           metric_dimensions=dim_dict,
+                                                           metric_name=metric)
     else:
         result = client.monascaclient(request).alarms.list(offset=offset,
-                                                        limit=limit,
-                                                        metric_dimensions=dim_dict)
+                                                           limit=limit,
+                                                           metric_dimensions=dim_dict)
     return result['elements'] if type(result) is dict else result
 
 
@@ -67,8 +67,8 @@ def alarm_delete(request, alarm_id):
 @profiler.trace
 def alarm_history(request, alarm_id, offset=0, limit=10000):
     result = client.monascaclient(request).alarms.history(alarm_id=alarm_id,
-                                                       offset=offset,
-                                                       limit=limit)
+                                                          offset=offset,
+                                                          limit=limit)
     return result['elements'] if type(result) is dict else result
 
 

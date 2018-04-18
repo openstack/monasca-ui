@@ -53,9 +53,11 @@ def _get_endpoint(request):
 
 
 def _get_auth_params_from_request(request):
-    """Extracts the properties from the request object needed by the monascaclient
-    call below. These will be used to memoize the calls to monascaclient
+    """Extracts the properties from the request object needed by the monascaclient call below.
+
+     These will be used to memoize the calls to monascaclient
     """
+
     LOG.debug('Extracting intel from request')
     return (
         request.user.user_domain_id,

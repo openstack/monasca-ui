@@ -13,16 +13,16 @@
 # under the License.
 
 from django.utils.translation import ugettext_lazy as _  # noqa
-from django.views.decorators.debug import sensitive_variables  # noqa
+from django.views.decorators.debug import sensitive_variables
 
 from horizon import exceptions
 from horizon import forms
-from horizon import workflows
 from horizon.utils import memoized
+from horizon import workflows
 
-from monitoring import api
 from monitoring.alarmdefs import constants
 from monitoring.alarmdefs import forms as ad_forms
+from monitoring import api
 
 
 class SetAlarmNotificationsAction(workflows.Action):

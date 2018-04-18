@@ -17,14 +17,14 @@ import copy
 import json
 import logging
 
-from django import http
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponse  # noqa
+from django import http
+from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _  # noqa
-from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView  # noqa
+from django.views import generic
+from django.views.generic import TemplateView
 from openstack_auth import utils as auth_utils
 from openstack_dashboard import policy
 import six
@@ -32,8 +32,8 @@ from six.moves import urllib
 
 from horizon import exceptions
 
-from monitoring import api
 from monitoring.alarms import tables as alarm_tables
+from monitoring import api
 from monitoring.config import local_settings as settings
 from monitoring.overview import constants
 
@@ -244,7 +244,8 @@ class IndexView(TemplateView):
         for link in context["dashboards"]:
             link['raw'] = link.get('raw', False)
         context['can_access_logs'] = policy.check(
-            ((getattr(settings, 'KIBANA_POLICY_SCOPE'), getattr(settings, 'KIBANA_POLICY_RULE')), ), self.request
+            ((getattr(settings, 'KIBANA_POLICY_SCOPE'), getattr(settings, 'KIBANA_POLICY_RULE')), ),
+            self.request
         )
         context['enable_kibana_button'] = settings.ENABLE_KIBANA_BUTTON
         context['show_grafana_home'] = settings.SHOW_GRAFANA_HOME
@@ -255,7 +256,9 @@ class MonascaProxyView(TemplateView):
     template_name = ""
 
     def _convert_dimensions(self, req_kwargs):
-        """this method converts the dimension string
+        """Converts the dimension string service:monitoring into a dict
+
+        This method converts the dimension string
         service:monitoring  (requested by a query string arg)
         into a python dict that looks like
         {"service": "monitoring"} (used by monasca api calls)
@@ -310,7 +313,7 @@ class MonascaProxyView(TemplateView):
                                                     **req_kwargs)}
         if not results:
             LOG.warning("There was a request made for the path %s that"
-                     " is not supported." % restpath)
+                        " is not supported." % restpath)
             results = {}
         return HttpResponse(json.dumps(results),
                             content_type='application/json')
@@ -418,5 +421,6 @@ class KibanaProxyView(generic.View):
 
     def _can_access_kibana(self):
         return policy.check(
-            ((getattr(settings, 'KIBANA_POLICY_SCOPE'), getattr(settings, 'KIBANA_POLICY_RULE')), ), self.request
+            ((getattr(settings, 'KIBANA_POLICY_SCOPE'), getattr(settings, 'KIBANA_POLICY_RULE')), ),
+            self.request
         )

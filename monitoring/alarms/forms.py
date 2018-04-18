@@ -25,8 +25,8 @@ from horizon import exceptions
 from horizon import forms
 from horizon import messages
 
-from monitoring import api
 from monitoring.alarms import constants
+from monitoring import api
 
 
 class ExpressionWidget(forms.Widget):

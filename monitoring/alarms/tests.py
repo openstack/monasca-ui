@@ -11,11 +11,11 @@
 #  under the License.
 
 from django.core import urlresolvers
-from mock import patch, call  # noqa
+from mock import patch
 
-from monitoring.test import helpers
 from monitoring.alarms import constants
 from monitoring.alarms import tables
+from monitoring.test import helpers
 
 
 INDEX_URL = urlresolvers.reverse(
@@ -56,7 +56,7 @@ class AlarmsTest(helpers.TestCase):
 
     def test_metric_conversion_multiple(self):
         res = tables.show_metric_names({"metrics": [{"name": "mem.used_bytes"},
-                                                   {"name": "mem.total_bytes"}]})
+                                                    {"name": "mem.total_bytes"}]})
         table_res = res.split(', ')
         self.assertEqual(len(table_res), 2)
         self.assertTrue("mem.used_bytes" in table_res)
@@ -64,5 +64,5 @@ class AlarmsTest(helpers.TestCase):
 
     def test_metric_conversion_unique(self):
         res = tables.show_metric_names({"metrics": [{"name": "mem.used_bytes"},
-                                                   {"name": "mem.used_bytes"}]})
+                                                    {"name": "mem.used_bytes"}]})
         self.assertEqual(res, "mem.used_bytes")

@@ -14,11 +14,10 @@
 
 from django.core import urlresolvers
 from django.test import RequestFactory
-from mock import patch, call  # noqa
 
-from monitoring.test import helpers
 from monitoring.overview import constants
 from monitoring.overview import views
+from monitoring.test import helpers
 
 
 INDEX_URL = urlresolvers.reverse(
@@ -49,7 +48,7 @@ class KibanaProxyViewTest(helpers.TestCase):
             '/', data={'a': 1, 'b': 2}
         )
         expected_path = ('/elasticsearch/.kibana/search'
-                    '/New-Saved-Search%E3%81%82')
+                         '/New-Saved-Search%E3%81%82')
         expected_qs = {'a': ['1'], 'b': ['2']}
 
         url = self.view.get_relative_url(
