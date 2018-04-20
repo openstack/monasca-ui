@@ -53,7 +53,7 @@ http://docs.openstack.org/developer/horizon/quickstart.html#setup
 * Edit openstack_dashboard/local/local_settings.py to modify the OPENSTACK_HOST
 IP address to point to devstack.
 * Add monasca-client to requirements.txt. Get the latest version from
-https://pypi.python.org/pypi/python-monascaclient
+https://pypi.org/project/python-monascaclient
 * Link monasca into Horizon:
 
 ```
