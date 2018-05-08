@@ -1,7 +1,7 @@
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
 # Sayako Kondo <kondoh.sayako@jp.fujitsu.com>, 2016. #zanata
 # Shinya Kawabata <s-kawabata@wx.jp.nec.com>, 2016. #zanata
-# Shu Muto <shu-mutou@rf.jp.nec.com>, 2016. #zanata
+# Shu Muto <shu.mutow@gmail.com>, 2016. #zanata
 # haruki yamanashi <h.yamanashi@jp.fujitsu.com>, 2016. #zanata
 # haruki yamanashi <h.yamanashi@jp.fujitsu.com>, 2017. #zanata
 # haruki yamanashi <h.yamanashi@jp.fujitsu.com>, 2018. #zanata
@@ -9,16 +9,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2018-01-18 08:05+0000\n"
+"POT-Creation-Date: 2018-04-24 12:47+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-01-24 05:35+0000\n"
+"PO-Revision-Date: 2018-04-24 09:52+0000\n"
 "Last-Translator: haruki yamanashi <h.yamanashi@jp.fujitsu.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
-"X-Generator: Zanata 3.9.6\n"
+"X-Generator: Zanata 4.3.3\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+
+msgid ""
+"\n"
+"          The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"          名前フィールドは、アラーム定義を特定するために使用されます。"
 
 msgid ""
 "\n"
@@ -257,6 +265,9 @@ msgstr "アラーム条件式"
 msgid "An unique name of the alarm."
 msgstr "アラームの名前"
 
+msgid "Associated Metrics"
+msgstr "関連するメトリック"
+
 msgid "Browser local"
 msgstr "ローカルタイム"
 
@@ -386,6 +397,9 @@ msgid "Metric Dimensions"
 msgstr "ディメンション"
 
 msgid "Metric Name"
+msgstr "メトリック名"
+
+msgid "Metric Names"
 msgstr "メトリック名"
 
 msgid "Monitoring"
