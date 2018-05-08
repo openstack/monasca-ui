@@ -162,11 +162,15 @@ def get_monitoring_services(request):
 
 
 def show_by_dimension(data, dim_name):
-    if 'dimensions' in data['metrics'][0]:
-        dimensions = data['metrics'][0]['dimensions']
-        if dim_name in dimensions:
-            return str(data['metrics'][0]['dimensions'][dim_name].encode('utf-8'))
-    return ""
+    if 'metrics' in data:
+        dimensions = []
+        for metric in data['metrics']:
+            if 'dimensions' in metric:
+                if dim_name in metric['dimensions']:
+                    dimensions.append(str(metric['dimensions'][dim_name].encode('utf-8')))
+
+        return dimensions
+    return []
 
 
 def get_status(alarms):
@@ -198,10 +202,11 @@ def generate_status(request):
         if 'groupBy' in row:
             alarms_by_group = {}
             for a in alarms:
-                group = show_by_dimension(a, row['groupBy'])
-                if group:
-                    group_alarms = alarms_by_group.setdefault(group, [])
-                    group_alarms.append(a)
+                groups = show_by_dimension(a, row['groupBy'])
+                if groups:
+                    for group in groups:
+                        group_alarms = alarms_by_group.setdefault(group, [])
+                        group_alarms.append(a)
             services = []
             for group, group_alarms in alarms_by_group.items():
                 name = '%s=%s' % (row['groupBy'], group)
