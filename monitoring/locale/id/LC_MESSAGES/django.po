@@ -3,11 +3,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2018-03-06 16:04+0000\n"
+"POT-Creation-Date: 2018-04-25 08:39+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-03-02 01:55+0000\n"
+"PO-Revision-Date: 2018-05-09 04:46+0000\n"
 "Last-Translator: suhartono <cloudsuhartono@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id\n"
@@ -165,6 +165,10 @@ msgstr ""
 "\n"
 "Type field menunjukkan bagaimana notifikasi dikirim saat alarm dipicu.    "
 
+#, python-format
+msgid "%s"
+msgstr "%s"
+
 msgid "+ Add more"
 msgstr "+ Add more"
 
@@ -198,8 +202,14 @@ msgstr "Alamat harus berisi alamat email yang valid."
 msgid "Alarm"
 msgstr "Alarm"
 
+msgid "Alarm Actions"
+msgstr "Alarm Actions"
+
 msgid "Alarm Definition Details"
 msgstr "Alarm Definition Details"
+
+msgid "Alarm Definitions"
+msgstr "Alarm Definitions"
 
 msgid "Alarm Details"
 msgstr "Alarm Details"
@@ -219,6 +229,9 @@ msgstr "Alarm Metric Dimensions"
 #, python-format
 msgid "Alarm definition %s has been created"
 msgstr "Alarm definition %s telah dibuat"
+
+msgid "Alarm definition has been updated."
+msgstr "Definisi alarm telah diperbarui."
 
 #, python-format
 msgid "Alarm definition with %s name already exists"
@@ -245,6 +258,9 @@ msgstr "Sebuah ekspresi alarm."
 msgid "An unique name of the alarm."
 msgstr "Nama unik dari alarm."
 
+msgid "Associated Metrics"
+msgstr "Associated Metrics"
+
 msgid "Browser local"
 msgstr "Browser lokal"
 
@@ -253,6 +269,9 @@ msgstr "Cancel"
 
 msgid "Close"
 msgstr "Close"
+
+msgid "Could not retrieve alarm definitions"
+msgstr "Tidak dapat mengambil definisi alarm"
 
 #, python-format
 msgid "Could not retrieve alarm for %s"
@@ -271,15 +290,25 @@ msgstr "Tidak dapat mengambil notifikasi"
 msgid "Create Alarm"
 msgstr "Create Alarm"
 
+msgid "Create Alarm Definition"
+msgstr "Create Alarm Definition"
+
 msgid "Create Notification"
 msgstr "Create Notification"
 
 msgid "Create Notification Method"
 msgstr "Create Notification Method"
 
+msgid "Critical"
+msgstr "Critical"
+
 msgid "Delete Alarm"
 msgid_plural "Delete Alarms"
 msgstr[0] "Delete Alarm"
+
+msgid "Delete Alarm Definition"
+msgid_plural "Delete Alarm Definitions"
+msgstr[0] "Delete Alarm Definition"
 
 msgid "Delete Notification"
 msgid_plural "Delete Notifications"
@@ -288,6 +317,10 @@ msgstr[0] "Delete Notification"
 msgid "Deleted Alarm"
 msgid_plural "Deleted Alarms"
 msgstr[0] "Deleted Alarm"
+
+msgid "Deleted Alarm Definition"
+msgid_plural "Deleted Alarm Definitions"
+msgstr[0] "Deleted Alarm Definition"
 
 msgid "Deleted Notification"
 msgid_plural "Deleted Notifications"
@@ -307,6 +340,9 @@ msgstr "Dimension(s)"
 
 msgid "Edit Alarm"
 msgstr "Edit Alarm"
+
+msgid "Edit Alarm Definition"
+msgstr "Edit Alarm Definition"
 
 msgid "Edit Alarm Definitions"
 msgstr "Edit Alarm Definitions"
@@ -356,6 +392,9 @@ msgstr "Metric Dimensions"
 msgid "Metric Name"
 msgstr "Metric Name"
 
+msgid "Metric Names"
+msgstr "Metric Names"
+
 msgid "Monitoring"
 msgstr "Monitoring"
 
@@ -374,6 +413,10 @@ msgstr "Tidak ada pemberitahuan yang tersedia."
 msgid "None"
 msgstr "None"
 
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr "Notifikasi %s telah dihapus."
+
 msgid "Notification Method Details"
 msgstr "Notification Method Details"
 
@@ -383,8 +426,24 @@ msgstr "Notifikasi berhasil diedit."
 msgid "Notification method has been created successfully."
 msgstr "Metode notifikasi telah berhasil dibuat."
 
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr ""
+"Metode notifikasi. Notifikasi dapat dikirim ketika transisi status alarm "
+"terjadi."
+
+msgid "Notifications"
+msgstr "Notifikasi"
+
+msgid "Notifications Enabled"
+msgstr "Notifikasi Diaktifkan"
+
 msgid "OK"
 msgstr "OK"
+
+msgid "OK Actions"
+msgstr "OK Actions"
 
 msgid "OR"
 msgstr "OR"
@@ -433,6 +492,16 @@ msgstr "Service :"
 
 msgid "Service Health"
 msgstr "Service Health"
+
+msgid "Severity"
+msgstr "Severity"
+
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+msgstr ""
+"Tingkat keparahan alarm. Harus berada di LOW, MEDIUM, HIGH or CRITICAL. atau "
+"KRITIS. Default-nya LOW."
 
 msgid "Show Alarm Definition"
 msgstr "Show Alarm Definition"
@@ -498,14 +567,24 @@ msgstr "Tidak dapat mengedit pemberitahuan: %s"
 msgid "Unable to list alarms: %s"
 msgstr "Tidak dapat menampilkan alarm: %s"
 
+msgid "Unable to retrieve alarm details."
+msgstr "Tidak dapat mengambil detail alarm."
+
 msgid "Unable to retrieve metrics"
 msgstr "Tidak dapat mengambil metrik"
 
 msgid "Unable to retrieve notification details."
 msgstr "Tidak dapat mengambil detail notifikasi."
 
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr "Tidak dapat mengambil notifikasi: %s"
+
 msgid "Undetermined"
 msgstr "Undetermined"
+
+msgid "Undetermined Actions"
+msgstr "Undetermined Actions"
 
 msgid "Unknown name"
 msgstr "Nama tidak dikenal"
