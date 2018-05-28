@@ -22,7 +22,8 @@ LOG = log.getLogger(__name__)
 @profiler.trace
 def alarm_list(request, offset=0, limit=10000, marker=None, paginate=False):
     result = client.monascaclient(request).alarms.list(offset=offset,
-                                                       limit=limit)
+                                                       limit=limit,
+                                                       sort_by='alarm_definition_name')
     return result['elements'] if type(result) is dict else result
 
 
@@ -85,7 +86,8 @@ def alarm_patch(request, **kwargs):
 @profiler.trace
 def alarmdef_list(request, offset=0, limit=10000, marker=None, paginate=False):
     result = client.monascaclient(request).alarm_definitions.list(offset=offset,
-                                                                  limit=limit)
+                                                                  limit=limit,
+                                                                  sort_by='name')
     return result['elements'] if type(result) is dict else result
 
 
@@ -142,7 +144,8 @@ def alarmdef_patch(request, **kwargs):
 def notification_list(request, offset=0, limit=10000, marker=None,
                       paginate=False):
     result = client.monascaclient(request).notifications.list(offset=offset,
-                                                              limit=limit)
+                                                              limit=limit,
+                                                              sort_by='name')
     return result['elements'] if type(result) is dict else result
 
 
