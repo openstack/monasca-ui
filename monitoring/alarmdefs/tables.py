@@ -12,7 +12,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from django.core import urlresolvers
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _  # noqa
 from django.utils.translation import ungettext_lazy
 
@@ -31,8 +31,7 @@ class CreateAlarm(tables.LinkAction):
     ajax = True
 
     def get_link_url(self):
-        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_create',
-                                    args=())
+        return reverse(constants.URL_PREFIX + 'alarm_create', args=())
 
     def allowed(self, request, datum=None):
         return True
@@ -44,8 +43,7 @@ class EditAlarm(tables.LinkAction):
     classes = ("ajax-modal", "btn-create")
 
     def get_link_url(self, datum):
-        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_edit',
-                                    args=(datum['id'], ))
+        return reverse(constants.URL_PREFIX + 'alarm_edit', args=(datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True

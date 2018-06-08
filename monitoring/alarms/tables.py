@@ -15,9 +15,9 @@
 
 import json
 
-from django.core import urlresolvers
-from django.core.urlresolvers import reverse_lazy
 from django import template
+from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _  # noqa
 from django.utils.translation import ungettext_lazy
 
@@ -108,9 +108,8 @@ class ShowAlarmHistory(tables.LinkAction):
     classes = ('btn-edit',)
 
     def get_link_url(self, datum):
-        return urlresolvers.reverse(constants.URL_PREFIX + 'history',
-                                    args=(datum['alarm_definition']['id'],
-                                          datum['id'], ))
+        return reverse(constants.URL_PREFIX + 'history',
+                       args=(datum['alarm_definition']['id'], datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
@@ -125,8 +124,8 @@ class CreateAlarm(tables.LinkAction):
     ajax = True
 
     def get_link_url(self):
-        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_create',
-                                    args=(self.table.kwargs['service'],))
+        return reverse(constants.URL_PREFIX + 'alarm_create',
+                       args=(self.table.kwargs['service'],))
 
     def allowed(self, request, datum=None):
         return True
@@ -138,9 +137,8 @@ class EditAlarm(tables.LinkAction):
     classes = ("ajax-modal", "btn-create")
 
     def get_link_url(self, datum):
-        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_edit',
-                                    args=(self.table.kwargs['service'],
-                                          datum['id'], ))
+        return reverse(constants.URL_PREFIX + 'alarm_edit',
+                       args=(self.table.kwargs['service'], datum['id'], ))
 
     def allowed(self, request, datum=None):
         return True
@@ -191,7 +189,7 @@ class ShowAlarmDefinition(tables.LinkAction):
     def get_link_url(self, datum=None):
         url = 'horizon:monitoring:alarmdefs:alarm_detail'
         args = (datum['alarm_definition']['id'],)
-        return urlresolvers.reverse_lazy(url, args=args)
+        return reverse_lazy(url, args=args)
 
 
 class DeleteAlarm(tables.DeleteAction):
@@ -230,8 +228,7 @@ class AlarmsFilterAction(tables.LinkAction):
     ajax = True
 
     def get_link_url(self):
-        return urlresolvers.reverse(constants.URL_PREFIX + 'alarm_filter',
-                                    args=())
+        return reverse(constants.URL_PREFIX + 'alarm_filter', args=())
 
     def allowed(self, request, datum=None):
         return True

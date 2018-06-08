@@ -10,18 +10,18 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-from django.core import urlresolvers
+from django.urls import reverse
 from mock import patch
 
 from monitoring.notifications import constants
 from monitoring.test import helpers
 
 
-INDEX_URL = urlresolvers.reverse(
+INDEX_URL = reverse(
     constants.URL_PREFIX + 'index')
-CREATE_URL = urlresolvers.reverse(
+CREATE_URL = reverse(
     constants.URL_PREFIX + 'notification_create')
-EDIT_URL = urlresolvers.reverse(
+EDIT_URL = reverse(
     constants.URL_PREFIX + 'notification_edit', args=('12345',))
 
 

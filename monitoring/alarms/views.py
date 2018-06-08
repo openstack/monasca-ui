@@ -20,9 +20,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import EmptyPage
 from django.core.paginator import Paginator
-from django.core.urlresolvers import reverse
-from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.dateparse import parse_datetime
 from django.utils.translation import ugettext as _  # noqa
 from django.utils.translation import ugettext_lazy

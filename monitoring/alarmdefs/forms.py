@@ -91,7 +91,7 @@ class MatchByWidget(forms.Widget):
 
 class NotificationField(forms.MultiValueField):
     def __init__(self, *args, **kwargs):
-        super(NotificationField, self).__init__(*args, **kwargs)
+        super(NotificationField, self).__init__(fields=(), *args, **kwargs)
 
     def _get_choices(self):
         return self._choices

@@ -13,7 +13,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from django.core import urlresolvers
+from django.urls import reverse
 from mock import patch
 
 from monitoring.alarmdefs import constants
@@ -22,14 +22,10 @@ from monitoring.alarmdefs import workflows
 from monitoring.test import helpers
 
 
-INDEX_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'index')
-CREATE_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm_create', args=())
-DETAIL_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm_detail', args=('12345',))
-EDIT_URL = urlresolvers.reverse(
-    constants.URL_PREFIX + 'alarm_edit', args=('12345',))
+INDEX_URL = reverse(constants.URL_PREFIX + 'index')
+CREATE_URL = reverse(constants.URL_PREFIX + 'alarm_create', args=())
+DETAIL_URL = reverse(constants.URL_PREFIX + 'alarm_detail', args=('12345',))
+EDIT_URL = reverse(constants.URL_PREFIX + 'alarm_edit', args=('12345',))
 
 
 class AlarmDefinitionsTest(helpers.TestCase):

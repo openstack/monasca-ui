@@ -10,7 +10,7 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-from django.core import urlresolvers
+from django.urls import reverse
 from mock import patch
 
 from monitoring.alarms import constants
@@ -18,11 +18,11 @@ from monitoring.alarms import tables
 from monitoring.test import helpers
 
 
-INDEX_URL = urlresolvers.reverse(
+INDEX_URL = reverse(
     constants.URL_PREFIX + 'index')
-ALARMS_URL_BY_DIMENSION = urlresolvers.reverse(
+ALARMS_URL_BY_DIMENSION = reverse(
     constants.URL_PREFIX + 'alarm', args=('nova',))
-ALARMS_URL = urlresolvers.reverse(
+ALARMS_URL = reverse(
     constants.URL_PREFIX + 'alarm', args=('all',))
 
 
