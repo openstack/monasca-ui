@@ -124,5 +124,3 @@ directory of this project:
 ::
 
    $ tox -e py27,py35
-
-.. _Team and repository tags: https://governance.openstack.org/tc/reference/tags/index.html
