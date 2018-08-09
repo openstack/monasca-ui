@@ -1,0 +1,415 @@
+# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Ian Y. Choi <ianyrchoi@gmail.com>, 2018. #zanata
+# Sungjin Kang <gang.sungjin@gmail.com>, 2018. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: monasca-ui VERSION\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
+"POT-Creation-Date: 2018-07-05 07:12+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-08-05 04:16+0000\n"
+"Last-Translator: Sungjin Kang <gang.sungjin@gmail.com>\n"
+"Language-Team: Korean (South Korea)\n"
+"Language: ko_KR\n"
+"X-Generator: Zanata 4.3.3\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+msgid ""
+"\n"
+"        The Description field can be used to describe alarm definition's\n"
+"        purpose.\n"
+"        "
+msgstr ""
+"\n"
+"        설명 필드는 알람 정의 목적을 설명하는데 사용할 수\n"
+"        있습니다.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"        이름 필드는 알림 정의를 식별하는데 사용됩니다.\n"
+"        "
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+msgid "+ Add more"
+msgstr "+ 더 추가"
+
+msgid "---Please select---"
+msgstr "---선택 해주세요---"
+
+msgid "A description of an alarm."
+msgstr "알람에 대한 설명입니다."
+
+msgid "AND"
+msgstr "AND"
+
+msgid "Add"
+msgstr "추가"
+
+msgid "Address"
+msgstr "주소"
+
+msgid "Alarm"
+msgstr "알람"
+
+msgid "Alarm Actions"
+msgstr "알람 동작"
+
+msgid "Alarm Definition Details"
+msgstr "알람 정의 세부 사항"
+
+msgid "Alarm Definitions"
+msgstr "알람 정의"
+
+msgid "Alarm Details"
+msgstr "알람 상세 정보"
+
+msgid "Alarm History"
+msgstr "알람 이력"
+
+msgid "Alarm ID"
+msgstr "알람 ID"
+
+msgid "Alarm Id"
+msgstr "알람 Id"
+
+msgid "Alarm Metric Dimensions"
+msgstr "알람 메트릭 치수"
+
+#, python-format
+msgid "Alarm definition %s has been created"
+msgstr "알람 정의 %s 가 생성되었습니다."
+
+msgid "Alarm definition has been updated."
+msgstr "알람 정의가 업데이트 되었습니다."
+
+#, python-format
+msgid "Alarm definition with %s name already exists"
+msgstr "%s 이름으로 되어있는 알람 정의가 이미 있습니다."
+
+msgid "Alarm has been created successfully."
+msgstr "알람을 성공적으로 생성하였습니다."
+
+msgid "Alarm has been edited successfully."
+msgstr "알람을 성공적으로 수정하였습니다."
+
+msgid "Alarms"
+msgstr "알람"
+
+msgid "Alarms for "
+msgstr "에 대한 알람"
+
+msgid "All Alarms"
+msgstr "모든 알람"
+
+msgid "An alarm expression."
+msgstr "알람 표현식."
+
+msgid "An unique name of the alarm."
+msgstr "알람에 대한 고유한 이름."
+
+msgid "Associated Metrics"
+msgstr "연관된 메트릭"
+
+msgid "Browser local"
+msgstr "브라우저 로컬"
+
+msgid "Cancel"
+msgstr "취소"
+
+msgid "Close"
+msgstr "닫기"
+
+msgid "Could not retrieve alarm definitions"
+msgstr "알람 정의를 찾을 수 없습니다."
+
+#, python-format
+msgid "Could not retrieve alarm history for %s"
+msgstr "%s 에 대한 알람 내역을 찾을 수 없습니다"
+
+msgid "Could not retrieve alarms"
+msgstr "알람을 찾지 못했습니다"
+
+msgid "Create Alarm"
+msgstr "알람 생성"
+
+msgid "Create Alarm Definition"
+msgstr "알람 정의 생성"
+
+msgid "Create Notification"
+msgstr "알림 생성"
+
+msgid "Critical"
+msgstr "Critical"
+
+msgid "Delete Alarm"
+msgid_plural "Delete Alarms"
+msgstr[0] "알람 삭제"
+
+msgid "Delete Alarm Definition"
+msgid_plural "Delete Alarm Definitions"
+msgstr[0] "알람 정의 삭제"
+
+msgid "Delete Notification"
+msgid_plural "Delete Notifications"
+msgstr[0] "알림 삭제"
+
+msgid "Deleted Alarm"
+msgid_plural "Deleted Alarms"
+msgstr[0] "알람 삭제됨"
+
+msgid "Deleted Alarm Definition"
+msgid_plural "Deleted Alarm Definitions"
+msgstr[0] "삭제된 알람 정의"
+
+msgid "Deleted Notification"
+msgid_plural "Deleted Notifications"
+msgstr[0] "알림 삭제됨"
+
+msgid "Description"
+msgstr "설명"
+
+msgid "Details"
+msgstr "상세 정보"
+
+msgid "Deterministic"
+msgstr "Deterministic"
+
+msgid "Edit Alarm"
+msgstr "알람 수정"
+
+msgid "Edit Alarm Definition"
+msgstr "알람 정의 수정"
+
+msgid "Edit Alarm Definitions"
+msgstr "알람 정의 수정"
+
+msgid "Edit Notification"
+msgstr "알림 수정"
+
+msgid "Expression"
+msgstr "표현식"
+
+msgid "Failed to validate name"
+msgstr "이름을 확인하지 못했습니다."
+
+msgid "Filter Alarms"
+msgstr "알람 필터"
+
+msgid "Graph Metric"
+msgstr "그래프 메트릭"
+
+msgid "High"
+msgstr "높음"
+
+msgid "Info"
+msgstr "정보"
+
+msgid "Key"
+msgstr "키"
+
+msgid "Low"
+msgstr "낮음"
+
+msgid "Match by"
+msgstr "일치"
+
+msgid "Medium"
+msgstr "보통"
+
+msgid "Metric Dimensions"
+msgstr "메트릭 치수"
+
+msgid "Metric Name"
+msgstr "메트릭 이름"
+
+msgid "Metric Names"
+msgstr "메트릭 이름"
+
+msgid "Monitoring"
+msgstr "모니터링"
+
+msgid "Name"
+msgstr "이름"
+
+msgid "New State"
+msgstr "새 상태"
+
+msgid "Next Page"
+msgstr "다음 페이지"
+
+msgid "None"
+msgstr "None"
+
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr "알림 %s 가 이미 삭제되었습니다."
+
+msgid "Notification Method Details"
+msgstr "알림 메소드 상세 정보"
+
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr "알림 방식. 알림은 알람 상태 변경이 일어날 때 전송됩니다."
+
+msgid "Notifications"
+msgstr "알림"
+
+msgid "Notifications Enabled"
+msgstr "알림 활성화됨"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "OK Actions"
+msgstr "OK 동작"
+
+msgid "OR"
+msgstr "OR"
+
+msgid "Old State"
+msgstr "이전 상태"
+
+msgid "OpenStack Services"
+msgstr "OpenStack 서비스"
+
+msgid "Overview"
+msgstr "개요"
+
+msgid "Password must be between 8 and 18 characters."
+msgstr "비밀번호는 8 ~ 18자 사이어야 합니다."
+
+msgid "Period"
+msgstr "기간"
+
+msgid "Previous Page"
+msgstr "이전 페이지"
+
+msgid "Reason"
+msgstr "원인"
+
+msgid "Remove"
+msgstr "제거"
+
+msgid "Save"
+msgstr "저장"
+
+msgid "Save Notification"
+msgstr "알림 저장"
+
+msgid "Select Notification"
+msgstr "알림 선택"
+
+msgid "Servers"
+msgstr "서버"
+
+msgid "Service :"
+msgstr "서비스:"
+
+msgid "Severity"
+msgstr "심각도"
+
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+msgstr ""
+"알람에 대한 심각도입니다. LOW, MEDIUM, HIGH, CRITICAL 중 하나이어야 합니다. "
+"디폴트는 LOW 입니다."
+
+msgid "Show Alarm Definition"
+msgstr "알람 정의 확인"
+
+msgid "Show History"
+msgstr "이력 확인"
+
+msgid "State"
+msgstr "상태"
+
+msgid "Status"
+msgstr "상태"
+
+msgid "Submit"
+msgstr "제출"
+
+msgid "The metric dimensions used to create unique alarms."
+msgstr "유일한 알람을 생성하는데 사용하기 위한 계량적 부피"
+
+msgid "Timestamp"
+msgstr "타임스탬프"
+
+msgid "Type"
+msgstr "타입"
+
+msgid "UTC"
+msgstr "UTC"
+
+#, python-format
+msgid "Unable to create alarm definition %s"
+msgstr "알람 정의 %s 를 생성할 수 없습니다."
+
+#, python-format
+msgid "Unable to create the alarm: %s"
+msgstr "알람을 생성할 수 없습니다: %s"
+
+#, python-format
+msgid "Unable to delete notification: %s"
+msgstr "알림 삭제를 할 수 없습니다: %s"
+
+#, python-format
+msgid "Unable to edit the alarm: %s"
+msgstr "알람을 수정할 수 없습니다: %s"
+
+#, python-format
+msgid "Unable to list alarms: %s"
+msgstr "알람 목록을 불러오지 못했습니다: %s"
+
+msgid "Unable to retrieve alarm details."
+msgstr "알람 세부 정보를 찾을 수 없습니다."
+
+msgid "Unable to retrieve metrics"
+msgstr "측정 항목을 찾을 수 없습니다."
+
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr "알림 %s 를 찾을 수 없습니다."
+
+msgid "Undetermined Actions"
+msgstr "정해지지 않은 동작"
+
+msgid "Unknown name"
+msgstr "알 수 없는 이름"
+
+#, python-format
+msgid "User %s does not have sufficient privileges to access Kibana"
+msgstr "사용자 %s 에게 Kibana 에 접근하기 위한 충분한 권한이 없습니다."
+
+msgid "Value"
+msgstr "값"
+
+msgid "avg"
+msgstr "avg"
+
+msgid "count"
+msgstr "count"
+
+msgid "last"
+msgstr "last"
+
+msgid "max"
+msgstr "max"
+
+msgid "min"
+msgstr "min"
+
+msgid "sum"
+msgstr "sum"
