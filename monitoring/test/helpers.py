@@ -43,7 +43,6 @@ class MonitoringTestsMixin(object):
 @unittest.skipIf(os.environ.get('SKIP_UNITTESTS', False),
                  "The SKIP_UNITTESTS env variable is set.")
 class TestCase(MonitoringTestsMixin, helpers.TestCase):
-    use_mox = False
     pass
 
 
