@@ -10,21 +10,43 @@ monasca-ui
 Monasca UI is implemented as a Horizon plugin that adds panels to
 Horizon. It is installed into devstack by the monasca-api plugin.
 
-Deployment Set Up
-=================
+Devstack Deployment Set Up
+==========================
 
--  Clone Horizon:
-   ``git clone https://git.openstack.org/openstack/horizon.git``
-
--  ``cd horizon``
+-  ``cd /opt/stack/horizon``
+-  Install Openstack upper-constraints requirements
+   ``pip install -c https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt -r requirements.txt``
+-  Clone monasca-ui:
+   ``git clone https://git.openstack.org/openstack/monasca-ui.git``
 -  Add ``git+https://git.openstack.org/openstack/monasca-ui.git`` to
    ``requirements.txt``.
+-  Install monasca-ui required packages
+   ``pip install -r requirements.txt`` (monasca-client packages will be installed.)
 -  Edit ``openstack_dashboard/settings.py`` to include the following two
    lines:
 
    -  ``import monitoring.enabled``
    -  ``monitoring.enabled,`` (Add this line to the
-      ``settings.update_dashboards`` list.)
+      ``settings_utils.update_dashboards`` list.)
+-  Link monasca into Horizon:
+
+::
+
+   ln -sf $(pwd)/../monasca-ui/monitoring/enabled/_50_admin_add_monitoring_panel.py \
+       $(pwd)/openstack_dashboard/enabled/_50_admin_add_monitoring_panel.py
+   ln -sf $(pwd)/../monasca-ui/monitoring/conf/monitoring_policy.json \
+       $(pwd)/openstack_dashboard/conf/monitoring_policy.json
+   ln -sfF $(pwd)/../monasca-ui/monitoring $(pwd)/monitoring
+
+-  Collect static files, run tests
+
+::
+
+   python manage.py collectstatic --noinput
+   python manage.py compress
+   ./run_tests.sh
+
+-  Restart apache service ``service apache2 restart``
 
 Development Environment Set Up
 ==============================
