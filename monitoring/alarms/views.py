@@ -163,7 +163,7 @@ class AlarmServiceView(tables.DataTableView):
                 try:
                     if self.service[:3] == 'b64':
                         name, value = self.service.split(":")
-                        self.service = base64.urlsafe_b64decode(str(value))
+                        self.service = base64.urlsafe_b64decode(str(value)).decode('utf-8')
                     results = api.monitor.alarm_list_by_dimension(self.request,
                                                                   self.service,
                                                                   page_offset,

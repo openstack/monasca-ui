@@ -167,7 +167,9 @@ def show_by_dimension(data, dim_name):
         for metric in data['metrics']:
             if 'dimensions' in metric:
                 if dim_name in metric['dimensions']:
-                    dimensions.append(str(metric['dimensions'][dim_name].encode('utf-8')))
+                    dimension = metric['dimensions'][dim_name] if six.PY3 \
+                        else metric['dimensions'][dim_name].encode('utf-8')
+                    dimensions.append(dimension)
 
         return dimensions
     return []
@@ -211,7 +213,9 @@ def generate_status(request):
             for group, group_alarms in alarms_by_group.items():
                 name = '%s=%s' % (row['groupBy'], group)
                 # Encode as base64url to be able to include '/'
-                name = 'b64:' + base64.urlsafe_b64encode(name)
+                # encoding and decoding is required because of python3 compatibility
+                # urlsafe_b64encode requires byte-type text
+                name = 'b64:' + base64.urlsafe_b64encode(name.encode('utf-8')).decode('utf-8')
                 service = {
                     'display': group,
                     'name': name,
