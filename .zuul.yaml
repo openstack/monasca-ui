@@ -1,22 +1,7 @@
 - project:
     templates:
-      - openstack-python-jobs-horizon
       - check-requirements
-    check:
-      jobs:
-        - openstack-tox-lower-constraints
-        - openstack-tox-py35:
-            required-projects:
-              - openstack/horizon
-        - openstack-tox-py36:
-            required-projects:
-              - openstack/horizon
-    gate:
-      jobs:
-        - openstack-tox-lower-constraints
-        - openstack-tox-py35:
-            required-projects:
-              - openstack/horizon
-        - openstack-tox-py36:
-            required-projects:
-              - openstack/horizon
+      - openstack-lower-constraints-jobs
+      - openstack-python-jobs-horizon
+      - openstack-python35-jobs-horizon
+      - openstack-python36-jobs-horizon
