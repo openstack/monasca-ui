@@ -104,7 +104,9 @@ GRAFANA_URL = getattr(settings, 'GRAFANA_URL', None)
 
 SHOW_GRAFANA_HOME = getattr(settings, 'SHOW_GRAFANA_HOME', True)
 
-ENABLE_KIBANA_BUTTON = getattr(settings, 'ENABLE_KIBANA_BUTTON', False)
+ENABLE_LOG_MANAGEMENT_BUTTON = getattr(settings, 'ENABLE_LOG_MANAGEMENT_BUTTON', False)
+ENABLE_EVENT_MANAGEMENT_BUTTON = getattr(settings, 'ENABLE_EVENT_MANAGEMENT_BUTTON', False)
+
 KIBANA_POLICY_RULE = getattr(settings, 'KIBANA_POLICY_RULE',
                              'monitoring:kibana_access')
 KIBANA_POLICY_SCOPE = getattr(settings, 'KIBANA_POLICY_SCOPE',
