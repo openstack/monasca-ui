@@ -78,8 +78,8 @@ def _get_to_verify(insecure, cacert):
     return to_verify
 
 
-@memoized.memoized_with_request(_get_auth_params_from_request)
-def monascaclient(request_auth_params, version=None):
+@memoized.memoized
+def monascaclient(request, version=None):
 
     (
         user_domain_id,
@@ -88,7 +88,7 @@ def monascaclient(request_auth_params, version=None):
         project_domain_id,
         monasca_url,
         auth_url
-    ) = request_auth_params
+    ) = _get_auth_params_from_request(request)
 
     # NOTE(trebskit) this is bit hacky, we should
     # go straight into using numbers as version representation
