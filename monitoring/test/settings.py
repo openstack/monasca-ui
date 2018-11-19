@@ -32,7 +32,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.messages',
     'django.contrib.humanize',
-    'django_nose',
     'openstack_auth',
     'compressor',
     'horizon',
@@ -118,14 +117,6 @@ SECURITY_GROUP_RULES = {
         'to_port': '80',
     },
 }
-
-NOSE_ARGS = ['--nocapture',
-             '--nologcapture',
-             '--cover-package=monitoring',
-             '--cover-inclusive',
-             '--with-xunit',
-             '--all-modules']
-
 
 OPENSTACK_SSL_NO_VERIFY = False
 
