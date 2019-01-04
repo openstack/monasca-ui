@@ -103,8 +103,8 @@ Set up Grafana 4.1
    ``grafana/plugins/monasca-grafana-datasource/``.
 -  Use the grafana docs to build and deploy grafana:
 
-   -  http://docs.grafana.org/project/building_from_source/
-   -  http://docs.grafana.org/installation/configuration/
+   -  https://grafana.com/docs/project/building_from_source/
+   -  https://grafana.com/docs/installation/configuration/
 
 -  Copy ``monasca-ui/grafana-dashboards/*`` to ``/public/dashboards/``
    in your grafana deployment.
@@ -145,4 +145,4 @@ directory of this project:
 
 ::
 
-   $ tox -e py27,py35
+   $ tox -e py27,py36
