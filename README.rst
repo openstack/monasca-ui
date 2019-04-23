@@ -15,10 +15,10 @@ Devstack Deployment Set Up
 
 -  ``cd /opt/stack/horizon``
 -  Install Openstack upper-constraints requirements
-   ``pip install -c https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt -r requirements.txt``
+   ``pip install -c https://opendev.org/openstack/requirements/raw/branch/master/upper-constraints.txt -r requirements.txt``
 -  Clone monasca-ui:
-   ``git clone https://git.openstack.org/openstack/monasca-ui.git``
--  Add ``git+https://git.openstack.org/openstack/monasca-ui.git`` to
+   ``git clone https://opendev.org/openstack/monasca-ui.git``
+-  Add ``git+https://opendev.org/openstack/monasca-ui.git`` to
    ``requirements.txt``.
 -  Install monasca-ui required packages
    ``pip install -r requirements.txt`` (monasca-client packages will be installed.)
@@ -56,8 +56,8 @@ Get the Code
 
 ::
 
-   git clone https://git.openstack.org/openstack/monasca-ui.git  # clone monasca-ui
-   git clone https://git.openstack.org/openstack/horizon.git  # clone horizon
+   git clone https://opendev.org/openstack/monasca-ui.git  # clone monasca-ui
+   git clone https://opendev.org/openstack/horizon.git  # clone horizon
    git clone https://github.com/monasca/grafana.git  # clone grafana
    git clone https://github.com/openstack/monasca-grafana-datasource.git # clone grafana plugins
 
