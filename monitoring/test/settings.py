@@ -40,6 +40,30 @@ INSTALLED_APPS = (
     'openstack_dashboard.dashboards.settings',
 )
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(ROOT_PATH, 'tests', 'templates')],
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.request',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.contrib.messages.context_processors.messages',
+                'horizon.context_processors.horizon',
+            ],
+            'debug': False,
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'horizon.loaders.TemplateLoader'
+            ],
+        },
+    },
+]
+
 AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
 
 SITE_BRANDING = 'OpenStack'
