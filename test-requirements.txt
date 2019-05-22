@@ -10,5 +10,6 @@ funcsigs>=1.0.0;python_version=='2.7' or python_version=='2.6' # Apache-2.0
 nodeenv>=0.9.4 # BSD
 selenium>=2.50.1 # Apache-2.0
 # Docs Requirements
-sphinx!=1.6.6,!=1.6.7,>=1.6.2 # BSD
+sphinx!=1.6.6,!=1.6.7,>=1.6.2,<2.0.0;python_version=='2.7'  # BSD
+sphinx!=1.6.6,!=1.6.7,>=1.6.2;python_version>='3.4'  # BSD
 oslosphinx>=4.7.0 # Apache-2.0
