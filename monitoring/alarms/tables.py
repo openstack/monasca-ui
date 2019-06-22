@@ -15,6 +15,7 @@
 
 import json
 
+from django.conf import settings
 from django import template
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -25,7 +26,6 @@ from horizon import tables
 
 from monitoring.alarms import constants
 from monitoring import api
-from monitoring.config import local_settings
 from monitoring.overview import constants as ov_constants
 
 
@@ -159,7 +159,7 @@ class GraphMetric(tables.LinkAction):
         self.attrs['target'] = '_blank'
         try:
             region = self.table.request.user.services_region
-            grafana_url = getattr(local_settings, 'GRAFANA_URL').get(region, '')
+            grafana_url = getattr(settings, 'GRAFANA_URL').get(region, '')
             url = grafana_url + \
                 '/dashboard/script/drilldown.js'
             metric = datum['metrics'][0]['name']
@@ -179,7 +179,8 @@ class GraphMetric(tables.LinkAction):
         return url + query
 
     def allowed(self, request, datum=None):
-        return datum['metrics']
+        return (getattr(settings, 'GRAFANA_URL', None) is not None and
+                datum['metrics'])
 
 
 class ShowAlarmDefinition(tables.LinkAction):
