@@ -15,6 +15,7 @@
 from __future__ import absolute_import
 
 from django.test import TestCase
+from django.test.utils import override_settings
 from mock import Mock
 
 import monitoring.alarms.tables
@@ -46,3 +47,18 @@ class GraphMetricLinkActionTests(TestCase):
             r'&threshold=[{"name": "metric1"}, {"name": "metric \u2461"}]'
             r'&api=http://foo/api/'
         )
+
+    def test_allowed_grafana_links(self):
+        allowed = self.get_allowed()
+        self.assertEqual(allowed, False)
+
+    @override_settings(GRAFANA_URL={'CustomRegion': '/grafana'})
+    def test_allowed_grafana_links_nonempty(self):
+        allowed = self.get_allowed()
+        self.assertEqual(allowed, 'metrics')
+
+    def get_allowed(self):
+        table_mock = Mock()
+        table_mock.request.build_absolute_uri.return_value = u"http://foo/api/"
+        link_action = monitoring.alarms.tables.GraphMetric(table=table_mock)
+        return link_action.allowed(table_mock.request, {'metrics': 'metrics'})
