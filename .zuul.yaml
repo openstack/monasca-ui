@@ -4,4 +4,4 @@
       - openstack-cover-jobs-horizon
       - openstack-lower-constraints-jobs
       - openstack-python-jobs-horizon
-      - openstack-python36-jobs-horizon
+      - openstack-python3-train-jobs-horizon
