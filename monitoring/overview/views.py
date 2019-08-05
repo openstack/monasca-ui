@@ -415,9 +415,10 @@ class KibanaProxyView(generic.View):
 
         # passing kbn version explicitly for kibana >= 4.3.x
         headers = {
-            'X-Auth-Token': request.user.token.id,
-            'kbn-version': request.META.get('HTTP_KBN_VERSION', ''),
-            'Cookie': request.META.get('HTTP_COOKIE', '')
+            "X-Auth-Token": request.user.token.id,
+            "kbn-version": request.META.get("HTTP_KBN_VERSION", ""),
+            "Cookie": request.META.get("HTTP_COOKIE", ""),
+            "Content-Type": "application/json",
         }
 
         return self.read(request.method, url, request.body, headers)

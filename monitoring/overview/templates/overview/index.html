@@ -45,7 +45,7 @@
       {% endif %}
       {% if can_access_kibana %}
           {% if enable_log_management_button or enable_event_management_button %}
-          <a target="dashboard" href="{% url 'horizon:monitoring:overview:kibana_proxy' url='/' %}" class="btn btn-default">
+          <a target="dashboard" href="{% url 'horizon:monitoring:overview:kibana_proxy' url='/app/kibana' %}" class="btn btn-default">
               <span class="fa fa-bar-chart"></span>
                     {% if enable_log_management_button %}
                         {% if enable_event_management_button %}

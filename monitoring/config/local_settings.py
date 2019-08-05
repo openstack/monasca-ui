@@ -104,14 +104,14 @@ GRAFANA_URL = getattr(settings, 'GRAFANA_URL', None)
 
 SHOW_GRAFANA_HOME = getattr(settings, 'SHOW_GRAFANA_HOME', True)
 
-ENABLE_LOG_MANAGEMENT_BUTTON = getattr(settings, 'ENABLE_LOG_MANAGEMENT_BUTTON', False)
+ENABLE_LOG_MANAGEMENT_BUTTON = getattr(settings, 'ENABLE_LOG_MANAGEMENT_BUTTON', True)
 ENABLE_EVENT_MANAGEMENT_BUTTON = getattr(settings, 'ENABLE_EVENT_MANAGEMENT_BUTTON', False)
 
 KIBANA_POLICY_RULE = getattr(settings, 'KIBANA_POLICY_RULE',
                              'monitoring:kibana_access')
 KIBANA_POLICY_SCOPE = getattr(settings, 'KIBANA_POLICY_SCOPE',
                               'monitoring')
-KIBANA_HOST = getattr(settings, 'KIBANA_HOST', 'http://192.168.10.4:5601/')
+KIBANA_HOST = getattr(settings, 'KIBANA_HOST', 'http://192.168.10.6:5601/')
 
 OPENSTACK_SSL_NO_VERIFY = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
 OPENSTACK_SSL_CACERT = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
