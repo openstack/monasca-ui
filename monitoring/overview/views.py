@@ -17,6 +17,7 @@ import copy
 import json
 import logging
 
+from django.conf import settings
 from django.contrib import messages
 from django import http
 from django.http import HttpResponse
@@ -25,16 +26,14 @@ from django.utils.translation import ugettext_lazy as _  # noqa
 from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
 from django.views.generic import TemplateView
+from horizon import exceptions
 from openstack_auth import utils as auth_utils
 from openstack_dashboard import policy
 import six
 from six.moves import urllib
 
-from horizon import exceptions
-
 from monitoring.alarms import tables as alarm_tables
 from monitoring import api
-from monitoring.config import local_settings as settings
 from monitoring.overview import constants
 
 LOG = logging.getLogger(__name__)
