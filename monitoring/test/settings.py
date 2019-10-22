@@ -11,136 +11,33 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import os
+import openstack_dashboard.enabled  # noqa: F811
+from openstack_dashboard.test.settings import *  # noqa: F403,H303
+from openstack_dashboard.utils import settings
 
-from django.utils.translation import ugettext_lazy as _  # noqa
-
-from horizon.test.settings import *  # noqa
-
-from openstack_dashboard.test.settings import *  # noqa
-
+import monitoring.enabled
 
 ROOT_URLCONF = 'monitoring.test.urls'
-TEMPLATE_DIRS = (
-    os.path.join(TEST_DIR, 'templates'),
+
+# pop these keys to avoid log warnings about deprecation
+# update_dashboards will populate them anyway
+HORIZON_CONFIG.pop('dashboards', None)
+HORIZON_CONFIG.pop('default_dashboard', None)
+
+
+# Update the dashboards with heat_dashboard enabled files
+# and current INSTALLED_APPS
+settings.update_dashboards(
+    [
+        openstack_dashboard.enabled,
+        monitoring.enabled,
+    ],
+    HORIZON_CONFIG,
+    INSTALLED_APPS
 )
 
-INSTALLED_APPS = (
-    'django.contrib.contenttypes',
-    'django.contrib.auth',
-    'django.contrib.sessions',
-    'django.contrib.staticfiles',
-    'django.contrib.messages',
-    'django.contrib.humanize',
-    'openstack_auth',
-    'compressor',
-    'horizon',
-    'openstack_dashboard',
-    'monitoring',
-    'openstack_dashboard.dashboards.settings',
-)
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(ROOT_PATH, 'tests', 'templates')],
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.i18n',
-                'django.template.context_processors.request',
-                'django.template.context_processors.media',
-                'django.template.context_processors.static',
-                'django.contrib.messages.context_processors.messages',
-                'horizon.context_processors.horizon',
-            ],
-            'debug': False,
-            'loaders': [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
-                'horizon.loaders.TemplateLoader'
-            ],
-        },
-    },
-]
-
-AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
-
-SITE_BRANDING = 'OpenStack'
-
-HORIZON_CONFIG = {
-    'dashboards': ('settings', 'monitoring',),
-    'default_dashboard': 'settings',
-    "password_validator": {
-        "regex": '^.{8,18}$',
-        "help_text": _("Password must be between 8 and 18 characters.")
-    },
-    'user_home': None,
-    'help_url': "http://docs.openstack.org",
-}
-
-# Set to True to allow users to upload images to glance via Horizon server.
-# When enabled, a file form field will appear on the create image form.
-# See documentation for deployment considerations.
-HORIZON_IMAGES_ALLOW_UPLOAD = True
-
-AVAILABLE_REGIONS = [
-    ('http://localhost:5000/v2.0', 'local'),
-    ('http://remote:5000/v2.0', 'remote'),
-]
-
-OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v2.0"
-OPENSTACK_KEYSTONE_DEFAULT_ROLE = "Member"
-
-OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
-OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'test_domain'
-
-OPENSTACK_KEYSTONE_BACKEND = {
-    'name': 'native',
-    'can_edit_user': True,
-    'can_edit_group': True,
-    'can_edit_project': True,
-    'can_edit_domain': True,
-    'can_edit_role': True
-}
-
-OPENSTACK_NEUTRON_NETWORK = {
-    'enable_lb': False,
-    'enable_firewall': False,
-    'enable_vpn': False,
-    'profile_support': None,
-    'enable_distributed_router': False,
-}
-
-OPENSTACK_HYPERVISOR_FEATURES = {
-    'can_set_mount_point': False,
-    'can_encrypt_volumes': False,
-}
-
-LOGGING['loggers']['openstack_dashboard'] = {
-    'handlers': ['test'],
-    'propagate': False,
-}
-
-LOGGING['loggers']['selenium'] = {
-    'handlers': ['test'],
-    'propagate': False,
-}
-
-SECURITY_GROUP_RULES = {
-    'all_tcp': {
-        'name': 'ALL TCP',
-        'ip_protocol': 'tcp',
-        'from_port': '1',
-        'to_port': '65535',
-    },
-    'http': {
-        'name': 'HTTP',
-        'ip_protocol': 'tcp',
-        'from_port': '80',
-        'to_port': '80',
-    },
-}
+# Remove duplicated apps
+INSTALLED_APPS = list(set(INSTALLED_APPS))
 
 OPENSTACK_SSL_NO_VERIFY = False
 

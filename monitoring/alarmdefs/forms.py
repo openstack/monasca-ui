@@ -65,7 +65,7 @@ class ExpressionWidget(forms.Widget):
         super(ExpressionWidget, self).__init__(attrs)
         self.initial = initial
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         final_attrs = self.build_attrs(attrs, {'name': name})
         t = get_template(constants.TEMPLATE_PREFIX + 'expression_field.html')
 
@@ -96,7 +96,7 @@ class MatchByWidget(forms.Widget):
         super(MatchByWidget, self).__init__(attrs)
         self.initial = initial
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         final_attrs = self.build_attrs(attrs, {'name': name})
         t = get_template(constants.TEMPLATE_PREFIX + 'match_by_field.html')
 
@@ -131,7 +131,7 @@ class NotificationCreateWidget(forms.Select):
     def __init__(self, *args, **kwargs):
         super(NotificationCreateWidget, self).__init__(*args, **kwargs)
 
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         final_attrs = self.build_attrs(attrs, {'name': name})
         tpl = get_template(constants.TEMPLATE_PREFIX + 'notification_field.html')
 
