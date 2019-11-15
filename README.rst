@@ -145,4 +145,4 @@ directory of this project:
 
 ::
 
-   $ tox -e py27,py36
+   $ tox -e py36
