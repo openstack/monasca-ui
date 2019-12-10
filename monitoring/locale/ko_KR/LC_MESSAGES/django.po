@@ -1,20 +1,42 @@
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
 # Ian Y. Choi <ianyrchoi@gmail.com>, 2018. #zanata
 # Sungjin Kang <gang.sungjin@gmail.com>, 2018. #zanata
+# Andreas Jaeger <jaegerandi@gmail.com>, 2019. #zanata
+# Hongjae Kim <neo415ha@gmail.com>, 2019. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2018-10-18 16:03+0000\n"
+"POT-Creation-Date: 2019-10-08 09:02+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-10-21 07:18+0000\n"
-"Last-Translator: Sungjin Kang <gang.sungjin@gmail.com>\n"
+"PO-Revision-Date: 2019-12-10 07:40+0000\n"
+"Last-Translator: Andreas Jaeger <jaegerandi@gmail.com>\n"
 "Language-Team: Korean (South Korea)\n"
 "Language: ko_KR\n"
 "X-Generator: Zanata 4.3.3\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+
+msgid ""
+"\n"
+"        Each alarm definition is defined by its expression composed out of:\n"
+"        mathematical function, metric, threshold and comparator for "
+"metric's\n"
+"        value and the threshold. Additionally it is possible to narrow\n"
+"        evaluation of the alarm to certain entities by choosing their\n"
+"        dimensions. The deterministic alarms never enter UNDETERMINED "
+"state.\n"
+"        Use them for metrics that are received sporadically.\n"
+"        "
+msgstr ""
+"\n"
+"각 경보 정의는 다음으로 구성된 표현으로 정의된다.\n"
+" 메트릭에 대한 수학적 함수, 메트릭, 임계값 및 비교기\n"
+" 값과 임계값 또한 좁힐 수 있다.\n"
+" 특정 실체에 대한 경보 평가\n"
+" 치수 결정론적 알람은 절대 UNDETERMINED 상태로 들어가지 않는다.\n"
+" 산발적으로 수신되는 지표에 사용한다."
 
 msgid ""
 "\n"
@@ -59,6 +81,9 @@ msgstr "---선택 해주세요---"
 
 msgid "A description of an alarm."
 msgstr "알람에 대한 설명입니다."
+
+msgid "A descriptive name of the notification method."
+msgstr "통지 방법에 대한 설명 이름."
 
 msgid "AND"
 msgstr "AND"
@@ -150,6 +175,9 @@ msgstr "%s 에 대한 알람 내역을 찾을 수 없습니다"
 msgid "Could not retrieve alarms"
 msgstr "알람을 찾지 못했습니다"
 
+msgid "Could not retrieve notifications"
+msgstr "알림을 검색할 수 없음"
+
 msgid "Create Alarm"
 msgstr "알람 생성"
 
@@ -158,6 +186,9 @@ msgstr "알람 정의 생성"
 
 msgid "Create Notification"
 msgstr "알림 생성"
+
+msgid "Create Notification Method"
+msgstr "통지 작성 방법"
 
 msgid "Critical"
 msgstr "Critical"
@@ -268,6 +299,12 @@ msgstr "알림 %s 가 이미 삭제되었습니다."
 msgid "Notification Method Details"
 msgstr "알림 메소드 상세 정보"
 
+msgid "Notification has been edited successfully."
+msgstr "통지가 성공적으로 편집되었다."
+
+msgid "Notification method has been created successfully."
+msgstr "통지 방법이 성공적으로 생성되었다."
+
 msgid ""
 "Notification methods. Notifications can be sent when an alarm state "
 "transition occurs."
@@ -302,6 +339,9 @@ msgstr "비밀번호는 8 ~ 18자 사이어야 합니다."
 
 msgid "Period"
 msgstr "기간"
+
+msgid "Period must be zero except for type webhook."
+msgstr "주기는 타입 웹 후크를 제외하고 0이어야 한다."
 
 msgid "Previous Page"
 msgstr "이전 페이지"
@@ -355,6 +395,9 @@ msgstr "제출"
 msgid "The metric dimensions used to create unique alarms."
 msgstr "유일한 알람을 생성하는데 사용하기 위한 계량적 부피"
 
+msgid "The notification period."
+msgstr "통지 기간."
+
 msgid "Timestamp"
 msgstr "타임스탬프"
 
@@ -389,6 +432,9 @@ msgstr "알람 세부 정보를 찾을 수 없습니다."
 
 msgid "Unable to retrieve metrics"
 msgstr "측정 항목을 찾을 수 없습니다."
+
+msgid "Unable to retrieve notification details."
+msgstr "알림 세부 정보를 검색할 수 없음."
 
 #, python-format
 msgid "Unable to retrieve notifications: %s"
