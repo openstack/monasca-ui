@@ -21,6 +21,7 @@ class NotificationType(object):
     WEBHOOK = "WEBHOOK"
     PAGERDUTY = "PAGERDUTY"
 
+
 EMAIL_VALIDATOR = validators.EmailValidator(
     message=_("Address must contain a valid email address."))
 WEBHOOK_VALIDATOR = validators.URLValidator(

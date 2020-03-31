@@ -26,4 +26,5 @@ class Monitoring(horizon.Dashboard):
     policy_rules = (("monitoring", "monitoring:monitoring"),)
     permissions = (('openstack.services.' + settings.MONITORING_SERVICE_TYPE),)
 
+
 horizon.register(Monitoring)

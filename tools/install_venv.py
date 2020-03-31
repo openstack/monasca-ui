@@ -22,6 +22,8 @@
 Installation script for the OpenStack Dashboard development virtualenv.
 """
 
+# flake8: noqa
+
 from __future__ import print_function
 
 import os

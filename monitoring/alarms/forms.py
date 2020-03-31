@@ -65,7 +65,7 @@ class SimpleExpressionWidget(django_forms.MultiWidget):
 
     def decompress(self, expr):
         if expr:
-            return re.search('^(\w+)\((.*)\) ([<>=]*) (.*)$', expr).groups()
+            return re.search(r'^(\w+)\((.*)\) ([<>=]*) (.*)$', expr).groups()
         else:
             return [None, None, None, None]
 
