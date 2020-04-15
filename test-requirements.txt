@@ -11,3 +11,6 @@ selenium>=2.50.1 # Apache-2.0
 # Docs Requirements
 sphinx!=1.6.6,!=1.6.7,>=1.6.2;python_version>='3.4'  # BSD
 oslosphinx>=4.7.0 # Apache-2.0
+
+# Horizon
+pytest>=5.3.5 # MIT
