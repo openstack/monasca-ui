@@ -12,8 +12,6 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from __future__ import absolute_import
-
 from django.test import TestCase
 from django.test.utils import override_settings
 from mock import Mock
