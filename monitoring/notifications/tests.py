@@ -11,7 +11,7 @@
 #  under the License.
 
 from django.urls import reverse
-from mock import patch
+from unittest.mock import patch
 
 from monitoring.notifications import constants
 from monitoring.test import helpers

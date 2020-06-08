@@ -16,8 +16,8 @@
 
 from django.conf import settings as d_settings
 from django.test.utils import override_settings
-from mock import Mock
-from mock import patch
+from unittest.mock import Mock
+from unittest.mock import patch
 
 from monascaclient import client as mon_client
 from monascaclient import v2_0

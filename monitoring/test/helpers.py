@@ -16,8 +16,8 @@ import unittest
 import warnings
 
 from django.core.handlers import wsgi
-import mock
 from openstack_dashboard.test import helpers
+from unittest import mock
 
 from monitoring.test.test_data import utils as test_data_utils
 

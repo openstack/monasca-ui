@@ -14,7 +14,7 @@
 # under the License.
 
 from django.urls import reverse
-from mock import patch
+from unittest.mock import patch
 
 from monitoring.alarmdefs import constants
 from monitoring.alarmdefs import views

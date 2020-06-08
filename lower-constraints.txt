@@ -28,7 +28,7 @@ fixtures==3.0.0
 funcsigs==1.0.0
 futurist==1.2.0
 greenlet==0.4.10
-horizon==17.1.0
+horizon==18.3.0
 idna==2.6
 imagesize==0.7.1
 iso8601==0.1.11
@@ -42,7 +42,6 @@ kombu==4.0.0
 linecache2==1.0.0
 MarkupSafe==1.0
 mccabe==0.2.1
-mock==2.0.0
 monotonic==0.6
 mox3==0.20.0
 msgpack-python==0.4.0
