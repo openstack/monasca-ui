@@ -1,4 +1,4 @@
-Team and repository tags
+Monasca UI
 ========================
 
 .. image:: https://governance.openstack.org/tc/badges/monasca-ui.svg
