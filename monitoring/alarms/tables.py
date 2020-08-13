@@ -83,7 +83,7 @@ def show_metric_dimensions(data):
     if len(data['metrics']) > 1:
         commondimensions = data['metrics'][0]['dimensions']
         for metric in data['metrics'][1:]:
-            for k in commondimensions.keys():
+            for k in tuple(commondimensions):
                 if k not in metric['dimensions'].keys() or \
                         commondimensions[k] != metric['dimensions'][k]:
                     del commondimensions[k]
