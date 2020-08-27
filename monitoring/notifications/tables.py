@@ -49,11 +49,9 @@ class DeleteNotification(tables.DeleteAction):
     def delete(self, request, obj_id):
         try:
             api.monitor.notification_delete(request, obj_id)
-        except Exception as e:
+        except Exception:
             exceptions.handle(
-                request,
-                _('Unable to delete notification: %s') %
-                e)
+                request, _('Unable to delete notification.'))
 
 
 class CreateNotification(tables.LinkAction):
