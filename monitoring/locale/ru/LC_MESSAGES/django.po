@@ -1,0 +1,638 @@
+# Roman Gorshunov <roman.gorshunov@att.com>, 2020. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: monasca-ui VERSION\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
+"POT-Creation-Date: 2020-09-03 15:49+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2020-10-13 01:28+0000\n"
+"Last-Translator: Roman Gorshunov <roman.gorshunov@att.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"X-Generator: Zanata 4.3.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+msgid ""
+"\n"
+"          The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"          Поле Имя используется для определения сигнала тревоги\n"
+"        "
+
+msgid ""
+"\n"
+"        Each alarm definition is defined by its expression composed out of:\n"
+"        mathematical function, metric, threshold and comparator for "
+"metric's\n"
+"        value and the threshold. Additionally it is possible to narrow\n"
+"        evaluation of the alarm to certain entities by choosing their\n"
+"        dimensions. The deterministic alarms never enter UNDETERMINED "
+"state.\n"
+"        Use them for metrics that are received sporadically.\n"
+"        "
+msgstr ""
+"\n"
+"        Каждое определение сигнала тревоги задаётся выражением,\n"
+"        состоящим из:\n"
+"        математической функции, метрики, пороговых значений и\n"
+"        оператора сравнения значений метрик и пороговых значений.\n"
+"        Так же возможно сузить область действия сигнала тревоги,\n"
+"        выбрав их размерность. Детерминированные сигналы тревоги\n"
+"        никогда не переходят в состояние НЕ ОПРЕДЕЛЁН.\n"
+"        Используйте их для метрик, значения которых определяются\n"
+"        нерегулярно.\n"
+"        "
+
+msgid ""
+"\n"
+"        If for some transitions notifications should not be sent they can "
+"be\n"
+"        disabled.\n"
+"        "
+msgstr ""
+"\n"
+"        Если для некоторых изменений статуса уведомления не\n"
+"        должны отправляться, то они могут быть отключены.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Description field can be used to describe alarm definition's\n"
+"        purpose.\n"
+"        "
+msgstr ""
+"\n"
+"        Поле Описание может использоваться для описания цели определения "
+"сигнала\n"
+"        тревоги.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Name field is used to identify the alarm definition.\n"
+"        "
+msgstr ""
+"\n"
+"        Поле Имя используется для определения сигнала тревоги.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Notifications field contains the list of Notifications that "
+"should\n"
+"        be sent when transitioning to another state.\n"
+"        "
+msgstr ""
+"\n"
+"        Поле Уведомления содержит список уведомлений, которые\n"
+"        должны отправляться, при изменении статуса.\n"
+"        "
+
+msgid ""
+"\n"
+"        The Severity field allows to specify the importance of alarm\n"
+"        definition.\n"
+"        "
+msgstr ""
+"\n"
+"        Полу Важность позволяет задать значительность события\n"
+"        сигнала тревоги.\n"
+"        "
+
+msgid ""
+"\n"
+"      A non-zero value in the period field indicates how frequently a "
+"notification\n"
+"      should be resent (only valid for webhook urls).\n"
+"    "
+msgstr ""
+"\n"
+"      Ненулевое значение в поле периода задаёт частоту\n"
+"      повторной отправки уведомления (только для webhook'ов).\n"
+"    "
+
+msgid ""
+"\n"
+"      The Address field indicates the email address, URL, or PagerDuty "
+"service\n"
+"      key to be notified.\n"
+"    "
+msgstr ""
+"\n"
+"      Поле Адрес содержит email, URL, или ключ сервиса PagerDuty,\n"
+"      куда будет отправлено уведомление.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Expression field  which if true, triggers a notification to be "
+"sent.\n"
+"      See <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
+"\">Alarm Expressions</a> for how to write an expression.\n"
+"    "
+msgstr ""
+"\n"
+"      Если вычисление в поле Выражение даёт результатом true, то "
+"отправляется уведомление.\n"
+"      См. <a href=\"https://github.com/openstack/monasca-api/blob/master/"
+"docs/monasca-api-spec.md#alarm-definition-expressions\" target=\"_blank"
+"\">Выражения сигналов тревоги</a> для\n"
+"      информации о том, как писать выражения.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Name field is used to identify the notification method.\n"
+"    "
+msgstr ""
+"\n"
+"      Поле Имя используется для идентификации метода уведомления.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Notifications field contains the list of Notifications that should "
+"be sent when transitioning to another ALARM state.\n"
+"    "
+msgstr ""
+"\n"
+"      Поле Уведомления содержит список уведомлений, которые должны быть "
+"отправлены, при изменении статуса сигнала тревоги.\n"
+"    "
+
+msgid ""
+"\n"
+"      The Type field indicates how the notification is sent when an alarm is "
+"triggered.\n"
+"    "
+msgstr ""
+"\n"
+"      Поле Тип определяет, как отправляется уведомление при срабатывании "
+"сигнала тревоги.\n"
+"    "
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+msgid "+ Add more"
+msgstr "+ Добавить ещё"
+
+msgid "---Please select---"
+msgstr "---Пожалуйста, выберите---"
+
+msgid "A description of an alarm."
+msgstr "Описание сигнала тревоги."
+
+msgid "A descriptive name of the notification method."
+msgstr "Описательное имя метода уведомления."
+
+msgid "AND"
+msgstr "AND"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Add a match by"
+msgstr "Добавить фильтрацию по"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Address must contain a valid URL address."
+msgstr "Поле должно содержать корректный URL."
+
+msgid "Address must contain a valid email address."
+msgstr "Поле должно содержать корректный email адрес."
+
+msgid "Alarm"
+msgstr "Сигнал тревоги"
+
+msgid "Alarm Actions"
+msgstr "Действия по сигналу тревоги"
+
+msgid "Alarm Definition Details"
+msgstr "Детали определения сигнала тревоги"
+
+msgid "Alarm Definitions"
+msgstr "Определение сигнала тревоги"
+
+msgid "Alarm Details"
+msgstr "Подробности сигнала тревоги"
+
+msgid "Alarm History"
+msgstr "История сигнала тревоги"
+
+msgid "Alarm ID"
+msgstr "ID Сигнала тревоги"
+
+msgid "Alarm Id"
+msgstr "ID Сигнала тревоги"
+
+msgid "Alarm Metric Dimensions"
+msgstr "Размерность метрик сигнала тревоги"
+
+#, python-format
+msgid "Alarm definition %s has been created"
+msgstr "Создано определение сигнала тревоги с именем %s"
+
+msgid "Alarm definition has been updated."
+msgstr "Определение сигнала тревоги обновлено."
+
+#, python-format
+msgid "Alarm definition with %s name already exists"
+msgstr "Определение сигнала тревоги с именем %s уже существует"
+
+msgid "Alarm has been created successfully."
+msgstr "Сигнал тревоги успешно создан."
+
+msgid "Alarm has been edited successfully."
+msgstr "Сигнал тревоги успешно изменён."
+
+msgid "Alarms"
+msgstr "Сигналы тревоги"
+
+msgid "Alarms for "
+msgstr "Сигналы тревоги для"
+
+msgid "All Alarms"
+msgstr "Все сигналы тревоги"
+
+msgid "An alarm expression."
+msgstr "Описание сигнала тревоги."
+
+msgid "An unique name of the alarm."
+msgstr "Уникальное имя сигнала тревоги."
+
+msgid "Associated Metrics"
+msgstr "Связанные метрики"
+
+msgid "Browser local"
+msgstr "Локальный навигатор"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Could not retrieve alarm definitions"
+msgstr "Не удалось получить определения сигнала тревоги"
+
+#, python-format
+msgid "Could not retrieve alarm for %s"
+msgstr "Не удалось получить сигнал тревоги для %s"
+
+#, python-format
+msgid "Could not retrieve alarm history for %s"
+msgstr "Не удалось получить историю сигналов тревоги для %s"
+
+msgid "Could not retrieve alarms"
+msgstr "Не удалось получить сигналы тревоги"
+
+msgid "Could not retrieve notifications"
+msgstr "Не удалось получить уведомления"
+
+msgid "Create Alarm"
+msgstr "Создать сигнал тревоги"
+
+msgid "Create Alarm Definition"
+msgstr "Создать определение сигнала тревоги"
+
+msgid "Create Notification"
+msgstr "Создать уведомление"
+
+msgid "Create Notification Method"
+msgstr "Создать метод уведомления"
+
+msgid "Critical"
+msgstr "Критичность"
+
+msgid "Delete Alarm"
+msgid_plural "Delete Alarms"
+msgstr[0] "Удалить сигнал тревоги"
+msgstr[1] "Удалить сигналы тревоги"
+msgstr[2] "Удалить сигналы тревоги"
+
+msgid "Delete Alarm Definition"
+msgid_plural "Delete Alarm Definitions"
+msgstr[0] "Удалить определение сигнала тревоги"
+msgstr[1] "Удалить определения сигналов тревоги"
+msgstr[2] "Удалить определения сигналов тревоги"
+
+msgid "Delete Notification"
+msgid_plural "Delete Notifications"
+msgstr[0] "Удалить уведомление"
+msgstr[1] "Удалить уведомления"
+msgstr[2] "Удалить уведомления"
+
+msgid "Deleted Alarm"
+msgid_plural "Deleted Alarms"
+msgstr[0] "Сигнал тревоги удалён"
+msgstr[1] "Сигналы тревоги удалены"
+msgstr[2] "Сигналы тревоги удалены"
+
+msgid "Deleted Alarm Definition"
+msgid_plural "Deleted Alarm Definitions"
+msgstr[0] "Определение сигнала тревоги удалено"
+msgstr[1] "Определения сигналов тревоги удалены"
+msgstr[2] "Определения сигналов тревоги удалены"
+
+msgid "Deleted Notification"
+msgid_plural "Deleted Notifications"
+msgstr[0] "Уведомление удалено"
+msgstr[1] "Уведомления удалены"
+msgstr[2] "Уведомления удалены"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "Deterministic"
+msgstr "Определён"
+
+msgid "Dimension(s)"
+msgstr "Размерность(-и)"
+
+msgid "Edit Alarm"
+msgstr "Изменить сигнал тревоги"
+
+msgid "Edit Alarm Definition"
+msgstr "Изменить определение сигнала тревоги"
+
+msgid "Edit Alarm Definitions"
+msgstr "Изменить определения сигнала тревоги"
+
+msgid "Edit Notification"
+msgstr "Изменить уведомление"
+
+msgid "Expression"
+msgstr "Выражение"
+
+msgid "Failed to present alarm history"
+msgstr "Не удалось отобразить историю сигналов тревоги"
+
+msgid "Failed to validate name"
+msgstr "Проверка имени не выполнена"
+
+msgid "Filter Alarms"
+msgstr "Фильтровать сигналы тревоги"
+
+msgid "Graph Metric"
+msgstr "Построить график по метрикам"
+
+msgid "High"
+msgstr "Низкий"
+
+msgid "Info"
+msgstr "Информация"
+
+msgid "Key"
+msgstr "Ключ"
+
+msgid "Low"
+msgstr "Высокий"
+
+msgid "Match by"
+msgstr "Фильтровать по"
+
+msgid "Measurements for Alarms"
+msgstr "Измерения для сигналов тревоги"
+
+msgid "Medium"
+msgstr "Средний"
+
+msgid "Metric Dimensions"
+msgstr "Размерность метрики"
+
+msgid "Metric Name"
+msgstr "Имя метрики"
+
+msgid "Metric Names"
+msgstr "Имя метрики"
+
+msgid "Monitoring"
+msgstr "Мониторинг"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "New State"
+msgstr "Новый статус"
+
+msgid "Next Page"
+msgstr "Следующая Страница"
+
+msgid "No notifications available."
+msgstr "Нет доступных уведомлений."
+
+msgid "None"
+msgstr "Нет"
+
+#, python-format
+msgid "Notification %s has already been deleted."
+msgstr "Уведомление %s уже было удалено."
+
+msgid "Notification Method Details"
+msgstr "Подробности метода уведомления"
+
+msgid "Notification has been edited successfully."
+msgstr "Уведомление успешно изменено."
+
+msgid "Notification method has been created successfully."
+msgstr "Метод уведомления успешно создан."
+
+msgid ""
+"Notification methods. Notifications can be sent when an alarm state "
+"transition occurs."
+msgstr ""
+"Методы уведомления. При изменении статуса тревоги могут отправляться "
+"уведомления."
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Notifications Enabled"
+msgstr "Уведомления включены"
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "OK Actions"
+msgstr "Действия по отмене тревоги"
+
+msgid "OR"
+msgstr "OR"
+
+msgid "Old State"
+msgstr "Предыдущий статус"
+
+msgid "OpenStack Services"
+msgstr "Службы OpenStack"
+
+msgid "Overview"
+msgstr "Обзор"
+
+msgid "Period"
+msgstr "Период"
+
+msgid "Period must be zero except for type webhook."
+msgstr "Для webhook'а период должен быть установлен в ноль."
+
+msgid "Previous Page"
+msgstr "Предыдущая Страница"
+
+msgid "Reason"
+msgstr "Причина"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Save Notification"
+msgstr "Сохранить уведомление"
+
+msgid "Select Notification"
+msgstr "Выбрать уведомление"
+
+msgid "Servers"
+msgstr "Серверы"
+
+msgid "Service :"
+msgstr "Служба :"
+
+msgid "Service Health"
+msgstr "Доступность сервиса"
+
+msgid "Severity"
+msgstr "Важность"
+
+msgid ""
+"Severity of an alarm. Must be either LOW, MEDIUM, HIGH or CRITICAL. Default "
+"is LOW."
+msgstr ""
+"Важность сигнала тревоги. Должна быть установлена в один из вариантов: "
+"НИЗКАЯ, СРЕДНЯЯ, ВЫСОКАЯ или КРИТИЧНАЯ. По-умолчанию – НИЗКАЯ."
+
+msgid "Show Alarm Definition"
+msgstr "Показать определение сигнала тревоги"
+
+msgid "Show History"
+msgstr "Показать историю"
+
+msgid "State"
+msgstr "Состояние"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Submit"
+msgstr "Отправить"
+
+msgid "The email/url address to notify."
+msgstr "E-mail адрес или URL для доставки уведомления."
+
+msgid "The metric dimensions used to create unique alarms."
+msgstr ""
+"Размерность метрик, используемых для создания индивидуальных сигналов "
+"тревоги."
+
+msgid "The notification period."
+msgstr "Период уведомления."
+
+msgid "The type of notification method (i.e. email)."
+msgstr "Тип метода уведомления (напр. email)."
+
+msgid "Timestamp"
+msgstr "Системное время"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "UTC"
+msgstr "UTC"
+
+#, python-format
+msgid "Unable to create alarm definition %s"
+msgstr "Не удалось создать определение сигнала тревоги с именем %s"
+
+#, python-format
+msgid "Unable to create the alarm: %s"
+msgstr "Не удалось создать сигнал тревоги: %s"
+
+#, python-format
+msgid "Unable to create the notification method: %s"
+msgstr "Не удалось создать метод уведомления: %s"
+
+#, python-format
+msgid "Unable to delete notification: %s"
+msgstr "Не удалось удалить уведомление: %s"
+
+#, python-format
+msgid "Unable to edit the alarm: %s"
+msgstr "Не удалось изменить сигнал тревоги: %s"
+
+#, python-format
+msgid "Unable to edit the notification: %s"
+msgstr "Не удалось изменить уведомление: %s"
+
+#, python-format
+msgid "Unable to list alarms: %s"
+msgstr "Не удалось получить сигналы тревоги:  %s"
+
+msgid "Unable to retrieve alarm details."
+msgstr "Не удалось получить подробности сигнала тревоги"
+
+msgid "Unable to retrieve metrics"
+msgstr "Не удалось получить метрики"
+
+msgid "Unable to retrieve notification details."
+msgstr "Не удалось получить подробности уведомления"
+
+#, python-format
+msgid "Unable to retrieve notifications: %s"
+msgstr "Невозможно получить уведомления: %s"
+
+msgid "Undetermined"
+msgstr "Не определён"
+
+msgid "Undetermined Actions"
+msgstr "Действия не определены"
+
+msgid "Unknown name"
+msgstr "Неизвестное имя"
+
+#, python-format
+msgid "User %s does not have sufficient privileges to access Kibana"
+msgstr "Пользователь %s не имеет достаточных привилегий для доступа в Kibana"
+
+msgid "Value"
+msgstr "Значение"
+
+msgid "avg"
+msgstr "avg"
+
+msgid "count"
+msgstr "count"
+
+msgid "last"
+msgstr "last"
+
+msgid "max"
+msgstr "max"
+
+msgid "min"
+msgstr "min"
+
+msgid "sum"
+msgstr "sum"
