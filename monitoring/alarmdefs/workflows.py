@@ -62,9 +62,9 @@ class SetAlarmNotificationsAction(workflows.Action):
         try:
             notifications = ad_forms._get_notifications(request)
             self.fields['notifications'].choices = notifications
-        except Exception as e:
+        except Exception:
             exceptions.handle(request,
-                              _('Unable to retrieve notifications: %s') % e)
+                              _('Unable to retrieve notifications.'))
 
 
 _SEVERITY_CHOICES = [("LOW", _("Low")),
@@ -221,8 +221,10 @@ class AlarmDefinitionWorkflow(workflows.Workflow):
                 ok_actions=context['ok_actions'],
                 undetermined_actions=context['undetermined_actions'],
             )
-        except Exception as e:
-            exceptions.handle(request, e, escalate=True)
+        except Exception:
+            exceptions.handle(request,
+                              _('Unable to create alarm definition.'),
+                              escalate=True)
             return False
 
         return True

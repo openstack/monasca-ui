@@ -118,10 +118,9 @@ class CreateMethodForm(BaseNotificationMethodForm):
             messages.success(request,
                              _('Notification method has been created '
                                'successfully.'))
-        except Exception as e:
+        except Exception:
             exceptions.handle(request,
-                              _('Unable to create the notification '
-                                'method: %s') % e)
+                              _('Unable to create the notification method.'))
             return False
         return True
 
@@ -154,8 +153,8 @@ class EditMethodForm(BaseNotificationMethodForm):
             )
             messages.success(request,
                              _('Notification has been edited successfully.'))
-        except Exception as e:
+        except Exception:
             exceptions.handle(request,
-                              _('Unable to edit the notification: %s') % e)
+                              _('Unable to edit the notification.'))
             return False
         return True

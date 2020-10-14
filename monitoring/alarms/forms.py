@@ -213,10 +213,10 @@ class BaseAlarmForm(forms.SelfHandlingForm):
     def set_notification_choices(self, request):
         try:
             notifications = api.monitor.notification_list(request)
-        except Exception as e:
+        except Exception:
             notifications = []
             exceptions.handle(request,
-                              _('Unable to retrieve notifications: %s') % e)
+                              _('Unable to retrieve notifications.'))
         notification_choices = [(notification['id'], notification['name'])
                                 for notification in notifications]
         if notification_choices:
@@ -264,8 +264,8 @@ class CreateAlarmForm(BaseAlarmForm):
             )
             messages.success(request,
                              _('Alarm has been created successfully.'))
-        except Exception as e:
-            exceptions.handle(request, _('Unable to create the alarm: %s') % e.message)
+        except Exception:
+            exceptions.handle(request, _('Unable to create the alarm.'))
             return False
         return True
 
@@ -298,7 +298,7 @@ class EditAlarmForm(BaseAlarmForm):
             )
             messages.success(request,
                              _('Alarm has been edited successfully.'))
-        except Exception as e:
-            exceptions.handle(request, _('Unable to edit the alarm: %s') % e)
+        except Exception:
+            exceptions.handle(request, _('Unable to edit the alarm.'))
             return False
         return True
