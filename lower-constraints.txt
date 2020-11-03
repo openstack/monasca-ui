@@ -103,7 +103,6 @@ Routes==2.3.1
 selenium==2.50.1
 semantic-version==2.3.1
 simplejson==3.5.1
-six==1.10.0
 snowballstemmer==1.2.1
 statsd==3.2.1
 stevedore==1.20.0

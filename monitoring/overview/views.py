@@ -29,8 +29,7 @@ from django.views.generic import TemplateView
 from horizon import exceptions
 from openstack_auth import utils as auth_utils
 from openstack_dashboard import policy
-import six
-from six.moves import urllib
+import urllib
 
 from monitoring.alarms import tables as alarm_tables
 from monitoring import api
@@ -166,8 +165,7 @@ def show_by_dimension(data, dim_name):
         for metric in data['metrics']:
             if 'dimensions' in metric:
                 if dim_name in metric['dimensions']:
-                    dimension = metric['dimensions'][dim_name] if six.PY3 \
-                        else metric['dimensions'][dim_name].encode('utf-8')
+                    dimension = metric['dimensions'][dim_name]
                     dimensions.append(dimension)
 
         return dimensions
@@ -199,7 +197,7 @@ def generate_status(request):
         service_alarms.append(a)
     monitoring_services = copy.deepcopy(get_monitoring_services(request))
     for row in monitoring_services:
-        row['name'] = six.text_type(row['name'])
+        row['name'] = str(row['name'])
         if 'groupBy' in row:
             alarms_by_group = {}
             for a in alarms:
@@ -228,7 +226,7 @@ def generate_status(request):
                 service_alarms = alarms_by_service.get(service['name'], [])
                 service['class'] = get_status(service_alarms)
                 service['icon'] = get_icon(service['class'])
-                service['display'] = six.text_type(service['display'])
+                service['display'] = str(service['display'])
     return monitoring_services
 
 
