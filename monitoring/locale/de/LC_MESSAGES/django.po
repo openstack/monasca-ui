@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2020-04-16 08:55+0000\n"
+"POT-Creation-Date: 2020-11-03 11:08+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -172,10 +172,6 @@ msgstr ""
 "    Das Feld Typ gibt an, wie die Benachrichtigung gesendet wird, wenn ein "
 "Alarm\n"
 "    ausgelöst wird."
-
-#, python-format
-msgid "%s"
-msgstr "%s"
 
 msgid "+ Add more"
 msgstr "+ Fügen Sie weitere hinzu"
@@ -557,26 +553,6 @@ msgid "Unable to create alarm definition %s"
 msgstr "Die Alarmdefinition %s konnte nicht erstellt werden"
 
 #, python-format
-msgid "Unable to create the alarm: %s"
-msgstr "Der Alarm konnte nicht erstellt werden: %s"
-
-#, python-format
-msgid "Unable to create the notification method: %s"
-msgstr "Die Benachrichtigungsmethode kann nicht erstellt werden: %s"
-
-#, python-format
-msgid "Unable to delete notification: %s"
-msgstr "Die Benachrichtigung konnte nicht gelöscht werden: %s"
-
-#, python-format
-msgid "Unable to edit the alarm: %s"
-msgstr "Der Alarm kann nicht bearbeitet werden: %s"
-
-#, python-format
-msgid "Unable to edit the notification: %s"
-msgstr "Die Benachrichtigung kann nicht bearbeitet werden: %s"
-
-#, python-format
 msgid "Unable to list alarms: %s"
 msgstr "Alarme können nicht aufgelistet werden: %s"
 
@@ -588,10 +564,6 @@ msgstr "Die Messwerte konnten nicht abgerufen werden"
 
 msgid "Unable to retrieve notification details."
 msgstr "Die Benachrichtigungsdetails konnten nicht abgerufen werden."
-
-#, python-format
-msgid "Unable to retrieve notifications: %s"
-msgstr "Benachrichtigungen können nicht abgerufen werden: %s"
 
 msgid "Undetermined"
 msgstr "Unbestimmt"

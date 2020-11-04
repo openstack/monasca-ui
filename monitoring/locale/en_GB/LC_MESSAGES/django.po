@@ -1,15 +1,16 @@
 # Andi Chandler <andi@gowling.com>, 2016. #zanata
 # Andi Chandler <andi@gowling.com>, 2017. #zanata
 # Andi Chandler <andi@gowling.com>, 2018. #zanata
+# Andi Chandler <andi@gowling.com>, 2020. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2020-04-16 08:55+0000\n"
+"POT-Creation-Date: 2020-11-03 11:08+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-04-17 11:58+0000\n"
+"PO-Revision-Date: 2020-11-03 10:21+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom)\n"
 "Language: en_GB\n"
@@ -178,10 +179,6 @@ msgstr ""
 "      The Type field indicates how the notification is sent when an alarm is "
 "triggered.\n"
 "    "
-
-#, python-format
-msgid "%s"
-msgstr "%s"
 
 msgid "+ Add more"
 msgstr "+ Add more"
@@ -560,25 +557,23 @@ msgstr "UTC"
 msgid "Unable to create alarm definition %s"
 msgstr "Unable to create alarm definition %s"
 
-#, python-format
-msgid "Unable to create the alarm: %s"
-msgstr "Unable to create the alarm: %s"
+msgid "Unable to create alarm definition."
+msgstr "Unable to create alarm definition."
 
-#, python-format
-msgid "Unable to create the notification method: %s"
-msgstr "Unable to create the notification method: %s"
+msgid "Unable to create the alarm."
+msgstr "Unable to create the alarm."
 
-#, python-format
-msgid "Unable to delete notification: %s"
-msgstr "Unable to delete notification: %s"
+msgid "Unable to create the notification method."
+msgstr "Unable to create the notification method."
 
-#, python-format
-msgid "Unable to edit the alarm: %s"
-msgstr "Unable to edit the alarm: %s"
+msgid "Unable to delete notification."
+msgstr "Unable to delete notification."
 
-#, python-format
-msgid "Unable to edit the notification: %s"
-msgstr "Unable to edit the notification: %s"
+msgid "Unable to edit the alarm."
+msgstr "Unable to edit the alarm."
+
+msgid "Unable to edit the notification."
+msgstr "Unable to edit the notification."
 
 #, python-format
 msgid "Unable to list alarms: %s"
@@ -593,9 +588,11 @@ msgstr "Unable to retrieve metrics"
 msgid "Unable to retrieve notification details."
 msgstr "Unable to retrieve notification details."
 
-#, python-format
-msgid "Unable to retrieve notifications: %s"
-msgstr "Unable to retrieve notifications: %s"
+msgid "Unable to retrieve notifications."
+msgstr "Unable to retrieve notifications."
+
+msgid "Unable to update alarm definition."
+msgstr "Unable to update alarm definition."
 
 msgid "Undetermined"
 msgstr "Undetermined"

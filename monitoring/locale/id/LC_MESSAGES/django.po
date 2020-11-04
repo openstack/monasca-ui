@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monasca-ui VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2020-04-16 08:55+0000\n"
+"POT-Creation-Date: 2020-11-03 11:08+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -164,10 +164,6 @@ msgid ""
 msgstr ""
 "\n"
 "Type field menunjukkan bagaimana notifikasi dikirim saat alarm dipicu.    "
-
-#, python-format
-msgid "%s"
-msgstr "%s"
 
 msgid "+ Add more"
 msgstr "+ Add more"
@@ -541,26 +537,6 @@ msgid "Unable to create alarm definition %s"
 msgstr "Tidak dapat membuat definisi alarm %s"
 
 #, python-format
-msgid "Unable to create the alarm: %s"
-msgstr "Tidak dapat membuat alarm: %s"
-
-#, python-format
-msgid "Unable to create the notification method: %s"
-msgstr "Tidak dapat membuat metode notifikasi: %s"
-
-#, python-format
-msgid "Unable to delete notification: %s"
-msgstr "Tidak dapat menghapus pemberitahuan: %s"
-
-#, python-format
-msgid "Unable to edit the alarm: %s"
-msgstr "Tidak dapat mengedit alarm: %s"
-
-#, python-format
-msgid "Unable to edit the notification: %s"
-msgstr "Tidak dapat mengedit pemberitahuan: %s"
-
-#, python-format
 msgid "Unable to list alarms: %s"
 msgstr "Tidak dapat menampilkan alarm: %s"
 
@@ -572,10 +548,6 @@ msgstr "Tidak dapat mengambil metrik"
 
 msgid "Unable to retrieve notification details."
 msgstr "Tidak dapat mengambil detail notifikasi."
-
-#, python-format
-msgid "Unable to retrieve notifications: %s"
-msgstr "Tidak dapat mengambil notifikasi: %s"
 
 msgid "Undetermined"
 msgstr "Undetermined"
