@@ -281,6 +281,8 @@ class MonascaProxyView(TemplateView):
                 if len(dimension_name_value) == 2:
                     name = dimension_name_value[0]
                     value = dimension_name_value[1]
+                    if isinstance(value, bytes):
+                        value = value.decode("utf-8")
                     dim_dict[name] = urllib.parse.unquote(value)
                 else:
                     raise Exception('Dimensions are malformed')
