@@ -56,6 +56,12 @@ msgstr "Submit"
 msgid "Threshold"
 msgstr "Threshold"
 
+msgid "Time"
+msgstr "Time"
+
+msgid "Times"
+msgstr "Times"
+
 msgid "Up"
 msgstr "Up"
 

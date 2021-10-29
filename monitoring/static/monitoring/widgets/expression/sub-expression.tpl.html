@@ -3,7 +3,6 @@
 </div>
 
 <form name="subExpressionForm" ng-if="!vm.preview" novalidate>
-
     <div class="row expression-details" ng-if="vm.connectable">
         <div class="col-md-2 col-xs-6">
             <label class="control-label" for="expressionOperator">
@@ -98,8 +97,45 @@
                    ng-class="{'has-error': subExpressionForm.threshold.$invalid && !subExpressionForm.$pristine}"
                    aria-describedby="helpBlock"/>
         </div>
+        <div class="col-md-2 col-xs-6">
+            <label class="control-label" for="expressionFunction">
+                <span class="field-label">{{ 'Time'|translate }}</span>
+                <span class="hz-icon-required fa fa-asterisk"></span>
+            </label>
+            <input id="expressionTime"
+                   name="expressionTime"
+                   type="number"
+                   step="any"
+                   class="form-control input-sm"
+                   aria-label="{$ 'Time'|translate $}"
+                   title="{$ 'Time'|translate $}"
+                   placeholder="60"
+                   min="60"
+                   ng-change="vm.updateExpression()"
+                   ng-model="vm.model.time"
+                   ng-class="{'has-error': subExpressionForm.time.$invalid && !subExpressionForm.$pristine}"
+                   aria-describedby="helpBlock"/>
+        </div>
+        <div class="col-md-2 col-xs-6">
+            <label class="control-label" for="expressionFunction">
+                <span class="field-label">{{ 'Times'|translate }}</span>
+                <span class="hz-icon-required fa fa-asterisk"></span>
+            </label>
+            <input id="expressionTimes"
+                   name="expressionTimes"
+                   type="number"
+                   step="any"
+                   class="form-control input-sm"
+                   aria-label="{$ 'Times'|translate $}"
+                   title="{$ 'Times'|translate $}"
+                   placeholder="1"
+                   min="1"
+                   ng-change="vm.updateExpression()"
+                   ng-model="vm.model.times"
+                   ng-class="{'has-error': subExpressionForm.times.$invalid && !subExpressionForm.$pristine}"
+                   aria-describedby="helpBlock"/>
+        </div>
     </div>
-
     <div class="row expression-details">
         <div class="col-md-9 col-xs-9">
             <tags-input id="dimension-chooser"

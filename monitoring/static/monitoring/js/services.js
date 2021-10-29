@@ -18,6 +18,7 @@ angular
     .module('monitoring.services', [])
     .factory('monExpressionBuilder', expressionBuilder);
 
+
 function expressionBuilder() {
 
     return {
@@ -28,7 +29,6 @@ function expressionBuilder() {
     function subExpressionToString(subExpressions, withOp) {
         var tmp = [],
             exprAsStr;
-
         angular.forEach(subExpressions, function(expr) {
             exprAsStr = [
                 withOp ? renderOp(expr) : '',
@@ -36,9 +36,13 @@ function expressionBuilder() {
                 expr.fun && '(',
                 expr.metric ? expr.metric.name : '', renderDimensions(expr),
                 (expr.deterministic ? ',deterministic': ''),
+                expr.time && ',',
+                expr.time || ',60',
                 expr.fun && ')',
                 expr.cmp || '',
-                expr.threshold === 0 ? 0 : expr.threshold || ''
+                expr.threshold === 0 ? 0 : expr.threshold || '',
+                expr.times && ' times ',
+                expr.times || ' times 1',
             ].join('');
             tmp.push(exprAsStr);
         });
