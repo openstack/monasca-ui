@@ -117,5 +117,5 @@ OPENSTACK_SSL_NO_VERIFY = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
 OPENSTACK_SSL_CACERT = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
 
 POLICY_FILES = getattr(settings, 'POLICY_FILES', {})
-POLICY_FILES.update({'monitoring': 'monitoring_policy.json',}) # noqa
+POLICY_FILES.update({'monitoring': 'monitoring_policy.yaml',}) # noqa
 setattr(settings, 'POLICY_FILES', POLICY_FILES)
