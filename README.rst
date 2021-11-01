@@ -34,8 +34,8 @@ Devstack Deployment Set Up
 
    ln -sf $(pwd)/../monasca-ui/monitoring/enabled/_50_admin_add_monitoring_panel.py \
        $(pwd)/openstack_dashboard/enabled/_50_admin_add_monitoring_panel.py
-   ln -sf $(pwd)/../monasca-ui/monitoring/conf/monitoring_policy.json \
-       $(pwd)/openstack_dashboard/conf/monitoring_policy.json
+   ln -sf $(pwd)/../monasca-ui/monitoring/conf/monitoring_policy.yaml \
+       $(pwd)/openstack_dashboard/conf/monitoring_policy.yaml
    ln -sfF $(pwd)/../monasca-ui/monitoring $(pwd)/monitoring
 
 -  Collect static files, run tests
@@ -89,8 +89,8 @@ Set up Monasca-UI
 
    ln -sf $(pwd)/../monasca-ui/monitoring/enabled/_50_admin_add_monitoring_panel.py \
        $(pwd)/openstack_dashboard/enabled/_50_admin_add_monitoring_panel.py
-   ln -sf $(pwd)/../monasca-ui/monitoring/conf/monitoring_policy.json \
-       $(pwd)/openstack_dashboard/conf/monitoring_policy.json
+   ln -sf $(pwd)/../monasca-ui/monitoring/conf/monitoring_policy.yaml \
+       $(pwd)/openstack_dashboard/conf/monitoring_policy.yaml
    ln -sfF $(pwd)/../monasca-ui/monitoring $(pwd)/monitoring
    ./run_tests #load monasca-client into virtualenv
 
