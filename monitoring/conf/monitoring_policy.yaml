@@ -1,0 +1,4 @@
+"monasca_user_role": "role:monasca-user"
+"default": "@"
+"monitoring:monitoring": "rule:monasca_user_role"
+"monitoring:kibana_access": "rule:monasca_user_role"
