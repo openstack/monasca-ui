@@ -4,4 +4,4 @@
       - horizon-non-primary-django-jobs
       - openstack-cover-jobs-horizon
       - openstack-lower-constraints-jobs
-      - openstack-python3-yoga-jobs-horizon
+      - openstack-python3-zed-jobs-horizon
