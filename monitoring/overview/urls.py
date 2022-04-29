@@ -11,19 +11,19 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from django.conf.urls import url
+from django.urls import re_path
 
 from monitoring.config import local_settings as settings
 from monitoring.overview import views
 
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^status', views.StatusView.as_view(), name='status'),
-    url(r'^proxy\/(?P<restpath>.*)$', views.MonascaProxyView.as_view()),
-    url(r'^proxy', views.MonascaProxyView.as_view(), name='proxy'),
-    url(r'^logs_proxy(?P<url>.*)$',
-        views.KibanaProxyView.as_view(
-            base_url=settings.KIBANA_HOST), name='kibana_proxy'
-        )
+    re_path(r'^$', views.IndexView.as_view(), name='index'),
+    re_path(r'^status', views.StatusView.as_view(), name='status'),
+    re_path(r'^proxy\/(?P<restpath>.*)$', views.MonascaProxyView.as_view()),
+    re_path(r'^proxy', views.MonascaProxyView.as_view(), name='proxy'),
+    re_path(r'^logs_proxy(?P<url>.*)$',
+            views.KibanaProxyView.as_view(base_url=settings.KIBANA_HOST),
+            name='kibana_proxy'
+            )
 ]

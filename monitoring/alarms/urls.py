@@ -11,22 +11,22 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from django.conf.urls import url  # noqa
+from django.urls import re_path
 
 from monitoring.alarms import views
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^alarm/filter/$',
-        views.AlarmFilterView.as_view(),
-        name='alarm_filter'),
-    url(r'^alarm/(?P<service>[^/]+)/$',
-        views.AlarmServiceView.as_view(),
-        name='alarm'),
-    url(r'^alarm/$',
-        views.AlarmServiceView.as_view(),
-        name='alarm_all'),
-    url(r'^history/(?P<name>[^/]+)/(?P<id>[^/]+)$',
-        views.AlarmHistoryView.as_view(),
-        name='history')
+    re_path(r'^$', views.IndexView.as_view(), name='index'),
+    re_path(r'^alarm/filter/$',
+            views.AlarmFilterView.as_view(),
+            name='alarm_filter'),
+    re_path(r'^alarm/(?P<service>[^/]+)/$',
+            views.AlarmServiceView.as_view(),
+            name='alarm'),
+    re_path(r'^alarm/$',
+            views.AlarmServiceView.as_view(),
+            name='alarm_all'),
+    re_path(r'^history/(?P<name>[^/]+)/(?P<id>[^/]+)$',
+            views.AlarmHistoryView.as_view(),
+            name='history')
 ]

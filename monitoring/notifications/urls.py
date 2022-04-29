@@ -11,16 +11,16 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from django.conf.urls import url  # noqa
+from django.urls import re_path
 
 from monitoring.notifications import views
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^notification_create$',
-        views.NotificationCreateView.as_view(),
-        name='notification_create'),
-    url(r'^notification_edit/(?P<id>[^/]+)$',
-        views.NotificationEditView.as_view(),
-        name='notification_edit')
+    re_path(r'^$', views.IndexView.as_view(), name='index'),
+    re_path(r'^notification_create$',
+            views.NotificationCreateView.as_view(),
+            name='notification_create'),
+    re_path(r'^notification_edit/(?P<id>[^/]+)$',
+            views.NotificationEditView.as_view(),
+            name='notification_edit')
 ]

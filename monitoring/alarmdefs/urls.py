@@ -11,19 +11,19 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from django.conf.urls import url  # noqa
+from django.urls import re_path
 
 from monitoring.alarmdefs import views
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^alarm/create$',
-        views.AlarmCreateView.as_view(),
-        name='alarm_create'),
-    url(r'^(?P<id>[^/]+)/alarm_detail/$',
-        views.AlarmDetailView.as_view(),
-        name='alarm_detail'),
-    url(r'^alarm/(?P<id>[^/]+)/alarm_edit/$',
-        views.AlarmEditView.as_view(),
-        name='alarm_edit')
+    re_path(r'^$', views.IndexView.as_view(), name='index'),
+    re_path(r'^alarm/create$',
+            views.AlarmCreateView.as_view(),
+            name='alarm_create'),
+    re_path(r'^(?P<id>[^/]+)/alarm_detail/$',
+            views.AlarmDetailView.as_view(),
+            name='alarm_detail'),
+    re_path(r'^alarm/(?P<id>[^/]+)/alarm_edit/$',
+            views.AlarmEditView.as_view(),
+            name='alarm_edit')
 ]
