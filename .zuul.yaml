@@ -3,4 +3,3 @@
       - check-requirements
       - horizon-non-primary-django-jobs
       - openstack-cover-jobs-horizon
-      - openstack-python3-zed-jobs-horizon

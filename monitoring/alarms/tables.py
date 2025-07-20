@@ -19,8 +19,8 @@ from django.conf import settings
 from django import template
 from django.urls import reverse
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _  # noqa
-from django.utils.translation import ungettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext_lazy
 
 from horizon import tables
 
@@ -199,7 +199,7 @@ class DeleteAlarm(tables.DeleteAction):
 
     @staticmethod
     def action_present(count):
-        return ungettext_lazy(
+        return ngettext_lazy(
             u"Delete Alarm",
             u"Delete Alarms",
             count
@@ -207,7 +207,7 @@ class DeleteAlarm(tables.DeleteAction):
 
     @staticmethod
     def action_past(count):
-        return ungettext_lazy(
+        return ngettext_lazy(
             u"Deleted Alarm",
             u"Deleted Alarms",
             count

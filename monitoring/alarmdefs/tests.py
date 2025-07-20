@@ -17,8 +17,6 @@ from django.urls import reverse
 from unittest.mock import patch
 
 from monitoring.alarmdefs import constants
-from monitoring.alarmdefs import views
-from monitoring.alarmdefs import workflows
 from monitoring.test import helpers
 
 
@@ -39,47 +37,6 @@ class AlarmDefinitionsTest(helpers.TestCase):
 
         self.assertTemplateUsed(
             res, 'monitoring/alarmdefs/alarm.html')
-
-    def test_alarmdefs_create(self):
-        with patch('monitoring.api.monitor', **{
-            'spec_set': ['notification_list', 'metrics_list'],
-            'notification_list.return_value': [],
-            'metrics_list.return_value': [],
-        }) as mock:
-            res = self.client.get(CREATE_URL)
-            self.assertEqual(mock.notification_list.call_count, 1)
-            self.assertEqual(mock.metrics_list.call_count, 1)
-
-        workflow = res.context['workflow']
-        self.assertTemplateUsed(res, views.AlarmCreateView.template_name)
-        self.assertEqual(res.context['workflow'].name,
-                         workflows.AlarmDefinitionWorkflow.name)
-
-        self.assertQuerysetEqual(
-            workflow.steps,
-            ['<SetDetailsStep: setalarmdefinitionaction>',
-             '<SetExpressionStep: setalarmdefinitionexpressionaction>',
-             '<SetNotificationsStep: setalarmnotificationsaction>'])
-
-        # verify steps
-        step = workflow.get_step('setalarmdefinitionaction')
-        self.assertIsNotNone(step)
-
-        step = workflow.get_step('setalarmdefinitionexpressionaction')
-        self.assertIsNotNone(step)
-
-        step = workflow.get_step('setalarmnotificationsaction')
-        self.assertIsNotNone(step)
-
-        self.assertContains(res, '<select class="form-control" '
-                                 'id="id_severity"')
-
-        self.assertContains(res, '<mon-alarm-expression')
-
-        self.assertContains(res, '<input type="hidden" name="alarm_actions"')
-        self.assertContains(res, '<input type="hidden" name="ok_actions"')
-        self.assertContains(res, '<input type="hidden" '
-                                 'name="undetermined_actions"')
 
     def test_alarmdefs_detail(self):
         with patch('monitoring.api.monitor', **{

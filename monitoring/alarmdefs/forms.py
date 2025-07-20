@@ -17,7 +17,8 @@ from itertools import chain
 import json
 
 from django.template.loader import get_template
-from django.utils.translation import ugettext as _  # noqa
+from django.utils.encoding import force_str
+from django.utils.translation import gettext_lazy as _
 
 from horizon import exceptions
 from horizon import forms
@@ -56,10 +57,14 @@ def _get_notifications(request):
 class ExpressionWidget(forms.Widget):
 
     func = json.dumps(
-        [('min', _('min')), ('max', _('max')), ('sum', _('sum')),
-         ('count', _('count')), ('avg', _('avg')), ('last', _('last'))])
+        [('min', force_str(_('min'))), ('max', force_str(_('max'))),
+         ('sum', force_str(_('sum'))), ('count', force_str(_('count'))),
+         ('avg', force_str(_('avg'))), ('last', force_str(_('last')))]
+    )
     comparators = [['>', '>'], ['>=', '>='], ['<', '<'], ['<=', '<=']]
-    operators = json.dumps([('AND', _('AND')), ('OR', _('OR'))])
+    operators = json.dumps(
+        [('AND', force_str(_('AND'))), ('OR', force_str(_('OR')))]
+    )
 
     def __init__(self, initial, attrs=None):
         super(ExpressionWidget, self).__init__(attrs)

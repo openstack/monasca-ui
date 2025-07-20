@@ -24,8 +24,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.dateparse import parse_datetime
-from django.utils.translation import ugettext as _  # noqa
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import View
 
 from horizon import exceptions
@@ -71,8 +70,8 @@ index_by_severity = {d['severity']: i for i, d in enumerate(priorities)}
 
 alarm_history_default_ts_format = 'utc'
 alarm_history_ts_formats = (
-    ('utc', ugettext_lazy('UTC'),),
-    ('bl', ugettext_lazy('Browser local'),),
+    ('utc', _('UTC'),),
+    ('bl', _('Browser local'),),
 )
 
 default_service = 'all'
