@@ -1,34 +1,34 @@
+==========
 Monasca UI
-========================
+==========
 
 .. image:: https://governance.openstack.org/tc/badges/monasca-ui.svg
-    :target: https://governance.openstack.org/tc/reference/tags/index.html
 
-monasca-ui
-==========
+.. Change things from this point on
 
 Monasca UI is implemented as a Horizon plugin that adds panels to
 Horizon. It is installed into devstack by the monasca-api plugin.
 
-Devstack Deployment Set Up
+DevStack Deployment Set Up
 ==========================
 
 -  ``cd /opt/stack/horizon``
--  Install Openstack upper-constraints requirements
+-  Install OpenStack upper-constraints requirements
    ``pip install -c https://opendev.org/openstack/requirements/raw/branch/master/upper-constraints.txt -r requirements.txt``
--  Clone monasca-ui:
+-  Clone Monasca UI:
    ``git clone https://opendev.org/openstack/monasca-ui.git``
 -  Add ``git+https://opendev.org/openstack/monasca-ui.git`` to
    ``requirements.txt``.
--  Install monasca-ui required packages
-   ``pip install -r requirements.txt`` (monasca-client packages will be installed.)
+-  Install Monasca UI required packages:
+   ``pip install -r requirements.txt`` (monasca-client packages will be installed.
 -  Edit ``openstack_dashboard/settings.py`` to include the following two
    lines:
 
    -  ``import monitoring.enabled``
    -  ``monitoring.enabled,`` (Add this line to the
       ``settings_utils.update_dashboards`` list.)
--  Link monasca into Horizon:
+
+-  Link Monasca UI into Horizon:
 
 ::
 
@@ -145,4 +145,4 @@ directory of this project:
 
 ::
 
-   $ tox -e py36
+   $ tox -e py3
