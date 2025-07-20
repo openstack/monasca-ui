@@ -200,16 +200,16 @@ class DeleteAlarm(tables.DeleteAction):
     @staticmethod
     def action_present(count):
         return ngettext_lazy(
-            u"Delete Alarm",
-            u"Delete Alarms",
+            "Delete Alarm",
+            "Delete Alarms",
             count
         )
 
     @staticmethod
     def action_past(count):
         return ngettext_lazy(
-            u"Deleted Alarm",
-            u"Deleted Alarms",
+            "Deleted Alarm",
+            "Deleted Alarms",
             count
         )
 

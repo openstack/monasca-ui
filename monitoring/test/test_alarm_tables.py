@@ -23,7 +23,7 @@ class GraphMetricLinkActionTests(TestCase):
 
     def test_get_link_url(self):
         table_mock = Mock()
-        table_mock.request.build_absolute_uri.return_value = u"http://foo/api/"
+        table_mock.request.build_absolute_uri.return_value = "http://foo/api/"
 
         link_action = monitoring.alarms.tables.GraphMetric(table=table_mock)
 
@@ -57,6 +57,6 @@ class GraphMetricLinkActionTests(TestCase):
 
     def get_allowed(self):
         table_mock = Mock()
-        table_mock.request.build_absolute_uri.return_value = u"http://foo/api/"
+        table_mock.request.build_absolute_uri.return_value = "http://foo/api/"
         link_action = monitoring.alarms.tables.GraphMetric(table=table_mock)
         return link_action.allowed(table_mock.request, {'metrics': 'metrics'})
