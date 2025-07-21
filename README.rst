@@ -20,13 +20,13 @@ DevStack Deployment Set Up
 -  Add ``git+https://opendev.org/openstack/monasca-ui.git`` to
    ``requirements.txt``.
 -  Install Monasca UI required packages:
-   ``pip install -r requirements.txt`` (monasca-client packages will be installed.
+   ``pip install -r requirements.txt`` (monasca-client packages will be installed)
 -  Edit ``openstack_dashboard/settings.py`` to include the following two
    lines:
 
    -  ``import monitoring.enabled``
    -  ``monitoring.enabled,`` (Add this line to the
-      ``settings_utils.update_dashboards`` list.)
+      ``settings_utils.update_dashboards`` list)
 
 -  Link Monasca UI into Horizon:
 
