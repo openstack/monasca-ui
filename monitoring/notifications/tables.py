@@ -30,16 +30,16 @@ class DeleteNotification(tables.DeleteAction):
     @staticmethod
     def action_present(count):
         return ngettext_lazy(
-            u"Delete Notification",
-            u"Delete Notifications",
+            "Delete Notification",
+            "Delete Notifications",
             count
         )
 
     @staticmethod
     def action_past(count):
         return ngettext_lazy(
-            u"Deleted Notification",
-            u"Deleted Notifications",
+            "Deleted Notification",
+            "Deleted Notifications",
             count
         )
 
